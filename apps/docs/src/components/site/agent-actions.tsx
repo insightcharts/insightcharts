@@ -3,6 +3,7 @@
 import { Bot, Check, ChevronDown, Copy, ExternalLink, FileText } from "lucide-react";
 import { useEffect, useState } from "react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { LOGO_COLOR } from "@/lib/brand";
 import { cn } from "@/lib/utils";
 import { copyText } from "./copy-button";
 
@@ -74,16 +75,16 @@ export function AgentActions({ href, prefill, markdownHref, size = "default", me
         type="button"
         data-agent-copy={href}
         onClick={() => copy(href, "copied")}
-        className={cn("inline-flex items-center gap-1.5 bg-primary text-primary-foreground transition-colors hover:bg-primary/90", height, size === "hero" ? "px-3.5" : size === "compact" ? "px-2" : "px-3", menu ? "rounded-l-md" : "rounded-md", ring)}
+        className={cn("inline-flex items-center gap-1.5 border border-input bg-background text-foreground transition-colors hover:bg-accent dark:bg-input/30 dark:hover:bg-input/50", height, size === "hero" ? "px-3.5" : size === "compact" ? "px-2" : "px-3", menu ? "rounded-l-md" : "rounded-md", ring)}
       >
-        {done ? <Check className="size-3.5" aria-hidden /> : <Bot className={size === "compact" ? "size-3.5" : "size-4"} aria-hidden />}
+        {done ? <Check className="size-3.5" aria-hidden /> : <Bot className={size === "compact" ? "size-3.5" : "size-4"} style={{ color: LOGO_COLOR }} aria-hidden />}
         <span aria-live="polite" className="whitespace-nowrap">
           {label}
         </span>
       </button>
       {menu ? (
         <DropdownMenu>
-          <DropdownMenuTrigger aria-label="More ways to use the agent instructions" className={cn("inline-flex items-center justify-center rounded-r-md border-l border-primary-foreground/25 bg-primary text-primary-foreground transition-colors hover:bg-primary/90", height, size === "hero" ? "w-9" : "w-8", ring)}>
+          <DropdownMenuTrigger aria-label="More ways to use the agent instructions" className={cn("-ml-px inline-flex items-center justify-center rounded-r-md border border-input bg-background text-muted-foreground transition-colors hover:bg-accent hover:text-foreground dark:bg-input/30 dark:hover:bg-input/50", height, size === "hero" ? "w-9" : "w-8", ring)}>
             <ChevronDown className="size-3.5" aria-hidden />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="min-w-56">

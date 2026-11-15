@@ -13,7 +13,7 @@
     "check": "pnpm index && pnpm --filter insightcharts typecheck",
     "llms": "tsx scripts/build-llms.ts",
     "registry": "tsx scripts/build-registry.ts",
-    "agent-docs": "pnpm manifest && pnpm llms && pnpm registry"
+    "agent-docs": "pnpm manifest && pnpm registry && pnpm llms"
   },
   "devDependencies": {
     "tsx": "latest",
