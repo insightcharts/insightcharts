@@ -3,6 +3,15 @@
   "version": "0.1.0",
   "description": "Composable, AI-native infographics and data stories for React, built on Apache ECharts.",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/insightcharts/insightcharts.git",
+    "directory": "packages/insightcharts"
+  },
+  "homepage": "https://github.com/insightcharts/insightcharts#readme",
+  "bugs": {
+    "url": "https://github.com/insightcharts/insightcharts/issues"
+  },
   "type": "module",
   "sideEffects": false,
   "keywords": [
@@ -19,7 +28,8 @@
   "files": [
     "dist",
     "manifest.json",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -70,5 +80,8 @@
     "tsup": "^9.0.0",
     "typescript": "^5.9.0",
     "vitest": "^5.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

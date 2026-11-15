@@ -1,0 +1,2906 @@
+{
+  "package": "insightcharts",
+  "version": "0.1.0",
+  "site": "https://insightcharts.dev",
+  "prompts": [
+    {
+      "path": "/agents/index.md",
+      "title": "Build charts, data stories and infographics with InsightCharts",
+      "kind": "home",
+      "description": "Choose the right InsightCharts component for the user's data, install the library and build a finished figure in the user's React project."
+    },
+    {
+      "path": "/agents/docs/accessibility.md",
+      "title": "Make charts accessible",
+      "kind": "guide",
+      "description": "Every chart in the user's project has a title that states its fact, an accurate text alternative, a data table where exact values matter, and readable contrast."
+    },
+    {
+      "path": "/agents/docs/crossfiltering.md",
+      "title": "Link charts so a click on one filters the others",
+      "kind": "guide",
+      "description": "Two or more charts share one dataset inside InsightData, and clicking a mark in a selectable chart filters the other charts."
+    },
+    {
+      "path": "/agents/docs/dark-mode.md",
+      "title": "Make InsightCharts follow the project's dark mode",
+      "kind": "guide",
+      "description": "Every chart matches the colour mode of the page around it, or the mode the user asked for, with no wrong-mode chart after a theme switch."
+    },
+    {
+      "path": "/agents/docs/data.md",
+      "title": "Connect data to an InsightCharts chart",
+      "kind": "guide",
+      "description": "The chart reads the user's data source directly, with any reshaping done by JSON transforms, and shows loading and error states for remote data."
+    },
+    {
+      "path": "/agents/docs/escape-hatch.md",
+      "title": "Go beyond a component's props with ECharts options",
+      "kind": "guide",
+      "description": "The chart has the ECharts setting or custom form the user needs, and it still takes its colours, text and behaviour from InsightCharts."
+    },
+    {
+      "path": "/agents/docs/export.md",
+      "title": "Add export to charts and posters",
+      "kind": "guide",
+      "description": "Readers can save a chart as PNG, JPEG, SVG, PDF, CSV or JSON, or a whole poster or social card as one PNG, from a menu or from the user's own button."
+    },
+    {
+      "path": "/agents/docs/highlighting-and-annotations.md",
+      "title": "Add a title, a highlight and annotations to a chart",
+      "kind": "guide",
+      "description": "The chart has a title that states one fact with its number, the entity in the title is highlighted, and at most three annotations mark what the reader needs."
+    },
+    {
+      "path": "/agents/docs/icons.md",
+      "title": "Use icons in charts and figures",
+      "kind": "guide",
+      "description": "Every icon prop in the user's charts holds a built-in icon name or a valid custom path, and unit charts state what one icon stands for."
+    },
+    {
+      "path": "/agents/docs.md",
+      "title": "Choose and build the right InsightCharts component",
+      "kind": "guide",
+      "description": "The user's data is drawn with the component level that fits the job, with a title that states one fact, a highlight and a source."
+    },
+    {
+      "path": "/agents/docs/infographics.md",
+      "title": "Build an infographic poster",
+      "kind": "guide",
+      "description": "One designed poster in the user's project, drawn by an infographic template or the poster frame, with the user's data, a poster theme and a source line."
+    },
+    {
+      "path": "/agents/docs/installation.md",
+      "title": "Install InsightCharts in this project",
+      "kind": "guide",
+      "description": "The package (or the copied component source) is installed, a chart imports and renders, and the project typechecks."
+    },
+    {
+      "path": "/agents/docs/json-spec.md",
+      "title": "Emit, validate and render a JSON spec",
+      "kind": "guide",
+      "description": "A JSON spec that passes the schema and renders through Insight in the user's project."
+    },
+    {
+      "path": "/agents/docs/quickstart.md",
+      "title": "Render a first InsightCharts chart",
+      "kind": "guide",
+      "description": "One chart of the user's data renders with a title that states one fact, a subtitle, a source and a highlight."
+    },
+    {
+      "path": "/agents/docs/stories.md",
+      "title": "Build a step-by-step data story with Scrolly",
+      "kind": "guide",
+      "description": "One chart stays in place and changes state as the reader scrolls, swipes or steps through a list of short text steps."
+    },
+    {
+      "path": "/agents/docs/templates.md",
+      "title": "Build a whole page from a template",
+      "kind": "guide",
+      "description": "A complete page in the user's project rendered by one report-style template, with the user's titles, figures and charts in its props."
+    },
+    {
+      "path": "/agents/docs/theming.md",
+      "title": "Theme InsightCharts to match a brand",
+      "kind": "guide",
+      "description": "Every chart in the project uses the user's colours and fonts in light and dark mode, set in one place."
+    },
+    {
+      "path": "/agents/stories.md",
+      "title": "Build a scroll story like the ones in the gallery",
+      "kind": "index",
+      "description": "A scroll story in the user's project that pins one chart and changes one prop at every step, modelled on a story from the gallery."
+    },
+    {
+      "path": "/agents/prompts/single-chart-from-csv.md",
+      "title": "Draw one chart from a CSV file",
+      "kind": "library",
+      "description": "Loads a CSV file, chooses a chart form, and renders one chart with a title that states one fact from the data."
+    },
+    {
+      "path": "/agents/prompts/kpi-row.md",
+      "title": "Build a row of key numbers",
+      "kind": "library",
+      "description": "Renders two to eight key figures with their changes as a stat row or a KPI grid."
+    },
+    {
+      "path": "/agents/prompts/executive-brief.md",
+      "title": "Write an executive brief",
+      "kind": "library",
+      "description": "Builds a one-page brief with a headline, key figures, a hero chart, supporting charts and recommended actions."
+    },
+    {
+      "path": "/agents/prompts/scroll-story.md",
+      "title": "Build a scroll story",
+      "kind": "library",
+      "description": "Pins one chart and changes one prop at each step as the reader scrolls, swipes or steps through the text."
+    },
+    {
+      "path": "/agents/prompts/crossfilter-explorer.md",
+      "title": "Build a cross-filtered explorer",
+      "kind": "library",
+      "description": "Draws two to four charts over one dataset so that a click on one chart filters the others."
+    },
+    {
+      "path": "/agents/prompts/infographic-poster.md",
+      "title": "Build an infographic poster",
+      "kind": "library",
+      "description": "Draws one designed poster from a JSON spec with an infographic template and a poster theme."
+    },
+    {
+      "path": "/agents/prompts/brand-theme.md",
+      "title": "Restyle charts to a brand theme",
+      "kind": "library",
+      "description": "Applies a brand's colours and fonts to every InsightCharts component in a project, in light and dark mode."
+    },
+    {
+      "path": "/agents/prompts/convert-recharts-chartjs.md",
+      "title": "Convert a Recharts or Chart.js chart",
+      "kind": "library",
+      "description": "Replaces an existing Recharts or Chart.js chart with the matching InsightCharts component and a title that states one fact."
+    },
+    {
+      "path": "/agents/docs/agents.md",
+      "title": "Getting started for agents",
+      "kind": "agents",
+      "description": "The steps an AI coding agent follows to install InsightCharts and render a first chart in a React project."
+    },
+    {
+      "path": "/agents/docs/agents/setup.md",
+      "title": "Set up your agent",
+      "kind": "agents",
+      "description": "The commands and configuration that give Claude Code, Cursor, Codex or any other agent the InsightCharts skill, registry and reference files."
+    },
+    {
+      "path": "/agents/docs/agents/workflow.md",
+      "title": "The agent workflow",
+      "kind": "agents",
+      "description": "The seven steps an agent follows to turn data into a finished InsightCharts figure, with what to check at each step."
+    },
+    {
+      "path": "/agents/docs/agents/choosing.md",
+      "title": "Choosing a component",
+      "kind": "agents",
+      "description": "How to choose a level and a component for a dataset, with a decision table of all the components and the poster primitives."
+    },
+    {
+      "path": "/agents/docs/agents/writing.md",
+      "title": "Writing rules for agents",
+      "kind": "agents",
+      "description": "The rules for every title, subtitle, callout, annotation label and story step an agent writes, with examples and a self-check list."
+    },
+    {
+      "path": "/agents/docs/agents/json-specs.md",
+      "title": "JSON specs",
+      "kind": "agents",
+      "description": "How an agent writes an InsightCharts component as a JSON spec, validates it against the JSON Schema and renders it with the Insight component."
+    },
+    {
+      "path": "/agents/docs/agents/prompts.md",
+      "title": "Prompt library",
+      "kind": "agents",
+      "description": "Ready-to-copy prompts that tell an agent how to do eight common jobs with InsightCharts."
+    },
+    {
+      "path": "/agents/docs/agents/endpoints.md",
+      "title": "Reference endpoints",
+      "kind": "agents",
+      "description": "Every machine-readable URL that InsightCharts publishes for agents, with what each one contains."
+    },
+    {
+      "path": "/agents/atoms.md",
+      "title": "Choose and add an InsightCharts atom",
+      "kind": "index"
+    },
+    {
+      "path": "/agents/molecules.md",
+      "title": "Choose and add an InsightCharts molecule",
+      "kind": "index"
+    },
+    {
+      "path": "/agents/templates.md",
+      "title": "Choose and add an InsightCharts template",
+      "kind": "index"
+    },
+    {
+      "path": "/agents/infographics.md",
+      "title": "Choose and build an InsightCharts infographic",
+      "kind": "index"
+    },
+    {
+      "path": "/agents/atoms/arc-diagram.md",
+      "title": "Arc diagram",
+      "kind": "component",
+      "description": "Places entities in order on a line and joins each related pair with a semicircular arc whose thickness is the value of the connection; dots are sized by each entity's total."
+    },
+    {
+      "path": "/agents/atoms/arc-diagram/one-entity-highlighted.md",
+      "title": "Arc diagram: One entity highlighted",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/arc-diagram/coloured-by-entity-counting-rows.md",
+      "title": "Arc diagram: Coloured by entity, counting rows",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/arc-diagram/ten-entities-one-colour-each.md",
+      "title": "Arc diagram: Ten entities, one colour each",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/arc-diagram/stress-18-entities-with-long-names.md",
+      "title": "Arc diagram: Stress: 18 entities with long names",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/area-chart.md",
+      "title": "Area chart",
+      "kind": "component",
+      "description": "Shows a quantity over time as a filled area from zero: one series, stacked series, shares of 100%, or a streamgraph."
+    },
+    {
+      "path": "/agents/atoms/area-chart/stacked-labelled-in-the-bands.md",
+      "title": "Area chart: Stacked, labelled in the bands",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/area-chart/100-stacked-with-highlight.md",
+      "title": "Area chart: 100% stacked with highlight",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/area-chart/streamgraph-long-format.md",
+      "title": "Area chart: Streamgraph, long format",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/area-chart/overlapping-washes.md",
+      "title": "Area chart: Overlapping washes",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/arrow-chart.md",
+      "title": "Arrow chart",
+      "kind": "component",
+      "description": "Draws an arrow per category from a start value to an end value, showing the direction and size of each shift."
+    },
+    {
+      "path": "/agents/atoms/arrow-chart/lower-is-better-one-row-highlighted.md",
+      "title": "Arrow chart: Lower is better, one row highlighted",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/arrow-chart/long-format.md",
+      "title": "Arrow chart: Long format",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/arrow-chart/stress-24-rows-on-a-value-axis.md",
+      "title": "Arrow chart: Stress: 24 rows on a value axis",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/bar-chart.md",
+      "title": "Bar chart",
+      "kind": "component",
+      "description": "Compares a value across categories with bars from a zero baseline."
+    },
+    {
+      "path": "/agents/atoms/bar-chart/two-bars-horizontal.md",
+      "title": "Bar chart: Two bars, horizontal",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/bar-chart/vertical-over-time-with-a-target-line.md",
+      "title": "Bar chart: Vertical over time with a target line",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/bar-chart/grouped-horizontal-highlighted.md",
+      "title": "Bar chart: Grouped, horizontal, highlighted",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/bar-chart/stacked-to-100.md",
+      "title": "Bar chart: Stacked to 100%",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/bar-chart/forced-vertical-with-names-too-long-for-their-bands.md",
+      "title": "Bar chart: Forced vertical with names too long for their bands",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/bar-chart/stress-18-long-category-names.md",
+      "title": "Bar chart: Stress: 18 long category names",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/beeswarm-chart.md",
+      "title": "Beeswarm chart",
+      "kind": "component",
+      "description": "Shows a distribution as one dot per row along a value axis, with dots stacked sideways where they would collide."
+    },
+    {
+      "path": "/agents/atoms/beeswarm-chart/rows-by-group-with-medians.md",
+      "title": "Beeswarm chart: Rows by group, with medians",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/beeswarm-chart/colour-by-series-long-format.md",
+      "title": "Beeswarm chart: Colour by series, long format",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/beeswarm-chart/highlight-a-whole-row.md",
+      "title": "Beeswarm chart: Highlight a whole row",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/beeswarm-chart/stress-2-000-dots.md",
+      "title": "Beeswarm chart: Stress: 2,000 dots",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/big-number.md",
+      "title": "Big number",
+      "kind": "component",
+      "description": "A featured statistic with its label, change and the context that gives it meaning."
+    },
+    {
+      "path": "/agents/atoms/big-number/hero.md",
+      "title": "Big number: Hero",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/big-number/hero-with-a-trend-editorial.md",
+      "title": "Big number: Hero with a trend, editorial",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/big-number/filled.md",
+      "title": "Big number: Filled",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/big-number/tinted-positive-tone.md",
+      "title": "Big number: Tinted, positive tone",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/big-number/with-an-icon.md",
+      "title": "Big number: With an icon",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/big-number/with-a-ring-toward-a-target.md",
+      "title": "Big number: With a ring toward a target",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/big-number/hero-ring-ocean.md",
+      "title": "Big number: Hero ring, ocean",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/big-number/hero-filled-magenta-centred.md",
+      "title": "Big number: Hero filled, magenta, centred",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/big-number/hero-icon-forest.md",
+      "title": "Big number: Hero icon, forest",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/big-number/trend-ledger.md",
+      "title": "Big number: Trend, ledger",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/big-number/filled-categorical-tone-noir.md",
+      "title": "Big number: Filled, categorical tone, noir",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/block-bar.md",
+      "title": "Block bars",
+      "kind": "component",
+      "description": "Compares 3 to 12 values as thick rounded bars from a zero baseline, with each value printed inside the end of its bar and the category beneath."
+    },
+    {
+      "path": "/agents/atoms/block-bar/paired-series.md",
+      "title": "Block bars: Paired series",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/block-bar/highlight-click-to-select.md",
+      "title": "Block bars: Highlight, click to select",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/block-bar/stress-twelve-bars-long-labels-uneven-values.md",
+      "title": "Block bars: Stress: twelve bars, long labels, uneven values",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/box-plot.md",
+      "title": "Box plot",
+      "kind": "component",
+      "description": "Summarises a numeric field per group as median, quartile box, whiskers and outlier dots, computed from raw rows."
+    },
+    {
+      "path": "/agents/atoms/box-plot/sorted-long-labels-many-outliers.md",
+      "title": "Box plot: Sorted, long labels, many outliers",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/box-plot/vertical-ordered-categories.md",
+      "title": "Box plot: Vertical, ordered categories",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/box-plot/single-box-min-max-whiskers.md",
+      "title": "Box plot: Single box, min-max whiskers",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/bubble-network.md",
+      "title": "Bubble network",
+      "kind": "component",
+      "description": "Draws a small set of circles sized by value and joined by thin lines, with one circle highlighted and tagged."
+    },
+    {
+      "path": "/agents/atoms/bubble-network/placed-by-hand-link-values-click-to-select.md",
+      "title": "Bubble network: Placed by hand, link values, click to select",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/bubble-network/ring-layout-no-hub.md",
+      "title": "Bubble network: Ring layout, no hub",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/bubble-network/stress-12-circles-long-names-values-from-1-to-480.md",
+      "title": "Bubble network: Stress: 12 circles, long names, values from 1 to 480",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/bubble-scale.md",
+      "title": "Bubble scale",
+      "kind": "component",
+      "description": "Places circles sized by one measure along a single value scale set by another, spread sideways so none overlap, with boxed scale marks instead of an axis."
+    },
+    {
+      "path": "/agents/atoms/bubble-scale/colour-by-series-horizontal.md",
+      "title": "Bubble scale: Colour by series, horizontal",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/bubble-scale/highlight-one-circle-click-to-select.md",
+      "title": "Bubble scale: Highlight one circle, click to select",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/bubble-scale/stress-40-circles-crowded-at-one-end-sizes-from-1-to-900.md",
+      "title": "Bubble scale: Stress: 40 circles crowded at one end, sizes from 1 to 900",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/bullet-chart.md",
+      "title": "Bullet chart",
+      "kind": "component",
+      "description": "Compares one measure per row with its target, optionally against qualitative bands such as poor / fair / good."
+    },
+    {
+      "path": "/agents/atoms/bullet-chart/scorecard-with-a-separate-scale-per-row.md",
+      "title": "Bullet chart: Scorecard with a separate scale per row",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/bullet-chart/no-thresholds-one-row-highlighted.md",
+      "title": "Bullet chart: No thresholds, one row highlighted",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/bullet-chart/stress-10-rows-with-long-labels.md",
+      "title": "Bullet chart: Stress: 10 rows with long labels",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/bump-chart.md",
+      "title": "Bump chart",
+      "kind": "component",
+      "description": "Shows how the ranking of entities changes over time, with rank 1 at the top and each line named at its end."
+    },
+    {
+      "path": "/agents/atoms/bump-chart/every-line-coloured.md",
+      "title": "Bump chart: Every line coloured",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/bump-chart/long-format-with-a-late-entrant.md",
+      "title": "Bump chart: Long format with a late entrant",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/bump-chart/stress-12-entities-over-10-periods.md",
+      "title": "Bump chart: Stress: 12 entities over 10 periods",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/calendar-heatmap.md",
+      "title": "Calendar heatmap",
+      "kind": "component",
+      "description": "Colours every day of one or more years by a value, laid out as a grid of weeks."
+    },
+    {
+      "path": "/agents/atoms/calendar-heatmap/three-years-with-a-gap-in-the-record.md",
+      "title": "Calendar heatmap: Three years, with a gap in the record",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/calendar-heatmap/sparse-events-sunday-start.md",
+      "title": "Calendar heatmap: Sparse events, Sunday start",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/calendar-heatmap/forced-vertical-with-a-fixed-height.md",
+      "title": "Calendar heatmap: Forced vertical with a fixed height",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/callout.md",
+      "title": "Callout",
+      "kind": "component",
+      "description": "A boxed statement of fact with a short bold lead and a sentence of explanation. The tone is marked by icon and tint."
+    },
+    {
+      "path": "/agents/atoms/callout/positive.md",
+      "title": "Callout: Positive",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/callout/negative-caveat-outline.md",
+      "title": "Callout: Negative caveat, outline",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/callout/neutral-plain.md",
+      "title": "Callout: Neutral, plain",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/callout/one-token-overridden.md",
+      "title": "Callout: One token overridden",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/callout/accent-on-a-painted-ground.md",
+      "title": "Callout: Accent on a painted ground",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/choropleth-map.md",
+      "title": "Choropleth map",
+      "kind": "component",
+      "description": "Colours the regions of a map by a normalised value, from GeoJSON you supply."
+    },
+    {
+      "path": "/agents/atoms/choropleth-map/diverging-with-missing-regions.md",
+      "title": "Choropleth map: Diverging, with missing regions",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/choropleth-map/tile-grid-with-labels-loaded-from-a-url.md",
+      "title": "Choropleth map: Tile grid with labels, loaded from a URL",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/choropleth-map/diverging-on-a-tile-grid.md",
+      "title": "Choropleth map: Diverging on a tile grid",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/circle-pack.md",
+      "title": "Circle pack",
+      "kind": "component",
+      "description": "Shows parts as tightly packed circles sized by value, optionally clustered into groups, with the value and name printed inside each circle."
+    },
+    {
+      "path": "/agents/atoms/circle-pack/flat-with-highlight-icons-and-a-size-key.md",
+      "title": "Circle pack: Flat, with highlight, icons and a size key",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/circle-pack/shaded-by-value-inside-one-ring.md",
+      "title": "Circle pack: Shaded by value inside one ring",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/circle-pack/stress-27-circles-in-5-groups-long-names-values-from-2-to-1-280.md",
+      "title": "Circle pack: Stress: 27 circles in 5 groups, long names, values from 2 to 1,280",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/curve-rank.md",
+      "title": "Curve rank",
+      "kind": "component",
+      "description": "Places each entity on two parallel scales, one per measure, and joins its two positions with a smooth S-curve labelled with the name and both values."
+    },
+    {
+      "path": "/agents/atoms/curve-rank/one-highlighted-log-scale-on-the-right.md",
+      "title": "Curve rank: One highlighted, log scale on the right",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/curve-rank/ten-entities-one-colour-each.md",
+      "title": "Curve rank: Ten entities, one colour each",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/curve-rank/stress-14-entities-close-values-long-names.md",
+      "title": "Curve rank: Stress: 14 entities, close values, long names",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/data-table.md",
+      "title": "Data table",
+      "kind": "component",
+      "description": "A restrained editorial table from rows and a column config: aligned tabular numbers, an optional in-cell bar, row highlight and click-to-sort headers."
+    },
+    {
+      "path": "/agents/atoms/data-table/scrolling-sticky-header-compact.md",
+      "title": "Data table: Scrolling, sticky header, compact",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/data-table/default-columns-no-sorting.md",
+      "title": "Data table: Default columns, no sorting",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/data-table/two-highlighted-rows-negative-values.md",
+      "title": "Data table: Two highlighted rows, negative values",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/delta.md",
+      "title": "Delta",
+      "kind": "component",
+      "description": "An inline change indicator: direction arrow, signed value and an optional baseline label."
+    },
+    {
+      "path": "/agents/atoms/delta/down-is-good-churn.md",
+      "title": "Delta: Down is good (churn)",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/delta/down-is-bad-pill.md",
+      "title": "Delta: Down is bad, pill",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/delta/no-change.md",
+      "title": "Delta: No change",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/delta/string-value-large-pill.md",
+      "title": "Delta: String value, large pill",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/delta/solid-capsule-extra-large.md",
+      "title": "Delta: Solid capsule, extra large",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/delta/solid-down-is-good-editorial.md",
+      "title": "Delta: Solid, down is good, editorial",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/delta/accent-tone-ledger.md",
+      "title": "Delta: Accent tone, ledger",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/delta/neutral-tone.md",
+      "title": "Delta: Neutral tone",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/delta/pill-on-a-poster-ground-noir.md",
+      "title": "Delta: Pill on a poster ground, noir",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/delta/solid-magenta.md",
+      "title": "Delta: Solid, magenta",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/diverging-bar-chart.md",
+      "title": "Diverging bar chart",
+      "kind": "component",
+      "description": "Draws bars either side of a centre line: positive against negative values, or stacked agree / disagree responses around a neutral midpoint."
+    },
+    {
+      "path": "/agents/atoms/diverging-bar-chart/likert-scale-around-a-neutral-midpoint.md",
+      "title": "Diverging bar chart: Likert scale around a neutral midpoint",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/diverging-bar-chart/two-opposed-groups-long-format.md",
+      "title": "Diverging bar chart: Two opposed groups, long format",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/diverging-bar-chart/vertical-over-time-good-and-bad.md",
+      "title": "Diverging bar chart: Vertical over time, good and bad",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/diverging-bar-chart/stress-14-long-statements-one-highlighted-normalised.md",
+      "title": "Diverging bar chart: Stress: 14 long statements, one highlighted, normalised",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/donut-chart.md",
+      "title": "Donut chart",
+      "kind": "component",
+      "description": "Shows how 2 to 5 parts make up one whole, with each slice labelled by name and share."
+    },
+    {
+      "path": "/agents/atoms/donut-chart/two-slices-no-centre.md",
+      "title": "Donut chart: Two slices, no centre",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/donut-chart/folded-into-other-custom-centre.md",
+      "title": "Donut chart: Folded into Other, custom centre",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/donut-chart/stress-long-names-and-a-sliver.md",
+      "title": "Donut chart: Stress: long names and a sliver",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/dumbbell-chart.md",
+      "title": "Dumbbell chart",
+      "kind": "component",
+      "description": "Shows two values per category as dots joined by a line, so the length of the line shows the difference."
+    },
+    {
+      "path": "/agents/atoms/dumbbell-chart/two-groups-highlighted-row.md",
+      "title": "Dumbbell chart: Two groups, highlighted row",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/dumbbell-chart/long-format.md",
+      "title": "Dumbbell chart: Long format",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/dumbbell-chart/stress-22-rows-long-names-axis-instead-of-labels.md",
+      "title": "Dumbbell chart: Stress: 22 rows, long names, axis instead of labels",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/fan-flow.md",
+      "title": "Fan flow",
+      "kind": "component",
+      "description": "One solid block that splits into curved ribbons, each as thick as its value, ending at an aligned column of names, values and shares."
+    },
+    {
+      "path": "/agents/atoms/fan-flow/many-into-one-with-highlight.md",
+      "title": "Fan flow: Many into one, with highlight",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/fan-flow/one-colour.md",
+      "title": "Fan flow: One colour",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/fan-flow/ten-destinations-one-colour-each.md",
+      "title": "Fan flow: Ten destinations, one colour each",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/fan-flow/stress-18-destinations-long-names-very-uneven-values.md",
+      "title": "Fan flow: Stress: 18 destinations, long names, very uneven values",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/funnel-chart.md",
+      "title": "Funnel chart",
+      "kind": "component",
+      "description": "Shows how many remain at each step of a sequence, with conversion and drop-off between steps."
+    },
+    {
+      "path": "/agents/atoms/funnel-chart/three-stages-highlight.md",
+      "title": "Funnel chart: Three stages, highlight",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/funnel-chart/four-stages-custom-drop-off-word.md",
+      "title": "Funnel chart: Four stages, custom drop-off word",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/funnel-chart/stress-seven-stages-long-names-big-numbers.md",
+      "title": "Funnel chart: Stress: seven stages, long names, big numbers",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/glyph-table.md",
+      "title": "Glyph table",
+      "kind": "component",
+      "description": "A table with one row per entity in which every number is drawn as a small form chosen per column (counted dots, squares or icons, a ring, a sized circle, a bar) with the value printed beside it."
+    },
+    {
+      "path": "/agents/atoms/glyph-table/highlighted-row-icons-selectable.md",
+      "title": "Glyph table: Highlighted row, icons, selectable",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/glyph-table/ten-entities-one-colour-each.md",
+      "title": "Glyph table: Ten entities, one colour each",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/glyph-table/stress-10-rows-long-names-very-uneven-values-missing-data.md",
+      "title": "Glyph table: Stress: 10 rows, long names, very uneven values, missing data",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/headline.md",
+      "title": "Headline",
+      "kind": "component",
+      "description": "The opening block of a piece or section: kicker, title, one-sentence deck and a byline/date line."
+    },
+    {
+      "path": "/agents/atoms/headline/section.md",
+      "title": "Headline: Section",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/headline/card.md",
+      "title": "Headline: Card",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/headline/centered-page-long-title.md",
+      "title": "Headline: Centered page, long title",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/heatmap.md",
+      "title": "Heatmap",
+      "kind": "component",
+      "description": "Colours a category-by-category (or time-by-category) grid by a numeric value, using a sequential or diverging scale."
+    },
+    {
+      "path": "/agents/atoms/heatmap/missing-cells-cohort-triangle.md",
+      "title": "Heatmap: Missing cells (cohort triangle)",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/heatmap/diverging-around-zero.md",
+      "title": "Heatmap: Diverging around zero",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/heatmap/stress-18-by-24-highlighted-row-a-gap.md",
+      "title": "Heatmap: Stress: 18 by 24, highlighted row, a gap",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/histogram.md",
+      "title": "Histogram",
+      "kind": "component",
+      "description": "Bins a numeric field and shows how many rows fall in each bin, as touching bars on a continuous axis."
+    },
+    {
+      "path": "/agents/atoms/histogram/large-sample-10-minute-bins.md",
+      "title": "Histogram: Large sample, 10-minute bins",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/histogram/skewed-with-mean-and-median.md",
+      "title": "Histogram: Skewed, with mean and median",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/histogram/two-peaks.md",
+      "title": "Histogram: Two peaks",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/histogram/stress-few-rows-many-bins.md",
+      "title": "Histogram: Stress: few rows, many bins",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/icon-array-grid.md",
+      "title": "Icon array grid",
+      "kind": "component",
+      "description": "Compares many counts as a grid of labelled tiles, each holding an array of N icons with its name and number."
+    },
+    {
+      "path": "/agents/atoms/icon-array-grid/out-of-100-with-ghosts-highlight-click-to-select.md",
+      "title": "Icon array grid: Out of 100, with ghosts, highlight, click to select",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/icon-array-grid/squares-five-per-line-sorted.md",
+      "title": "Icon array grid: Squares, five per line, sorted",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/icon-array-grid/stress-24-tiles-long-names-uneven-counts.md",
+      "title": "Icon array grid: Stress: 24 tiles, long names, uneven counts",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/icon-stat.md",
+      "title": "Icon stat",
+      "kind": "component",
+      "description": "A \"1 in 4\"-style statement: a row or grid of simple glyphs with some filled, and the sentence they illustrate."
+    },
+    {
+      "path": "/agents/atoms/icon-stat/circles-3-in-10.md",
+      "title": "Icon stat: Circles, 3 in 10",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/icon-stat/grid-of-100.md",
+      "title": "Icon stat: Grid of 100",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/icon-stat/people-centered-custom-value.md",
+      "title": "Icon stat: People, centered, custom value",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/legend-key.md",
+      "title": "Legend key",
+      "kind": "component",
+      "description": "A standalone colour key: categorical swatches, or a sequential/diverging ramp with end labels."
+    },
+    {
+      "path": "/agents/atoms/legend-key/sequential-ramp.md",
+      "title": "Legend key: Sequential ramp",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/legend-key/diverging-stepped.md",
+      "title": "Legend key: Diverging, stepped",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/legend-key/lines-vertical-explicit-order.md",
+      "title": "Legend key: Lines, vertical, explicit order",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/line-chart.md",
+      "title": "Line chart",
+      "kind": "component",
+      "description": "Shows how one or more values change over time or another ordered dimension."
+    },
+    {
+      "path": "/agents/atoms/line-chart/highlight-with-named-context-lines.md",
+      "title": "Line chart: Highlight with named context lines",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/line-chart/highlight-one-legend-entry-for-the-rest-annotations-near-the-right-edge.md",
+      "title": "Line chart: Highlight, one legend entry for the rest, annotations near the right edge",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/line-chart/stress-six-lines-converge.md",
+      "title": "Line chart: Stress: six lines converge",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/line-chart/long-format-with-highlight.md",
+      "title": "Line chart: Long format with highlight",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/lollipop-chart.md",
+      "title": "Lollipop chart",
+      "kind": "component",
+      "description": "Ranks categories with a dot on a thin stem from zero, or as a stemless dot plot on a free scale."
+    },
+    {
+      "path": "/agents/atoms/lollipop-chart/dot-plot-on-a-non-zero-scale-highlighted.md",
+      "title": "Lollipop chart: Dot plot on a non-zero scale, highlighted",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/lollipop-chart/long-format-three-dots-per-row.md",
+      "title": "Lollipop chart: Long format, three dots per row",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/lollipop-chart/vertical-over-time.md",
+      "title": "Lollipop chart: Vertical, over time",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/lollipop-chart/stress-26-rows-with-long-names.md",
+      "title": "Lollipop chart: Stress: 26 rows with long names",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/nested-shares.md",
+      "title": "Nested shares",
+      "kind": "component",
+      "description": "Shows several shares of the same whole, such as one share at five dates, as outlines nested from one corner of a square, each enclosing an area equal to its share."
+    },
+    {
+      "path": "/agents/atoms/nested-shares/from-the-top-corner-click-to-select.md",
+      "title": "Nested shares: From the top corner, click to select",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/nested-shares/by-category-one-highlighted.md",
+      "title": "Nested shares: By category, one highlighted",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/nested-shares/stress-eight-close-shares-long-names.md",
+      "title": "Nested shares: Stress: eight close shares, long names",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/orbit-chart.md",
+      "title": "Orbit chart",
+      "kind": "component",
+      "description": "Places items as dots on concentric rings round a centre, one ring per category, level or period, with a key that explains rings, angle and dot area."
+    },
+    {
+      "path": "/agents/atoms/orbit-chart/angle-from-the-data-equal-dots-click-to-select.md",
+      "title": "Orbit chart: Angle from the data, equal dots, click to select",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/orbit-chart/sized-dots-a-colour-per-ring.md",
+      "title": "Orbit chart: Sized dots, a colour per ring",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/orbit-chart/stress-5-rings-34-items-long-names.md",
+      "title": "Orbit chart: Stress: 5 rings, 34 items, long names",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/pictogram-chart.md",
+      "title": "Pictogram chart",
+      "kind": "component",
+      "description": "Compares quantities with rows of repeated icons, each icon standing for a fixed number of units."
+    },
+    {
+      "path": "/agents/atoms/pictogram-chart/houses-sorted.md",
+      "title": "Pictogram chart: Houses, sorted",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/pictogram-chart/shares-as-drops.md",
+      "title": "Pictogram chart: Shares as drops",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/pictogram-chart/stress-many-icons-wrap-long-names.md",
+      "title": "Pictogram chart: Stress: many icons wrap, long names",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/pill-rank.md",
+      "title": "Pill rank",
+      "kind": "component",
+      "description": "Shows a ranked list as horizontally centred rounded bars, with each name in capitals on its pill, the value at the left edge and the rank at the right."
+    },
+    {
+      "path": "/agents/atoms/pill-rank/no-highlight-click-to-select.md",
+      "title": "Pill rank: No highlight, click to select",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/pill-rank/stress-16-rows-long-names-values-from-3-to-2-140.md",
+      "title": "Pill rank: Stress: 16 rows, long names, values from 3 to 2,140",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/pill-rank/data-order-no-ranks.md",
+      "title": "Pill rank: Data order, no ranks",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/progress-meter.md",
+      "title": "Progress meter",
+      "kind": "component",
+      "description": "A labelled horizontal meter of one value against a maximum or target, with the target marked and the value printed."
+    },
+    {
+      "path": "/agents/atoms/progress-meter/against-a-maximum.md",
+      "title": "Progress meter: Against a maximum",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/progress-meter/target-passed.md",
+      "title": "Progress meter: Target passed",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/progress-meter/small-low-value.md",
+      "title": "Progress meter: Small, low value",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/progress-meter/large-science.md",
+      "title": "Progress meter: Large, science",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/progress-meter/categorical-tone-with-a-detail-ledger.md",
+      "title": "Progress meter: Categorical tone with a detail, ledger",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/progress-meter/capacity-magenta.md",
+      "title": "Progress meter: Capacity, magenta",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/progress-meter/neutral-tone-mono.md",
+      "title": "Progress meter: Neutral tone, mono",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/progress-meter/forest.md",
+      "title": "Progress meter: Forest",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/proportional-area.md",
+      "title": "Proportional area",
+      "kind": "component",
+      "description": "Compares two to eight values as squares or circles whose areas are proportional to the values, each printed with its name and number."
+    },
+    {
+      "path": "/agents/atoms/proportional-area/nested-squares-highlight-click-to-select.md",
+      "title": "Proportional area: Nested squares, highlight, click to select",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/proportional-area/circles-in-a-row.md",
+      "title": "Proportional area: Circles in a row",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/proportional-area/nested-circles.md",
+      "title": "Proportional area: Nested circles",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/proportional-area/stress-eight-packed-circles-very-uneven-long-names.md",
+      "title": "Proportional area: Stress: eight packed circles, very uneven, long names",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/proportional-area/packed-squares.md",
+      "title": "Proportional area: Packed squares",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/prose.md",
+      "title": "Prose",
+      "kind": "component",
+      "description": "A readable block of narration at a 45-75 character measure, for the text between charts."
+    },
+    {
+      "path": "/agents/atoms/prose/lead-paragraph-large.md",
+      "title": "Prose: Lead paragraph, large",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/prose/muted-aside-narrow-measure.md",
+      "title": "Prose: Muted aside, narrow measure",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/pull-quote.md",
+      "title": "Pull quote",
+      "kind": "component",
+      "description": "A large quotation with its attribution."
+    },
+    {
+      "path": "/agents/atoms/pull-quote/centered.md",
+      "title": "Pull quote: Centered",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/pull-quote/medium-with-source-link.md",
+      "title": "Pull quote: Medium, with source link",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/pull-quote/accent-overridden.md",
+      "title": "Pull quote: Accent overridden",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/radial-bar-chart.md",
+      "title": "Radial bar chart",
+      "kind": "component",
+      "description": "Draws bars around a circle for data that repeats in a cycle, such as hours of the day or months of the year."
+    },
+    {
+      "path": "/agents/atoms/radial-bar-chart/months.md",
+      "title": "Radial bar chart: Months",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/radial-bar-chart/stacked-series.md",
+      "title": "Radial bar chart: Stacked series",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/radial-bar-chart/stress-long-labels-compass.md",
+      "title": "Radial bar chart: Stress: long labels, compass",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/radial-spokes.md",
+      "title": "Radial spokes",
+      "kind": "component",
+      "description": "Draws one spoke per row radiating from a centre disc, each as long as its value, with the name and value set on an outer ring."
+    },
+    {
+      "path": "/agents/atoms/radial-spokes/thin-lines-centre-label-click-to-select.md",
+      "title": "Radial spokes: Thin lines, centre label, click to select",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/radial-spokes/fan-over-180-degrees-shaded-by-value.md",
+      "title": "Radial spokes: Fan over 180 degrees, shaded by value",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/radial-spokes/stress-12-spokes-long-labels-values-from-0-to-96.md",
+      "title": "Radial spokes: Stress: 12 spokes, long labels, values from 0 to 96",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/ribbon-chart.md",
+      "title": "Ribbon chart",
+      "kind": "component",
+      "description": "One filled band per entity across periods: its thickness is its value in each period and its vertical position is its rank, so bands cross as the order changes."
+    },
+    {
+      "path": "/agents/atoms/ribbon-chart/long-data-one-highlighted.md",
+      "title": "Ribbon chart: Long data, one highlighted",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/ribbon-chart/ten-entities-one-colour-each.md",
+      "title": "Ribbon chart: Ten entities, one colour each",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/ribbon-chart/stress-7-entities-8-periods-thin-bands.md",
+      "title": "Ribbon chart: Stress: 7 entities, 8 periods, thin bands",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/sankey-chart.md",
+      "title": "Sankey chart",
+      "kind": "component",
+      "description": "Shows how a quantity flows from sources through stages to destinations, with link width proportional to the flow."
+    },
+    {
+      "path": "/agents/atoms/sankey-chart/two-stages-highlight.md",
+      "title": "Sankey chart: Two stages, highlight",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/sankey-chart/vertical.md",
+      "title": "Sankey chart: Vertical",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/sankey-chart/stress-four-stages-many-nodes-long-names-a-loop.md",
+      "title": "Sankey chart: Stress: four stages, many nodes, long names, a loop",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/scale-ladder.md",
+      "title": "Scale ladder",
+      "kind": "component",
+      "description": "A tall vertical band graded along one scale (linear or log, running up or down) with each item placed at its true position and labelled with an icon, its name and its value on alternating sides."
+    },
+    {
+      "path": "/agents/atoms/scale-ladder/depth-log-scale-running-down-one-highlighted.md",
+      "title": "Scale ladder: Depth, log scale, running down, one highlighted",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/scale-ladder/stress-14-items-crowded-values-long-names.md",
+      "title": "Scale ladder: Stress: 14 items, crowded values, long names",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/scale-ladder/height-one-icon-for-all-one-highlighted.md",
+      "title": "Scale ladder: Height, one icon for all, one highlighted",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/scatter-chart.md",
+      "title": "Scatter chart",
+      "kind": "component",
+      "description": "Plots two numeric measures against each other, one dot per row, with optional bubble size, group colour, selective labels and a trend line."
+    },
+    {
+      "path": "/agents/atoms/scatter-chart/bubbles-colour-groups-log-axis.md",
+      "title": "Scatter chart: Bubbles, colour groups, log axis",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/scatter-chart/quadrants-via-annotations.md",
+      "title": "Scatter chart: Quadrants via annotations",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/scatter-chart/stress-2-400-points-with-a-trend.md",
+      "title": "Scatter chart: Stress: 2,400 points with a trend",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/segmented-bar.md",
+      "title": "Segmented bar",
+      "kind": "component",
+      "description": "Splits one whole into proportional segments along a single horizontal bar."
+    },
+    {
+      "path": "/agents/atoms/segmented-bar/thin-for-cards.md",
+      "title": "Segmented bar: Thin, for cards",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/segmented-bar/with-highlight.md",
+      "title": "Segmented bar: With highlight",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/segmented-bar/stress-many-parts-long-names-slivers.md",
+      "title": "Segmented bar: Stress: many parts, long names, slivers",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/shape-fill.md",
+      "title": "Shape fill",
+      "kind": "component",
+      "description": "Shows one or more percentages as icon silhouettes filled from the bottom to that level, with the number printed large beside each."
+    },
+    {
+      "path": "/agents/atoms/shape-fill/one-silhouette.md",
+      "title": "Shape fill: One silhouette",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/shape-fill/one-silhouette-sized-by-the-height-prop.md",
+      "title": "Shape fill: One silhouette sized by the height prop",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/shape-fill/highlight-click-to-select.md",
+      "title": "Shape fill: Highlight, click to select",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/shape-fill/stress-six-items-mixed-icons-long-labels.md",
+      "title": "Shape fill: Stress: six items, mixed icons, long labels",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/slope-chart.md",
+      "title": "Slope chart",
+      "kind": "component",
+      "description": "Connects each entity's value at two (or a few) points with a straight line, labelled with name and value at both ends."
+    },
+    {
+      "path": "/agents/atoms/slope-chart/coloured-by-direction.md",
+      "title": "Slope chart: Coloured by direction",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/slope-chart/long-format-three-periods.md",
+      "title": "Slope chart: Long format, three periods",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/slope-chart/stress-20-entities-with-close-values-and-long-names.md",
+      "title": "Slope chart: Stress: 20 entities with close values and long names",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/small-multiples.md",
+      "title": "Small multiples",
+      "kind": "component",
+      "description": "Repeats one small line, area or bar chart per value of a facet field on a shared scale, each panel titled."
+    },
+    {
+      "path": "/agents/atoms/small-multiples/every-other-line-as-context.md",
+      "title": "Small multiples: Every other line as context",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/small-multiples/bars-two-series-per-panel-wide-data.md",
+      "title": "Small multiples: Bars, two series per panel (wide data)",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/small-multiples/stress-20-panels-with-long-titles.md",
+      "title": "Small multiples: Stress: 20 panels with long titles",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/source-note.md",
+      "title": "Source note",
+      "kind": "component",
+      "description": "A sourcing footer for a whole piece: sources with optional links, the period covered, method, caveats and credit."
+    },
+    {
+      "path": "/agents/atoms/source-note/inline.md",
+      "title": "Source note: Inline",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/source-note/single-source-no-rule.md",
+      "title": "Source note: Single source, no rule",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/sparkline.md",
+      "title": "Sparkline",
+      "kind": "component",
+      "description": "A word-sized line or bar series without axes, with the latest point marked."
+    },
+    {
+      "path": "/agents/atoms/sparkline/with-a-reference-band.md",
+      "title": "Sparkline: With a reference band",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/sparkline/bars-gains-and-losses.md",
+      "title": "Sparkline: Bars: gains and losses",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/sparkline/area-fill-full-width.md",
+      "title": "Sparkline: Area fill, full width",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/sparkline/stress-400-points-in-160px.md",
+      "title": "Sparkline: Stress: 400 points in 160px",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-circles.md",
+      "title": "Stat circles",
+      "kind": "component",
+      "description": "Shows a few related magnitudes as plain circles sized by area, each with its number set large and a short label."
+    },
+    {
+      "path": "/agents/atoms/stat-circles/nested-shaded-by-value.md",
+      "title": "Stat circles: Nested, shaded by value",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-circles/steps-with-icons-highlight-and-click-to-select.md",
+      "title": "Stat circles: Steps, with icons, highlight and click to select",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-circles/stress-six-circles-long-labels-values-from-2-to-9-800.md",
+      "title": "Stat circles: Stress: six circles, long labels, values from 2 to 9,800",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile.md",
+      "title": "Stat tile",
+      "kind": "component",
+      "description": "A compact KPI tile: label, value, change against a baseline and an optional graphic. Twenty variants display the same data as a card, a trend, progress toward a target, a comparison, a breakdown, a rank or a count of icons."
+    },
+    {
+      "path": "/agents/atoms/stat-tile/plain.md",
+      "title": "Stat tile: Plain",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/borderless.md",
+      "title": "Stat tile: Borderless",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/filled.md",
+      "title": "Stat tile: Filled",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/tinted.md",
+      "title": "Stat tile: Tinted",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/outline-accent.md",
+      "title": "Stat tile: Outline accent",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/outline-accent-rule-on-the-top-edge.md",
+      "title": "Stat tile: Outline accent, rule on the top edge",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/sparkline.md",
+      "title": "Stat tile: Sparkline",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/area.md",
+      "title": "Stat tile: Area",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/bars.md",
+      "title": "Stat tile: Bars",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/dots.md",
+      "title": "Stat tile: Dots",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/split.md",
+      "title": "Stat tile: Split",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/sparkline-beside-the-figure.md",
+      "title": "Stat tile: Sparkline beside the figure",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/progress.md",
+      "title": "Stat tile: Progress",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/ring.md",
+      "title": "Stat tile: Ring",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/ring-above-the-figure.md",
+      "title": "Stat tile: Ring above the figure",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/comparison.md",
+      "title": "Stat tile: Comparison",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/delta-first.md",
+      "title": "Stat tile: Delta first",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/rank.md",
+      "title": "Stat tile: Rank",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/breakdown.md",
+      "title": "Stat tile: Breakdown",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/icon.md",
+      "title": "Stat tile: Icon",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/icon-beside-the-figure.md",
+      "title": "Stat tile: Icon beside the figure",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/unit.md",
+      "title": "Stat tile: Unit",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/unit-one-icon-is-1-000-users.md",
+      "title": "Stat tile: Unit, one icon is 1,000 users",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/compact.md",
+      "title": "Stat tile: Compact",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/hero.md",
+      "title": "Stat tile: Hero",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/small-centred.md",
+      "title": "Stat tile: Small, centred",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/large-dots.md",
+      "title": "Stat tile: Large, dots",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/area-on-a-filled-ground.md",
+      "title": "Stat tile: Area on a filled ground",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/bars-on-a-tinted-ground-positive-tone.md",
+      "title": "Stat tile: Bars on a tinted ground, positive tone",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/progress-on-a-filled-ground-neutral-tone.md",
+      "title": "Stat tile: Progress on a filled ground, neutral tone",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/ledger-operating-margin-against-plan.md",
+      "title": "Stat tile: Ledger: operating margin against plan",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/editorial-unemployment-rate.md",
+      "title": "Stat tile: Editorial: unemployment rate",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/forest-tree-cover-by-land-owner.md",
+      "title": "Stat tile: Forest: tree cover by land owner",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/noir-league-position.md",
+      "title": "Stat tile: Noir: league position",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/magenta-ticket-sales.md",
+      "title": "Stat tile: Magenta: ticket sales",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/ocean-offshore-wind-capacity.md",
+      "title": "Stat tile: Ocean: offshore wind capacity",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/sunrise-store-visits.md",
+      "title": "Stat tile: Sunrise: store visits",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/blueprint-units-assembled.md",
+      "title": "Stat tile: Blueprint: units assembled",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/science-vaccination-coverage.md",
+      "title": "Stat tile: Science: vaccination coverage",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/dusk-night-trains.md",
+      "title": "Stat tile: Dusk: night trains",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/paper-household-energy-bill.md",
+      "title": "Stat tile: Paper: household energy bill",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/earth-bottles-returned-for-refill.md",
+      "title": "Stat tile: Earth: bottles returned for refill",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/mono-compact-row.md",
+      "title": "Stat tile: Mono: compact row",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/poster-hero-figure.md",
+      "title": "Stat tile: Poster: hero figure",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/down-is-good-trend-on-the-right.md",
+      "title": "Stat tile: Down is good, trend on the right",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/context-only.md",
+      "title": "Stat tile: Context only",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/stat-tile/chart-spec-in-the-trend-slot.md",
+      "title": "Stat tile: Chart spec in the trend slot",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/step-marker.md",
+      "title": "Step marker",
+      "kind": "component",
+      "description": "A numbered chapter or step heading (\"01 — Electricity sources in 2015\") for sequencing the sections of a story."
+    },
+    {
+      "path": "/agents/atoms/step-marker/with-total-and-rule.md",
+      "title": "Step marker: With total and rule",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/step-marker/stacked.md",
+      "title": "Step marker: Stacked",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/step-marker/rule-on-a-painted-ground.md",
+      "title": "Step marker: Rule on a painted ground",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/step-marker/letter-step-title-only.md",
+      "title": "Step marker: Letter step, title only",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/strip-plot.md",
+      "title": "Strip plot",
+      "kind": "component",
+      "description": "Shows every observation as a tick or dot along a value axis, one row per category."
+    },
+    {
+      "path": "/agents/atoms/strip-plot/barcode-1-120-listings-sorted-by-median.md",
+      "title": "Strip plot: Barcode: 1,120 listings, sorted by median",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/strip-plot/dots-with-jitter-long-labels.md",
+      "title": "Strip plot: Dots with jitter, long labels",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/strip-plot/stress-20-rows.md",
+      "title": "Strip plot: Stress: 20 rows",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/timeline-chart.md",
+      "title": "Timeline chart",
+      "kind": "component",
+      "description": "Places events and spans on a time axis in labelled lanes, with each item named directly."
+    },
+    {
+      "path": "/agents/atoms/timeline-chart/single-lane-milestones-only.md",
+      "title": "Timeline chart: Single lane, milestones only",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/timeline-chart/project-plan-with-lanes.md",
+      "title": "Timeline chart: Project plan with lanes",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/timeline-chart/stress-long-names-crowded-lanes-centuries.md",
+      "title": "Timeline chart: Stress: long names, crowded lanes, centuries",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/treemap.md",
+      "title": "Treemap",
+      "kind": "component",
+      "description": "Shows parts of a whole as nested rectangles sized by value, optionally grouped into categories."
+    },
+    {
+      "path": "/agents/atoms/treemap/flat-with-highlight.md",
+      "title": "Treemap: Flat, with highlight",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/treemap/stress-many-small-tiles-and-long-names.md",
+      "title": "Treemap: Stress: many small tiles and long names",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/treemap/two-levels-four-groups.md",
+      "title": "Treemap: Two levels, four groups",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/unit-blocks.md",
+      "title": "Unit blocks",
+      "kind": "component",
+      "description": "Shows the size of each group as a solid block of small icons, one icon per fixed number of units."
+    },
+    {
+      "path": "/agents/atoms/unit-blocks/highlight-click-to-select.md",
+      "title": "Unit blocks: Highlight, click to select",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/unit-blocks/stress-20-350-icons-one-per-finisher.md",
+      "title": "Unit blocks: Stress: 20,350 icons, one per finisher",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/unit-blocks/columns-of-squares-coloured-by-a-series-field.md",
+      "title": "Unit blocks: Columns of squares, coloured by a series field",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/unit-blocks/stress-twelve-uneven-groups-long-names.md",
+      "title": "Unit blocks: Stress: twelve uneven groups, long names",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/waffle-chart.md",
+      "title": "Waffle chart",
+      "kind": "component",
+      "description": "Shows shares of a whole as counted cells in a grid, such as 37 in every 100."
+    },
+    {
+      "path": "/agents/atoms/waffle-chart/several-categories.md",
+      "title": "Waffle chart: Several categories",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/waffle-chart/highlight-circles.md",
+      "title": "Waffle chart: Highlight, circles",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/atoms/waffle-chart/stress-long-names-wide-grid-rounding.md",
+      "title": "Waffle chart: Stress: long names, wide grid, rounding",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/annotated-timeline.md",
+      "title": "Annotated timeline",
+      "kind": "component",
+      "description": "A vertical sequence of dated events along a rail, each with a short explanation and, optionally, a small chart or figure."
+    },
+    {
+      "path": "/agents/molecules/annotated-timeline/figures-at-the-side.md",
+      "title": "Annotated timeline: Figures at the side",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/annotated-timeline/sea-ice-minimums-ocean-theme.md",
+      "title": "Annotated timeline: Sea ice minimums, ocean theme",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/annotated-timeline/wage-rises-with-figures-at-the-side-editorial-theme.md",
+      "title": "Annotated timeline: Wage rises with figures at the side, editorial theme",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/before-after.md",
+      "title": "Before and after",
+      "kind": "component",
+      "description": "Two states of one measure side by side, as figures, stat tiles of any variant or small charts, with the change between them stated in the middle."
+    },
+    {
+      "path": "/agents/molecules/before-after/tiles-the-second-state-in-the-accent.md",
+      "title": "Before and after: Tiles, the second state in the accent",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/before-after/progress-toward-the-same-target-science.md",
+      "title": "Before and after: Progress toward the same target, science",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/before-after/rings-forest.md",
+      "title": "Before and after: Rings, forest",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/before-after/unit-counts-ocean.md",
+      "title": "Before and after: Unit counts, ocean",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/before-after/filled-tiles-stacked-noir.md",
+      "title": "Before and after: Filled tiles, stacked, noir",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/before-after/trends-within-each-period-ledger.md",
+      "title": "Before and after: Trends within each period, ledger",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/before-after/breakdown-of-each-state-earth.md",
+      "title": "Before and after: Breakdown of each state, earth",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/before-after/dense-text-change-without-an-arrow-mono.md",
+      "title": "Before and after: Dense, text change without an arrow, mono",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/before-after/roomy-plain-figures-editorial.md",
+      "title": "Before and after: Roomy plain figures, editorial",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/before-after/two-charts-change-stated-in-words.md",
+      "title": "Before and after: Two charts, change stated in words",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/before-after/figures-with-sparklines.md",
+      "title": "Before and after: Figures with sparklines",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/chart-callout.md",
+      "title": "Chart with callout",
+      "kind": "component",
+      "description": "A chart with a callout beside it that states the main fact. In narrow containers the callout goes underneath."
+    },
+    {
+      "path": "/agents/molecules/chart-callout/caveat-on-the-left-boxed.md",
+      "title": "Chart with callout: Caveat on the left, boxed",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/chart-callout/positive-aligned-to-the-top-science-theme.md",
+      "title": "Chart with callout: Positive, aligned to the top, science theme",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/chart-callout/outlined-context-note-noir-theme.md",
+      "title": "Chart with callout: Outlined context note, noir theme",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/chart-tabs.md",
+      "title": "Chart tabs",
+      "kind": "component",
+      "description": "One chart frame with a segmented control that switches between several views of the same data, morphing between views that share a chart type."
+    },
+    {
+      "path": "/agents/molecules/chart-tabs/tabs-beside-the-title-a-different-chart-per-view.md",
+      "title": "Chart tabs: Tabs beside the title, a different chart per view",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/chart-tabs/three-chart-forms-editorial-theme.md",
+      "title": "Chart tabs: Three chart forms, editorial theme",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/chart-tabs/one-chart-three-measures-dusk-theme.md",
+      "title": "Chart tabs: One chart, three measures, dusk theme",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/comparison-table.md",
+      "title": "Comparison table",
+      "kind": "component",
+      "description": "A table whose rows carry inline sparklines, deltas and in-cell bars beside their exact values, from rows and a column config."
+    },
+    {
+      "path": "/agents/molecules/comparison-table/long-data-with-groupby-relative-change-compact-ledger-theme.md",
+      "title": "Comparison table: Long data with groupBy, relative change, compact, ledger theme",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/comparison-table/deltas-given-in-the-data-down-is-good-noir-theme.md",
+      "title": "Comparison table: Deltas given in the data, down is good, noir theme",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/comparison-table/bars-sparklines-and-absolute-change-science-theme.md",
+      "title": "Comparison table: Bars, sparklines and absolute change, science theme",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/filter-chips.md",
+      "title": "Filter chips",
+      "kind": "component",
+      "description": "The active crossfilter selections of the surrounding `InsightData`, shown as removable chips with a reset control."
+    },
+    {
+      "path": "/agents/molecules/filter-chips/nothing-selected-with-a-hint-earth-theme.md",
+      "title": "Filter chips: Nothing selected, with a hint, earth theme",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/filter-chips/a-date-range-and-two-values-blueprint-theme.md",
+      "title": "Filter chips: A date range and two values, blueprint theme",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/filter-chips/one-value-ledger-theme.md",
+      "title": "Filter chips: One value, ledger theme",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/hero-figure.md",
+      "title": "Hero figure",
+      "kind": "component",
+      "description": "The opening exhibit of a piece: kicker, headline and deck above one large chart, with a source line underneath."
+    },
+    {
+      "path": "/agents/molecules/hero-figure/centered-big-number-as-the-exhibit-dusk-theme.md",
+      "title": "Hero figure: Centered, big number as the exhibit, dusk theme",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/hero-figure/default-theme-with-one-accent-overridden.md",
+      "title": "Hero figure: Default theme with one accent overridden",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/hero-figure/part-of-a-whole-as-the-exhibit-earth-theme.md",
+      "title": "Hero figure: Part of a whole as the exhibit, earth theme",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/kpi-grid.md",
+      "title": "KPI grid",
+      "kind": "component",
+      "description": "A responsive grid of trend cards drawn from one dataset: each metric shows its latest value, its change and a graphic, in one `stat-tile` variant or a deliberate mix of them."
+    },
+    {
+      "path": "/agents/molecules/kpi-grid/area-cards-one-colour-per-metric.md",
+      "title": "KPI grid: Area cards, one colour per metric",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/kpi-grid/featured-split-card-with-a-mix-of-displays-ledger.md",
+      "title": "KPI grid: Featured split card with a mix of displays, ledger",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/kpi-grid/dividers-instead-of-cards-editorial.md",
+      "title": "KPI grid: Dividers instead of cards, editorial",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/kpi-grid/dense-compact-rows-in-two-columns-mono.md",
+      "title": "KPI grid: Dense compact rows in two columns, mono",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/kpi-grid/icons-on-tinted-cards-earth.md",
+      "title": "KPI grid: Icons on tinted cards, earth",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/kpi-grid/filled-cards-roomy-poster.md",
+      "title": "KPI grid: Filled cards, roomy, poster",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/kpi-grid/progress-toward-targets-science.md",
+      "title": "KPI grid: Progress toward targets, science",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/kpi-grid/change-first-noir.md",
+      "title": "KPI grid: Change first, noir",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/kpi-grid/comparison-with-the-first-week-sunrise.md",
+      "title": "KPI grid: Comparison with the first week, sunrise",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/kpi-grid/bars-on-a-poster-ground-blueprint.md",
+      "title": "KPI grid: Bars on a poster ground, blueprint",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/kpi-grid/outline-rule-with-dots-six-metrics-paper.md",
+      "title": "KPI grid: Outline rule with dots, six metrics, paper",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/kpi-grid/rings-and-a-hero-card-ocean.md",
+      "title": "KPI grid: Rings and a hero card, ocean",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/kpi-grid/two-columns-change-against-the-previous-month.md",
+      "title": "KPI grid: Two columns, change against the previous month",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/kpi-grid/six-metrics.md",
+      "title": "KPI grid: Six metrics",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/linked-charts.md",
+      "title": "Linked charts",
+      "kind": "component",
+      "description": "Two to four charts over one shared dataset in a responsive grid: clicking a mark in one filters the others, with the active filters shown as removable chips."
+    },
+    {
+      "path": "/agents/molecules/linked-charts/two-charts-no-row-count.md",
+      "title": "Linked charts: Two charts, no row count",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/linked-charts/three-views-of-museum-visits-paper-theme.md",
+      "title": "Linked charts: Three views of museum visits, paper theme",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/linked-charts/bike-share-trips-noir-theme.md",
+      "title": "Linked charts: Bike-share trips, noir theme",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/metric-breakdown.md",
+      "title": "Metric breakdown",
+      "kind": "component",
+      "description": "A headline number with its composition underneath: one segmented bar and a key giving each part's value and share."
+    },
+    {
+      "path": "/agents/molecules/metric-breakdown/headline-beside-the-parts-ledger.md",
+      "title": "Metric breakdown: Headline beside the parts, ledger",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/metric-breakdown/a-meter-per-part-science.md",
+      "title": "Metric breakdown: A meter per part, science",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/metric-breakdown/a-progress-tile-per-part.md",
+      "title": "Metric breakdown: A progress tile per part",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/metric-breakdown/ring-tiles-with-a-filled-headline-forest.md",
+      "title": "Metric breakdown: Ring tiles with a filled headline, forest",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/metric-breakdown/inline-key-with-an-icon-earth.md",
+      "title": "Metric breakdown: Inline key with an icon, earth",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/metric-breakdown/filled-tiles-noir.md",
+      "title": "Metric breakdown: Filled tiles, noir",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/metric-breakdown/dense-key-without-dividers-mono.md",
+      "title": "Metric breakdown: Dense key without dividers, mono",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/metric-breakdown/tinted-headline-with-meters-sunrise.md",
+      "title": "Metric breakdown: Tinted headline with meters, sunrise",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/metric-breakdown/roomy-tinted-tiles-dusk.md",
+      "title": "Metric breakdown: Roomy, tinted tiles, dusk",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/metric-breakdown/three-parts-shares-only.md",
+      "title": "Metric breakdown: Three parts, shares only",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/metric-breakdown/hero-sorted.md",
+      "title": "Metric breakdown: Hero, sorted",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/poster.md",
+      "title": "Poster",
+      "kind": "component",
+      "description": "The sheet an infographic is composed on. It paints a full-bleed ground from a poster theme, forces one theme and colour mode on everything inside, and lays out a masthead, a grid of panels and a footer. It can save the whole sheet as one PNG."
+    },
+    {
+      "path": "/agents/molecules/poster/magenta-one-dominant-graphic-with-download.md",
+      "title": "Poster: Magenta, one dominant graphic, with download",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/poster/dusk-gradient-ground-fixed-4-5-shape.md",
+      "title": "Poster: Dusk, gradient ground, fixed 4:5 shape",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/poster/paper-three-columns-solid-rules-centred-masthead.md",
+      "title": "Poster: Paper, three columns, solid rules, centred masthead",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/proportion-statement.md",
+      "title": "Proportion statement",
+      "kind": "component",
+      "description": "A share stated as a countable sentence (\"37 in every 100…\"): a waffle grid or a row of icons beside the statement in large type, with the number emphasised."
+    },
+    {
+      "path": "/agents/molecules/proportion-statement/icons-1-in-4.md",
+      "title": "Proportion statement: Icons, 1 in 4",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/proportion-statement/icons-on-the-right-custom-figure-ocean-theme.md",
+      "title": "Proportion statement: Icons on the right, custom figure, ocean theme",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/proportion-statement/waffle-with-circles-poster-theme.md",
+      "title": "Proportion statement: Waffle with circles, poster theme",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/quote-figure.md",
+      "title": "Quote with figure",
+      "kind": "component",
+      "description": "A pull-quote paired with the statistic or small chart that backs it up, side by side and stacking in narrow containers."
+    },
+    {
+      "path": "/agents/molecules/quote-figure/evidence-on-the-left-statistic-only.md",
+      "title": "Quote with figure: Evidence on the left, statistic only",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/quote-figure/a-meter-as-the-evidence-editorial-theme.md",
+      "title": "Quote with figure: A meter as the evidence, editorial theme",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/quote-figure/evidence-on-the-left-with-yearly-bars-earth-theme.md",
+      "title": "Quote with figure: Evidence on the left with yearly bars, earth theme",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/ranked-list.md",
+      "title": "Ranked list",
+      "kind": "component",
+      "description": "A ranking as a list: position, name, value and a thin in-row bar, with an optional change indicator and highlighted rows."
+    },
+    {
+      "path": "/agents/molecules/ranked-list/top-five-with-change-forest-theme.md",
+      "title": "Ranked list: Top five with change, forest theme",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/ranked-list/places-moved-long-names-no-bar-mono-theme.md",
+      "title": "Ranked list: Places moved, long names, no bar, mono theme",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/ranked-list/two-rows-highlighted-magenta-theme.md",
+      "title": "Ranked list: Two rows highlighted, magenta theme",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/ranked-list/top-five-no-highlight.md",
+      "title": "Ranked list: Top five, no highlight",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/scrolly-chart.md",
+      "title": "Scrolly chart",
+      "kind": "component",
+      "description": "A scroll-driven story from JSON: one base chart spec and a list of steps, each with narration and a patch of chart props applied while that step is active."
+    },
+    {
+      "path": "/agents/molecules/scrolly-chart/steps-mode-buttons-cumulative-patches-noir-theme.md",
+      "title": "Scrolly chart: Steps mode (buttons), cumulative patches, noir theme",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/scrolly-chart/swipe-mode.md",
+      "title": "Scrolly chart: Swipe mode",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/scrolly-chart/three-lines-one-highlighted-per-step-ledger-theme.md",
+      "title": "Scrolly chart: Three lines, one highlighted per step, ledger theme",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/section.md",
+      "title": "Section",
+      "kind": "component",
+      "description": "A story section: a numbered step marker or a headline, introductory prose, then one or more exhibits in a responsive one- to three-column grid."
+    },
+    {
+      "path": "/agents/molecules/section/unnumbered-one-exhibit-with-a-rule-and-one-accent-overridden.md",
+      "title": "Section: Unnumbered, one exhibit, with a rule and one accent overridden",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/section/three-columns-of-figures-mono-theme.md",
+      "title": "Section: Three columns of figures, mono theme",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/section/first-step-with-two-chart-forms-sunrise-theme.md",
+      "title": "Section: First step with two chart forms, sunrise theme",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/small-multiple-grid.md",
+      "title": "Small multiple grid",
+      "kind": "component",
+      "description": "Repeats any chart spec once per value of a facet field, each panel with its own filtered rows and a title, in a grid that follows the container width."
+    },
+    {
+      "path": "/agents/molecules/small-multiple-grid/shared-highlight-two-columns-emphasised-panel.md",
+      "title": "Small multiple grid: Shared highlight, two columns, emphasised panel",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/small-multiple-grid/a-waffle-chart-in-each-panel-science-theme.md",
+      "title": "Small multiple grid: A waffle chart in each panel, science theme",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/small-multiple-grid/a-dumbbell-chart-in-each-panel-forest-theme.md",
+      "title": "Small multiple grid: A dumbbell chart in each panel, forest theme",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/stat-row.md",
+      "title": "Stat row",
+      "kind": "component",
+      "description": "Two to five key figures in one row, as open numbers separated by hairlines or as stat tiles of any variant, collapsing to two columns and then one as the container narrows."
+    },
+    {
+      "path": "/agents/molecules/stat-row/tiles-with-trends.md",
+      "title": "Stat row: Tiles with trends",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/stat-row/area-tiles-one-colour-per-metric.md",
+      "title": "Stat row: Area tiles, one colour per metric",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/stat-row/featured-filled-tile-with-sparklines-ledger.md",
+      "title": "Stat row: Featured filled tile with sparklines, ledger",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/stat-row/progress-toward-targets-science.md",
+      "title": "Stat row: Progress toward targets, science",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/stat-row/rings-with-dividers-forest.md",
+      "title": "Stat row: Rings with dividers, forest",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/stat-row/icons-on-tinted-tiles-earth.md",
+      "title": "Stat row: Icons on tinted tiles, earth",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/stat-row/change-first-noir.md",
+      "title": "Stat row: Change first, noir",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/stat-row/comparison-with-the-same-week-last-year-sunrise.md",
+      "title": "Stat row: Comparison with the same week last year, sunrise",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/stat-row/compact-rows-in-one-column-mono.md",
+      "title": "Stat row: Compact rows in one column, mono",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/stat-row/mixed-displays-in-one-row-blueprint.md",
+      "title": "Stat row: Mixed displays in one row, blueprint",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/stat-row/breakdown-tiles-dusk.md",
+      "title": "Stat row: Breakdown tiles, dusk",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/stat-row/roomy-featured-plain-figures-editorial.md",
+      "title": "Stat row: Roomy, featured plain figures, editorial",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/stat-row/unit-counts-ocean.md",
+      "title": "Stat row: Unit counts, ocean",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/stat-row/filled-tiles-in-categorical-colours-poster.md",
+      "title": "Stat row: Filled tiles in categorical colours, poster",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/stat-row/outline-rule-with-dots-paper.md",
+      "title": "Stat row: Outline rule with dots, paper",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/stat-row/two-figures.md",
+      "title": "Stat row: Two figures",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/stat-row/five-figures.md",
+      "title": "Stat row: Five figures",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/trend-card.md",
+      "title": "Trend card",
+      "kind": "component",
+      "description": "A KPI card computed from a series: the latest value, its change against a baseline in the same data, and a trend graphic, in any `stat-tile` variant."
+    },
+    {
+      "path": "/agents/molecules/trend-card/area-along-the-bottom-edge.md",
+      "title": "Trend card: Area along the bottom edge",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/trend-card/split-figure-left-and-line-right-ledger.md",
+      "title": "Trend card: Split, figure left and line right, ledger",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/trend-card/filled-ground-with-a-line.md",
+      "title": "Trend card: Filled ground with a line",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/trend-card/comparison-with-the-first-period-editorial.md",
+      "title": "Trend card: Comparison with the first period, editorial",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/trend-card/progress-toward-a-target-science.md",
+      "title": "Trend card: Progress toward a target, science",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/trend-card/ring-forest.md",
+      "title": "Trend card: Ring, forest",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/trend-card/bars-for-weekly-counts-blueprint.md",
+      "title": "Trend card: Bars for weekly counts, blueprint",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/trend-card/change-first-on-a-tinted-ground-sunrise.md",
+      "title": "Trend card: Change first on a tinted ground, sunrise",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/trend-card/dots-large-noir.md",
+      "title": "Trend card: Dots, large, noir",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/trend-card/compact-row-mono.md",
+      "title": "Trend card: Compact row, mono",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/trend-card/hero-with-an-outline-rule-paper.md",
+      "title": "Trend card: Hero with an outline rule, paper",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/trend-card/down-is-good-trend-on-the-right.md",
+      "title": "Trend card: Down is good, trend on the right",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/molecules/trend-card/absolute-change-against-the-previous-period-bars.md",
+      "title": "Trend card: Absolute change against the previous period, bars",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/atlas-poster.md",
+      "title": "Atlas poster",
+      "kind": "component",
+      "description": "A landscape spread of up to eleven small illustrations of one subject, each a different graphic form, in three bands of unequal panels: a statement in large type, spokes round an icon and a network of circles; a smooth trend with its peak labelled, nested squares and a slope chart; a pill ranking, a treemap, a tile map and sized circles; and a closing row of icon statements."
+    },
+    {
+      "path": "/agents/templates/atlas-poster/dusk-a-space-programme-ten-panels-with-download.md",
+      "title": "Atlas poster: Dusk, a space programme, ten panels, with download",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/atlas-poster/sunrise-a-country-s-internet-linked.md",
+      "title": "Atlas poster: Sunrise, a country's internet, linked",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/comparison-brief.md",
+      "title": "Comparison brief",
+      "kind": "component",
+      "description": "A compared with B on one page. It has a headline that states the result, the headline figures mirrored either side of their labels, one hero exhibit that shows both sides, paired exhibits on a shared scale, a verdict callout and a source note."
+    },
+    {
+      "path": "/agents/templates/comparison-brief/transport-a-stacked-hero-and-a-pair-of-waffles.md",
+      "title": "Comparison brief: Transport: a stacked hero and a pair of waffles",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/comparison-brief/housing-buying-against-renting-two-pairs.md",
+      "title": "Comparison brief: Housing: buying against renting, two pairs",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/count-poster.md",
+      "title": "Count poster",
+      "kind": "component",
+      "description": "A poster that counts at scale. Blocks of thousands of unit icons fill most of the sheet, a second band counts reference groups with the same icon at the same size in a muted colour, and a bottom row holds three small graphics: squares sized by area with a ratio bracket, thick bars with the numbers inside, and shares as nested outlines or filled silhouettes."
+    },
+    {
+      "path": "/agents/templates/count-poster/forest-trees-planted-with-download.md",
+      "title": "Count poster: Forest, trees planted, with download",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/count-poster/blueprint-bicycles-built-linked-panels.md",
+      "title": "Count poster: Blueprint, bicycles built, linked panels",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/data-explorer.md",
+      "title": "Data explorer",
+      "kind": "component",
+      "description": "A set of linked charts over one shared dataset that filter each other. It has a headline, a sentence of instructions with filter chips, a row of figures that recompute from the filtered rows, two to four charts and an optional detail table. It opens on selections the author chooses."
+    },
+    {
+      "path": "/agents/templates/data-explorer/education-rates-rather-than-totals-two-starting-filters.md",
+      "title": "Data explorer: Education: rates rather than totals, two starting filters",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/data-explorer/customer-support-default-theme-three-chart-forms-and-a-table.md",
+      "title": "Data explorer: Customer support: default theme, three chart forms and a table",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/executive-brief.md",
+      "title": "Executive brief",
+      "kind": "component",
+      "description": "A one-page summary. It has a headline that states the main finding with its number, a deck, a row of three or four key figures, one hero chart with a takeaway callout, two smaller supporting exhibits, a short list of actions and a source note."
+    },
+    {
+      "path": "/agents/templates/executive-brief/public-health-emergency-department-waits.md",
+      "title": "Executive brief: Public health: emergency department waits",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/executive-brief/logistics-on-time-delivery-two-carriers.md",
+      "title": "Executive brief: Logistics: on-time delivery, two carriers",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/explainer.md",
+      "title": "Explainer",
+      "kind": "component",
+      "description": "A vertical infographic in one narrow column. It opens with a big number or a proportion statement (`hook`), then the hero exhibit, then numbered sections with one exhibit each, a conclusion with an optional link, and sources."
+    },
+    {
+      "path": "/agents/templates/explainer/personal-finance-opening-with-a-big-number.md",
+      "title": "Explainer: Personal finance, opening with a big number",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/explainer/home-energy-default-theme-five-chart-forms.md",
+      "title": "Explainer: Home energy, default theme, five chart forms",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/flow-poster.md",
+      "title": "Flow poster",
+      "kind": "component",
+      "description": "A portrait poster of where something comes from and where it goes, in three stacked bands painted in one colour: the producers as large labelled tiles, the leading producer's output fanning out as ribbons to an aligned column of destinations, and the destinations as bubbles on a scale of how much each depends on that producer."
+    },
+    {
+      "path": "/agents/templates/flow-poster/ocean-electricity-from-one-region-linked.md",
+      "title": "Flow poster: Ocean, electricity from one region, linked",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/flow-poster/sunrise-containers-through-one-port-with-download.md",
+      "title": "Flow poster: Sunrise, containers through one port, with download",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/matrix-poster.md",
+      "title": "Matrix poster",
+      "kind": "component",
+      "description": "One wide landscape graphic that compares 4 to 12 entities on five to seven measures: two measures as S-curves between parallel scales on the left, joined to a table on the right in which every other number is drawn as dots, squares, icons, a ring, a circle or a bar. Both halves share one row order and one colour per entity."
+    },
+    {
+      "path": "/agents/templates/matrix-poster/noir-eight-seabirds-linked.md",
+      "title": "Matrix poster: Noir, eight seabirds, linked",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/matrix-poster/blueprint-ten-weather-stations-one-highlighted-with-download.md",
+      "title": "Matrix poster: Blueprint, ten weather stations, one highlighted, with download",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/network-poster.md",
+      "title": "Network poster",
+      "kind": "component",
+      "description": "A poster of who is connected to whom: a full-width arc diagram with one arc per connection, as thick as its value (`arc-diagram`), a strip of two to four large figures, and a bottom row where the same entities return as circles joined by lines (`bubble-network`) and as a ranking of centred pills (`pill-rank`)."
+    },
+    {
+      "path": "/agents/templates/network-poster/noir-joint-papers-a-hub-layout-with-download.md",
+      "title": "Network poster: Noir, joint papers, a hub layout, with download",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/network-poster/forest-five-rail-yards-arcs-and-figures-only.md",
+      "title": "Network poster: Forest, five rail yards, arcs and figures only",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/profile-poster.md",
+      "title": "Profile poster",
+      "kind": "component",
+      "description": "A poster that describes one subject from four sides: the subject as one large silhouette filled to a share (`shape-fill`), two to four large figures, its place among other things on one scale (`scale-ladder`), and a table that sets it beside its peers with every number drawn as a small form (`glyph-table`)."
+    },
+    {
+      "path": "/agents/templates/profile-poster/dusk-a-reservoir-depths-read-downwards-linked.md",
+      "title": "Profile poster: Dusk, a reservoir, depths read downwards, linked",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/profile-poster/paper-a-wind-turbine-no-table-with-download.md",
+      "title": "Profile poster: Paper, a wind turbine, no table, with download",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/radial-poster.md",
+      "title": "Radial poster",
+      "kind": "component",
+      "description": "A poster with one subject in the middle of the sheet: a wheel of spokes round an icon (`radial-spokes`), two to four large figures standing either side of it, and a bottom row with the same subject's surroundings on concentric rings (`orbit-chart`) and a ranking as centred pills (`pill-rank`)."
+    },
+    {
+      "path": "/agents/templates/radial-poster/forest-one-tree-no-rings-with-download.md",
+      "title": "Radial poster: Forest, one tree, no rings, with download",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/radial-poster/noir-a-half-wheel-linked-to-the-ranking.md",
+      "title": "Radial poster: Noir, a half wheel, linked to the ranking",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/ranking-poster.md",
+      "title": "Ranking poster",
+      "kind": "component",
+      "description": "A poster of one subject by the numbers, in four rows: two figures in large type or as filled silhouettes, two treemaps side by side, a full-width ranking of centred pills with one row highlighted, and packed circles with icons beside a column of sized circles and a closing figure."
+    },
+    {
+      "path": "/agents/templates/ranking-poster/paper-a-road-race-two-statements.md",
+      "title": "Ranking poster: Paper, a road race, two statements",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/ranking-poster/ocean-a-marine-reserve-linked-with-download.md",
+      "title": "Ranking poster: Ocean, a marine reserve, linked, with download",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/report-page.md",
+      "title": "Report page",
+      "kind": "component",
+      "description": "A section of an analytical report laid out as a document. It has a title block, a summary, numbered findings, then method, limitations and sources. Each finding has one exhibit, an observation and a separately labelled interpretation with a confidence rating and a caveat."
+    },
+    {
+      "path": "/agents/templates/report-page/product-analytics-an-experiment-write-up.md",
+      "title": "Report page: Product analytics: an experiment write-up",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/report-page/energy-a-field-study-with-a-distribution.md",
+      "title": "Report page: Energy: a field study with a distribution",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/scale-poster.md",
+      "title": "Scale poster",
+      "kind": "component",
+      "description": "A tall poster that is one illustrated scale: a full-height `scale-ladder` with icons, leader-labelled items and named zones, and a narrow side column of large figures and one small graphic, each set level with the part of the scale it describes."
+    },
+    {
+      "path": "/agents/templates/scale-poster/forest-a-climb-read-upwards-linked.md",
+      "title": "Scale poster: Forest, a climb read upwards, linked",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/scale-poster/noir-a-log-scale-with-download.md",
+      "title": "Scale poster: Noir, a log scale, with download",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/scorecard.md",
+      "title": "Scorecard",
+      "kind": "component",
+      "description": "A recurring report. It has a masthead with the report name and period, a headline that states the main change, a KPI grid with changes and sparklines, a ranked list beside one or two trend charts, an optional comparison table, short notes and a source note."
+    },
+    {
+      "path": "/agents/templates/scorecard/sport-a-table-instead-of-a-ranking.md",
+      "title": "Scorecard: Sport: a table instead of a ranking",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/scorecard/support-desk-weekly-stacked-channels-and-targets.md",
+      "title": "Scorecard: Support desk: weekly, stacked channels and targets",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/social-card.md",
+      "title": "Social card",
+      "kind": "component",
+      "description": "A graphic that states one fact, at a fixed aspect ratio (1:1, 4:5, 16:9 or 9:16). It has a kicker, a headline, one exhibit, a source and a credit, painted on the theme surface. A button downloads the whole card as a PNG."
+    },
+    {
+      "path": "/agents/templates/social-card/16-9-public-health-noir-theme.md",
+      "title": "Social card: 16:9, public health, noir theme",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/social-card/9-16-transport-a-proportion-instead-of-a-chart.md",
+      "title": "Social card: 9:16, transport, a proportion instead of a chart",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/social-card/1-1-energy-two-stacked-series.md",
+      "title": "Social card: 1:1, energy, two stacked series",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/social-card/4-5-personal-finance-a-single-number-inverse-tone.md",
+      "title": "Social card: 4:5, personal finance, a single number, inverse tone",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/story-deck.md",
+      "title": "Story deck",
+      "kind": "component",
+      "description": "A sequence of full-frame cards (title, stat, chart, quote, closing) that the reader swipes or steps through. Each card states one fact. It has an optional fixed aspect ratio, a keyboard-accessible pager and a stacked layout for print."
+    },
+    {
+      "path": "/agents/templates/story-deck/education-landscape-cards.md",
+      "title": "Story deck: Education: landscape cards",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/story-deck/stacked-auto-height.md",
+      "title": "Story deck: Stacked, auto height",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/timeline-poster.md",
+      "title": "Timeline poster",
+      "kind": "component",
+      "description": "A poster of change over a run of periods: a full-width ribbon of bands whose thickness is each entity's value and whose order is its rank (`ribbon-chart`), a strip of two to four dated figures under it, and a bottom row with one measure per period as thick bars (`block-bar`) and one share at several dates as nested outlines (`nested-shares`)."
+    },
+    {
+      "path": "/agents/templates/timeline-poster/paper-library-loans-with-download.md",
+      "title": "Timeline poster: Paper, library loans, with download",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/timeline-poster/dusk-long-format-rows-bars-linked-to-the-ribbon.md",
+      "title": "Timeline poster: Dusk, long-format rows, bars linked to the ribbon",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/timeline-story.md",
+      "title": "Timeline story",
+      "kind": "component",
+      "description": "A story told in date order. It has a headline, one overview exhibit of the whole period (a timeline chart or an annotated line), dated chapters along a rail, a closing paragraph and a source note. Each chapter has a short text and an optional small exhibit."
+    },
+    {
+      "path": "/agents/templates/timeline-story/sport-a-timeline-chart-as-the-overview-exhibits-below.md",
+      "title": "Timeline story: Sport: a timeline chart as the overview, exhibits below",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/timeline-story/cities-a-stacked-overview-and-a-waffle-in-a-chapter.md",
+      "title": "Timeline story: Cities: a stacked overview and a waffle in a chapter",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/visual-essay.md",
+      "title": "Visual essay",
+      "kind": "component",
+      "description": "A long article read by scrolling. It has a headline, then an ordered list of blocks in a reading column, then a source note. The blocks are prose, figures, charts with a callout, scrolly sequences, pull quotes, stat rows, small multiples and chapter breaks. Exhibits can be wider than the column."
+    },
+    {
+      "path": "/agents/templates/visual-essay/transport-a-shorter-essay-without-a-scrolly.md",
+      "title": "Visual essay: Transport: a shorter essay without a scrolly",
+      "kind": "example"
+    },
+    {
+      "path": "/agents/templates/visual-essay/health-sleep-survey-on-a-poster-ground.md",
+      "title": "Visual essay: Health: sleep survey on a poster ground",
+      "kind": "example"
+    }
+  ]
+}

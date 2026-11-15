@@ -2,7 +2,9 @@ import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PosterThumb } from "@/components/catalog/poster-thumb";
+import { AgentActions } from "@/components/site/agent-actions";
 import { DocsPage } from "@/components/site/docs-shell";
+import { agentPrompt } from "@/lib/agent";
 import { Heading } from "@/components/site/heading";
 import { builtFrom, getComponent, hrefOf, infographics, INFOGRAPHICS, isPosterPrimitive, pageTemplates, posterPrimitives, type CatalogEntry } from "@/lib/catalog";
 import { infographicsCard, social } from "@/lib/og";
@@ -56,6 +58,7 @@ export default function InfographicsIndex() {
   const frame = getComponent("poster");
   const primitives = posterPrimitives().length;
   const others = pageTemplates().length;
+  const agent = agentPrompt(`/${INFOGRAPHICS.slug}`);
   // Two columns filled in turn, so posters of different heights do not leave holes in rows.
   const columns = [list.filter((_, i) => i % 2 === 0), list.filter((_, i) => i % 2 === 1)];
   return (
@@ -70,7 +73,10 @@ export default function InfographicsIndex() {
         <p className="mb-2 text-sm text-muted-foreground">
           Templates<span className="tabular-nums"> · {list.length} {list.length === 1 ? "infographic" : "infographics"}</span>
         </p>
-        <h1 className="text-3xl font-semibold tracking-tight">{INFOGRAPHICS.title}</h1>
+        <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
+          <h1 className="text-3xl font-semibold tracking-tight">{INFOGRAPHICS.title}</h1>
+          <AgentActions href={agent.href} prefill={agent.prefill} markdownHref="/llms/guides/infographics.md" />
+        </div>
         <p className="mt-3 max-w-[66ch] text-[17px] leading-7 text-muted-foreground text-pretty">{INFOGRAPHICS.summary}</p>
         <p className="mt-3 max-w-[66ch] text-sm leading-6 text-muted-foreground">
           Every infographic is a template and its page is under <code className="font-mono text-[12.5px] text-foreground">/templates</code>.{" "}

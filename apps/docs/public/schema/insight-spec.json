@@ -409,7 +409,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -643,7 +650,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -889,7 +903,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -1153,7 +1174,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -1402,7 +1430,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -1634,7 +1669,14 @@
             "description": "End of the ring's scale. Default: the target, or 1 for a share."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A theme name such as `\"editorial\"`, or token overrides. A named theme paints its own ground."
           },
           "frame": {
@@ -1766,7 +1808,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -1999,7 +2048,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -2218,7 +2274,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -2447,7 +2510,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -2690,7 +2760,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -2943,7 +3020,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -3176,7 +3260,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -3344,8 +3435,15 @@
             "type": "object"
           },
           "theme": {
-            "type": "object",
-            "description": "Theme override: partial tokens, or { light, dark }."
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
+            "description": "A built-in theme name, or a theme override: partial tokens, or { light, dark }."
           },
           "mode": {
             "enum": [
@@ -3464,7 +3562,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -3717,7 +3822,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -3969,7 +4081,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -4244,8 +4363,15 @@
             "type": "object"
           },
           "theme": {
-            "type": "object",
-            "description": "Theme override: partial tokens, or { light, dark }."
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
+            "description": "A built-in theme name, or a theme override: partial tokens, or { light, dark }."
           },
           "mode": {
             "enum": [
@@ -4335,7 +4461,14 @@
             "$comment": "default: \"auto\""
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A theme name such as `\"ledger\"`, or token overrides. A named theme paints its own ground."
           },
           "frame": {
@@ -4466,7 +4599,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -4727,7 +4867,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -4954,7 +5101,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -5217,7 +5371,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -5465,7 +5626,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -5664,8 +5832,15 @@
             "type": "object"
           },
           "theme": {
-            "type": "object",
-            "description": "Theme override: partial tokens, or { light, dark }."
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
+            "description": "A built-in theme name, or a theme override: partial tokens, or { light, dark }."
           },
           "mode": {
             "enum": [
@@ -5755,8 +5930,15 @@
             "type": "object"
           },
           "theme": {
-            "type": "object",
-            "description": "Theme override: partial tokens, or { light, dark }."
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
+            "description": "A built-in theme name, or a theme override: partial tokens, or { light, dark }."
           },
           "mode": {
             "enum": [
@@ -5876,7 +6058,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -6103,7 +6292,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -6320,7 +6516,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -6543,8 +6746,15 @@
             "type": "object"
           },
           "theme": {
-            "type": "object",
-            "description": "Theme override: partial tokens, or { light, dark }."
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
+            "description": "A built-in theme name, or a theme override: partial tokens, or { light, dark }."
           },
           "mode": {
             "enum": [
@@ -6656,8 +6866,15 @@
             "type": "object"
           },
           "theme": {
-            "type": "object",
-            "description": "Theme override: partial tokens, or { light, dark }."
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
+            "description": "A built-in theme name, or a theme override: partial tokens, or { light, dark }."
           },
           "mode": {
             "enum": [
@@ -6776,7 +6993,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -7036,7 +7260,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -7278,7 +7509,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -7489,7 +7727,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -7737,7 +7982,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -7975,7 +8227,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -8174,7 +8433,14 @@
             "description": "A short muted note after the value, e.g. a share of the total (\"26%\")."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A theme name such as `\"science\"`, or token overrides. A named theme paints its own ground."
           },
           "frame": {
@@ -8306,7 +8572,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -8508,8 +8781,15 @@
             "type": "object"
           },
           "theme": {
-            "type": "object",
-            "description": "Theme override: partial tokens, or { light, dark }."
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
+            "description": "A built-in theme name, or a theme override: partial tokens, or { light, dark }."
           },
           "mode": {
             "enum": [
@@ -8581,8 +8861,15 @@
             "type": "object"
           },
           "theme": {
-            "type": "object",
-            "description": "Theme override: partial tokens, or { light, dark }."
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
+            "description": "A built-in theme name, or a theme override: partial tokens, or { light, dark }."
           },
           "mode": {
             "enum": [
@@ -8701,7 +8988,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -8934,7 +9228,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -9172,7 +9473,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -9409,7 +9717,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -9630,7 +9945,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -9885,7 +10207,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -10151,7 +10480,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -10369,7 +10705,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -10601,7 +10944,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -10841,7 +11191,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -11066,8 +11423,15 @@
             "type": "object"
           },
           "theme": {
-            "type": "object",
-            "description": "Theme override: partial tokens, or { light, dark }."
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
+            "description": "A built-in theme name, or a theme override: partial tokens, or { light, dark }."
           },
           "mode": {
             "enum": [
@@ -11186,7 +11550,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -11411,7 +11782,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -11769,7 +12147,14 @@
             "$comment": "default: \"auto\""
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A theme name such as `\"ledger\"`, or token overrides. A named theme paints its own ground behind the tile."
           },
           "frame": {
@@ -11882,8 +12267,15 @@
             "type": "object"
           },
           "theme": {
-            "type": "object",
-            "description": "Theme override: partial tokens, or { light, dark }."
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
+            "description": "A built-in theme name, or a theme override: partial tokens, or { light, dark }."
           },
           "mode": {
             "enum": [
@@ -12004,7 +12396,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -12226,7 +12625,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -12437,7 +12843,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -12648,7 +13061,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -12890,7 +13310,14 @@
             "description": "Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
           },
           "frame": {
@@ -13066,7 +13493,14 @@
             "description": "Method note or caveat."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to every event. A named theme with its own surface paints that surface behind the component."
           },
           "frame": {
@@ -13226,7 +13660,14 @@
             "description": "Method note or caveat."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A theme name such as `\"editorial\"`, or token overrides, passed on to both states. A named theme paints its own ground."
           },
           "mode": {
@@ -13318,7 +13759,14 @@
             "description": "JSX alternative to `chart`."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the chart and callout. A named theme with its own surface paints that surface behind the component."
           },
           "frame": {
@@ -13423,7 +13871,14 @@
             "description": "Extra content under the chart."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the chart. A named theme with its own surface paints that surface behind the component."
           },
           "frame": {
@@ -13549,7 +14004,14 @@
             "description": "Method note or caveat."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the sparklines and deltas. A named theme with its own surface paints that surface behind the component."
           },
           "frame": {
@@ -13621,7 +14083,14 @@
             "$comment": "default: \"rows\""
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object. A named theme with its own surface paints that surface behind the component."
           },
           "frame": {
@@ -13739,7 +14208,14 @@
             "description": "JSX alternative to `chart`."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the headline, chart and source note. A named theme with its own surface paints that surface behind the component."
           },
           "frame": {
@@ -13922,7 +14398,14 @@
             "description": "Method note or caveat."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A theme name such as `\"ledger\"`, or token overrides, passed on to every card. A named theme paints its own ground."
           },
           "mode": {
@@ -14076,7 +14559,14 @@
             "$comment": "default: 24"
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to every chart. A named theme with its own surface paints that surface behind the component."
           },
           "frame": {
@@ -14319,7 +14809,14 @@
             "description": "Set false to stop a named theme painting its ground."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A theme name such as `\"earth\"`, or token overrides, passed on to the number and the bar. A named theme paints its own ground."
           },
           "mode": {
@@ -14415,7 +14912,14 @@
                 "type": "string"
               },
               {
-                "type": "object"
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "object"
+                  }
+                ]
               }
             ],
             "description": "A poster theme name, any other theme name, or a theme object. It is passed on to everything inside.",
@@ -14587,7 +15091,14 @@
             "description": "Method note or caveat."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the visual. A named theme with its own surface paints that surface behind the component."
           },
           "frame": {
@@ -14667,7 +15178,14 @@
             "description": "Method note or caveat."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the quote and the figure. A named theme with its own surface paints that surface behind the component."
           },
           "frame": {
@@ -14807,7 +15325,14 @@
             "description": "Method note or caveat."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object. A named theme with its own surface paints that surface behind the component."
           },
           "frame": {
@@ -14914,7 +15439,14 @@
             "description": "Method note or caveat."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the chart and the step cards. A named theme with its own surface paints that surface behind the component."
           },
           "frame": {
@@ -15065,7 +15597,14 @@
             "description": "JSX alternative to `body`; each child becomes a grid item."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the component."
           },
           "frame": {
@@ -15240,7 +15779,14 @@
             "description": "Method note or caveat."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to every panel. A named theme with its own surface paints that surface behind the component."
           },
           "frame": {
@@ -15392,7 +15938,14 @@
             "description": "Method note or caveat."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A theme name such as `\"ledger\"`, or token overrides, passed on to every figure. A named theme paints its own ground."
           },
           "mode": {
@@ -15653,7 +16206,14 @@
             "description": "Set false to stop a named theme painting its ground."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A theme name such as `\"ledger\"`, or token overrides, passed on to the tile. A named theme paints its own ground."
           },
           "mode": {
@@ -15817,7 +16377,14 @@
                 "type": "string"
               },
               {
-                "type": "object"
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "object"
+                  }
+                ]
               }
             ],
             "description": "Poster theme: `noir`, `magenta`, `dusk`, `ocean`, `forest`, `blueprint`, `sunrise`, `paper`, any other theme name, or a theme object.",
@@ -16054,7 +16621,14 @@
             "description": "Widest the piece may get. It is centred in wider containers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece."
           },
           "frame": {
@@ -16191,7 +16765,14 @@
                 "type": "string"
               },
               {
-                "type": "object"
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "object"
+                  }
+                ]
               }
             ],
             "description": "Poster theme: `noir`, `magenta`, `dusk`, `ocean`, `forest`, `blueprint`, `sunrise`, `paper`, any other theme name, or a theme object.",
@@ -16458,7 +17039,14 @@
             "description": "Widest the piece may get. It is centred in wider containers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece."
           },
           "frame": {
@@ -16626,7 +17214,14 @@
             "description": "Widest the piece may get. It is centred in wider containers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece."
           },
           "frame": {
@@ -16784,7 +17379,14 @@
             "description": "Widest the piece may get. It is centred in wider containers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece."
           },
           "frame": {
@@ -16882,7 +17484,14 @@
                 "type": "string"
               },
               {
-                "type": "object"
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "object"
+                  }
+                ]
               }
             ],
             "description": "Poster theme: `noir`, `magenta`, `dusk`, `ocean`, `forest`, `blueprint`, `sunrise`, `paper`, any other theme name, or a theme object.",
@@ -17050,7 +17659,14 @@
                 "type": "string"
               },
               {
-                "type": "object"
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "object"
+                  }
+                ]
               }
             ],
             "description": "Poster theme: `noir`, `magenta`, `dusk`, `ocean`, `forest`, `blueprint`, `sunrise`, `paper`, any other theme name, or a theme object.",
@@ -17204,7 +17820,14 @@
                 "type": "string"
               },
               {
-                "type": "object"
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "object"
+                  }
+                ]
               }
             ],
             "description": "Poster theme: `noir`, `magenta`, `dusk`, `ocean`, `forest`, `blueprint`, `sunrise`, `paper`, any other theme name, or a theme object.",
@@ -17360,7 +17983,14 @@
                 "type": "string"
               },
               {
-                "type": "object"
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "object"
+                  }
+                ]
               }
             ],
             "description": "Poster theme: `noir`, `magenta`, `dusk`, `ocean`, `forest`, `blueprint`, `sunrise`, `paper`, any other theme name, or a theme object.",
@@ -17516,7 +18146,14 @@
                 "type": "string"
               },
               {
-                "type": "object"
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "object"
+                  }
+                ]
               }
             ],
             "description": "Poster theme: `noir`, `magenta`, `dusk`, `ocean`, `forest`, `blueprint`, `sunrise`, `paper`, any other theme name, or a theme object.",
@@ -17704,7 +18341,14 @@
                 "type": "string"
               },
               {
-                "type": "object"
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "object"
+                  }
+                ]
               }
             ],
             "description": "Poster theme: `noir`, `magenta`, `dusk`, `ocean`, `forest`, `blueprint`, `sunrise`, `paper`, any other theme name, or a theme object.",
@@ -17948,7 +18592,14 @@
             "description": "Widest the piece may get. It is centred in wider containers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece."
           },
           "frame": {
@@ -18038,7 +18689,14 @@
                 "type": "string"
               },
               {
-                "type": "object"
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "object"
+                  }
+                ]
               }
             ],
             "description": "Poster theme: `noir`, `magenta`, `dusk`, `ocean`, `forest`, `blueprint`, `sunrise`, `paper`, any other theme name, or a theme object.",
@@ -18275,7 +18933,14 @@
             "description": "Widest the piece may get. It is centred in wider containers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece."
           },
           "frame": {
@@ -18395,7 +19060,14 @@
             "$comment": "default: 2"
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"magenta\"`, `\"noir\"`, `\"editorial\"`...) or a theme object, passed on to the exhibit. A named theme with its own surface paints the card in that surface; the download button stays in the page's theme."
           },
           "mode": {
@@ -18529,7 +19201,14 @@
             "$comment": "default: 1"
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"dusk\"`, `\"magenta\"`, `\"paper\"`...) or a theme object, passed on to everything in the cards. A named theme with its own surface paints each card in that surface; the pager and the source note stay in the page's theme."
           },
           "mode": {
@@ -18622,7 +19301,14 @@
                 "type": "string"
               },
               {
-                "type": "object"
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "object"
+                  }
+                ]
               }
             ],
             "description": "Poster theme: `noir`, `magenta`, `dusk`, `ocean`, `forest`, `blueprint`, `sunrise`, `paper`, any other theme name, or a theme object.",
@@ -18854,7 +19540,14 @@
             "description": "Widest the piece may get. It is centred in wider containers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece."
           },
           "frame": {
@@ -19001,7 +19694,14 @@
             "description": "Widest the piece may get. It is centred in wider containers."
           },
           "theme": {
-            "type": "object",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ],
             "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece."
           },
           "frame": {

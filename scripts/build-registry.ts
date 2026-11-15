@@ -15,9 +15,8 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
 import ts from "typescript";
-import { hoistableData, jsLiteral, levelDir, loadComponents, Output, PUBLIC, ROOT, specToJsx, SRC, validate, type Component, type ComponentMeta, type SchemaStore } from "./lib/shared";
+import { hoistableData, jsLiteral, levelDir, loadComponents, Output, PUBLIC, ROOT, SITE_URL, specToJsx, SRC, validate, type Component, type ComponentMeta, type SchemaStore } from "./lib/shared";
 
-const SITE_URL = (process.env.INSIGHTCHARTS_URL ?? "https://insightcharts.dev").replace(/\/+$/, "");
 
 const NAMESPACE = "@insightcharts";
 const TARGET_ROOT = "components/insightcharts";

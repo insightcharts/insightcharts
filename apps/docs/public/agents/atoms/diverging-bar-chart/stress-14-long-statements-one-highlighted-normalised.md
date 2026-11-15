@@ -1,0 +1,366 @@
+# Reproduce the "Stress: 14 long statements, one highlighted, normalised" example of the InsightCharts Diverging bar chart
+
+These are instructions for an AI coding agent (Claude Code, Cursor, Codex or similar) working in the user's project. Library: InsightCharts, a React chart library for infographics and data stories, built on Apache ECharts 6. Package: `insightcharts` version 0.1.0 on npm. Peer dependencies: `echarts` >=6.0.0, `react` >=18, `react-dom` >=18.
+
+Task: reproduce the "Stress: 14 long statements, one highlighted, normalised" example of `diverging-bar-chart` (an atom) exactly as written below and check that it renders. Then replace the example data and text with the user's. If the user has not given you their data and the one fact to show, reproduce the example first and then ask for both.
+
+## 1. Check that this is the right component
+
+Draws bars either side of a centre line: positive against negative values, or stacked agree / disagree responses around a neutral midpoint.
+
+Use it when: Values that can be above or below zero (net change, balance, deviation from average); survey scales where the split between the two sides matters; two opposed groups back to back.
+
+Pick something else when: Values that are all positive (use bar-chart); parts that do not have a natural two-sided order (use a stacked bar-chart); change between two dates (use arrow-chart or dumbbell-chart).
+
+Instructions for the alternatives: `dumbbell-chart` https://insightcharts.dev/agents/atoms/dumbbell-chart.md, `arrow-chart` https://insightcharts.dev/agents/atoms/arrow-chart.md, `bar-chart` https://insightcharts.dev/agents/atoms/bar-chart.md.
+
+## 2. Install
+
+Find the package manager from the lockfile (`pnpm-lock.yaml`, `yarn.lock`, `bun.lock`, otherwise npm). Skip this step if `insightcharts` is already in `package.json`. If the project has `components/insightcharts/`, import from that folder instead of the package.
+
+From npm (use the project's package manager):
+
+```bash
+npm install insightcharts echarts      # or: pnpm add / yarn add / bun add
+```
+
+Or copy the component's source into the project with the shadcn CLI, when the user wants to edit it. The project needs a `components.json`. The CLI also installs the `insightcharts` package, because the engine still comes from it.
+
+```bash
+npx shadcn@latest registry add @insightcharts=https://insightcharts.dev/r/{name}.json   # once per project
+npx shadcn@latest add @insightcharts/diverging-bar-chart
+```
+
+The file lands at `components/insightcharts/atoms/diverging-bar-chart.tsx`. Import the component from there when you install it this way.
+
+## 3. Import
+
+```tsx
+import { DivergingBarChart } from "insightcharts";
+```
+
+In Next.js the component can be imported into a server component when every prop is plain data. A file that passes a function prop must start with `"use client"`.
+
+## 4. Data
+
+Pass `data` as an array of row objects. CSV text, a URL, `{ url, path }`, an async function and an Arrow-style table also work. Field props are strings that name columns of the rows. The example's rows look like this:
+
+```json
+[
+  {
+    "statement": "The government should raise taxes on the highest earners",
+    "oppose": 420,
+    "unsure": 90,
+    "support": 180
+  },
+  {
+    "statement": "Public transport should be free for people under 25",
+    "oppose": 367,
+    "unsure": 107,
+    "support": 251
+  },
+  {
+    "statement": "The retirement age should rise in line with life expectancy",
+    "oppose": 314,
+    "unsure": 124,
+    "support": 322
+  }
+]
+```
+
+How the example maps columns to props:
+
+- `x` = `"statement"`. Category field.
+- `y` = `["oppose","unsure","support"]`. One signed value field, or several fields ordered from most negative to most positive.
+
+With the user's data, keep the props and change the column names.
+
+## 5. The "Stress: 14 long statements, one highlighted, normalised" example
+
+This example sets `theme="mono"`, a built-in theme that paints its own background behind the component. Keep it to reproduce the look. Remove `theme` to follow the host page instead, or keep the colours and set `frame={false}` to drop the painted background.
+
+```tsx
+import { DivergingBarChart } from "insightcharts";
+
+const data = [
+  {
+    statement: "The government should raise taxes on the highest earners",
+    oppose: 420,
+    unsure: 90,
+    support: 180,
+  },
+  {
+    statement: "Public transport should be free for people under 25",
+    oppose: 367,
+    unsure: 107,
+    support: 251,
+  },
+  {
+    statement: "The retirement age should rise in line with life expectancy",
+    oppose: 314,
+    unsure: 124,
+    support: 322,
+  },
+  {
+    statement: "New housing should be allowed on protected countryside",
+    oppose: 261,
+    unsure: 141,
+    support: 393,
+  },
+  {
+    statement: "Private cars should be banned from the city centre",
+    oppose: 208,
+    unsure: 158,
+    support: 464,
+  },
+  {
+    statement: "University tuition should be paid entirely by the state",
+    oppose: 155,
+    unsure: 95,
+    support: 205,
+  },
+  {
+    statement: "The country should build new nuclear power stations",
+    oppose: 402,
+    unsure: 112,
+    support: 276,
+  },
+  {
+    statement: "Immigration quotas should be set by regional governments",
+    oppose: 349,
+    unsure: 129,
+    support: 347,
+  },
+  { statement: "Working from home should be a legal right", oppose: 296, unsure: 146, support: 418 },
+  {
+    statement: "Short-haul flights should be banned where a train exists",
+    oppose: 243,
+    unsure: 163,
+    support: 489,
+  },
+  { statement: "The voting age should be lowered to 16", oppose: 190, unsure: 100, support: 230 },
+  {
+    statement: "Social media should be barred for children under 15",
+    oppose: 137,
+    unsure: 117,
+    support: 301,
+  },
+  { statement: "Rents should be capped by law", oppose: 384, unsure: 134, support: 372 },
+  {
+    statement: "A four-day working week should become standard",
+    oppose: 331,
+    unsure: 151,
+    support: 443,
+  },
+];
+
+<DivergingBarChart
+  theme="mono"
+  data={data}
+  x="statement"
+  y={["oppose", "unsure", "support"]}
+  names={{ oppose: "Oppose", unsure: "Not sure", support: "Support" }}
+  percent
+  highlight="Rents should be capped by law"
+  title="42% of respondents support capping rents by law"
+  subtitle="Share of respondents, normalised to 100% per statement"
+  note="Synthetic data for layout testing."
+/>
+```
+
+Put the element in the `return` of a component. The same thing as a JSON spec, rendered with `<Insight spec={spec} />` (`import { Insight } from "insightcharts"`):
+
+```json
+{
+  "theme": "mono",
+  "data": [
+    {
+      "statement": "The government should raise taxes on the highest earners",
+      "oppose": 420,
+      "unsure": 90,
+      "support": 180
+    },
+    {
+      "statement": "Public transport should be free for people under 25",
+      "oppose": 367,
+      "unsure": 107,
+      "support": 251
+    },
+    {
+      "statement": "The retirement age should rise in line with life expectancy",
+      "oppose": 314,
+      "unsure": 124,
+      "support": 322
+    },
+    {
+      "statement": "New housing should be allowed on protected countryside",
+      "oppose": 261,
+      "unsure": 141,
+      "support": 393
+    },
+    {
+      "statement": "Private cars should be banned from the city centre",
+      "oppose": 208,
+      "unsure": 158,
+      "support": 464
+    },
+    {
+      "statement": "University tuition should be paid entirely by the state",
+      "oppose": 155,
+      "unsure": 95,
+      "support": 205
+    },
+    {
+      "statement": "The country should build new nuclear power stations",
+      "oppose": 402,
+      "unsure": 112,
+      "support": 276
+    },
+    {
+      "statement": "Immigration quotas should be set by regional governments",
+      "oppose": 349,
+      "unsure": 129,
+      "support": 347
+    },
+    {
+      "statement": "Working from home should be a legal right",
+      "oppose": 296,
+      "unsure": 146,
+      "support": 418
+    },
+    {
+      "statement": "Short-haul flights should be banned where a train exists",
+      "oppose": 243,
+      "unsure": 163,
+      "support": 489
+    },
+    {
+      "statement": "The voting age should be lowered to 16",
+      "oppose": 190,
+      "unsure": 100,
+      "support": 230
+    },
+    {
+      "statement": "Social media should be barred for children under 15",
+      "oppose": 137,
+      "unsure": 117,
+      "support": 301
+    },
+    { "statement": "Rents should be capped by law", "oppose": 384, "unsure": 134, "support": 372 },
+    {
+      "statement": "A four-day working week should become standard",
+      "oppose": 331,
+      "unsure": 151,
+      "support": 443
+    }
+  ],
+  "x": "statement",
+  "y": ["oppose", "unsure", "support"],
+  "names": { "oppose": "Oppose", "unsure": "Not sure", "support": "Support" },
+  "percent": true,
+  "highlight": "Rents should be capped by law",
+  "title": "42% of respondents support capping rents by law",
+  "subtitle": "Share of respondents, normalised to 100% per statement",
+  "note": "Synthetic data for layout testing.",
+  "type": "diverging-bar-chart"
+}
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `x` (required) | `string` |  | Category field. |
+| `y` (required) | `string \| string[]` |  | One signed value field, or several fields ordered from most negative to most positive. |
+| `series` | `string` |  | Field that splits rows into ordered series (long data). |
+| `neutral` | `string \| false` |  | Series centred on the midline. Default: the middle one of an odd number of series. |
+| `percent` | `boolean` | `false` | Normalise each row to 100% (stacked series). |
+| `colors` | `"polarity" \| "sentiment"` | `"polarity"` | Single series: diverging poles, or the positive / negative colours when one side is good and the other bad. |
+| `sort` | `"none" \| "asc" \| "desc"` |  | Row order. Default: descending by value or by the positive side; data order for dates. |
+| `orientation` | `"auto" \| "horizontal" \| "vertical"` | `"auto"` | Horizontal, except vertical for a single series over dates. |
+| `labels` | `boolean` |  | Values at bar ends (single) or inside segments (stacked). Default: on when there is room. |
+| `names` | `Record<string, string>` |  | Display names for series keys. |
+
+Every chart also accepts these common props:
+
+| Prop | Type | Description |
+|---|---|---|
+| `data` | `DataInput` | Rows, CSV text, a URL, `{ url, path }`, an async function, or an Arrow-style table. Omit inside `<InsightData>`. |
+| `transform` | `Transform \| Transform[]` | A pipeline of transforms applied before drawing. |
+| `title` | `string` | The title. One plain statement of what the data shows, with the number and the period ("Monthly churn fell from 4.2% to 2.1% in 2024"), or a plain label ("Monthly churn, 2024"). One clause, no figures of speech. |
+| `subtitle` | `string` | Measure, unit, population, period. |
+| `source` | `string` | Data source, shown as "Source: ...". |
+| `note` | `string` | Method notes or caveats. |
+| `height` | `number \| string` | CSS height of the plot. Default 360. |
+| `aspect` | `number` | Width / height. Overrides `height`. |
+| `highlight` | `string \| string[]` | The entity (or entities) the title is about. Every other series is drawn in grey. |
+| `annotations` | `Annotation[]` | Reference lines, shaded bands and callouts, in data coordinates. |
+| `format` | `FormatSpec` | How to print values: `"compact"`, `"percent"`, `"currency:USD"`, `"{value} kg"`, Intl options, or a function. |
+| `legend` | `boolean` | Show the legend. Default: shown when there are two or more series. |
+| `select` | `boolean \| string` | Make marks clickable to filter. Inside `<InsightData>` the selection filters every other chart. Pass a field name, or `true` to use the chart's category field. |
+| `onSelect` | `(values: string[], field: string) => void` | Called with the selected values whenever the selection changes. |
+| `option` | `EChartsOption \| ((option: EChartsOption, ctx: BuildContext) => EChartsOption)` | Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers. |
+| `theme` | `ThemeInput` | A built-in theme name (`"editorial"`, `"ledger"`, `"noir"`...), or a theme object. A named theme paints its own background behind the chart. |
+| `frame` | `boolean` | Paint the theme's background behind the chart. Default: on for a named theme with its own surface. |
+| `mode` | `ModeInput` | `"auto"` (default) follows the page, `"system"` follows the OS, or force `"light"` / `"dark"`. |
+| `renderer` | `RendererInput` | `"auto"` (default) uses SVG for light charts and canvas for heavy ones. |
+| `animate` | `boolean` | Set false to disable animation for this chart. Reduced-motion preferences are always respected. |
+| `lazy` | `boolean` | Mount the chart only when it scrolls within 200px of the viewport. Default true (from `InsightProvider`). |
+| `group` | `string` | Link tooltips with other charts sharing this group id. |
+| `exportable` | `boolean \| ExportFormat[]` | Show an export menu: `true` or a list of formats from png, jpeg, svg, pdf, csv, json. |
+| `table` | `boolean` | Show a collapsible "View data" table under the chart. |
+| `alt` | `string` | Accessible description: the chart type and measures, then the main pattern and the notable values. |
+| `id` | `string` | Stable id for this chart's selection in the shared store. |
+| `onEvents` | `Record<string, ChartEventHandler>` | ECharts event handlers: `{ click: (params, chart) => {} }`. |
+| `onReady` | `(chart: EChartsInstance) => void` | Called with the ECharts instance once it is initialised. |
+| `className` | `string` | Class on the figure element. |
+| `style` | `CSSProperties` | Inline style on the figure element. |
+
+## Composition
+
+- Built from: nothing. It is a primitive.
+- Used by: `executive-brief` (template), `report-page` (template)
+
+## Rules for this form
+
+- Anything drawn as a bar encodes its value by length, so it starts at zero. Do not cut its axis.
+- Sort by value unless the categories have an order of their own (time, age bands, a scale).
+- Keep the categories to the number the reader can compare. Fold the rest into "Other" with the `top` transform (`{ type: "top", n, by, other: "Other", label }`).
+- Do not set colours per series. Set `highlight` to the one or two entities the title is about. The others are drawn in grey.
+- Use at most three `annotations`. Their values must match values in the data.
+- No dual axes and no 3D. The chart must read without hovering.
+- Write `title` as one plain statement of fact with its number and its period, in one clause ("Monthly churn fell from 4.2% to 2.1% in 2024"), or as a plain label ("Monthly churn, 2024"). No metaphors, no dramatic verbs, no second half joined with a comma, "and" or a dash.
+
+## Accessibility
+
+- The chart is exposed as an image (`role="img"`) with a description the component writes from the data. Set `alt` when the title states a different fact from that description: chart type and measures first, then the main pattern and the notable values.
+- Set `table` to add a collapsible "View data" table under the chart, for readers who need exact values or use a screen reader.
+- The title is a heading, the legend a list and the source a `<figcaption>`. Do not repeat them in surrounding markup.
+
+## Verify
+
+- [ ] The project typechecks (`npx tsc --noEmit`). Props are typed, so a misspelt prop is an error in JSX.
+- [ ] A JSON spec validates against https://insightcharts.dev/schema/insight-spec.json. Unknown props fail.
+- [ ] It renders in a browser at desktop width and at about 380px wide with no clipped or overlapping text.
+- [ ] It reads in light and in dark mode.
+- [ ] The title is one clause that states one fact with its number and period, or it is a plain label.
+- [ ] Every number in the text can be found in the data or computed from it.
+- [ ] `source` is set.
+- [ ] One entity is highlighted and the others are grey, or the chart has one series.
+- [ ] The chart can be read without hovering.
+- [ ] No example data or example text is left in place.
+
+## Reference
+
+- Instructions for the component without this example: https://insightcharts.dev/agents/atoms/diverging-bar-chart.md
+- Component reference with every example: https://insightcharts.dev/llms/diverging-bar-chart.md
+- Registry item: https://insightcharts.dev/r/diverging-bar-chart.json
+- Source: https://github.com/insightcharts/insightcharts/blob/main/packages/insightcharts/src/atoms/diverging-bar-chart.tsx
+- How to choose a different atom: https://insightcharts.dev/agents/atoms.md
+- This page: https://insightcharts.dev/atoms/diverging-bar-chart#example-stress-14-long-statements-one-highlighted-normalised
+- These instructions as plain text: https://insightcharts.dev/agents/atoms/diverging-bar-chart/stress-14-long-statements-one-highlighted-normalised.md
+- Instructions for one component: https://insightcharts.dev/agents/<atoms|molecules|templates>/<name>.md
+- Every guide, component and prompt: https://insightcharts.dev/llms.txt
+- JSON Schema for specs: https://insightcharts.dev/schema/insight-spec.json
+- Component manifest: https://insightcharts.dev/schema/manifest.json
+- Registry catalogue: https://insightcharts.dev/r/registry.json

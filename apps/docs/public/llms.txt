@@ -127,6 +127,51 @@ Install with `npm install insightcharts echarts`, or copy component source with 
 - [Timeline story](https://insightcharts.dev/llms/timeline-story.md): A story told in date order. It has a headline, one overview exhibit of the whole period (a timeline chart or an annotated line), dated chapters along a rail, a closing paragraph and a source note. Each chapter has a short text and an optional small exhibit.
 - [Visual essay](https://insightcharts.dev/llms/visual-essay.md): A long article read by scrolling. It has a headline, then an ordered list of blocks in a reading column, then a source note. The blocks are prose, figures, charts with a callout, scrolly sequences, pull quotes, stat rows, small multiples and chapter breaks. Exhibits can be wider than the column.
 
+## Agent instructions
+
+Each page of the site has a self-contained prompt written to a coding agent, at the page's path under `/agents` with `.md` added. Give an agent the URL, or paste the text.
+
+- [Build charts, data stories and infographics with InsightCharts](https://insightcharts.dev/agents/index.md): Choose the right InsightCharts component for the user's data, install the library and build a finished figure in the user's React project.
+- [Getting started for agents](https://insightcharts.dev/agents/docs/agents.md): The steps an AI coding agent follows to install InsightCharts and render a first chart in a React project.
+- [Set up your agent](https://insightcharts.dev/agents/docs/agents/setup.md): The commands and configuration that give Claude Code, Cursor, Codex or any other agent the InsightCharts skill, registry and reference files.
+- [The agent workflow](https://insightcharts.dev/agents/docs/agents/workflow.md): The seven steps an agent follows to turn data into a finished InsightCharts figure, with what to check at each step.
+- [Choosing a component](https://insightcharts.dev/agents/docs/agents/choosing.md): How to choose a level and a component for a dataset, with a decision table of all the components and the poster primitives.
+- [Writing rules for agents](https://insightcharts.dev/agents/docs/agents/writing.md): The rules for every title, subtitle, callout, annotation label and story step an agent writes, with examples and a self-check list.
+- [JSON specs](https://insightcharts.dev/agents/docs/agents/json-specs.md): How an agent writes an InsightCharts component as a JSON spec, validates it against the JSON Schema and renders it with the Insight component.
+- [Prompt library](https://insightcharts.dev/agents/docs/agents/prompts.md): Ready-to-copy prompts that tell an agent how to do eight common jobs with InsightCharts.
+- [Reference endpoints](https://insightcharts.dev/agents/docs/agents/endpoints.md): Every machine-readable URL that InsightCharts publishes for agents, with what each one contains.
+- [Make charts accessible](https://insightcharts.dev/agents/docs/accessibility.md): Every chart in the user's project has a title that states its fact, an accurate text alternative, a data table where exact values matter, and readable contrast.
+- [Link charts so a click on one filters the others](https://insightcharts.dev/agents/docs/crossfiltering.md): Two or more charts share one dataset inside InsightData, and clicking a mark in a selectable chart filters the other charts.
+- [Make InsightCharts follow the project's dark mode](https://insightcharts.dev/agents/docs/dark-mode.md): Every chart matches the colour mode of the page around it, or the mode the user asked for, with no wrong-mode chart after a theme switch.
+- [Connect data to an InsightCharts chart](https://insightcharts.dev/agents/docs/data.md): The chart reads the user's data source directly, with any reshaping done by JSON transforms, and shows loading and error states for remote data.
+- [Go beyond a component's props with ECharts options](https://insightcharts.dev/agents/docs/escape-hatch.md): The chart has the ECharts setting or custom form the user needs, and it still takes its colours, text and behaviour from InsightCharts.
+- [Add export to charts and posters](https://insightcharts.dev/agents/docs/export.md): Readers can save a chart as PNG, JPEG, SVG, PDF, CSV or JSON, or a whole poster or social card as one PNG, from a menu or from the user's own button.
+- [Add a title, a highlight and annotations to a chart](https://insightcharts.dev/agents/docs/highlighting-and-annotations.md): The chart has a title that states one fact with its number, the entity in the title is highlighted, and at most three annotations mark what the reader needs.
+- [Use icons in charts and figures](https://insightcharts.dev/agents/docs/icons.md): Every icon prop in the user's charts holds a built-in icon name or a valid custom path, and unit charts state what one icon stands for.
+- [Choose and build the right InsightCharts component](https://insightcharts.dev/agents/docs.md): The user's data is drawn with the component level that fits the job, with a title that states one fact, a highlight and a source.
+- [Build an infographic poster](https://insightcharts.dev/agents/docs/infographics.md): One designed poster in the user's project, drawn by an infographic template or the poster frame, with the user's data, a poster theme and a source line.
+- [Install InsightCharts in this project](https://insightcharts.dev/agents/docs/installation.md): The package (or the copied component source) is installed, a chart imports and renders, and the project typechecks.
+- [Emit, validate and render a JSON spec](https://insightcharts.dev/agents/docs/json-spec.md): A JSON spec that passes the schema and renders through Insight in the user's project.
+- [Render a first InsightCharts chart](https://insightcharts.dev/agents/docs/quickstart.md): One chart of the user's data renders with a title that states one fact, a subtitle, a source and a highlight.
+- [Build a step-by-step data story with Scrolly](https://insightcharts.dev/agents/docs/stories.md): One chart stays in place and changes state as the reader scrolls, swipes or steps through a list of short text steps.
+- [Build a whole page from a template](https://insightcharts.dev/agents/docs/templates.md): A complete page in the user's project rendered by one report-style template, with the user's titles, figures and charts in its props.
+- [Theme InsightCharts to match a brand](https://insightcharts.dev/agents/docs/theming.md): Every chart in the project uses the user's colours and fonts in light and dark mode, set in one place.
+- [Build a scroll story like the ones in the gallery](https://insightcharts.dev/agents/stories.md): A scroll story in the user's project that pins one chart and changes one prop at every step, modelled on a story from the gallery.
+- [Choose and add an InsightCharts atom](https://insightcharts.dev/agents/atoms.md)
+- [Choose and add an InsightCharts molecule](https://insightcharts.dev/agents/molecules.md)
+- [Choose and add an InsightCharts template](https://insightcharts.dev/agents/templates.md)
+- [Choose and build an InsightCharts infographic](https://insightcharts.dev/agents/infographics.md)
+- [Draw one chart from a CSV file](https://insightcharts.dev/agents/prompts/single-chart-from-csv.md): Loads a CSV file, chooses a chart form, and renders one chart with a title that states one fact from the data.
+- [Build a row of key numbers](https://insightcharts.dev/agents/prompts/kpi-row.md): Renders two to eight key figures with their changes as a stat row or a KPI grid.
+- [Write an executive brief](https://insightcharts.dev/agents/prompts/executive-brief.md): Builds a one-page brief with a headline, key figures, a hero chart, supporting charts and recommended actions.
+- [Build a scroll story](https://insightcharts.dev/agents/prompts/scroll-story.md): Pins one chart and changes one prop at each step as the reader scrolls, swipes or steps through the text.
+- [Build a cross-filtered explorer](https://insightcharts.dev/agents/prompts/crossfilter-explorer.md): Draws two to four charts over one dataset so that a click on one chart filters the others.
+- [Build an infographic poster](https://insightcharts.dev/agents/prompts/infographic-poster.md): Draws one designed poster from a JSON spec with an infographic template and a poster theme.
+- [Restyle charts to a brand theme](https://insightcharts.dev/agents/prompts/brand-theme.md): Applies a brand's colours and fonts to every InsightCharts component in a project, in light and dark mode.
+- [Convert a Recharts or Chart.js chart](https://insightcharts.dev/agents/prompts/convert-recharts-chartjs.md): Replaces an existing Recharts or Chart.js chart with the matching InsightCharts component and a title that states one fact.
+- One component: `https://insightcharts.dev/agents/<atoms|molecules|templates>/<name>.md`, for example https://insightcharts.dev/agents/atoms/bar-chart.md. Install, import, props, data shape, JSX, JSON spec, rules and a checklist.
+- One example of a component: `https://insightcharts.dev/agents/<level>/<name>/<example>.md`. Every prompt is listed in https://insightcharts.dev/agents/index.json.
+
 ## Machine-readable
 
 - [Spec JSON Schema](https://insightcharts.dev/schema/insight-spec.json): validates any `<Insight spec>` object

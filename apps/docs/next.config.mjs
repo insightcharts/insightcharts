@@ -13,6 +13,8 @@ const config = {
   reactStrictMode: true,
   agentRules: false,
   transpilePackages: ["insightcharts"],
+  // The "For AI agents" guide became the "For agents" section.
+  redirects: async () => [{ source: "/docs/ai-agents", destination: "/docs/agents", permanent: true }],
   outputFileTracingRoot: root,
   turbopack: {
     root,

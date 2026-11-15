@@ -279,20 +279,23 @@ export interface PreviewFrameProps {
   ground?: { light: string; dark: string };
   /** No padding round the example: it paints its own background to the edges. */
   flush?: boolean;
+  /** The "Copy agent instructions" button for this exact example, shown beside the tabs. */
+  agent?: ReactNode;
   className?: string;
 }
 
 const action = "inline-flex h-7 items-center gap-1.5 rounded-md px-2 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none";
 
 /** Preview / Code / JSON tabs around a live example. */
-export function PreviewFrame({ children, code, json, minHeight, toolbar = true, maxHeight, fullHref, poster, ground, flush, className }: PreviewFrameProps) {
+export function PreviewFrame({ children, code, json, minHeight, toolbar = true, maxHeight, fullHref, poster, ground, flush, agent, className }: PreviewFrameProps) {
   const [tab, setTab] = useState<"preview" | "code" | "json">("preview");
   const [expanded, setExpanded] = useState(false);
   const id = useId();
   const tabs = [{ key: "preview" as const, label: "Preview" }, ...(code ? [{ key: "code" as const, label: "Code" }] : []), ...(json ? [{ key: "json" as const, label: "JSON" }] : [])];
   return (
     <div data-preview-root className={cn("not-prose min-w-0 overflow-hidden rounded-xl border bg-background", className)}>
-      {tabs.length === 1 && !toolbar && !maxHeight && !fullHref ? null : <div className="flex min-h-11 flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b px-2 py-1.5">
+      {tabs.length === 1 && !toolbar && !maxHeight && !fullHref && !agent ? null : <div className="flex min-h-11 flex-wrap items-center justify-between gap-x-3 gap-y-1.5 border-b px-2 py-1.5">
+        <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5">
         <div role="tablist" aria-label="Example" className="flex items-center gap-0.5">
           {tabs.map((t) => (
             <button
@@ -316,6 +319,8 @@ export function PreviewFrame({ children, code, json, minHeight, toolbar = true, 
               {t.label}
             </button>
           ))}
+        </div>
+        {agent}
         </div>
         {tab === "preview" && (toolbar || maxHeight || fullHref) ? (
           <div className="flex flex-wrap items-center justify-end gap-x-1.5 gap-y-1">

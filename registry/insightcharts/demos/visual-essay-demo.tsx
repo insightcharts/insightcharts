@@ -1,6 +1,9 @@
+import { registerComponents } from "insightcharts";
 import { VisualEssay } from "@/components/insightcharts/templates/visual-essay";
 import { LineChart } from "@/components/insightcharts/atoms/line-chart";
 import { BarChart } from "@/components/insightcharts/atoms/bar-chart";
+
+registerComponents({ BarChart });
 
 export function VisualEssayDemo() {
   return (
@@ -124,26 +127,27 @@ export function VisualEssayDemo() {
         },
         {
           kind: "scrolly",
-          chart: <BarChart
-            data={[
+          chart: {
+            type: "bar-chart",
+            data: [
               { source: "Nuclear", y2015: 26.5, y2024: 23.7 },
               { source: "Coal", y2015: 24.6, y2024: 9.8 },
               { source: "Gas", y2015: 15.8, y2024: 15.7 },
               { source: "Hydro", y2015: 11.5, y2024: 12.5 },
               { source: "Wind", y2015: 9.3, y2024: 17.4 },
               { source: "Solar", y2015: 2.9, y2024: 11.1 },
-            ]}
-            x="source"
-            y="y2015"
-            sort="none"
-            orientation="horizontal"
-            format="{value}%"
-            height={320}
-            title="EU electricity generation by source, 2015"
-            subtitle="Share of electricity generation"
-            source="Ember, European Electricity Review 2025"
-            option={{ xAxis: { max: 30 } }}
-          />,
+            ],
+            x: "source",
+            y: "y2015",
+            sort: "none",
+            orientation: "horizontal",
+            format: "{value}%",
+            height: 320,
+            title: "EU electricity generation by source, 2015",
+            subtitle: "Share of electricity generation",
+            source: "Ember, European Electricity Review 2025",
+            option: { xAxis: { max: 30 } },
+          },
           stepHeight: "70vh",
           stickyTop: 16,
           steps: [

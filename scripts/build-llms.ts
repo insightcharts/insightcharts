@@ -9,15 +9,14 @@
 //   apps/docs/public/schema/insight-spec.json    JSON Schema for <Insight spec>
 //   apps/docs/public/schema/manifest.json        copy of the component manifest
 //   skills/insightcharts/references/*.md         the skill's reference files
+//   apps/docs/public/agents/**                   one prompt per page of the site (see lib/agent-prompts.ts)
+//   apps/docs/content/docs/agents/*.mdx          the "For agents" pages of the docs
 import { readdirSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
 import { pathToFileURL } from "node:url";
 import ts from "typescript";
-import { compactJson, hoistableData, jsLiteral, levelDir, loadComponents, Output, PKG, PUBLIC, ROOT, specToJsx, SRC, validate, type Component, type ComponentMeta } from "./lib/shared";
-
-const SITE_URL = (process.env.INSIGHTCHARTS_URL ?? "https://insightcharts.dev").replace(/\/+$/, "");
-/** GitHub `owner/repo`. A placeholder until the project has a public home. */
-const REPO = process.env.INSIGHTCHARTS_REPO ?? "insightcharts/insightcharts";
+import { buildAgentPrompts } from "./lib/agent-prompts";
+import { compactJson, hoistableData, jsLiteral, levelDir, loadComponents, Output, PKG, PUBLIC, REPO, ROOT, SITE_URL, specToJsx, SRC, validate, type Component, type ComponentMeta } from "./lib/shared";
 
 const GUIDES_DIR = join(ROOT, "scripts/llms-guides");
 const SKILL_REFS = join(ROOT, "skills/insightcharts/references");
@@ -124,7 +123,8 @@ const NAMED: Record<string, Schema> = {
   Transform: { $ref: "#/definitions/transform" },
   TransformSpec: { $ref: "#/definitions/transform" },
   DataInput: { $ref: "#/definitions/data" },
-  ThemeInput: { type: "object" },
+  // A built-in theme name ("ledger", "noir") or a theme object.
+  ThemeInput: { anyOf: [{ type: "string" }, { type: "object" }] },
   ModeInput: { enum: ["auto", "system", "light", "dark"] },
   RendererInput: { enum: ["auto", "svg", "canvas"] },
   ExportFormat: { enum: ["png", "jpeg", "svg", "pdf", "csv", "json"] },
@@ -207,7 +207,7 @@ function buildSchema(components: Component[], common: CommonProp[], collisions: 
       // HTML components take these styling props without listing them in their metadata.
       properties.className ??= { type: "string" };
       properties.style ??= { type: "object" };
-      properties.theme ??= { type: "object", description: "Theme override: partial tokens, or { light, dark }." };
+      properties.theme ??= { anyOf: [{ type: "string" }, { type: "object" }], description: "A built-in theme name, or a theme override: partial tokens, or { light, dark }." };
       properties.mode ??= { enum: ["auto", "system", "light", "dark"], description: "Colour mode." };
     }
     componentDefs[c.name] = {
@@ -531,6 +531,7 @@ async function main() {
     THEME_VARS: await themeVarsTable(),
     COMPONENT_COUNT: String(components.length),
   };
+  const themeVars = fragments.THEME_VARS;
   const guides = readGuides(fragments);
   checkGuides(guides, components.map((c) => c.component));
   const commonGuide: Guide = {
@@ -552,6 +553,28 @@ async function main() {
   for (const g of allGuides) out.add(join(llmsDir, "guides", `${g.slug}.md`), g.body);
   out.json(join(PUBLIC, "schema/insight-spec.json"), schema);
   out.add(join(PUBLIC, "schema/manifest.json"), readFileSync(join(PKG, "manifest.json"), "utf8"));
+
+  // One prompt per page of the site, and the "For agents" pages.
+  const prompts = await buildAgentPrompts(
+    {
+      components,
+      usedBy,
+      extras,
+      siteUrl: SITE_URL,
+      repo: REPO,
+      helpers: {
+        jsxExample: (spec) => jsxExample(spec, byName, MAIN_ROWS),
+        propsTable,
+        commonPropsTable: commonPropsTable(common),
+        themeVarsTable: themeVars,
+        transformTypes: unionTypes("data/types.ts", "TransformSpec"),
+        annotationTypes: unionTypes("core/annotations.ts", "Annotation"),
+        guideSlugs: allGuides.map((g) => g.slug),
+      },
+    },
+    out,
+  );
+  const promptLine = (p: (typeof prompts)[number]) => `- [${p.title}](${SITE_URL}${p.path})${p.description ? `: ${p.description}` : ""}`;
 
   // llms.txt
   const levels: [ComponentMeta["level"], string][] = [
@@ -577,6 +600,18 @@ async function main() {
     index.push(`## ${heading}`, "", ...list.map((c) => `- [${c.title}](${pageUrl(c.name)}): ${c.description}`), "");
   }
   index.push(
+    "## Agent instructions",
+    "",
+    "Each page of the site has a self-contained prompt written to a coding agent, at the page's path under `/agents` with `.md` added. Give an agent the URL, or paste the text.",
+    "",
+    ...prompts.filter((p) => p.kind === "home").map(promptLine),
+    ...prompts.filter((p) => p.kind === "agents").map(promptLine),
+    ...prompts.filter((p) => p.kind === "guide").map(promptLine),
+    ...prompts.filter((p) => p.kind === "index").map(promptLine),
+    ...prompts.filter((p) => p.kind === "library").map(promptLine),
+    `- One component: \`${SITE_URL}/agents/<atoms|molecules|templates>/<name>.md\`, for example ${SITE_URL}/agents/atoms/bar-chart.md. Install, import, props, data shape, JSX, JSON spec, rules and a checklist.`,
+    `- One example of a component: \`${SITE_URL}/agents/<level>/<name>/<example>.md\`. Every prompt is listed in ${SITE_URL}/agents/index.json.`,
+    "",
     "## Machine-readable",
     "",
     `- [Spec JSON Schema](${SITE_URL}/schema/insight-spec.json): validates any \`<Insight spec>\` object`,
@@ -650,6 +685,7 @@ async function main() {
   const result = out.flush();
   console.log(`llms: ${components.length} component pages, ${allGuides.length} guides, llms.txt, llms-full.txt, schema/insight-spec.json -> ${relative(ROOT, PUBLIC)}/`);
   console.log(`llms: skill references -> ${relative(ROOT, SKILL_REFS)}/ (${["components.md", ...guides.filter((g) => g.skill).map((g) => g.skill)].join(", ")})`);
+  console.log(`llms: ${prompts.length} agent prompts -> ${relative(ROOT, join(PUBLIC, "agents"))}/ and the "For agents" pages -> apps/docs/content/docs/agents/`);
   console.log(`llms: ${result.written} written, ${result.unchanged} unchanged, ${result.removed} removed; site ${SITE_URL}`);
   if (schemaWarnings.length) {
     console.warn(`\nllms: ${schemaWarnings.length} spec problem(s). An example that does not validate usually means a prop is used but missing from the component's \`props\` metadata, or its documented type is wrong:\n${schemaWarnings.map((w) => `  - ${w}`).join("\n")}\n`);

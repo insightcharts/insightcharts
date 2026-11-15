@@ -10,6 +10,11 @@ export const PKG = join(ROOT, "packages/insightcharts");
 export const SRC = join(PKG, "src");
 export const PUBLIC = join(ROOT, "apps/docs/public");
 
+/** The public URL of the docs site. The docs app reads the same value from NEXT_PUBLIC_SITE_URL (apps/docs/src/lib/site.ts). */
+export const SITE_URL = (process.env.INSIGHTCHARTS_URL ?? process.env.NEXT_PUBLIC_SITE_URL ?? "https://insightcharts.dev").replace(/\/+$/, "");
+/** GitHub `owner/repo`. A placeholder until the project has a public home. */
+export const REPO = process.env.INSIGHTCHARTS_REPO ?? "insightcharts/insightcharts";
+
 export interface PropDoc {
   name: string;
   type: string;
@@ -105,7 +110,23 @@ export function specToJsx(spec: Record<string, unknown>, byName: Map<string, Com
   /** A prop documented as taking specs but not rendered content keeps its value as data. */
   const specOnly = (meta: ComponentMeta, prop: string) => {
     const doc = meta.props.find((p) => p.name === prop);
-    return !!doc && /InsightSpec|Spec\b/.test(doc.type) && !/Slot|ReactNode/.test(doc.type);
+    // A function form that returns ReactNode does not make the prop take an element.
+    return !!doc && /InsightSpec|Spec\b/.test(doc.type) && !/Slot|ReactNode/.test(doc.type.replace(/\([^()]*\)\s*=>\s*[\w.[\]]+/g, ""));
+  };
+  /**
+   * Inside a plain object, `chart` beside `steps` or `facet` is the chart of a scrolly sequence
+   * or of a grid of small multiples (a visual-essay block). Those merge props into it, so it
+   * stays a spec, as the `chart` prop of scrolly-chart and small-multiple-grid does.
+   */
+  const keepsSpec = (obj: object, key: string) => key === "chart" && ("steps" in obj || "facet" in obj);
+  const member = (obj: object, key: string, print: () => string) => {
+    if (!keepsSpec(obj, key)) return print();
+    raw++;
+    try {
+      return print();
+    } finally {
+      raw--;
+    }
   };
   const pad = (n: number) => "  ".repeat(n);
 
@@ -114,7 +135,7 @@ export function specToJsx(spec: Record<string, unknown>, byName: Map<string, Com
     if (Array.isArray(v)) return `[${v.map(inline).join(", ")}]`;
     if (v && typeof v === "object") {
       const entries = Object.entries(v);
-      return entries.length ? `{ ${entries.map(([k, val]) => `${IDENT.test(k) ? k : JSON.stringify(k)}: ${inline(val)}`).join(", ")} }` : "{}";
+      return entries.length ? `{ ${entries.map(([k, val]) => `${IDENT.test(k) ? k : JSON.stringify(k)}: ${member(v, k, () => inline(val))}`).join(", ")} }` : "{}";
     }
     return v === undefined ? "undefined" : JSON.stringify(v);
   };
@@ -126,7 +147,7 @@ export function specToJsx(spec: Record<string, unknown>, byName: Map<string, Com
     if (Array.isArray(v)) return `[\n${v.map((item) => `${pad(level + 1)}${value(item, level + 1)},`).join("\n")}\n${pad(level)}]`;
     if (v && typeof v === "object") {
       return `{\n${Object.entries(v)
-        .map(([k, val]) => `${pad(level + 1)}${IDENT.test(k) ? k : JSON.stringify(k)}: ${value(val, level + 1)},`)
+        .map(([k, val]) => `${pad(level + 1)}${IDENT.test(k) ? k : JSON.stringify(k)}: ${member(v, k, () => value(val, level + 1))},`)
         .join("\n")}\n${pad(level)}}`;
     }
     return flat;
@@ -294,6 +315,10 @@ export class Output {
 
   add(path: string, content: string) {
     this.files.set(path, content.endsWith("\n") ? content : `${content}\n`);
+  }
+
+  has(path: string) {
+    return this.files.has(path);
   }
 
   json(path: string, value: unknown) {

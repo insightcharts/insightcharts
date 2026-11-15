@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BareDemo } from "@/components/mdx/demo";
+import { AgentActions } from "@/components/site/agent-actions";
+import { agentPrompt } from "@/lib/agent";
 import { social, storiesCard } from "@/lib/og";
 import { STORIES } from "@/lib/stories";
 
@@ -15,11 +17,15 @@ export const metadata: Metadata = {
 const link = "font-medium text-foreground underline decoration-border underline-offset-4 hover:decoration-foreground";
 
 export default function Stories() {
+  const agent = agentPrompt("/stories");
   return (
     <main id="content" className="min-w-0 pb-24">
       <header className="py-10 sm:py-14">
         <p className="mb-3 font-mono text-xs tracking-wide text-muted-foreground">{STORIES.length} examples</p>
-        <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Scroll stories</h1>
+        <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
+          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Scroll stories</h1>
+          <AgentActions href={agent.href} prefill={agent.prefill} markdownHref="/llms/guides/stories.md" />
+        </div>
         <p className="mt-4 max-w-[68ch] text-[17px] leading-7 text-muted-foreground text-pretty">
           Each story pins one chart and changes one prop at every step. Scroll the page, use the arrow buttons under a chart, or focus a story and press the left and right arrow keys. <Link href="/docs/stories" className={link}>Read the guide</Link>.
         </p>

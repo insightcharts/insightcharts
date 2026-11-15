@@ -106,6 +106,16 @@ Defaults: `lazy` is true, so a chart mounts when it scrolls within 200px of the 
 - `onReady(chart)` and a ref (`getInstance()`, `getOption()`, `export()`) give you the ECharts instance.
 - `Chart` and `Figure` from `insightcharts/core` render a raw ECharts option inside the same figure chrome when no component fits. Core registers no series types itself, so register the ones you draw: `echarts.use([ScatterChart])` with `echarts` from `insightcharts/core` and `ScatterChart` from `echarts/charts`.
 
+### Instructions for one page or one component
+
+Every page of the site has a self-contained prompt written to a coding agent. Its URL is the page's path under `/agents` with `.md` added.
+
+- The whole method and how to choose a form: `https://insightcharts.dev/agents/index.md`
+- One guide (install, data, theming and so on): `https://insightcharts.dev/agents/docs/<guide>.md`
+- How to choose within a level: `https://insightcharts.dev/agents/atoms.md`, `https://insightcharts.dev/agents/molecules.md`, `https://insightcharts.dev/agents/templates.md`, `https://insightcharts.dev/agents/infographics.md`
+- One component, with its props, data shape, example and checklist: `https://insightcharts.dev/agents/<atoms|molecules|templates>/<name>.md`
+- Ready-made prompts for common jobs: `https://insightcharts.dev/agents/docs/agents/prompts.md`
+
 ### Components
 
 **Atoms (61)**
@@ -418,6 +428,8 @@ To change colours, change the theme (see the theming guide), not individual char
 - Can it be read with no hover, at 380px wide, and in dark mode?
 - Is there a `subtitle` naming the measure and a `source`?
 - Would a sentence or a `big-number` show the same fact?
+
+Once you have chosen, the instructions for that component (install, import, props, data shape, a working example and a checklist) are at `https://insightcharts.dev/agents/<atoms|molecules|templates>/<name>.md`.
 
 ---
 
@@ -23629,7 +23641,10 @@ The file lands at `components/insightcharts/molecules/small-multiple-grid.tsx`. 
 ### Usage
 
 ```tsx
-import { BarChart, SmallMultipleGrid } from "insightcharts";
+import { BarChart, SmallMultipleGrid, registerComponents } from "insightcharts";
+
+// Specs passed as data are resolved by name when rendered.
+registerComponents({ BarChart });
 
 const data = [
   { country: "Netherlands", age: "16-24", Usually: 18, Sometimes: 22 },
@@ -23673,17 +23688,18 @@ const data = [
   columns={3}
   panelHeight={170}
   legend={["Usually", "Sometimes"]}
-  chart={<BarChart
-    x="age"
-    y={["Usually", "Sometimes"]}
-    stack
-    sort="none"
-    orientation="horizontal"
-    format="{value}%"
-    labels={false}
-    legend={false}
-    option={{ xAxis: { max: 70 } }}
-  />}
+  chart={{
+    type: "bar-chart",
+    x: "age",
+    y: ["Usually", "Sometimes"],
+    stack: true,
+    sort: "none",
+    orientation: "horizontal",
+    format: "{value}%",
+    labels: false,
+    legend: false,
+    option: { xAxis: { max: 70 } },
+  }}
   source="Eurostat, Labour Force Survey"
   note="Rounded, illustrative"
 />
@@ -23787,7 +23803,10 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 #### Shared highlight, two columns, emphasised panel
 
 ```tsx
-import { BarChart, SmallMultipleGrid } from "insightcharts";
+import { BarChart, SmallMultipleGrid, registerComponents } from "insightcharts";
+
+// Specs passed as data are resolved by name when rendered.
+registerComponents({ BarChart });
 
 const data = [
   { country: "Netherlands", age: "16-24", Usually: 18, Sometimes: 22 },
@@ -23809,7 +23828,14 @@ const data = [
   columns={2}
   highlight="25-34"
   emphasis="Netherlands"
-  chart={<BarChart x="age" y="Usually" sort="none" orientation="vertical" format="{value}%" />}
+  chart={{
+    type: "bar-chart",
+    x: "age",
+    y: "Usually",
+    sort: "none",
+    orientation: "vertical",
+    format: "{value}%",
+  }}
   note="Illustrative data"
 />
 ```
@@ -23817,7 +23843,10 @@ const data = [
 #### A waffle chart in each panel, science theme
 
 ```tsx
-import { SmallMultipleGrid, WaffleChart } from "insightcharts";
+import { SmallMultipleGrid, WaffleChart, registerComponents } from "insightcharts";
+
+// Specs passed as data are resolved by name when rendered.
+registerComponents({ WaffleChart });
 
 const data = [
   { region: "Europe", group: "Online", share: 91 },
@@ -23831,7 +23860,7 @@ const data = [
   data={data}
   facet="region"
   panelHeight={150}
-  chart={<WaffleChart name="group" value="share" total={100} legend={false} />}
+  chart={{ type: "waffle-chart", name: "group", value: "share", total: 100, legend: false }}
   title="91% of people in Europe used the internet in 2023"
   subtitle="Share of the population using the internet, by region, 2023"
   source="ITU Facts and Figures 2023"
@@ -23842,7 +23871,10 @@ const data = [
 #### A dumbbell chart in each panel, forest theme
 
 ```tsx
-import { DumbbellChart, SmallMultipleGrid } from "insightcharts";
+import { DumbbellChart, SmallMultipleGrid, registerComponents } from "insightcharts";
+
+// Specs passed as data are resolved by name when rendered.
+registerComponents({ DumbbellChart });
 
 const data = [
   { reserve: "Alder Marsh", species: "Osprey", y2014: 4, y2024: 11 },
@@ -23865,15 +23897,16 @@ const data = [
   columns={2}
   highlight="Osprey"
   emphasis="Alder Marsh"
-  chart={<DumbbellChart
-    category="species"
-    from="y2014"
-    to="y2024"
-    names={{ y2014: "2014", y2024: "2024" }}
-    sort="none"
-    format="integer"
-    legend={false}
-  />}
+  chart={{
+    type: "dumbbell-chart",
+    category: "species",
+    from: "y2014",
+    to: "y2024",
+    names: { y2014: "2014", y2024: "2024" },
+    sort: "none",
+    format: "integer",
+    legend: false,
+  }}
   source="Reserve breeding surveys"
   note="Illustrative data for fictional reserves"
 />
@@ -35675,7 +35708,10 @@ The file lands at `components/insightcharts/templates/visual-essay.tsx`. `@insig
 ### Usage
 
 ```tsx
-import { BarChart, LineChart, VisualEssay } from "insightcharts";
+import { BarChart, LineChart, VisualEssay, registerComponents } from "insightcharts";
+
+// Specs passed as data are resolved by name when rendered.
+registerComponents({ BarChart });
 
 <VisualEssay
   theme="editorial"
@@ -35797,26 +35833,27 @@ import { BarChart, LineChart, VisualEssay } from "insightcharts";
     },
     {
       kind: "scrolly",
-      chart: <BarChart
-        data={[
+      chart: {
+        type: "bar-chart",
+        data: [
           { source: "Nuclear", y2015: 26.5, y2024: 23.7 },
           { source: "Coal", y2015: 24.6, y2024: 9.8 },
           { source: "Gas", y2015: 15.8, y2024: 15.7 },
           { source: "Hydro", y2015: 11.5, y2024: 12.5 },
           { source: "Wind", y2015: 9.3, y2024: 17.4 },
           { source: "Solar", y2015: 2.9, y2024: 11.1 },
-        ]}
-        x="source"
-        y="y2015"
-        sort="none"
-        orientation="horizontal"
-        format="{value}%"
-        height={320}
-        title="EU electricity generation by source, 2015"
-        subtitle="Share of electricity generation"
-        source="Ember, European Electricity Review 2025"
-        option={{ xAxis: { max: 30 } }}
-      />,
+        ],
+        x: "source",
+        y: "y2015",
+        sort: "none",
+        orientation: "horizontal",
+        format: "{value}%",
+        height: 320,
+        title: "EU electricity generation by source, 2015",
+        subtitle: "Share of electricity generation",
+        source: "Ember, European Electricity Review 2025",
+        option: { xAxis: { max: 30 } },
+      },
       stepHeight: "70vh",
       stickyTop: 16,
       steps: [

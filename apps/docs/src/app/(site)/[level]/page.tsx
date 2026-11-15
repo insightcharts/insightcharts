@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ComponentCard } from "@/components/catalog/component-card";
+import { AgentActions } from "@/components/site/agent-actions";
 import { DocsPage } from "@/components/site/docs-shell";
+import { agentPrompt } from "@/lib/agent";
 import { Heading } from "@/components/site/heading";
 import { ArrowRight } from "lucide-react";
 import { levelCard, social } from "@/lib/og";
@@ -31,13 +33,17 @@ export default async function LevelIndex({ params }: { params: Promise<{ level: 
   const posters = info.level === "template" ? infographics() : [];
   const total = groups.reduce((n, g) => n + g.items.length, 0);
   const i = LEVELS.indexOf(info);
+  const agent = agentPrompt(`/${info.slug}`);
   return (
     <DocsPage wide toc={groups.map((g) => ({ id: g.category, title: g.title, depth: 2 }))}>
       <header>
         <p className="mb-2 text-sm text-muted-foreground">
           Level {i + 1} of 3{total ? <span className="tabular-nums"> · {total} {total === 1 ? "component" : "components"}</span> : null}
         </p>
-        <h1 className="text-3xl font-semibold tracking-tight">{info.title}</h1>
+        <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
+          <h1 className="text-3xl font-semibold tracking-tight">{info.title}</h1>
+          <AgentActions href={agent.href} prefill={agent.prefill} markdownHref="/llms.txt" />
+        </div>
         <p className="mt-3 max-w-[66ch] text-[17px] leading-7 text-muted-foreground text-pretty">{info.summary}</p>
       </header>
 

@@ -197,3 +197,5 @@ To change colours, change the theme (see the theming guide), not individual char
 - Can it be read with no hover, at 380px wide, and in dark mode?
 - Is there a `subtitle` naming the measure and a `source`?
 - Would a sentence or a `big-number` show the same fact?
+
+Once you have chosen, the instructions for that component (install, import, props, data shape, a working example and a checklist) are at `https://insightcharts.dev/agents/<atoms|molecules|templates>/<name>.md`.

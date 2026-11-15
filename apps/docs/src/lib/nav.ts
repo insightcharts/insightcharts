@@ -29,6 +29,11 @@ export function getNav(): NavGroup[] {
     } else if (node.type === "page") {
       if (!current) guides.push((current = { title: "Guides", blocks: [{ items: [] }] }));
       current.blocks[0].items.push({ title: String(node.name), href: node.url });
+    } else if (node.type === "folder") {
+      // A folder of guides is a group of its own: "For agents".
+      const items = [...(node.index ? [node.index] : []), ...node.children.filter((child) => child.type === "page")].map((page) => ({ title: String(page.name), href: page.url }));
+      guides.push({ title: String(node.name), blocks: [{ items }] });
+      current = undefined;
     }
   }
   const levels: NavGroup[] = LEVELS.map((l) => {
@@ -55,4 +60,8 @@ export function guideOrder(): NavItem[] {
     .flatMap((g) => g.blocks.flatMap((b) => b.items));
 }
 
-export const topNav: NavItem[] = [{ title: "Docs", href: "/docs" }, ...LEVELS.map((l) => ({ title: l.title, href: `/${l.slug}` })), { title: INFOGRAPHICS.title, href: `/${INFOGRAPHICS.slug}`, paths: infographics().map(hrefOf) }, { title: "Stories", href: "/stories" }];
+/** The "For agents" pages, a folder of the guides with a top-level entry of its own. */
+export const AGENTS_HREF = "/docs/agents";
+const agentPages = () => source.getPages().map((p) => p.url).filter((url) => url === AGENTS_HREF || url.startsWith(`${AGENTS_HREF}/`));
+
+export const topNav: NavItem[] = [{ title: "Docs", href: "/docs" }, { title: "For agents", href: AGENTS_HREF, paths: agentPages() }, ...LEVELS.map((l) => ({ title: l.title, href: `/${l.slug}` })), { title: INFOGRAPHICS.title, href: `/${INFOGRAPHICS.slug}`, paths: infographics().map(hrefOf) }, { title: "Stories", href: "/stories" }];

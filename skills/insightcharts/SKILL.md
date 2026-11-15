@@ -246,3 +246,10 @@ Do not use dual axes, gauges, 3D, or pies with more than five slices.
 - `references/recipes.md`: complete patterns (ranking with a highlight, top-N plus Other, indexed growth, stat row, server loading, specs).
 
 Online: `https://insightcharts.dev/llms.txt` indexes a markdown page per component and guides on theming, crossfiltering, Scrolly, infographics, export and the JSON spec.
+
+Each page of the site also has a self-contained prompt for one job, at the page's path under `/agents` with `.md` added:
+
+- One component, with its props, data shape, a working example, the rules for its form and a checklist: `https://insightcharts.dev/agents/<atoms|molecules|templates>/<name>.md`, for example `https://insightcharts.dev/agents/atoms/bar-chart.md`.
+- How to choose within a level: `https://insightcharts.dev/agents/atoms.md`, `molecules.md`, `templates.md` and `infographics.md`.
+- One guide as executable steps: `https://insightcharts.dev/agents/docs/<guide>.md` (`installation`, `quickstart`, `data`, `theming`, `crossfiltering`, `stories`, `templates`, `infographics`, `export`, `json-spec`).
+- Ready-made prompts for common jobs (a chart from a CSV, a KPI row, an executive brief, a scroll story, a cross-filtered explorer, a poster, a brand theme, converting a Recharts or Chart.js chart): `https://insightcharts.dev/agents/docs/agents/prompts.md`.

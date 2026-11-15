@@ -35,7 +35,10 @@ The file lands at `components/insightcharts/molecules/small-multiple-grid.tsx`. 
 ## Usage
 
 ```tsx
-import { BarChart, SmallMultipleGrid } from "insightcharts";
+import { BarChart, SmallMultipleGrid, registerComponents } from "insightcharts";
+
+// Specs passed as data are resolved by name when rendered.
+registerComponents({ BarChart });
 
 const data = [
   { country: "Netherlands", age: "16-24", Usually: 18, Sometimes: 22 },
@@ -79,17 +82,18 @@ const data = [
   columns={3}
   panelHeight={170}
   legend={["Usually", "Sometimes"]}
-  chart={<BarChart
-    x="age"
-    y={["Usually", "Sometimes"]}
-    stack
-    sort="none"
-    orientation="horizontal"
-    format="{value}%"
-    labels={false}
-    legend={false}
-    option={{ xAxis: { max: 70 } }}
-  />}
+  chart={{
+    type: "bar-chart",
+    x: "age",
+    y: ["Usually", "Sometimes"],
+    stack: true,
+    sort: "none",
+    orientation: "horizontal",
+    format: "{value}%",
+    labels: false,
+    legend: false,
+    option: { xAxis: { max: 70 } },
+  }}
   source="Eurostat, Labour Force Survey"
   note="Rounded, illustrative"
 />
@@ -193,7 +197,10 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 ### Shared highlight, two columns, emphasised panel
 
 ```tsx
-import { BarChart, SmallMultipleGrid } from "insightcharts";
+import { BarChart, SmallMultipleGrid, registerComponents } from "insightcharts";
+
+// Specs passed as data are resolved by name when rendered.
+registerComponents({ BarChart });
 
 const data = [
   { country: "Netherlands", age: "16-24", Usually: 18, Sometimes: 22 },
@@ -215,7 +222,14 @@ const data = [
   columns={2}
   highlight="25-34"
   emphasis="Netherlands"
-  chart={<BarChart x="age" y="Usually" sort="none" orientation="vertical" format="{value}%" />}
+  chart={{
+    type: "bar-chart",
+    x: "age",
+    y: "Usually",
+    sort: "none",
+    orientation: "vertical",
+    format: "{value}%",
+  }}
   note="Illustrative data"
 />
 ```
@@ -223,7 +237,10 @@ const data = [
 ### A waffle chart in each panel, science theme
 
 ```tsx
-import { SmallMultipleGrid, WaffleChart } from "insightcharts";
+import { SmallMultipleGrid, WaffleChart, registerComponents } from "insightcharts";
+
+// Specs passed as data are resolved by name when rendered.
+registerComponents({ WaffleChart });
 
 const data = [
   { region: "Europe", group: "Online", share: 91 },
@@ -237,7 +254,7 @@ const data = [
   data={data}
   facet="region"
   panelHeight={150}
-  chart={<WaffleChart name="group" value="share" total={100} legend={false} />}
+  chart={{ type: "waffle-chart", name: "group", value: "share", total: 100, legend: false }}
   title="91% of people in Europe used the internet in 2023"
   subtitle="Share of the population using the internet, by region, 2023"
   source="ITU Facts and Figures 2023"
@@ -248,7 +265,10 @@ const data = [
 ### A dumbbell chart in each panel, forest theme
 
 ```tsx
-import { DumbbellChart, SmallMultipleGrid } from "insightcharts";
+import { DumbbellChart, SmallMultipleGrid, registerComponents } from "insightcharts";
+
+// Specs passed as data are resolved by name when rendered.
+registerComponents({ DumbbellChart });
 
 const data = [
   { reserve: "Alder Marsh", species: "Osprey", y2014: 4, y2024: 11 },
@@ -271,15 +291,16 @@ const data = [
   columns={2}
   highlight="Osprey"
   emphasis="Alder Marsh"
-  chart={<DumbbellChart
-    category="species"
-    from="y2014"
-    to="y2024"
-    names={{ y2014: "2014", y2024: "2024" }}
-    sort="none"
-    format="integer"
-    legend={false}
-  />}
+  chart={{
+    type: "dumbbell-chart",
+    category: "species",
+    from: "y2014",
+    to: "y2024",
+    names: { y2014: "2014", y2024: "2024" },
+    sort: "none",
+    format: "integer",
+    legend: false,
+  }}
   source="Reserve breeding surveys"
   note="Illustrative data for fictional reserves"
 />

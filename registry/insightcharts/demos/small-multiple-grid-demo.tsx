@@ -1,5 +1,8 @@
+import { registerComponents } from "insightcharts";
 import { SmallMultipleGrid } from "@/components/insightcharts/molecules/small-multiple-grid";
 import { BarChart } from "@/components/insightcharts/atoms/bar-chart";
+
+registerComponents({ BarChart });
 
 const data = [
   { country: "Netherlands", age: "16-24", Usually: 18, Sometimes: 22 },
@@ -45,17 +48,18 @@ export function SmallMultipleGridDemo() {
       columns={3}
       panelHeight={170}
       legend={["Usually", "Sometimes"]}
-      chart={<BarChart
-        x="age"
-        y={["Usually", "Sometimes"]}
-        stack
-        sort="none"
-        orientation="horizontal"
-        format="{value}%"
-        labels={false}
-        legend={false}
-        option={{ xAxis: { max: 70 } }}
-      />}
+      chart={{
+        type: "bar-chart",
+        x: "age",
+        y: ["Usually", "Sometimes"],
+        stack: true,
+        sort: "none",
+        orientation: "horizontal",
+        format: "{value}%",
+        labels: false,
+        legend: false,
+        option: { xAxis: { max: 70 } },
+      }}
       source="Eurostat, Labour Force Survey"
       note="Rounded, illustrative"
     />

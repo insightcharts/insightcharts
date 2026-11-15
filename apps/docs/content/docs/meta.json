@@ -5,6 +5,7 @@
     "index",
     "installation",
     "quickstart",
+    "agents",
     "---Core concepts---",
     "data",
     "theming",
@@ -19,7 +20,6 @@
     "---Going further---",
     "json-spec",
     "escape-hatch",
-    "accessibility",
-    "ai-agents"
+    "accessibility"
   ]
 }

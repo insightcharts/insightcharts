@@ -1,0 +1,216 @@
+# Build an Unit blocks with InsightCharts
+
+These are instructions for an AI coding agent (Claude Code, Cursor, Codex or similar) working in the user's project. Library: InsightCharts, a React chart library for infographics and data stories, built on Apache ECharts 6. Package: `insightcharts` version 0.1.0 on npm. Peer dependencies: `echarts` >=6.0.0, `react` >=18, `react-dom` >=18.
+
+Task: add an Unit blocks (`unit-blocks`, a poster primitive (atom)) to the user's project, drawing the user's data. If the user has not given you the data and the one fact to show, ask for both before you write code.
+
+## 1. Check that this is the right component
+
+Shows the size of each group as a solid block of small icons, one icon per fixed number of units.
+
+Use it when: Large counts of people or things in 2 to 12 groups, where the reader should see the crowd itself: 20,350 marathon finishers by age group, one figure per 10 runners.
+
+Pick something else when: Precise comparison of close values (use block-bar or bar-chart); fewer than about 30 icons per group (use pictogram-chart or icon-array-grid); shares of one whole (use waffle-chart).
+
+Instructions for the alternatives: `icon-array-grid` https://insightcharts.dev/agents/atoms/icon-array-grid.md, `pictogram-chart` https://insightcharts.dev/agents/atoms/pictogram-chart.md, `waffle-chart` https://insightcharts.dev/agents/atoms/waffle-chart.md, `bar-chart` https://insightcharts.dev/agents/atoms/bar-chart.md, `block-bar` https://insightcharts.dev/agents/atoms/block-bar.md.
+
+## 2. Install
+
+Find the package manager from the lockfile (`pnpm-lock.yaml`, `yarn.lock`, `bun.lock`, otherwise npm). Skip this step if `insightcharts` is already in `package.json`. If the project has `components/insightcharts/`, import from that folder instead of the package.
+
+From npm (use the project's package manager):
+
+```bash
+npm install insightcharts echarts      # or: pnpm add / yarn add / bun add
+```
+
+Or copy the component's source into the project with the shadcn CLI, when the user wants to edit it. The project needs a `components.json`. The CLI also installs the `insightcharts` package, because the engine still comes from it.
+
+```bash
+npx shadcn@latest registry add @insightcharts=https://insightcharts.dev/r/{name}.json   # once per project
+npx shadcn@latest add @insightcharts/unit-blocks
+```
+
+The file lands at `components/insightcharts/atoms/unit-blocks.tsx`. Import the component from there when you install it this way.
+
+## 3. Import
+
+```tsx
+import { UnitBlocks } from "insightcharts";
+```
+
+In Next.js the component can be imported into a server component when every prop is plain data. A file that passes a function prop must start with `"use client"`.
+
+## 4. Data
+
+Pass `data` as an array of row objects. CSV text, a URL, `{ url, path }`, an async function and an Arrow-style table also work. Field props are strings that name columns of the rows. The example's rows look like this:
+
+```json
+[
+  { "age": "Under 30", "finishers": 4180 },
+  { "age": "30 to 39", "finishers": 6920 },
+  { "age": "40 to 49", "finishers": 5340 }
+]
+```
+
+How the example maps columns to props:
+
+- `name` = `"age"`. Group field: one block of icons per row of data.
+- `value` = `"finishers"`. Value field: the quantity each block counts out.
+
+With the user's data, keep the props and change the column names.
+
+## 5. Working example
+
+```tsx
+import { UnitBlocks } from "insightcharts";
+
+const data = [
+  { age: "Under 30", finishers: 4180 },
+  { age: "30 to 39", finishers: 6920 },
+  { age: "40 to 49", finishers: 5340 },
+  { age: "50 to 59", finishers: 2760 },
+  { age: "60 and over", finishers: 1150 },
+];
+
+<UnitBlocks
+  theme="noir"
+  data={data}
+  name="age"
+  value="finishers"
+  unit={10}
+  unitLabel="10 finishers"
+  format="integer"
+  title="6,920 of the 20,350 finishers were aged 30 to 39"
+  subtitle="Finishers of the Lakeshore Marathon by age group, 2025"
+  source="Illustrative data"
+  note="Invented figures for a fictional race"
+/>
+```
+
+Put the element in the `return` of a component. The same thing as a JSON spec, rendered with `<Insight spec={spec} />` (`import { Insight } from "insightcharts"`):
+
+```json
+{
+  "theme": "noir",
+  "type": "unit-blocks",
+  "data": [
+    { "age": "Under 30", "finishers": 4180 },
+    { "age": "30 to 39", "finishers": 6920 },
+    { "age": "40 to 49", "finishers": 5340 },
+    { "age": "50 to 59", "finishers": 2760 },
+    { "age": "60 and over", "finishers": 1150 }
+  ],
+  "name": "age",
+  "value": "finishers",
+  "unit": 10,
+  "unitLabel": "10 finishers",
+  "format": "integer",
+  "title": "6,920 of the 20,350 finishers were aged 30 to 39",
+  "subtitle": "Finishers of the Lakeshore Marathon by age group, 2025",
+  "source": "Illustrative data",
+  "note": "Invented figures for a fictional race"
+}
+```
+
+This example sets `theme="noir"`, a built-in poster theme that paints its own background behind the component. Keep it to reproduce the look. Remove `theme` to follow the host page instead, or keep the colours and set `frame={false}` to drop the painted background.
+
+## Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `name` (required) | `string` |  | Group field: one block of icons per row of data. |
+| `value` (required) | `string` |  | Value field: the quantity each block counts out. |
+| `unit` | `number` |  | Units per icon. Default: a round number that gives about 2,000 icons in total. |
+| `unitLabel` | `string` |  | What one icon stands for, for the key line, e.g. "10 finishers". |
+| `icon` | `IconName \| "path://..."` | `"person"` | Built-in icon name or a custom single SVG path. |
+| `series` | `string` |  | Field that colours the blocks. Default: one colour per group, up to eight groups. |
+| `layout` | `"packed" \| "columns"` | `"packed"` | `packed`: equal block heights, widths follow the counts. `columns`: equal widths, blocks grow upwards from a baseline. |
+| `columns` | `number` |  | Blocks per line in the `columns` layout. Default: all, two on a phone. |
+| `iconSize` | `number` |  | Icon height in px. Default: the largest that fits, chosen per chart. To put two charts on one scale, give both the same `unit` and `iconSize`: the icon size, the gaps and the worth of an icon are then identical and the chart takes the height it needs. |
+| `sort` | `"none" \| "asc" \| "desc"` | `"none"` | Order of the blocks. |
+
+Every chart also accepts these common props:
+
+| Prop | Type | Description |
+|---|---|---|
+| `data` | `DataInput` | Rows, CSV text, a URL, `{ url, path }`, an async function, or an Arrow-style table. Omit inside `<InsightData>`. |
+| `transform` | `Transform \| Transform[]` | A pipeline of transforms applied before drawing. |
+| `title` | `string` | The title. One plain statement of what the data shows, with the number and the period ("Monthly churn fell from 4.2% to 2.1% in 2024"), or a plain label ("Monthly churn, 2024"). One clause, no figures of speech. |
+| `subtitle` | `string` | Measure, unit, population, period. |
+| `source` | `string` | Data source, shown as "Source: ...". |
+| `note` | `string` | Method notes or caveats. |
+| `height` | `number \| string` | CSS height of the plot. Default 360. |
+| `aspect` | `number` | Width / height. Overrides `height`. |
+| `highlight` | `string \| string[]` | The entity (or entities) the title is about. Every other series is drawn in grey. |
+| `annotations` | `Annotation[]` | Reference lines, shaded bands and callouts, in data coordinates. |
+| `format` | `FormatSpec` | How to print values: `"compact"`, `"percent"`, `"currency:USD"`, `"{value} kg"`, Intl options, or a function. |
+| `legend` | `boolean` | Show the legend. Default: shown when there are two or more series. |
+| `select` | `boolean \| string` | Make marks clickable to filter. Inside `<InsightData>` the selection filters every other chart. Pass a field name, or `true` to use the chart's category field. |
+| `onSelect` | `(values: string[], field: string) => void` | Called with the selected values whenever the selection changes. |
+| `option` | `EChartsOption \| ((option: EChartsOption, ctx: BuildContext) => EChartsOption)` | Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers. |
+| `theme` | `ThemeInput` | A built-in theme name (`"editorial"`, `"ledger"`, `"noir"`...), or a theme object. A named theme paints its own background behind the chart. |
+| `frame` | `boolean` | Paint the theme's background behind the chart. Default: on for a named theme with its own surface. |
+| `mode` | `ModeInput` | `"auto"` (default) follows the page, `"system"` follows the OS, or force `"light"` / `"dark"`. |
+| `renderer` | `RendererInput` | `"auto"` (default) uses SVG for light charts and canvas for heavy ones. |
+| `animate` | `boolean` | Set false to disable animation for this chart. Reduced-motion preferences are always respected. |
+| `lazy` | `boolean` | Mount the chart only when it scrolls within 200px of the viewport. Default true (from `InsightProvider`). |
+| `group` | `string` | Link tooltips with other charts sharing this group id. |
+| `exportable` | `boolean \| ExportFormat[]` | Show an export menu: `true` or a list of formats from png, jpeg, svg, pdf, csv, json. |
+| `table` | `boolean` | Show a collapsible "View data" table under the chart. |
+| `alt` | `string` | Accessible description: the chart type and measures, then the main pattern and the notable values. |
+| `id` | `string` | Stable id for this chart's selection in the shared store. |
+| `onEvents` | `Record<string, ChartEventHandler>` | ECharts event handlers: `{ click: (params, chart) => {} }`. |
+| `onReady` | `(chart: EChartsInstance) => void` | Called with the ECharts instance once it is initialised. |
+| `className` | `string` | Class on the figure element. |
+| `style` | `CSSProperties` | Inline style on the figure element. |
+
+## Composition
+
+- Built from: nothing. It is a primitive.
+- Used by: `count-poster` (template)
+
+## Rules for this form
+
+- The value is printed on or beside each mark. There are no axes or gridlines by default, so do not remove the labels.
+- Area and count encodings are allowed here because the value is always printed.
+- The component sets its own height from its content. Do not force a `height` unless the layout needs one.
+- One icon stands for a fixed count (`unit`). Say what one icon is worth in `unitLabel` or `subtitle`. Icons are counted. Never scale an icon by area.
+- An icon prop takes a built-in icon name or a `path://` string holding one SVG path. A name that is not built in falls back to another icon, so use only the names in the icons guide.
+- Do not set colours per series. Set `highlight` to the one or two entities the title is about. The others are drawn in grey.
+- Use at most three `annotations`. Their values must match values in the data.
+- No dual axes and no 3D. The chart must read without hovering.
+- Write `title` as one plain statement of fact with its number and its period, in one clause ("Monthly churn fell from 4.2% to 2.1% in 2024"), or as a plain label ("Monthly churn, 2024"). No metaphors, no dramatic verbs, no second half joined with a comma, "and" or a dash.
+
+## Accessibility
+
+- The chart is exposed as an image (`role="img"`) with a description the component writes from the data. Set `alt` when the title states a different fact from that description: chart type and measures first, then the main pattern and the notable values.
+- Set `table` to add a collapsible "View data" table under the chart, for readers who need exact values or use a screen reader.
+- The title is a heading, the legend a list and the source a `<figcaption>`. Do not repeat them in surrounding markup.
+
+## Verify
+
+- [ ] The project typechecks (`npx tsc --noEmit`). Props are typed, so a misspelt prop is an error in JSX.
+- [ ] A JSON spec validates against https://insightcharts.dev/schema/insight-spec.json. Unknown props fail.
+- [ ] It renders in a browser at desktop width and at about 380px wide with no clipped or overlapping text.
+- [ ] It reads in light and in dark mode.
+- [ ] The title is one clause that states one fact with its number and period, or it is a plain label.
+- [ ] Every number in the text can be found in the data or computed from it.
+- [ ] `source` is set.
+- [ ] One entity is highlighted and the others are grey, or the chart has one series.
+- [ ] The chart can be read without hovering.
+- [ ] No example data or example text is left in place.
+
+## Reference
+
+- Component reference with every example: https://insightcharts.dev/llms/unit-blocks.md
+- Registry item: https://insightcharts.dev/r/unit-blocks.json
+- Source: https://github.com/insightcharts/insightcharts/blob/main/packages/insightcharts/src/atoms/unit-blocks.tsx
+- How to choose a different atom: https://insightcharts.dev/agents/atoms.md
+- This page: https://insightcharts.dev/atoms/unit-blocks
+- These instructions as plain text: https://insightcharts.dev/agents/atoms/unit-blocks.md
+- Instructions for one component: https://insightcharts.dev/agents/<atoms|molecules|templates>/<name>.md
+- Every guide, component and prompt: https://insightcharts.dev/llms.txt
+- JSON Schema for specs: https://insightcharts.dev/schema/insight-spec.json
+- Component manifest: https://insightcharts.dev/schema/manifest.json
+- Registry catalogue: https://insightcharts.dev/r/registry.json

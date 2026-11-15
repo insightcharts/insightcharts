@@ -1,0 +1,136 @@
+# Reference endpoints
+
+These are instructions for an AI coding agent (Claude Code, Cursor, Codex or similar) working in the user's project. Library: InsightCharts, a React chart library for infographics and data stories, built on Apache ECharts 6. Package: `insightcharts` version 0.1.0 on npm. Peer dependencies: `echarts` >=6.0.0, `react` >=18, `react-dom` >=18.
+
+Every URL on this page is a static file on this site. The files are generated from the library source and the component metadata, and rebuilt on every release. Read these files instead of the HTML pages. They have the same content without the page layout.
+
+## Endpoints
+
+| Resource | URL | Contents |
+|---|---|---|
+| Index | https://insightcharts.dev/llms.txt | Every guide, component and agent prompt, with one line each. |
+| Everything | https://insightcharts.dev/llms-full.txt | All guides and all component reference pages in one file. |
+| One component reference | `https://insightcharts.dev/llms/<name>.md` | Description, when to use and avoid, install, props, example JSX and JSON for one component. |
+| One guide | `https://insightcharts.dev/llms/guides/<slug>.md` | The long guides written for agents: quickstart, choosing-a-form, common-props, data, theming, crossfiltering, stories, infographics, export, json-spec, recipes. |
+| Home prompt | https://insightcharts.dev/agents/index.md | The strategic instructions: what the library is, how to choose a form, how to install, the working method. |
+| Guide prompt | `https://insightcharts.dev/agents/docs/<slug>.md` | Operational instructions for one guide: the steps, the API, an example, how to verify. The introduction is `/agents/docs.md`. |
+| Index prompt | `https://insightcharts.dev/agents/<index>.md` | How to choose among the components of one level, as a decision table. `<index>` is `atoms`, `molecules`, `templates`, `infographics` or `stories`. |
+| Component prompt | `https://insightcharts.dev/agents/<level>/<name>.md` | Tactical instructions for one component: install, import, props, data shape, JSX, JSON spec, rules, checklist. `<level>` is `atoms`, `molecules` or `templates`. |
+| Example prompt | `https://insightcharts.dev/agents/<level>/<name>/<example>.md` | The component prompt with one example's exact code and theme. |
+| Prompt library | `https://insightcharts.dev/agents/prompts/<id>.md` | Ready-to-copy prompts for common jobs. |
+| Prompt list | https://insightcharts.dev/agents/index.json | Every prompt as JSON: path, title and kind. |
+| Spec schema | https://insightcharts.dev/schema/insight-spec.json | JSON Schema (draft-07) for a spec. Unknown components and props fail validation. |
+| Manifest | https://insightcharts.dev/schema/manifest.json | Every component's metadata as data: name, level, category, props, example, what it composes. |
+| Registry index | https://insightcharts.dev/r/registry.json | The shadcn registry: every installable item. |
+| One registry item | `https://insightcharts.dev/r/<name>.json` | The source of one component as the shadcn CLI installs it. `/r/<name>-demo.json` adds an example file. |
+| Theme variables | https://insightcharts.dev/r/theme.json | Registry item that adds the `--ic-*` CSS variables to the project's stylesheet. |
+| Spec renderer | https://insightcharts.dev/r/insight.json | Registry item with an `Insight` wrapper that can register customised local components. |
+| Agent skill | https://insightcharts.dev/r/agent-skill.json | The skill as a registry item for `.claude/skills/insightcharts`. `/r/agent-skill-agents.json` installs to `.agents/skills/insightcharts`. |
+
+## Choose an endpoint
+
+| You need | Fetch |
+|---|---|
+| To start a task with no context | `https://insightcharts.dev/agents/index.md` |
+| A list of everything | `https://insightcharts.dev/llms.txt` |
+| Everything in one request | `https://insightcharts.dev/llms-full.txt` |
+| Instructions for one component | `https://insightcharts.dev/agents/<level>/<name>.md`, where `<level>` is `atoms`, `molecules` or `templates` |
+| Instructions that reproduce one example | `https://insightcharts.dev/agents/<level>/<name>/<example-slug>.md` |
+| The reference page of one component | `https://insightcharts.dev/llms/<name>.md` |
+| To choose among the components of a level | `https://insightcharts.dev/agents/atoms.md`, `/agents/molecules.md`, `/agents/templates.md`, `/agents/infographics.md` |
+| To validate a spec or constrain a model | `https://insightcharts.dev/schema/insight-spec.json` |
+| Every component's metadata as data | `https://insightcharts.dev/schema/manifest.json` |
+| The source of one component | `https://insightcharts.dev/r/<name>.json` |
+
+## Find the instructions for a page
+
+Every page of this site has a "Copy agent instructions" button. The same text is at a URL built from the page's path.
+
+| Page | Instructions |
+|---|---|
+| `/` | `/agents/index.md` |
+| `/docs/<slug>` | `/agents/docs/<slug>.md` |
+| `/atoms`, `/molecules`, `/templates`, `/infographics`, `/stories` | `/agents/atoms.md` and so on |
+| `/atoms/<name>`, `/molecules/<name>`, `/templates/<name>` | `/agents/<level>/<name>.md` |
+| One example on a component page | `/agents/<level>/<name>/<example-slug>.md` |
+| A prompt in the [prompt library](https://insightcharts.dev/docs/agents/prompts) | `/agents/prompts/<id>.md` |
+
+Each component page also declares its `/llms/<name>.md` file as a `text/markdown` alternate in its `<head>`.
+
+## Component metadata
+
+Each component carries a `meta` object. Every file on this page is generated from it.
+
+```ts
+BarChart.meta = {
+  name: "bar-chart",              // the spec type and registry id
+  component: "BarChart",          // the React export
+  title: "Bar chart",
+  level: "atom",                  // atom | molecule | template
+  category: "comparison",         // "poster" marks a poster primitive, "infographic" an infographic template
+  description: "Compares a value across categories with bars from a zero baseline.",
+  whenToUse: "Ranking or comparing up to about 20 categories ...",
+  avoid: "Change over many time points (use line-chart) ...",
+  props: [{ name: "x", type: "string", required: true, description: "Category field." }],
+  composes: [],                   // what it is built from
+  example: { type: "bar-chart", data: [...], x: "country", y: "share" },
+};
+```
+
+| Field | Use it for |
+|---|---|
+| `name` | The `type` of a spec and the registry item name. |
+| `component` | The named import from `insightcharts`. |
+| `level`, `category` | Finding the component in the catalogue. |
+| `whenToUse`, `avoid` | Choosing a form. `avoid` names the component to use instead. |
+| `props` | Each prop's `name`, `type`, `description`, `default` and `required`. |
+| `composes` | The components it is built from. |
+| `example` | A complete working spec. |
+
+The same metadata for every component is in `https://insightcharts.dev/schema/manifest.json`, under `components`.
+
+## Read the metadata at runtime
+
+`listComponents()` returns the metadata of every registered component. Call `registerAll()` first, or render an `Insight` once, so that every component is registered.
+
+```ts
+import { listComponents, registerAll } from "insightcharts";
+
+registerAll();
+const charts = listComponents().filter((meta) => meta.category === "comparison");
+```
+
+`getComponent(type)` returns the registered component for a name. A component's own metadata is on the component: `BarChart.meta`.
+
+## The registry
+
+The components are published as a shadcn registry under the `@insightcharts` namespace.
+
+| URL | Contents |
+|---|---|
+| `https://insightcharts.dev/r/registry.json` | The catalogue of every installable item. |
+| `https://insightcharts.dev/r/<name>.json` | The source of one component, as the shadcn CLI installs it. |
+| `https://insightcharts.dev/r/<name>-demo.json` | The same component with a ready-made example. |
+| `https://insightcharts.dev/r/theme.json` | The `--ic-*` CSS variables for light and dark. |
+| `https://insightcharts.dev/r/insight.json` | A local `Insight` spec renderer. |
+| `https://insightcharts.dev/r/agent-skill.json` | The agent skill, installed in `.claude/skills/insightcharts`. |
+| `https://insightcharts.dev/r/agent-skill-agents.json` | The agent skill, installed in `.agents/skills/insightcharts`. |
+
+The `components.json` entry and the install commands are on [Set up your agent](https://insightcharts.dev/docs/agents/setup).
+
+## The repository
+
+- Source: `https://github.com/insightcharts/insightcharts`
+- The skill: `https://github.com/insightcharts/insightcharts/tree/main/skills/insightcharts`
+- The contributor guide: `AGENTS.md` at the root of the repository. Read it before you write a new component or make a non-trivial edit to one.
+
+## Reference
+
+- This page: https://insightcharts.dev/docs/agents/endpoints
+- These instructions as plain text: https://insightcharts.dev/agents/docs/agents/endpoints.md
+- Instructions for one component: https://insightcharts.dev/agents/<atoms|molecules|templates>/<name>.md
+- Every guide, component and prompt: https://insightcharts.dev/llms.txt
+- JSON Schema for specs: https://insightcharts.dev/schema/insight-spec.json
+- Component manifest: https://insightcharts.dev/schema/manifest.json
+- Registry catalogue: https://insightcharts.dev/r/registry.json
+- Source: https://github.com/insightcharts/insightcharts

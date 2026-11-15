@@ -1,0 +1,13 @@
+{
+  "title": "For agents",
+  "pages": [
+    "index",
+    "setup",
+    "workflow",
+    "choosing",
+    "writing",
+    "json-specs",
+    "prompts",
+    "endpoints"
+  ]
+}

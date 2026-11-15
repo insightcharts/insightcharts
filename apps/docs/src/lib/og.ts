@@ -69,7 +69,7 @@ export const storiesCard = (): Card => ({ path: "stories", label: count(STORIES.
 
 export function guideCard(page: { slugs: string[]; data: { title: string; description?: string } }): Card {
   const slug = page.slugs.join("/");
-  return { path: slug ? `docs/${slug}` : "docs", label: "Guide", title: page.data.title, description: page.data.description, shots: GUIDE_SHOTS[slug] ?? [] };
+  return { path: slug ? `docs/${slug}` : "docs", label: page.slugs[0] === "agents" ? "For agents" : "Guide", title: page.data.title, description: page.data.description, shots: GUIDE_SHOTS[slug] ?? [] };
 }
 
 /** Every card the site has. The card route prerenders one image for each. */

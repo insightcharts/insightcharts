@@ -1,0 +1,143 @@
+# Getting started for agents
+
+These are instructions for an AI coding agent (Claude Code, Cursor, Codex or similar) working in the user's project. Library: InsightCharts, a React chart library for infographics and data stories, built on Apache ECharts 6. Package: `insightcharts` version 0.1.0 on npm. Peer dependencies: `echarts` >=6.0.0, `react` >=18, `react-dom` >=18.
+
+## Render a first chart
+
+Follow the steps in order. Stop and ask the user when a step says to.
+
+### 1. Check the project
+
+1. Find the package manager from the lockfile: `pnpm-lock.yaml` means pnpm, `yarn.lock` means yarn, `bun.lock` or `bun.lockb` means bun, `package-lock.json` or no lockfile means npm. Use it for every install command.
+2. Find the framework in `package.json`: `next` (the App Router if there is an `app/` directory), `vite`, `react-router`, `@remix-run/react` or `astro` with its React integration. The project must use React 18 or later. The package is ESM only.
+3. Check whether `insightcharts` is in `dependencies`. If it is missing, install it with ECharts: `npm install insightcharts echarts` (or `pnpm add`, `yarn add`, `bun add` with the same two names). There is no stylesheet to import.
+4. Look for a `components/insightcharts/` folder (it may be under `src/`). If it exists, the project copied component source from the shadcn registry. Import those components from that folder, because the user may have edited them. Import everything else from `insightcharts`.
+5. In Next.js, a file that passes a function prop (`onSelect`, `onEvents`, `onReady`, or a function as `format`, `transform`, `data` or `option`) or that uses `Scrolly` must start with `"use client"`. A chart with plain props can be imported into a server component.
+
+The project must use React 18 or later. If it does not use React, tell the user and stop.
+
+### 2. Install the package
+
+From npm (use the project's package manager):
+
+```bash
+npm install insightcharts echarts      # or: pnpm add / yarn add / bun add
+```
+
+Or copy the component's source into the project with the shadcn CLI, when the user wants to edit it. The project needs a `components.json`. The CLI also installs the `insightcharts` package, because the engine still comes from it.
+
+```bash
+npx shadcn@latest registry add @insightcharts=https://insightcharts.dev/r/{name}.json   # once per project
+npx shadcn@latest add @insightcharts/bar-chart
+```
+
+The file lands at `components/insightcharts/atoms/bar-chart.tsx`. Import the component from there when you install it this way.
+
+There is no stylesheet to import and no Tailwind setup.
+
+### 3. Ask for the data and the fact
+
+Ask the user for the data and the one fact the chart should show. If the user wants a first chart only to check the install, use the example in step 4 unchanged.
+
+### 4. Write the component file
+
+Create a component file where the project keeps its components, for example `components/renewables-chart.tsx` or `src/components/renewables-chart.tsx`.
+
+```tsx
+import { BarChart } from "insightcharts";
+
+const data = [
+  { country: "Norway", share: 98 },
+  { country: "Brazil", share: 89 },
+  { country: "Canada", share: 68 },
+  { country: "Germany", share: 52 },
+  { country: "United States", share: 23 },
+];
+
+export function RenewablesChart() {
+  return (
+    <BarChart
+      data={data}
+      x="country"
+      y="share"
+      format="{value}%"
+      highlight="Norway"
+      title="Renewables supplied 98% of Norway's electricity in 2023"
+      subtitle="Share of electricity generation from renewables, 2023"
+      source="Ember"
+      note="Illustrative figures"
+    />
+  );
+}
+```
+
+Every chart has the same four groups of props.
+
+| Group | Props | What to pass |
+|---|---|---|
+| Data | `data`, `transform` | Row objects, CSV text, a URL or an async function. `transform` reshapes the rows first. |
+| Fields | `x`, `y`, `series` and others | Column names as strings. There are no accessor functions. |
+| Text | `title`, `subtitle`, `source`, `note` | One plain fact with its number, then the measure and period, then the source. |
+| Emphasis | `highlight`, `annotations` | The entity the title is about, and up to three marks on a date, a threshold or a value. |
+
+### 5. Render it on a page
+
+Import the component into an existing page or route and render it inside a container with a width. The chart fills the width of its container. The height defaults to 360 pixels, and a horizontal bar chart grows with its rows.
+
+```tsx
+import { RenewablesChart } from "@/components/renewables-chart";
+
+export default function Page() {
+  return (
+    <main style={{ maxWidth: 720, margin: "0 auto", padding: 24 }}>
+      <RenewablesChart />
+    </main>
+  );
+}
+```
+
+Adjust the import path to the project's alias or use a relative path.
+
+In Next.js the chart can be imported into a server component, because every prop above is serialisable. Add `"use client"` at the top of the component file when the chart takes a function prop such as `onSelect`, `onEvents`, `onReady`, or a function `format`, `transform`, `data` or `option`.
+
+### 6. Verify
+
+1. Run the project's typecheck. A misspelt prop is a type error.
+2. Start the dev server and open the page.
+3. Check that the title, the bars with their value labels and the source line are all drawn.
+4. Check the page at about 380 pixels wide. No label may be clipped or overlap another.
+5. Switch the page to dark mode if it has one. The chart follows the page.
+6. Check the browser console for errors.
+
+### 7. Replace the example with the user's data
+
+1. Replace `data` with the user's rows, CSV text or URL.
+2. Point `x` and `y` at the user's column names.
+3. Work out the fact from the rows and write it as `title`, with its number and period.
+4. Set `highlight` to the entity the title names.
+5. Set `source` to where the data comes from.
+
+## Go further
+
+| Next job | Page |
+|---|---|
+| Install the skill or the registry for your agent | [Set up your agent](https://insightcharts.dev/docs/agents/setup) |
+| Follow the full method for a figure | [The agent workflow](https://insightcharts.dev/docs/agents/workflow) |
+| Pick the right component | [Choosing a component](https://insightcharts.dev/docs/agents/choosing) |
+| Write titles and text | [Writing rules for agents](https://insightcharts.dev/docs/agents/writing) |
+| Produce a chart as JSON | [JSON specs](https://insightcharts.dev/docs/agents/json-specs) |
+| Copy a prompt for a common job | [Prompt library](https://insightcharts.dev/docs/agents/prompts) |
+| Find a machine-readable file | [Reference endpoints](https://insightcharts.dev/docs/agents/endpoints) |
+
+Every page of this site has a "Copy agent instructions" button. The instructions for one component are at `https://insightcharts.dev/agents/<atoms|molecules|templates>/<name>.md`, for example `https://insightcharts.dev/agents/atoms/line-chart.md`.
+
+## Reference
+
+- This page: https://insightcharts.dev/docs/agents
+- These instructions as plain text: https://insightcharts.dev/agents/docs/agents.md
+- Instructions for one component: https://insightcharts.dev/agents/<atoms|molecules|templates>/<name>.md
+- Every guide, component and prompt: https://insightcharts.dev/llms.txt
+- JSON Schema for specs: https://insightcharts.dev/schema/insight-spec.json
+- Component manifest: https://insightcharts.dev/schema/manifest.json
+- Registry catalogue: https://insightcharts.dev/r/registry.json
+- Source: https://github.com/insightcharts/insightcharts

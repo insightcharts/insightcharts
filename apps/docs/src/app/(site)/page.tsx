@@ -4,11 +4,14 @@ import Link from "next/link";
 import { ComponentCard } from "@/components/catalog/component-card";
 import { PosterThumb } from "@/components/catalog/poster-thumb";
 import { Render } from "@/components/catalog/render";
+import { AgentLevels, type AgentLevel } from "@/components/landing/agent-levels";
 import { HeroStory } from "@/components/landing/hero-story";
 import { Section } from "@/components/landing/section";
 import { BareDemo, Demo } from "@/components/mdx/demo";
+import { AgentActions } from "@/components/site/agent-actions";
 import { CopyButton } from "@/components/site/copy-button";
-import { byLevel, components, hrefOf, infographics, INFOGRAPHICS, LEVELS, pageTemplates, type CatalogEntry } from "@/lib/catalog";
+import { agentPrompt, agentPromptText } from "@/lib/agent";
+import { byLevel, components, getComponent, hrefOf, infographics, INFOGRAPHICS, LEVELS, pageTemplates, type CatalogEntry } from "@/lib/catalog";
 import { homeCard, social } from "@/lib/og";
 import { groundOfTheme, posterGround, posterWidth } from "@/lib/posters";
 import { site } from "@/lib/site";
@@ -82,10 +85,18 @@ export default function Home() {
   const templates = pageTemplates();
   const posters = featuredPosters(3);
   const posterCount = infographics().length;
+  const agent = agentPrompt("/");
+  // The same three prompts the buttons copy, shown in full: the home page, a guide and a component.
+  const tactical = getComponent("bar-chart") ?? byLevel("atom")[0];
+  const agentLevels: AgentLevel[] = [
+    { key: "strategic", label: "Strategic", page: "Home page", pageHref: "/", path: "/", summary: "What the library is, how to choose between an atom, a molecule, a template and a poster, how to install it and the order to work in." },
+    { key: "operational", label: "Operational", page: "Quickstart guide", pageHref: "/docs/quickstart", path: "/docs/quickstart", summary: "The steps and commands for one task, the props and functions it uses, a working example and how to check the result." },
+    { key: "tactical", label: "Tactical", page: tactical.title, pageHref: hrefOf(tactical), path: hrefOf(tactical), summary: "One component: the install command, the import, every prop, the data shape, the example as JSX and as JSON, the rules for the form and a checklist." },
+  ].map(({ path, ...level }) => ({ ...level, ...agentPrompt(path), text: agentPromptText(path) ?? "" }));
   const agentLinks = [
     { icon: Braces, title: "JSON spec", body: "Every component can be written as { type, ...props } and rendered by the Insight component. A JSON Schema validates the spec.", href: "/docs/json-spec" },
     { icon: FileText, title: "llms.txt", body: "An index, a full-text file and a Markdown page per component. They are generated from the same metadata as this site.", href: "/llms.txt", external: true },
-    { icon: Sparkles, title: "Agent skill", body: "An installable skill with a workflow for building a figure from data, the rules for writing titles and a decision table for choosing a form.", href: "/docs/ai-agents#the-skill" },
+    { icon: Sparkles, title: "Agent skill", body: "An installable skill with a workflow for building a figure from data, the rules for writing titles and a decision table for choosing a form.", href: "/docs/agents/setup" },
     { icon: Package, title: "shadcn registry", body: "Add any component by name with the shadcn CLI or through the shadcn MCP server.", href: "/docs/installation#shadcn-registry" },
   ];
   return (
@@ -105,19 +116,41 @@ export default function Home() {
                 <code className="min-w-0 flex-1 truncate">{INSTALL}</code>
                 <CopyButton value={INSTALL} label="Copy install command" />
               </div>
-              <Link href="/docs/quickstart" className={`${button} bg-primary text-primary-foreground hover:bg-primary/90`}>
+              <AgentActions size="hero" href={agent.href} prefill={agent.prefill} markdownHref="/llms.txt" />
+              <Link href="/docs/quickstart" className={`${button} border hover:bg-accent`}>
                 Get started <ArrowRight className="size-3.5" />
               </Link>
               <Link href="/atoms" className={`${button} border hover:bg-accent`}>
                 Browse {components.length} components
               </Link>
             </div>
+            <p className="mt-3 max-w-[52ch] text-[13px] leading-5 text-muted-foreground">
+              The button copies a prompt that tells Claude Code, Cursor, Codex or another coding agent how to choose a component, install the library and build a chart. <Link href="/docs/agents" className="font-medium text-foreground underline decoration-border underline-offset-4 hover:decoration-foreground">Getting started for agents</Link>.
+            </p>
           </div>
         </div>
         <div className="mt-9 sm:mt-11">
           <HeroStory />
         </div>
       </section>
+
+      <Section
+        id="agent-instructions"
+        label="For agents"
+        title="Copy agent instructions from any page"
+        intro={
+          <>
+            <p>
+              Every page has a <strong className="font-medium text-foreground">Copy agent instructions</strong> button. It copies a prompt written to a coding agent for that page. Paste it into Claude Code, Cursor, Codex or another agent.
+            </p>
+            <p>
+              The prompt for the home page covers how to choose a form and the order to work in. A guide&apos;s prompt has the steps and the API for one task. A component&apos;s prompt has the props, a working example and a checklist. Each example on a component page has a button for that exact example. <Link href="/docs/agents/setup">Set up your agent</Link>, or open the <Link href="/docs/agents/prompts">prompt library</Link>.
+            </p>
+          </>
+        }
+      >
+        <AgentLevels levels={agentLevels} />
+      </Section>
 
       {posters.length ? (
         <Section
@@ -335,8 +368,8 @@ export default function Home() {
             <Link href="/docs/quickstart" className={`${button} bg-primary text-primary-foreground hover:bg-primary/90`}>
               Quickstart <ArrowRight className="size-3.5" />
             </Link>
-            <Link href="/docs/ai-agents" className={`${button} border hover:bg-accent`}>
-              For AI agents
+            <Link href="/docs/agents" className={`${button} border hover:bg-accent`}>
+              Getting started for agents
             </Link>
           </div>
         </div>

@@ -103,6 +103,16 @@ Defaults: `lazy` is true, so a chart mounts when it scrolls within 200px of the 
 - `onReady(chart)` and a ref (`getInstance()`, `getOption()`, `export()`) give you the ECharts instance.
 - `Chart` and `Figure` from `insightcharts/core` render a raw ECharts option inside the same figure chrome when no component fits. Core registers no series types itself, so register the ones you draw: `echarts.use([ScatterChart])` with `echarts` from `insightcharts/core` and `ScatterChart` from `echarts/charts`.
 
+## Instructions for one page or one component
+
+Every page of the site has a self-contained prompt written to a coding agent. Its URL is the page's path under `/agents` with `.md` added.
+
+- The whole method and how to choose a form: `{{SITE_URL}}/agents/index.md`
+- One guide (install, data, theming and so on): `{{SITE_URL}}/agents/docs/<guide>.md`
+- How to choose within a level: `{{SITE_URL}}/agents/atoms.md`, `{{SITE_URL}}/agents/molecules.md`, `{{SITE_URL}}/agents/templates.md`, `{{SITE_URL}}/agents/infographics.md`
+- One component, with its props, data shape, example and checklist: `{{SITE_URL}}/agents/<atoms|molecules|templates>/<name>.md`
+- Ready-made prompts for common jobs: `{{SITE_URL}}/agents/docs/agents/prompts.md`
+
 ## Components
 
 {{COMPONENT_INDEX}}

@@ -1,4 +1,4 @@
-<img src="../../apps/docs/public/logo.svg" width="72" height="72" alt="The InsightCharts logo: a red-orange circle with a lower-case i cut into it.">
+<img src="https://raw.githubusercontent.com/insightcharts/insightcharts/main/apps/docs/public/logo.svg" width="72" height="72" alt="The InsightCharts logo: a red-orange circle with a lower-case i cut into it.">
 
 # insightcharts
 

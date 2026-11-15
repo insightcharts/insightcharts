@@ -1,4 +1,6 @@
+import { AgentActions } from "@/components/site/agent-actions";
 import { CodeBlock } from "@/components/site/code-block";
+import { findAgentPrompt } from "@/lib/agent";
 import { specToJson, specToJsx } from "@/lib/codegen";
 import { getComponent, isPoster, isPosterPrimitive } from "@/lib/catalog";
 import { authoredGround, posterGround } from "@/lib/posters";
@@ -11,12 +13,13 @@ import { Render } from "./render";
  * A live example with Preview / Code / JSON tabs. The code is generated from the same spec
  * that renders, so the three tabs cannot drift apart.
  */
-export function ComponentPreview({ spec, example, toolbar, maxHeight, fullHref, lazy, className }: { spec: Record<string, unknown>; example?: string; toolbar?: boolean; maxHeight?: number; fullHref?: string; /** Mount a poster only when it nears the viewport. */ lazy?: boolean; className?: string }) {
+export function ComponentPreview({ spec, example, toolbar, maxHeight, fullHref, lazy, agentPath, className }: { spec: Record<string, unknown>; example?: string; toolbar?: boolean; maxHeight?: number; fullHref?: string; /** Mount a poster only when it nears the viewport. */ lazy?: boolean; /** The page path of the agent instructions for this exact example: "/atoms/bar-chart" or "/atoms/bar-chart/stacked". */ agentPath?: string; className?: string }) {
   const name = String(spec.type);
   const entry = getComponent(name);
   // A poster gets its own frame: its painted ground edge to edge, poster themes, PNG download.
   const poster = entry && isPoster(entry) ? { ground: posterGround(spec, entry), lazy } : undefined;
   const hasFunctions = JSON.stringify(spec).includes('"[function]"');
+  const agent = agentPath ? findAgentPrompt(agentPath) : undefined;
   return (
     <PreviewFrame
       toolbar={toolbar}
@@ -24,6 +27,7 @@ export function ComponentPreview({ spec, example, toolbar, maxHeight, fullHref, 
       fullHref={fullHref}
       poster={poster}
       ground={poster ? undefined : authoredGround(spec)}
+      agent={agent ? <AgentActions size="compact" menu={false} href={agent.href} /> : undefined}
       className={className}
       code={<CodeBlock bare code={specToJsx(spec)} lang="tsx" maxHeight={560} />}
       json={

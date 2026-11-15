@@ -6,8 +6,8 @@ import { ComponentPreview } from "@/components/catalog/component-preview";
 import { ExampleGallery, hasGallery } from "@/components/catalog/example-gallery";
 import { ExampleList } from "@/components/catalog/example-list";
 import { InstallTabs } from "@/components/catalog/install";
-import { PageActions } from "@/components/catalog/page-actions";
 import { InlineMd, PropsTable } from "@/components/catalog/props-table";
+import { AgentActions } from "@/components/site/agent-actions";
 import { CodeBlock } from "@/components/site/code-block";
 import { DocsPage } from "@/components/site/docs-shell";
 import { Heading } from "@/components/site/heading";
@@ -15,8 +15,9 @@ import { Pager } from "@/components/site/pager";
 import type { TocItem } from "@/components/site/toc";
 import { Composition, compositionToc } from "@/components/catalog/composition";
 import { byLevel, categoryTitle, commonProps, components, getComponent, hrefOf, infographics, INFOGRAPHICS, isInfographic, isPoster, levelBySlug, levelInfo, LEVELS, neighbours, sectionOf, type CatalogEntry } from "@/lib/catalog";
+import { agentPrompt } from "@/lib/agent";
 import { componentCard, social } from "@/lib/og";
-import { abs, site } from "@/lib/site";
+import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 export const dynamicParams = false;
@@ -35,7 +36,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   if (!c) return {};
   const title = `${c.title} (${sectionOf(c).singular.toLowerCase()})`;
   const tags = social({ path: hrefOf(c), title: c.title, description: c.description, type: "article", card: componentCard(c), alt: `The ${c.title} ${sectionOf(c).singular.toLowerCase()}, drawn from its main example.` });
-  return { title, description: c.description, ...tags, alternates: { ...tags.alternates, types: { "text/markdown": `/llms/${c.name}.md` } } };
+  return { title, description: c.description, ...tags, alternates: { ...tags.alternates, types: { "text/markdown": [{ url: `/llms/${c.name}.md`, title: "Component reference" }, { url: agentPrompt(hrefOf(c)).href, title: "Agent instructions" }] } } };
 }
 
 const slug = (s: string) =>
@@ -90,6 +91,7 @@ export default async function ComponentPage({ params }: { params: Params }) {
   const frameHeight = poster ? 880 : 760;
   const { previous, next } = neighbours(c);
   const importLine = `import { ${c.component} } from "insightcharts";`;
+  const agent = agentPrompt(hrefOf(c));
 
   // Small examples, or more than six: all of them together in a grid near the top of the page.
   const gallery = hasGallery(c);
@@ -134,7 +136,7 @@ export default async function ComponentPage({ params }: { params: Params }) {
         </nav>
         <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
           <h1 className="text-3xl font-semibold tracking-tight">{c.title}</h1>
-          <PageActions markdownHref={`/llms/${c.name}.md`} markdownUrl={abs(`/llms/${c.name}.md`)} title={c.title} />
+          <AgentActions href={agent.href} prefill={agent.prefill} markdownHref={`/llms/${c.name}.md`} />
         </div>
         <p className="mt-3 max-w-[66ch] text-[17px] leading-7 text-muted-foreground text-pretty">{c.description}</p>
       </header>
@@ -190,7 +192,7 @@ export default async function ComponentPage({ params }: { params: Params }) {
             .
           </p>
         ) : null}
-        {c.example ? <ComponentPreview spec={c.example} {...(tall ? { maxHeight: frameHeight } : null)} {...(c.level === "template" ? { fullHref: `${hrefOf(c)}/preview` } : null)} /> : <p className="text-sm text-muted-foreground">This component has no example in its metadata yet.</p>}
+        {c.example ? <ComponentPreview spec={c.example} agentPath={hrefOf(c)} {...(tall ? { maxHeight: frameHeight } : null)} {...(c.level === "template" ? { fullHref: `${hrefOf(c)}/preview` } : null)} /> : <p className="text-sm text-muted-foreground">This component has no example in its metadata yet.</p>}
       </section>
 
       {gallery ? (
@@ -227,13 +229,13 @@ export default async function ComponentPage({ params }: { params: Params }) {
       {c.examples.length ? (
         <section aria-labelledby="examples">
           <Heading id="examples">Examples</Heading>
-          {many ? <ExampleList items={c.examples.map((ex) => ({ id: `example-${slug(ex.title)}`, title: ex.title, preview: <ComponentPreview spec={{ type: c.name, ...ex.props }} example={ex.title} lazy={poster} {...(tall ? { maxHeight: frameHeight } : null)} /> }))} /> : null}
+          {many ? <ExampleList items={c.examples.map((ex) => ({ id: `example-${slug(ex.title)}`, title: ex.title, preview: <ComponentPreview spec={{ type: c.name, ...ex.props }} example={ex.title} agentPath={`${hrefOf(c)}/${slug(ex.title)}`} lazy={poster} {...(tall ? { maxHeight: frameHeight } : null)} /> }))} /> : null}
           {(many ? [] : c.examples).map((ex) => (
             <div key={ex.title} className="mt-10 first:mt-0">
               <Heading as="h3" id={`example-${slug(ex.title)}`} className="first:mt-0">
                 {ex.title}
               </Heading>
-              <ComponentPreview spec={{ type: c.name, ...ex.props }} example={ex.title} lazy={poster} {...(tall ? { maxHeight: frameHeight } : null)} />
+              <ComponentPreview spec={{ type: c.name, ...ex.props }} example={ex.title} agentPath={`${hrefOf(c)}/${slug(ex.title)}`} lazy={poster} {...(tall ? { maxHeight: frameHeight } : null)} />
             </div>
           ))}
         </section>

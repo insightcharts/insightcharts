@@ -5,6 +5,7 @@ import type { ComponentProps, ReactNode } from "react";
 import { ComponentCard } from "@/components/catalog/component-card";
 import { ComponentPreview } from "@/components/catalog/component-preview";
 import { InstallTabs } from "@/components/catalog/install";
+import { AgentPrompt } from "@/components/site/agent-prompt";
 import { Heading } from "@/components/site/heading";
 import { builtFrom, byLevel, components, getComponent, hrefOf, infographics, isPoster, pageTemplates, posterPrimitives, type CatalogEntry } from "@/lib/catalog";
 import { site } from "@/lib/site";
@@ -15,7 +16,7 @@ import { Pre } from "./pre";
 import { ThemePresets } from "./theme-presets";
 
 function A({ href = "", children, ...props }: ComponentProps<"a">) {
-  if (href.startsWith("/") && !/^\/(llms|r|schema)/.test(href)) return <Link href={href}>{children}</Link>;
+  if (href.startsWith("/") && !/^\/(llms|r|schema|agents)/.test(href)) return <Link href={href}>{children}</Link>;
   const external = /^https?:/.test(href);
   return (
     <a href={href} {...props} {...(external ? { target: "_blank", rel: "noreferrer" } : {})}>
@@ -270,4 +271,5 @@ export const mdxComponents: MDXComponents = {
     </div>
   ),
   SiteUrl: () => <>{site.url}</>,
+  AgentPrompt,
 };
