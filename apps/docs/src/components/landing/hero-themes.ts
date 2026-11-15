@@ -1,6 +1,6 @@
-// The themes the landing page's hero can be painted in: its own night design, and library
-// themes rebuilt for this composition. Every colour comes from the library's theme objects.
-import { alpha, luminance, mix, toRgba } from "insightcharts";
+// The themes the landing page's hero can be painted in: library themes rebuilt for this
+// composition, dark looks first. Every colour comes from the library's theme objects.
+import { alpha, cssFallback, luminance, mix, toRgba } from "insightcharts";
 import { posterBackgrounds, themes, themeSurfaces } from "insightcharts/themes";
 
 export interface HeroTokens {
@@ -76,50 +76,80 @@ function build(name: string, label: string, tokens: HeroTokens, ground: string):
   return { name, label, ground, mode: luminance(tokens.surface) < 0.4 ? "dark" : "light", tokens, theme: { name: `hero-${name}`, light: tokens, dark: tokens } };
 }
 
-/** A library theme by name, with six mode colours and a ground-to-ink ramp. */
-function fromLibrary(name: string, look: "light" | "dark" = "light"): HeroTheme {
-  const t = themes[name][look];
-  const ground = (posterBackgrounds as Record<string, { light: string; dark: string }>)[name]?.[look] ?? (themeSurfaces as Record<string, { light: string; dark: string }>)[name]?.[look] ?? t.surface;
-  const tokens: HeroTokens = {
-    surface: t.surface,
-    ink: t.ink,
-    inkSecondary: t.inkSecondary,
-    muted: t.muted,
-    grid: t.grid,
-    axis: t.axis,
-    accent: t.accent,
-    context: t.context,
-    positive: t.positive,
-    negative: t.negative,
-    categorical: sixColours(t.categorical, t.surface, t.ink),
-    sequential: groundRamp(t.surface, t.ink),
+// Some library tokens are CSS variable references with a literal fallback
+// (`var(--ic-ink, var(--foreground, #0b0b0b))`). The hero paints one fixed design per pill,
+// so it takes the literal.
+const literal = (value: string) => (value.includes("var(") ? cssFallback(value) : value);
+
+type Source = Omit<HeroTokens, "sequential">;
+
+function tokensOf(t: Source): HeroTokens {
+  const surface = literal(t.surface);
+  const ink = literal(t.ink);
+  return {
+    surface,
+    ink,
+    inkSecondary: literal(t.inkSecondary),
+    muted: literal(t.muted),
+    grid: literal(t.grid),
+    axis: literal(t.axis),
+    accent: literal(t.accent),
+    context: literal(t.context),
+    positive: literal(t.positive),
+    negative: literal(t.negative),
+    categorical: sixColours(t.categorical.map(literal), surface, ink),
+    sequential: groundRamp(surface, ink),
   };
-  return build(name, name.charAt(0).toUpperCase() + name.slice(1), tokens, ground);
 }
 
-// The hero's own design: a night ground, six hues, and a ramp from the ground to white.
-const night = build(
-  "night",
-  "Night",
-  {
-    surface: "#0b1022",
-    ink: "#f5f6ff",
-    inkSecondary: "#c3c9ea",
-    muted: "#8a92bd",
-    grid: "#232b52",
-    axis: "#39427a",
-    accent: "#4cc9f0",
-    context: "#39416d",
-    positive: "#3ddc97",
-    negative: "#ff7a7a",
-    categorical: ["#4cc9f0", "#ffd23f", "#3ddc97", "#ff6fa5", "#a594ff", "#ff9547"],
-    sequential: ["#1a2146", "#35408a", "#7482d8", "#c3cbff", "#ffffff"],
-  },
-  "radial-gradient(120% 90% at 12% 0%, #1b2357 0%, rgba(27,35,87,0) 55%), radial-gradient(90% 80% at 100% 100%, #2a1650 0%, rgba(42,22,80,0) 60%), #0b1022",
+/** A library theme by name in one of its two looks, with six mode colours and a ground-to-ink ramp. */
+function fromLibrary(name: string, look: "light" | "dark", label: string): HeroTheme {
+  const t = themes[name][look];
+  const ground = (posterBackgrounds as Record<string, { light: string; dark: string }>)[name]?.[look] ?? (themeSurfaces as Record<string, { light: string; dark: string }>)[name]?.[look] ?? literal(t.surface);
+  return build(`${name}-${look}`, label, tokensOf(t), ground);
+}
+
+// The shadcn theme reads `--chart-1` to `--chart-5` and the page's own tokens at run time, so
+// it has no literal colours of its own. These are shadcn/ui's stock dark values.
+const shadcnDark = build(
+  "shadcn-dark",
+  "shadcn",
+  tokensOf({
+    surface: "#0a0a0a",
+    ink: "#fafafa",
+    inkSecondary: "#a1a1a1",
+    muted: "#8a8a8a",
+    grid: "#262626",
+    axis: "#3a3a3a",
+    accent: "#1447e6",
+    context: "#404040",
+    positive: "#00bc7d",
+    negative: "#ff6467",
+    categorical: ["#1447e6", "#00bc7d", "#fe9a00", "#ad46ff", "#ff2056"],
+  }),
+  "#0a0a0a",
 );
 
-/** In rotation order: dark and light grounds alternate where they can, so each change is a clear one. */
-export const HERO_THEMES: HeroTheme[] = [night, fromLibrary("sunrise"), fromLibrary("dusk"), fromLibrary("editorial"), fromLibrary("ocean"), fromLibrary("magenta"), fromLibrary("ledger"), fromLibrary("forest"), fromLibrary("noir")];
+/**
+ * In rotation order: the dark looks first, then light ones. Each entry has a unique name,
+ * because a theme can appear in both looks.
+ */
+export const HERO_THEMES: HeroTheme[] = [
+  fromLibrary("noir", "dark", "Noir"),
+  fromLibrary("paper", "dark", "Paper"),
+  fromLibrary("earth", "dark", "Earth"),
+  fromLibrary("science", "dark", "Science"),
+  fromLibrary("ledger", "dark", "Ledger"),
+  fromLibrary("editorial", "dark", "Editorial"),
+  shadcnDark,
+  fromLibrary("dusk", "dark", "Dusk"),
+  fromLibrary("insight", "dark", "Insight"),
+  fromLibrary("sunrise", "light", "Sunrise"),
+  fromLibrary("editorial", "light", "Editorial light"),
+  fromLibrary("ledger", "light", "Ledger light"),
+  fromLibrary("science", "light", "Science light"),
+  fromLibrary("earth", "light", "Earth light"),
+];
 
 /** The hero's own chrome (title, labels, pills, Reset) reads these variables. */
 export const chromeOf = (t: HeroTheme) => ({ "--h-ink": t.tokens.ink, "--h-ink2": t.tokens.inkSecondary, "--h-muted": t.tokens.muted, "--h-line": alpha(t.tokens.ink, 0.22), "--h-wash": alpha(t.tokens.ink, 0.1), "--h-accent": t.tokens.accent }) as Record<string, string>;
