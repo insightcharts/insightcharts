@@ -1,0 +1,69 @@
+---
+title: Dark mode
+description: Charts use the page's colour mode by default. This page explains how detection works and how to follow the OS or force a mode.
+---
+
+Every chart, figure and story takes a `mode`. Set it per component, or once on `InsightProvider`.
+
+| Mode | Behaviour |
+|---|---|
+| `"auto"` (default) | Follows the colour mode of the page around the chart. |
+| `"system"` | Follows the operating system preference and ignores the page. |
+| `"light"`, `"dark"` | Forced. |
+
+<Demo name="color-modes" toolbar={false} />
+
+Switch this site between light and dark with the control in the header: the first panel changes and the other two do not.
+
+<DemoSource name="color-modes" />
+
+## How auto detection works
+
+`mode="auto"` inspects the DOM around the chart, from most to least explicit:
+
+1. **A class or data attribute on an ancestor.** The nearest ancestor matching `.dark`, `[data-theme="dark"]`, `[data-mode="dark"]`, `[data-color-mode="dark"]` or `[data-color-scheme="dark"]`, or the `light` equivalents. If both a dark and a light ancestor exist, the nearer one wins. This covers shadcn/ui, next-themes and Tailwind's class strategy with no configuration.
+2. **The background behind the chart.** Walking up from the chart, the first ancestor with a mostly opaque background decides: a relative luminance under 0.2 is dark.
+3. **`color-scheme` and the OS.** If the root element's `color-scheme` is `dark` only, the chart is dark. If it allows dark and the OS prefers dark, the chart is dark. Otherwise light.
+
+Charts re-check when the `class`, `style` or `data-*` theme attributes on `<html>` or `<body>` change, and when the OS preference changes. One observer serves the whole page.
+
+<Callout type="warning" title="Nested wrappers">
+Detection is re-run for changes on `<html>` and `<body>` only. If you toggle a `.dark` class on some inner wrapper at runtime, charts inside will not notice. Pass `mode` explicitly in that case, as the preview toolbar on this site does.
+</Callout>
+
+## Forcing a mode
+
+A forced mode selects the light or dark token set. The default theme normally reads `--background`, `--foreground`, `--muted-foreground` and `--border` from the host page; when a forced (or `"system"`) mode disagrees with the page around it, the component stops inheriting those four variables on its own element, so every token falls back to its built-in value for that mode. A chart forced to dark on a light page gets dark-mode ink without any wrapper class.
+
+What it does not do is paint a background. The chrome is transparent, so give the container the surface the chart expects:
+
+```tsx
+// The default theme's dark surface fallback is #1a1a19.
+<div style={{ background: "#1a1a19" }}>
+  <LineChart mode="dark" ... />
+</div>
+
+// With a preset, use the surface it was designed for.
+import { themes, themeSurfaces } from "insightcharts/themes";
+
+<div style={{ background: themeSurfaces.ledger.dark }}>
+  <LineChart mode="dark" theme={themes.ledger} ... />
+</div>
+```
+
+`--ic-*` variables are not reset, so brand overrides set on the page still apply to an isolated chart. If the forced mode agrees with the page, nothing is isolated and the host variables are used as usual.
+
+## Server rendering
+
+Charts draw in the browser, after hydration, so the plot never renders in the wrong mode. The HTML chrome is server-rendered with the light token set unless `mode="dark"` is forced, and switches on mount. Tokens that follow host variables (`surface`, `ink`, `muted`) are correct from the first paint either way.
+
+## Reading the mode yourself
+
+`useColorMode(ref, mode)` returns the resolved mode for an element and keeps it current; `detectMode(element)` and `systemMode()` are the one-off versions. Use them when you build your own component with `withMeta`.
+
+```tsx
+import { useColorMode } from "insightcharts";
+
+const ref = useRef<HTMLDivElement>(null);
+const { mode } = useColorMode(ref, "auto");
+```

@@ -1,0 +1,180 @@
+---
+title: Theming
+description: Theme tokens, the --ic-* CSS variables, presets and createTheme. Charts read shadcn/ui variables by default.
+---
+
+A theme is two sets of tokens, one for light and one for dark. Any colour token may be a literal (`#2a78d6`, `oklch(...)`) or a CSS variable reference (`var(--brand, #2a78d6)`). Variables are resolved against the chart's own DOM node, so scoped overrides work and the canvas always receives concrete colours.
+
+Try the presets and accents. Everything below re-themes through one `InsightProvider`. Some presets are designed for a background colour of their own, and the demo paints it. The last eight names are the [poster themes](#poster-themes). See [presets](#presets).
+
+<Demo name="theming" toolbar={false} />
+
+## How the default theme follows your page
+
+With no configuration, the chrome follows the host page. The default theme reads shadcn/ui's variables when they exist and falls back to neutral values when they do not:
+
+| Token | Reads | Fallback (light / dark) |
+|---|---|---|
+| `surface` | `--background` | `#fcfcfb` / `#1a1a19` |
+| `ink` | `--foreground` | `#0b0b0b` / `#f0efec` |
+| `muted` | `--muted-foreground` | `#898781` |
+| `fontFamily` | inherited from the page | system UI font |
+
+Series colours do not come from the page by default. The default categorical order is checked for separation between neighbours under colour-vision deficiency in both modes, so keep the order if you re-skin it.
+
+## CSS variables
+
+Every token of the default theme can be overridden with an `--ic-*` variable, set anywhere above the chart: on `:root`, on a section, or on a single wrapper.
+
+<Demo name="css-vars" />
+
+| Variable | Token | Used for |
+|---|---|---|
+| `--ic-surface` | `surface` | What sits behind the marks; the gaps and rings that separate them. |
+| `--ic-ink` | `ink` | Titles and primary values. |
+| `--ic-ink-secondary` | `inkSecondary` | Subtitles, legends, direct labels. |
+| `--ic-muted` | `muted` | Axis labels and source lines. |
+| `--ic-grid` | `grid` | Hairline gridlines. |
+| `--ic-axis` | `axis` | Baselines and axis lines. |
+| `--ic-accent` | `accent` | The highlighted series, and a single series. |
+| `--ic-context` | `context` | De-emphasised series behind a highlight. |
+| `--ic-positive`, `--ic-negative` | `positive`, `negative` | Up and down. |
+| `--ic-series-1` to `--ic-series-8` | `categorical` | Identity colours, in order. |
+| `--ic-font` | `fontFamily` | Chart and chrome text. |
+| `--ic-font-display` | `displayFamily` | Titles and big numbers. |
+
+```css
+:root {
+  --ic-accent: #0f766e;
+  --ic-font-display: "Fraunces", Georgia, serif;
+}
+.dark {
+  --ic-accent: #2dd4bf;
+}
+```
+
+The `sequential` and `diverging` ramps, and the numeric tokens `fontSize`, `radius` and `lineWidth`, have no variables. Set them with a theme object.
+
+## Theme objects and createTheme
+
+The `theme` prop on any chart, or on `InsightProvider`, accepts a full theme or a partial one. Tokens at the top level apply to both modes; `light` and `dark` override one mode. A partial theme is merged over the surrounding theme, so providers and charts only state what differs.
+
+```tsx
+import { BarChart, InsightProvider } from "insightcharts";
+
+<InsightProvider theme={{ accent: "#7c3aed", radius: 2, dark: { accent: "#a78bfa" } }}>
+  <BarChart theme={{ lineWidth: 3 }} ... />
+</InsightProvider>
+```
+
+`createTheme(input, base?)` does the same merge ahead of time and returns a complete theme you can export and reuse. `base` defaults to the default theme.
+
+```ts
+import { createTheme, themes } from "insightcharts/themes";
+
+export const brand = createTheme({
+  name: "brand",
+  accent: "var(--brand, #7c3aed)",
+  categorical: ["#7c3aed", "#0891b2", "#ca8a04", "#be123c"],
+  light: { grid: "#ebe9f5" },
+  dark: { grid: "#2a2740" },
+});
+
+// Or start from a preset.
+export const compact = createTheme({ fontSize: 12, lineWidth: 1.5 }, themes.shadcn);
+```
+
+### Tokens
+
+| Token | Type | Purpose |
+|---|---|---|
+| `surface`, `ink`, `inkSecondary`, `muted`, `grid`, `axis` | colour | Chrome, from background to baselines. |
+| `accent`, `context` | colour | The highlighted series, and the grey used for every other series. |
+| `positive`, `negative` | colour | Direction. Always paired with a non-colour cue. |
+| `categorical` | colour[] | Identity colours, assigned to entities in fixed order. |
+| `sequential` | colour[] | One hue, light to dark, for magnitude. |
+| `diverging` | colour[] | Negative pole, neutral midpoint, positive pole. |
+| `fontFamily`, `displayFamily` | string | Fonts for body text and for titles. |
+| `fontSize` | number | Base chart text size in pixels. Default 12. |
+| `radius` | number | Corner radius of bar ends in pixels. Default 4. |
+| `lineWidth` | number | Line thickness in pixels. Default 2. |
+
+## Presets
+
+`themes` from `insightcharts/themes` is a record of every theme by name. It holds the eight presets in this table and the eight [poster themes](#poster-themes). Each preset is also a named export (`editorialTheme`, `ledgerTheme`, `monoTheme`, `earthTheme`, `scienceTheme`, `posterTheme`, `shadcnTheme`). This table is drawn from the record itself; the preview toolbar on every component page lists the same presets.
+
+<ThemePresets />
+
+### Presets and their surfaces
+
+`insight` and `shadcn` follow the page they are on. The other six are designed for a specific background colour in each mode, and its separators, marker rings and sticky table headers are drawn in that colour. On any other background they show as off-colour seams, and the contrast the palette was checked for no longer holds.
+
+`themeSurfaces[name].light` and `.dark` are those backgrounds. Paint the section, card or page the charts sit in, and force the mode to match it:
+
+<Demo name="theme-surfaces" toolbar={false} />
+
+```tsx
+import { InsightProvider } from "insightcharts";
+import { ledgerTheme, themeSurfaces } from "insightcharts/themes";
+
+<section style={{ background: themeSurfaces.ledger.light }}>
+  <InsightProvider theme={ledgerTheme} mode="light">{children}</InsightProvider>
+</section>
+```
+
+To follow the page's mode instead of forcing one, read it with `useColorMode` and pick the matching surface, as the first demo on this page does.
+
+### The shadcn preset
+
+The `shadcn` preset reads more of the page's variables than the default theme does. Series colours come from `--chart-1` to `--chart-5` and the accent from `--chart-1`. Use it when charts must match an existing shadcn palette. shadcn's stock chart colours are not ordered for colour-vision-deficiency separation, so keep direct labels or legends on.
+
+```tsx
+import { InsightProvider } from "insightcharts";
+import { themes } from "insightcharts/themes";
+
+<InsightProvider theme={themes.shadcn}>{children}</InsightProvider>
+```
+
+## Poster themes
+
+A poster theme is a theme for the [infographics](/docs/infographics) and the [poster](/molecules/poster) frame. It has a strong painted ground, type colours for that ground and four or five mark colours. `posterThemes` from `insightcharts/themes` holds the eight by name, and the same eight are in the `themes` record. Each is also a named export: `noirTheme`, `magentaTheme`, `duskTheme`, `paperTheme`, `oceanTheme`, `forestTheme`, `blueprintTheme` and `sunriseTheme`.
+
+<PosterThemes />
+
+A poster theme differs from a preset in three ways.
+
+- **One look.** `noir`, `magenta`, `dusk`, `ocean`, `forest`, `blueprint` and `sunrise` have the same tokens in `light` and `dark`. The poster has the same colours on a light page and on a dark page. `paper` has a second variant: its `dark` tokens are the same design on charcoal stock.
+- **A painted ground.** `posterBackgrounds[name].light` and `.dark` are the CSS background of each theme. `dusk`, `ocean` and `sunrise` are gradients, so the value is a CSS `background` and not a single colour. The theme's `surface` token is the solid colour closest to the ground. Charts draw the gaps between touching marks in `surface`.
+- **A small palette.** A poster theme has four or five categorical colours, not eight. Fold further entities into "Other" or shade by value with the sequential ramp.
+
+The poster frame and every infographic template take the name as `theme` and paint the ground themselves:
+
+```tsx
+import { Poster } from "insightcharts";
+
+<Poster theme="ocean" title="..." panels={panels} />
+```
+
+To use a poster theme without the frame, paint the ground on a container and force one mode inside it:
+
+```tsx
+import { InsightProvider } from "insightcharts";
+import { posterBackgrounds, posterThemes } from "insightcharts/themes";
+
+<section style={{ background: posterBackgrounds.ocean.light }}>
+  <InsightProvider theme={posterThemes.ocean} mode="light">{children}</InsightProvider>
+</section>
+```
+
+The text colours of each theme have a contrast of at least 4.5:1 against every colour stop of its ground. The categorical colours and the accent have at least 3:1. The display faces are system font stacks. Set `--ic-font-display` on an ancestor to use your own face.
+
+## Restyling the chrome
+
+Titles, legends and source lines are real HTML. Each element carries a `data-slot` attribute (`ic-figure`, `ic-title`, `ic-subtitle`, `ic-legend`, `ic-plot`, `ic-source`, `ic-table`, `ic-actions`), so you can restyle them from your own CSS.
+
+```css
+[data-slot="ic-title"] {
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+}
+```

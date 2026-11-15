@@ -1,0 +1,38 @@
+---
+title: Accessibility
+description: The accessibility features built into every chart, and the parts the author is responsible for.
+---
+
+## Built-in features
+
+**Text alternatives.** Each chart is exposed as an image (`role="img"`) with a description. Components write their own: chart type and measures first, then the main pattern and notable values. Pass `alt` to replace it with your own words.
+
+**HTML around the plot.** The title is a heading, the subtitle a paragraph, the legend a labelled list and the source a `<figcaption>`, all inside a `<figure>`. They are selectable, translatable and read in order.
+
+**A data table on request.** `table` adds a collapsible "View data" table under the chart with the rows it drew: Screen-reader users and readers who need exact values can use it.
+
+<Spec spec={{ type: "bar-chart", data: [{ channel: "Search", signups: 420 }, { channel: "Referral", signups: 310 }, { channel: "Social", signups: 180 }, { channel: "Email", signups: 95 }], x: "channel", y: "signups", title: "Search brought in 420 signups last month", subtitle: "New accounts last month, by channel", note: "Illustrative data", table: true, alt: "Bar chart of signups by channel. Search leads with 420, followed by referral with 310, social with 180 and email with 95.", height: 220 }} />
+
+**Colour is never the only signal.** Series are labelled directly where possible and listed in a legend otherwise. Direction is marked with an arrow or sign as well as green and red. The default categorical palette is ordered so that neighbouring colours stay distinguishable under the common colour-vision deficiencies, in light and dark.
+
+**Tooltips are optional.** Charts can be read without hovering. Bars carry value labels and lines are named at their ends. No information appears only in a tooltip.
+
+**Reduced motion.** When the reader's system asks for reduced motion, charts draw without transitions and loading skeletons stop pulsing. You cannot override this with `animate`.
+
+**States.** The loading skeleton has `role="status"`, load errors are announced with `role="alert"`, and an empty dataset shows "No data to show." rather than blank axes.
+
+**Stories.** `Scrolly` keeps all step text in the document, makes every step reachable by keyboard, and announces step changes in its steps mode. See [stories](/docs/stories#accessibility-and-fallbacks).
+
+## What the author is responsible for
+
+- **State the main fact in the title.** A title such as "Search brought in 420 signups last month" gives every reader the main fact without reading the chart. See [writing titles](/docs/highlighting-and-annotations#writing-titles).
+- **Review generated descriptions.** The automatic `alt` describes the pattern from the data. If the title states a different fact, write your own `alt`.
+- **Turn on `table` for charts that carry exact figures** a reader may need.
+- **Check contrast when you theme.** Text uses `ink`, `inkSecondary` and `muted`; check that your overrides have enough contrast against `surface`. Text never takes a series colour.
+- **Keep the palette order.** If you replace `categorical`, test neighbouring colours with a colour-vision simulator.
+
+## Known limits
+
+- Marks inside a chart are not individually focusable. Keyboard and screen-reader users get the description and the data table, not access to each mark.
+- The built-in click selection (`select`) is pointer-only. If filtering matters to your interface, offer the same filters as ordinary buttons or a select, driving `InsightData` through its [store](/docs/crossfiltering#reading-and-controlling-the-selection).
+- The "View data" table shows the first 200 rows. Offer CSV export for larger datasets.

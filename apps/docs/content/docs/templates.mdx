@@ -1,0 +1,138 @@
+---
+title: Templates
+description: A template is one component that lays out a whole page from a title, figures and chart specs. It can be written as JSX or as one JSON document.
+---
+
+An atom draws one chart. A molecule combines a few atoms. A **template** arranges molecules and atoms into a whole page and handles the layout at narrow widths. It takes all of its content as props, so a complete page can be one JSON document written by a person, a CMS or a model.
+
+<Components names={["executive-brief", "visual-essay", "scorecard"]} />
+
+The catalogue has <Count of="templates" /> templates in two groups. <Count of="page-templates" /> are report-style page layouts, covered on this page. <Count of="infographics" /> are [infographics](/infographics): each draws one designed poster on a painted ground. The [infographics guide](/docs/infographics) covers those.
+
+## Choosing a template
+
+Pick the template that matches what the reader needs from the page. Each template page has a "use when" and an "avoid when" that names the alternative.
+
+<LevelTable level="template" />
+
+Choose an [infographic](/docs/infographics#choosing-an-infographic) instead when the piece is one image with little text that is shared as a picture.
+
+## A whole page as one spec
+
+This is an [executive brief](/templates/executive-brief). Open the **JSON** tab to see the document that produces the whole page.
+
+<Spec spec={{ type: "executive-brief", kicker: "Support review · Q3", title: "Median first reply time fell from 4.1 hours in June to 1.8 hours in September 2025", deck: "The triage rota began in July. The weekend median was 6.2 hours in September.", byline: "Support operations", date: "2025-10-06", figures: [{ value: "1.8 h", label: "Median first reply, September", delta: "−2.3 h", deltaLabel: "vs June", upIsGood: false }, { value: 0.92, format: "percent", label: "Tickets answered within a day", delta: "+11 pts", deltaLabel: "vs June" }, { value: 4.6, label: "Satisfaction, out of 5", context: "4.1 in June" }], hero: { type: "line-chart", data: [{ month: "Apr", hours: 4.3 }, { month: "May", hours: 4.2 }, { month: "Jun", hours: 4.1 }, { month: "Jul", hours: 2.9 }, { month: "Aug", hours: 2.1 }, { month: "Sep", hours: 1.8 }], x: "month", y: "hours", format: "{value} h", zero: true, title: "Median first reply time fell from 4.3 hours in April to 1.8 hours in September", subtitle: "Median hours to first reply, by month, 2025", annotations: [{ type: "line", axis: "x", value: "Jul", label: "Triage rota begins" }] }, takeaway: { lead: "The median fell 2.3 hours in three months", body: "The triage rota began in July. The median was 4.1 hours in June." }, supporting: [{ type: "bar-chart", data: [{ day: "Weekdays", hours: 1.4 }, { day: "Weekends", hours: 6.2 }], x: "day", y: "hours", format: "{value} h", highlight: "Weekends", title: "Weekend median first reply was 6.2 hours in September", subtitle: "Median hours to first reply, September 2025" }, { type: "bar-chart", data: [{ channel: "Chat", share: 48 }, { channel: "Email", share: 39 }, { channel: "Phone", share: 13 }], x: "channel", y: "share", format: "{value}%", orientation: "horizontal", title: "Chat was 48% of tickets in September", subtitle: "Share of tickets by channel, September 2025" }], actions: [{ title: "Extend the rota to weekends", text: "The weekend median was 6.2 hours in September.", owner: "Support · October" }, { title: "Report the weekend median separately", text: "The overall median was 1.8 hours in September." }], sources: ["Helpdesk export"], period: "April to September 2025", note: "Illustrative data" }} />
+
+Reading the spec from the top:
+
+- **`type`** names the template.
+- **`title`, `kicker`, `deck`, `byline`, `date`** are the masthead. The title is one plain statement of the main fact, with its number and period.
+- **`figures`** is plain data: three or four objects with the props of [big number](/atoms/big-number). The template renders them with a [stat row](/molecules/stat-row).
+- **`hero`** and each entry of **`supporting`** are *slots*: their values are chart specs, each with its own `type`. A slot takes any component. The template sets a height when the spec does not.
+- **`takeaway`** is the callout beside the hero. `lead` is a short statement in bold and `body` is one or two sentences under it.
+- **`actions`** are numbered recommendations, as strings or `{ title, text, owner }`.
+- **`sources`, `period`, `method`, `note`** become the closing source note.
+
+The spec contains no functions, so it can be stored, sent over the network and validated.
+
+## Rendering a template
+
+From JSON, render the spec with `Insight`. It resolves the template and every nested spec by name.
+
+```tsx
+import { Insight } from "insightcharts";
+
+export function Brief({ spec }) {
+  return <Insight spec={spec} />;
+}
+```
+
+In a server component you can load the spec and pass it straight through; it is serialisable.
+
+```tsx title="app/briefs/[id]/page.tsx"
+import { Insight } from "insightcharts";
+
+export default async function Page({ params }) {
+  const { id } = await params;
+  const spec = await fetch(`https://example.com/briefs/${id}.json`).then((r) => r.json());
+  return <Insight spec={spec} />;
+}
+```
+
+From JSX, import the template by name. Slots take React elements or specs. If you pass specs, call `registerAll()` once so their `type` names resolve (see [nested specs](/docs/json-spec#nested-specs)); if you pass elements, you do not need it.
+
+```tsx
+import { BarChart, ExecutiveBrief, LineChart } from "insightcharts";
+
+<ExecutiveBrief
+  title="Median first reply time fell from 4.1 hours in June to 1.8 hours in September 2025"
+  figures={[{ value: "1.8 h", label: "Median first reply, September" }]}
+  hero={<LineChart data={monthly} x="month" y="hours" title="Median hours to first reply, by month" />}
+  supporting={[<BarChart key="days" data={byDay} x="day" y="hours" title="Median hours to first reply, weekdays and weekends" />]}
+  sources={["Helpdesk export"]}
+/>
+```
+
+<Callout title="Elements or specs in a slot?">
+Slots typed `Slot` (such as `hero` above) take either. A few props are typed `InsightSpec` because the component merges props into the spec before rendering it: `chart` on [chart tabs](/molecules/chart-tabs), [scrolly chart](/molecules/scrolly-chart) and [small multiple grid](/molecules/small-multiple-grid). Those need a spec object, not an element. The props table on each page gives the type.
+</Callout>
+
+## Props shared by templates
+
+Templates use the same prop names for the same content, so content can be moved from one template to another. Most report-style templates have these props:
+
+<SharedProps level="template" />
+
+`theme` and `mode` are passed on to everything inside, so one prop changes the theme of the whole page. A preset that is designed for its own surface needs that surface behind the template; see [presets and their surfaces](/docs/theming#presets-and-their-surfaces).
+
+Layout follows the width of the template's container, not the viewport: a template in a 400 pixel column lays out as it would on a phone. `maxWidth` limits the width and centres the template in a wider container.
+
+## Data inside a template
+
+A chart spec in a slot takes `data` the way any chart does: inline rows, CSV text, or a URL the browser fetches. In a stored spec, a URL keeps the document small, and the data is fetched each time the page loads.
+
+```json
+{
+  "type": "bar-chart",
+  "data": "/data/energy.csv",
+  "transform": [{ "type": "filter", "field": "year", "op": "==", "value": 2024 }],
+  "x": "source",
+  "y": "twh"
+}
+```
+
+Templates that filter several charts together, such as [data explorer](/templates/data-explorer), take one `data` prop themselves and share it with the charts inside; those chart specs leave `data` out. See [data](/docs/data) for every accepted shape and transform.
+
+## Templates for sequences
+
+Three templates show a sequence of blocks, chapters or cards. [Visual essay](/templates/visual-essay) takes an ordered `blocks` array, where each block has a `kind` (`prose`, `figure`, `callout`, `scrolly`, `quote`, `stats`, `multiples`, `break`) and a bare chart spec counts as a figure. [Timeline story](/templates/timeline-story) takes dated `chapters`. [Story deck](/templates/story-deck) takes `cards` to step or swipe through.
+
+```json
+{
+  "type": "visual-essay",
+  "title": "Solar generation rose from 720 TWh in 2020 to 1,960 TWh in 2024",
+  "blocks": [
+    { "kind": "prose", "text": "Hydro generated 3,900 TWh in 2024. Wind generated 2,640 TWh." },
+    { "kind": "figure", "chart": { "type": "line-chart", "data": "/data/energy.csv", "transform": [{ "type": "aggregate", "groupBy": ["year", "source"], "measures": { "twh": { "op": "sum", "field": "twh" } } }], "x": "year", "y": "twh", "series": "source" } },
+    { "kind": "quote", "quote": "Asia added 790 TWh of solar generation between 2020 and 2024.", "attribution": "Grid planner" }
+  ]
+}
+```
+
+A `scrolly` block pins its chart while the steps scroll past, with the same rules as [Scrolly](/docs/stories): no ancestor of the template may clip overflow.
+
+## Generating a template spec with a model
+
+A template spec is a good thing to ask a model for. The template has already fixed the layout, so the model only writes the titles, figures and chart specs.
+
+1. Give it the data, the fact each chart should show and the template's Markdown page, for example [`/llms/executive-brief.md`](/llms/executive-brief.md). The page lists every prop and includes a complete example.
+2. Ask for one JSON object and validate it against [`/schema/insight-spec.json`](/schema/insight-spec.json).
+3. Render it with `Insight`. An unknown `type` anywhere in the tree renders an inline alert naming the valid ones, which you can send back to the model.
+
+See [for AI agents](/docs/ai-agents) for the other files published for agents.
+
+## Previewing a template
+
+A template is too large for the preview box used for atoms. On each template page the preview scrolls inside its frame, **Expand** shows it at full height in place, and **Full screen** opens it alone at `/templates/<name>/preview`, for example [the executive brief](/templates/executive-brief/preview). The width, theme and mode controls work in all three.
+
+An infographic page has a different toolbar. The theme menu lists the eight poster themes, a **Download PNG** button saves the poster, and there is no light and dark switch because a poster paints its own ground.

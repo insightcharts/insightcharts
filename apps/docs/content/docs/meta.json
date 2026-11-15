@@ -1,0 +1,25 @@
+{
+  "title": "Guides",
+  "pages": [
+    "---Get started---",
+    "index",
+    "installation",
+    "quickstart",
+    "---Core concepts---",
+    "data",
+    "theming",
+    "dark-mode",
+    "highlighting-and-annotations",
+    "crossfiltering",
+    "stories",
+    "templates",
+    "infographics",
+    "export",
+    "icons",
+    "---Going further---",
+    "json-spec",
+    "escape-hatch",
+    "accessibility",
+    "ai-agents"
+  ]
+}

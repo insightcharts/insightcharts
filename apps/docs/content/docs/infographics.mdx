@@ -1,0 +1,215 @@
+---
+title: Infographics
+description: An infographic is a template that draws one designed poster. This guide covers the templates, the poster frame, the poster themes, the poster primitives, PNG download and the phone layout.
+---
+
+An infographic is a template whose category is `infographic`. It draws one sheet with a painted background, a large title, little other text and one large graphic or several graphics laid out together. The catalogue has <Count of="infographics" /> infographics, listed on the [Infographics](/infographics) page.
+
+<Example name="count-poster" />
+
+Three things make up the set.
+
+| Part | What it is | Where |
+|---|---|---|
+| Infographic templates | <Count of="infographics" /> templates that each lay out one kind of poster. | [Infographics](/infographics) |
+| The poster frame | One molecule, `poster`. It paints the ground and lays out a masthead, a grid of panels and a footer. Every infographic is composed on it. | [Poster](/molecules/poster) |
+| Poster primitives | <Count of="poster-primitives" /> atoms drawn for a poster ground. | [Atoms, poster primitives](/atoms#poster) |
+
+## Choosing an infographic
+
+Each infographic fits one kind of subject. The "use when" and "avoid when" on each page name the alternative.
+
+<LevelTable level="template" set="infographic" />
+
+Choose an infographic when the piece is one image that should be read in a few seconds and shared as a picture. Choose a [report-style template](/docs/templates) when the reader needs paragraphs, a method note, recommendations or charts with axes.
+
+## Using an infographic from JSON
+
+An infographic takes all of its content as props. A spec is `{ type, ...props }`, and `Insight` renders it.
+
+```tsx
+import { Insight } from "insightcharts";
+
+const spec = {
+  type: "scale-poster",
+  theme: "ocean",
+  title: "The Meridian Deep survey logged 12 sightings between 8 m and 3,750 m",
+  scale: { data: sightings, name: "sighting", value: "m", direction: "down", format: "{value} m" },
+  sources: "Meridian Deep survey log",
+};
+
+<Insight spec={spec} />
+```
+
+This is the [scale poster](/templates/scale-poster) with its full example. The **JSON** tab holds the whole document.
+
+<Example name="scale-poster" />
+
+Reading an infographic spec from the top:
+
+- **`type`** names the template.
+- **`title`, `kicker`, `subtitle`** are the masthead. The title is the poster's one fact, written as a plain sentence with its number.
+- **`theme`** is a poster theme name. Each template has its own default.
+- **Region props** hold the graphics. Each template names its own regions, such as `scale` and `side` on the scale poster or `hero`, `reference`, `area`, `bars` and `shares` on the [count poster](/templates/count-poster).
+- **`sources`, `note`, `credit`** are the footer.
+
+A region takes a compact config: the rows in `data`, the field names, and any other prop of the primitive that draws the region. A `title`, `subtitle`, `source` or `note` in the config becomes the heading and source line of that panel. A region also takes a full spec with its own `type`, or a React element. That replaces the primitive the template would have drawn.
+
+```json
+{
+  "type": "count-poster",
+  "title": "Norland's schools taught 1.84 million pupils in 2025",
+  "unit": 1000,
+  "unitLabel": "1,000 people",
+  "hero": { "data": [{ "stage": "Primary", "pupils": 820000 }, { "stage": "Lower secondary", "pupils": 480000 }], "name": "stage", "value": "pupils", "title": "820,000 pupils were in primary school" },
+  "bars": { "type": "bar-chart", "data": [{ "year": "2000", "m": 1.42 }, { "year": "2025", "m": 1.84 }], "x": "year", "y": "m", "title": "Enrolment was 1.42 million in 2000" }
+}
+```
+
+### Props shared by infographics
+
+<SharedProps level="template" set="infographic" />
+
+`linked` joins the panels by name. A click on a mark in one graphic highlights the same name in every other graphic that has it. Graphics that read the shared `data` prop are filtered by the click.
+
+## Composing a poster with the poster frame
+
+Use the [`poster`](/molecules/poster) molecule directly when no template has the layout you need. A poster has a masthead (`kicker`, `title`, `subtitle`), a list of `panels` and a footer (`sources`, `note`, `credit`).
+
+<Spec spec={{ type: "poster", theme: "forest", kicker: "Transport", title: "Tarn Valley buses carried 9.6 million passengers in 2025", subtitle: "Passengers on the valley's seven bus routes, January to December 2025.", panels: [{ span: 5, valign: "center", content: { type: "big-number", size: "hero", value: "9.6 million", label: "Passengers in 2025", context: "8.9 million in 2024" } }, { span: 7, title: "Route 4 carried 2.3 million passengers", subtitle: "Passengers by route, thousands, 2025", content: { type: "pill-rank", data: [{ route: "Route 4", k: 2300 }, { route: "Route 1", k: 1900 }, { route: "Route 7", k: 1500 }, { route: "Route 2", k: 1400 }, { route: "Route 9", k: 1100 }, { route: "Route 5", k: 800 }, { route: "Route 3", k: 600 }], name: "route", value: "k", format: "{value}k", highlight: "Route 4" } }, { span: 7, title: "Passenger numbers were 6.1 million in 2021", subtitle: "Passengers per year, millions", content: { type: "block-bar", data: [{ year: "2021", m: 6.1 }, { year: "2022", m: 7.4 }, { year: "2023", m: 8.2 }, { year: "2024", m: 8.9 }, { year: "2025", m: 9.6 }], name: "year", value: "m", format: "{value}m" } }, { span: 5, title: "40% of the 120 buses were electric in 2025", content: { type: "shape-fill", data: [{ fleet: "Electric buses", share: 40 }], name: "fleet", value: "share", icon: "bus", format: "{value}%" } }], sources: "Tarn Valley Transport Authority", note: "Tarn Valley is an invented place. All figures are illustrative.", credit: "InsightCharts" }} />
+
+### Panels
+
+Each panel is one block of the poster.
+
+| Panel field | Default | Purpose |
+|---|---|---|
+| `content` | required | A component spec such as `{ type: "pill-rank", ... }`, or a React element. |
+| `title`, `subtitle` | none | A small heading over the content and one line under it. |
+| `span` | the full width | Columns the panel covers, out of the poster's `columns`. |
+| `rowSpan` | `1` | Rows the panel covers. It is ignored when the poster reflows to fewer columns. |
+| `source`, `note` | none | A source line and a caveat under the panel. |
+| `align` | `"left"` | Alignment of the heading, the source line and text content. |
+| `valign` | `"start"` | Where the content sits when a neighbouring panel is taller. |
+| `bleed` | `false` | Runs the content to the poster's left and right edges where the panel touches them. |
+| `id` | none | Set as `data-panel` on the panel. |
+
+`columns` is 12 by default, so `span: 5` beside `span: 7` makes one row. A small number such as `columns: 2` or `columns: 3` gives a simple grid. Panels are placed in reading order. A dotted rule is drawn under the masthead, between rows of panels and above the footer. `rules` changes it to `"solid"` or `"none"`.
+
+The frame passes its theme and one colour mode to everything inside it. A chart in a panel needs no `theme` or `mode` of its own.
+
+### Shape and size
+
+| Prop | Default | Purpose |
+|---|---|---|
+| `maxWidth` | `1200` | The widest the poster is drawn. It is centred in a wider container. |
+| `aspect` | none | A fixed shape as width / height, such as `"4:5"` or `0.75`. The poster still grows when its content needs more height. |
+| `padding` | `56` | Space between the poster's edge and its content. It is 36 under 900 px and 20 under 600 px. |
+| `gap` | `40` | Space between panels. It is 28 under 600 px. |
+
+## Poster themes
+
+A poster theme sets the ground of the sheet, the type colours and four or five strong mark colours. There are eight. Pass the name as `theme` to the frame or to any infographic.
+
+<PosterThemes />
+
+Seven of the eight themes have one look. Their `light` and `dark` tokens are the same, so the poster has the same colours on a light page and on a dark page. `paper` has a second variant on charcoal stock, which you get with `mode="dark"`.
+
+The frame's `mode` is `"light"` by default. A poster does not follow the page's colour mode unless you set `mode="auto"`.
+
+`posterThemes` holds the eight themes by name and `posterBackgrounds[name][mode]` holds the CSS background each one paints. Three of the grounds are gradients. Both are exported from `insightcharts/themes`, and the themes are also in the `themes` record. See [theming](/docs/theming#poster-themes) for using a poster theme outside the frame.
+
+```tsx
+import { Poster } from "insightcharts";
+
+<Poster theme="blueprint" title="..." panels={panels} />
+<Poster theme="paper" mode="dark" title="..." panels={panels} />
+<Poster theme="noir" background="linear-gradient(180deg, #0d0d0f, #1b1b22)" title="..." panels={panels} />
+```
+
+`background` replaces the ground with any CSS colour or gradient. Keep it close to the theme's `surface`, because charts draw the gaps between touching marks in the `surface` colour.
+
+## Poster primitives
+
+A poster primitive is an atom with the category `poster`. It is a chart built with `defineChart`, so it takes `data`, `title`, `highlight`, `format`, `select` and the other [common chart props](/docs/quickstart). It differs from the other chart atoms in four ways.
+
+- Marks are large flat fills in the theme's colours.
+- The name and value are printed inside the mark when they fit and beside it when they do not.
+- There are no axes or gridlines by default.
+- The graphic takes the height its layout needs and is laid out again for a narrow width.
+
+A primitive works in any theme and outside a poster. In a poster it takes the frame's theme.
+
+<PosterPrimitives />
+
+<Spec spec={{ type: "stat-circles", data: [{ who: "per person in the United States", kg: 124 }, { who: "per person in Brazil", kg: 100 }, { who: "per person in China", kg: 63 }, { who: "per person in India", kg: 6 }], name: "who", value: "kg", unit: "kg", title: "Meat supply in the United States was 124 kg per person in 2021", subtitle: "Meat supply per person per year, kilograms, 2021", source: "FAO food balance sheets", note: "Rounded, approximate figures for illustration" }} />
+
+Any other atom also fits a panel. The [poster](/molecules/poster) page lists the ones its examples use, such as [treemap](/atoms/treemap), [waffle chart](/atoms/waffle-chart) and [pictogram chart](/atoms/pictogram-chart).
+
+## Icons
+
+The library has <IconCount /> built-in icons. An icon prop takes a built-in name such as `"person"` or `"wind-turbine"`, or a custom path written as `"path://M0 0..."`. Unit charts repeat an icon by count. No chart scales an icon's width and height by a value.
+
+```json
+{ "type": "unit-blocks", "data": "/data/finishers.csv", "name": "age", "value": "finishers", "unit": 10, "unitLabel": "10 finishers", "icon": "person" }
+```
+
+The [icons](/docs/icons) page shows every icon with its name.
+
+## Saving a poster as a PNG
+
+Set `download` on the frame or on any infographic. A "Download PNG" control appears under the poster. It saves the whole sheet as one image, without the control.
+
+```tsx
+<Poster download exportWidth={3000} filename="bus-passengers-2025" onExport={(blob) => upload(blob)} title="..." panels={panels} />
+<Insight spec={{ type: "count-poster", download: true, ...rest }} />
+```
+
+| Prop | Default | Purpose |
+|---|---|---|
+| `download` | `false` | Shows the control. |
+| `exportWidth` | `2400` | Width of the image in pixels. The height follows the poster's shape. |
+| `filename` | a slug of the title | File name without the extension. |
+| `downloadLabel` | `"Download PNG"` | Label of the control. |
+| `onExport` | none | Called with the PNG `Blob` after a download. |
+
+`exportWidth`, `filename`, `downloadLabel` and `onExport` are props of the `poster` frame. The infographic templates take `download` only.
+
+With `download` set, every chart in the poster mounts at once instead of when it scrolls into view. The image is then complete when the reader saves it.
+
+The image is drawn from the DOM onto a canvas by `rasterize`, which is exported from `insightcharts/core`. To save a poster from your own button, pass it the sheet element.
+
+```tsx
+import { canvasToBlob, downloadBlob, rasterize } from "insightcharts/core";
+
+async function save() {
+  const sheet = document.querySelector<HTMLElement>('[data-slot="ic-poster"]');
+  const blob = await canvasToBlob(await rasterize(sheet, 2400));
+  downloadBlob(blob, "poster.png");
+}
+```
+
+`rasterize` paints box backgrounds including linear and radial gradients, borders, corner radii, clipping, text, inline SVG and canvases. It does not paint outer or blurred shadows, CSS transforms, conic or repeating gradients, or `url()` background images. It skips any element with the `data-ic-export-ignore` attribute. See [export](/docs/export#whole-posters-and-cards) for the other export paths.
+
+## Posters on a phone
+
+A poster lays itself out from its own width, not from the viewport. A poster in a 400 px column has the phone layout on any screen.
+
+| Poster width | Layout |
+|---|---|
+| 760 px and wider | The grid you wrote, with every `span` and `rowSpan`. |
+| 600 to 759 px | Two columns. On a 12-column grid a panel with `span` up to 6 takes one column and a wider panel takes both. |
+| Under 600 px | One column. Every panel is full width, in reading order. |
+
+Under 600 px the padding is 20 px, the gap is 28 px, the title is 30 to 40 px and a fixed `aspect` is dropped. The poster grows as tall as its panels need.
+
+Each poster primitive lays itself out again for the narrower panel. A primitive sets its own height from its rows and its measured width, so a graphic can be taller on a phone. The preview toolbar on each infographic page has phone and tablet width buttons on screens 768 px and wider.
+
+## Writing the text
+
+A poster has little text, so each line carries a number.
+
+- The `title` is one plain statement of fact with its number and period, such as "Riverton's bike-share scheme carried 4.2 million trips in 2025".
+- A panel `title` is one fact about that panel's graphic, or a plain label.
+- A `subtitle` names the measure, the unit, the population and the period.
+- `sources` names the source. Put a caveat such as "Illustrative data" in `note`.

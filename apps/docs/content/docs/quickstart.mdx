@@ -1,0 +1,79 @@
+---
+title: Quickstart
+description: How to render a first chart, the props every chart takes, and how to set defaults with a provider.
+---
+
+## A first chart
+
+Pass rows, name the fields to draw, and write a title that states one fact from the data with its number.
+
+<Spec spec={{ type: "bar-chart", data: [{ country: "Norway", share: 98 }, { country: "Brazil", share: 89 }, { country: "Canada", share: 68 }, { country: "Germany", share: 52 }, { country: "United States", share: 23 }], x: "country", y: "share", format: "{value}%", highlight: "Norway", title: "Renewables supplied 98% of Norway's electricity in 2023", subtitle: "Share of electricity generation from renewables, 2023", note: "Illustrative figures", height: 260 }} />
+
+## The props every chart takes
+
+Every chart built on the engine takes the same four groups of props.
+
+1. **Data**: `data` is rows, CSV text, a URL or a function (see [data](/docs/data)). `transform` reshapes it first.
+2. **Fields**: `x`, `y`, `series` and so on are field names, as strings. There are no accessor functions, so a chart can be written as JSON.
+3. **Text**: `title` is one plain statement of what the data shows, with the number and the period. `subtitle` names the measure, unit, population and period. `source` and `note` are shown under the chart. See [writing titles](/docs/highlighting-and-annotations#writing-titles).
+4. **Emphasis**: `highlight` names the entity the title is about, and the other series are drawn in grey. `annotations` mark a date, a threshold or a single value.
+
+The chart draws its own title, legend, source line, loading skeleton, error message and empty state. It fills the width of its container. `height` defaults to 360 pixels, except on charts that declare a natural height (row-based charts such as a horizontal bar chart grow with their rows); pass `height` to fix it, or `aspect` (width divided by height).
+
+The full list of shared props is in the collapsible "Common chart props" table on any chart page, for example [bar chart](/atoms/bar-chart#props).
+
+## Formatting numbers
+
+`format` controls how values print on labels, axes and tooltips. It accepts a shorthand string, a template, `Intl.NumberFormat` options, or a function.
+
+| Format | 1234.5 prints as |
+|---|---|
+| `"auto"` (default) | 1,234.5 (compact above 10,000) |
+| `"compact"` | 1.2K |
+| `"integer"` | 1,235 |
+| `"decimal:2"` | 1,234.50 |
+| `"signed"` | +1,234.5 |
+| `"currency:USD"` | $1.2K |
+| `"percent"` | 123,450% (expects a ratio: 0.42 prints as 42%) |
+| `"percent-raw"` | 1,234.5% (expects a percentage: 42 prints as 42%) |
+| `"year"` | 1235 (no thousands separator) |
+| `"{value} kg"` | 1,234.5 kg |
+
+## Big numbers
+
+Use `BigNumber` to show a single statistic. It takes a label, a change and a line of context, such as an earlier value.
+
+<Spec spec={{ type: "big-number", value: 0.317, format: "percent", label: "Share of global electricity from renewables", delta: 0.021, deltaLabel: "vs 2023", context: "Up from 19% in 2010", size: "hero" }} />
+
+## Setting defaults with a provider
+
+Charts work with no provider. `InsightProvider` sets defaults for everything beneath it, and providers nest, so one section of a page can carry its own theme or mode.
+
+```tsx
+import { InsightProvider } from "insightcharts";
+
+<InsightProvider theme={{ accent: "#7c3aed" }} locale="en-GB" exportable>
+  {children}
+</InsightProvider>
+```
+
+| Prop | Default | Purpose |
+|---|---|---|
+| `theme` | the default theme | A theme or partial tokens, merged over the parent provider's theme. |
+| `mode` | `"auto"` | `"auto"`, `"system"`, `"light"` or `"dark"`. See [dark mode](/docs/dark-mode). |
+| `renderer` | `"auto"` | `"svg"`, `"canvas"`, or `"auto"`: SVG up to 1,500 marks, canvas beyond. |
+| `locale` | `"en-US"` | BCP 47 locale for numbers and dates. |
+| `animate` | `true` | Set false to disable animation. Reduced-motion preferences are always respected. |
+| `exportable` | `false` | Show the export menu on every figure. |
+| `lazy` | `true` | Create each chart only when it scrolls within 200 pixels of the viewport. |
+
+<Callout title="Server rendering and locale">
+Text atoms such as `BigNumber` render on the server. The locale is a fixed default (`"en-US"`) rather than the runtime's, so the server and the browser print the same digits and hydration is clean. Set `locale` on a provider to format for your readers; do not derive it from `navigator.language` during render, or the two will disagree again.
+</Callout>
+
+## Next steps
+
+- [Data](/docs/data): every accepted shape and every transform.
+- [Highlighting and annotations](/docs/highlighting-and-annotations): `highlight`, `annotations` and the rules for writing titles.
+- [The JSON spec](/docs/json-spec): the same components written as JSON.
+- [Templates](/docs/templates): page layouts that take their content as props.

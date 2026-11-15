@@ -1,0 +1,23 @@
+{
+  "name": "insightcharts-monorepo",
+  "private": true,
+  "packageManager": "pnpm@12.10.1",
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev": "pnpm --filter docs dev",
+    "test": "pnpm -r test",
+    "typecheck": "pnpm -r typecheck",
+    "manifest": "pnpm index && tsx scripts/build-manifest.ts",
+    "index": "node scripts/build-index.mjs",
+    "gallery": "pnpm --filter gallery dev",
+    "check": "pnpm index && pnpm --filter insightcharts typecheck",
+    "llms": "tsx scripts/build-llms.ts",
+    "registry": "tsx scripts/build-registry.ts",
+    "agent-docs": "pnpm manifest && pnpm llms && pnpm registry"
+  },
+  "devDependencies": {
+    "tsx": "latest",
+    "typescript": "^5.9.0",
+    "@types/node": "latest"
+  }
+}

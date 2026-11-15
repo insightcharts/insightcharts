@@ -1,0 +1,73 @@
+---
+title: Crossfiltering
+description: InsightData shares one dataset between charts. A click on a selectable chart filters the others.
+---
+
+`InsightData` loads a dataset once and shares it. Charts inside it that do not pass their own `data` read the shared rows, and any chart with `select` filters the others when the reader clicks a mark.
+
+<Demo name="crossfilter" />
+
+Click a region, then a source. The stacked chart follows both; each selectable chart keeps showing its full set of bars while the other one filters it.
+
+## How it works
+
+1. `InsightData` resolves `data` (any [accepted shape](/docs/data)) and optionally applies a `transform` to everything.
+2. A chart inside with no `data` prop receives the shared rows, filtered by every active selection **except its own**. Because of that exception, the bars in a selectable chart do not disappear when you click one of them.
+3. The chart's own `transform` runs after the filter. In the demo each chart aggregates the same long-format rows a different way.
+4. Clicking a mark toggles its value in the chart's selection, so several values can be selected at once. Clicking the empty plot area clears that chart's selection. Selected marks stay solid and the rest fade.
+
+## The select prop
+
+| Value | Selects on |
+|---|---|
+| `true` | The chart's own category field: `x` for a bar chart, `series` for a line chart. Each chart documents its field. |
+| `"region"` | The named field. Use this when the field differs from the one the chart draws. |
+
+Give selectable charts a stable `id`. It keys the chart's entry in the store, which matters when you read or control selections yourself.
+
+`onSelect(values, field)` is called whenever a chart's selection changes.
+
+## Without InsightData
+
+`select` also works on a chart that stands alone. The selection is then local: the chart fades unselected marks and reports through `onSelect`, and you decide what to do with the values.
+
+<Demo name="select-local" />
+
+## Reading and controlling the selection
+
+`useInsightData()` returns the store from the nearest `InsightData`, or `null` outside one. The reset control in the first demo uses it.
+
+| Member | Purpose |
+|---|---|
+| `rows`, `all` | Every loaded row, unfiltered. |
+| `status`, `error` | `"loading"`, `"ready"` or `"error"`. |
+| `selections` | Active selections keyed by chart id: `{ field, values?, range? }`. |
+| `select(owner, selection)` | Set or clear (`null`) one owner's selection. |
+| `clear()` | Clear every selection. |
+| `rowsFor(owner?)` | Rows filtered by every selection except `owner`'s. |
+
+A selection is either a list of `values` or a `range` of `[min, max]` on a field, matched inclusively. Charts produce value selections; set a range yourself from a slider or a date picker:
+
+```tsx
+const store = useInsightData();
+store?.select("date-range", { field: "year", range: [2022, 2024] });
+```
+
+To keep selections in the URL or in your own state, control them:
+
+```tsx
+const [selections, setSelections] = useState({});
+
+<InsightData data="/data/energy.csv" selections={selections} onSelectionsChange={setSelections}>
+  ...
+</InsightData>
+```
+
+## Linked tooltips
+
+Crossfiltering changes the data. To only link hover state, give charts the same `group` id and their tooltips and axis pointers move together.
+
+```tsx
+<LineChart group="traffic" ... />
+<LineChart group="traffic" ... />
+```

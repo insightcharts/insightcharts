@@ -1,0 +1,73 @@
+---
+title: Custom ECharts options
+description: The option prop passes any ECharts setting to a component. When no component fits, the Chart component renders a raw ECharts option.
+---
+
+There are three ways to go beyond a component's props. They are listed from the smallest change to the largest.
+
+## The option prop
+
+Every chart accepts `option`. As an object it is deep-merged over the option the component generated. As a function it receives that option and the build context and returns the option to draw.
+
+<Demo name="option-escape" />
+
+Merging follows the shape of the option:
+
+- Plain objects merge key by key.
+- An array of objects, such as `series`, merges item by item: `{ series: [{ smooth: true }] }` patches the first series and leaves the rest alone.
+- A single object given where the option holds an array of objects is applied to every item: `{ series: { smooth: true } }` patches all series.
+- Everything else (scalars, arrays of values) is replaced.
+
+The context passed to the function form:
+
+| Member | Contents |
+|---|---|
+| `rows` | The data after loading, crossfilter and `transform`. |
+| `tokens` | The resolved theme. Every colour is a concrete value that canvas can draw. |
+| `mode` | `"light"` or `"dark"`. |
+| `width`, `height` | Container size in CSS pixels. |
+| `compact` | True under 480 pixels wide. |
+| `fmt`, `formatter(spec)` | The value formatter from `format`, and a factory for others. |
+| `color(key, index)`, `dimmed(key)`, `selected(value)` | The same colour, highlight and selection helpers the component itself used. |
+| `locale`, `animate` | The active locale, and false when animation is off or the reader prefers reduced motion. |
+
+`option` is applied last, after highlight and annotations.
+
+## The ECharts instance
+
+`onReady(chart)` is called with the ECharts instance when it is created, and a ref exposes it later through `getInstance()`. `onEvents` binds ECharts events; prefix a name with `zr:` to listen on the canvas itself, which is how you listen for clicks on the blank area.
+
+```tsx
+<BarChart
+  onEvents={{
+    click: (params) => console.log(params.name, params.value),
+    "zr:click": (event) => !event.target && console.log("blank area"),
+  }}
+  onReady={(chart) => chart.dispatchAction({ type: "showTip", seriesIndex: 0, dataIndex: 1 })}
+  ...
+/>
+```
+
+## Chart and Figure
+
+When no component fits, render any ECharts option through `Chart`, the engine every component is built on. You still get lazy mounting, resizing, theme tokens, dark mode, reduced motion and export. Wrap it in `Figure` for the same title, subtitle and source line.
+
+<Demo name="chart-direct" />
+
+`option` may be a full ECharts option or a function of the chart context, as here, so colours come from the theme and follow dark mode.
+
+Already registered with ECharts: both renderers, the core components (grid, tooltip, dataset, transform, mark line, mark area, mark point, graphic, aria), label layout and universal transition. Anything else, such as the radar series above, is registered once with `echarts.use([...])`. Import `echarts` from `insightcharts` so you register on the same instance the library uses.
+
+| Chart prop | Purpose |
+|---|---|
+| `option` | An ECharts option, or `(ctx) => option`. |
+| `height`, `aspect` | CSS height (default 360), or width divided by height. |
+| `renderer`, `markCount` | `"auto"` picks canvas when `markCount` exceeds 1,500. |
+| `theme`, `mode`, `animate`, `lazy`, `group` | As on every chart. |
+| `onEvents`, `onReady`, `onContext` | Events, the instance, and the context each time an option is built. |
+| `alt` | Accessible description. |
+| `exportMeta` | Title, subtitle, source and rows for export. |
+
+## Your own components
+
+If you need the same custom chart more than once, define a component for it. `defineChart` takes a pure `build(props, ctx)` function and returns a component with every feature described on this site: data loading, crossfilter, highlight, annotations, chrome, export and a JSON spec. The contributor guide in the repository (`AGENTS.md`) explains how, with `atoms/bar-chart.tsx` as the reference implementation.

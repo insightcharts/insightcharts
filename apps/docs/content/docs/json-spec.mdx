@@ -1,0 +1,83 @@
+---
+title: The JSON spec
+description: Any component can be written as plain JSON and rendered with Insight. Use a spec when the chart is chosen at runtime.
+---
+
+A spec is an object with a `type`, which is a component's kebab-case name, plus that component's props.
+
+```json
+{ "type": "bar-chart", "data": [{ "month": "May", "tickets": 51 }], "x": "month", "y": "tickets" }
+```
+
+`Insight` renders it. Edit the JSON on the left. The figure on the right redraws each time the JSON is valid.
+
+<Demo name="json-live" toolbar={false} />
+
+## What a spec can contain
+
+Almost every prop is JSON-serialisable:
+
+- Fields are **names**, not accessor functions: `x: "month"`.
+- Data reshaping is a list of [transform](/docs/data#transforms) objects, not code.
+- Number formats are [strings](/docs/quickstart#formatting-numbers): `"compact"`, `"percent"`, `"{value} kg"`.
+- Annotations are objects in data coordinates.
+- Remote data is a URL or `{ url, path }`.
+
+Only callbacks (`onSelect`, `onEvents`, `onReady`) and the function forms of `option`, `format`, `transform` and `data` cannot be expressed. A spec that needs none of them can be stored in a database, returned by an API or produced by a model.
+
+## Rendering specs
+
+```tsx
+import { Insight } from "insightcharts";
+
+export function Answer({ spec }) {
+  return <Insight spec={spec} />;
+}
+```
+
+`Insight` can render any atom, molecule or template, so it pulls all of them into the bundle. Prefer named imports (`BarChart`) when you know the chart at build time and bundle size matters, and `Insight` when the chart is chosen at runtime. The components are registered the first time an `Insight` renders, not when the module is imported.
+
+If `type` is not a known component, `Insight` renders an inline alert that lists the available names rather than throwing. You can send that message back to a model so it can correct the spec.
+
+## Nested specs
+
+Molecules and templates take content through slot props. A slot accepts either rendered React content or another spec, so a whole page can be written as one JSON document.
+
+<Spec spec={{ type: "chart-callout", chart: { type: "line-chart", data: [{ month: "Jan", churn: 4.2 }, { month: "Mar", churn: 4.1 }, { month: "May", churn: 3.1 }, { month: "Jul", churn: 2.6 }, { month: "Sep", churn: 2.3 }, { month: "Nov", churn: 2.1 }], x: "month", y: "churn", format: "{value}%", zero: true, height: 240, title: "Monthly churn fell from 4.2% in January to 2.1% in November 2024", subtitle: "Monthly customer churn, 2024", note: "Illustrative data" }, lead: "Churn was 2.1% in November", body: "The largest fall between two readings was from 4.1% in March to 3.1% in May." }} />
+
+Here `chart` is a slot of [chart with callout](/molecules/chart-callout), and its value is a line chart spec. Each [molecule](/molecules) and [template](/templates) page lists its slot props and shows a complete example under the **JSON** tab; [templates](/docs/templates) walks through a whole page built this way.
+
+Nested specs are looked up by name. `Insight` does this for you. When you render the outer component yourself with a named import and pass specs into its slots, as the **Code** tab above does, fill the registry first. `registerAll()` registers everything; `registerComponents` registers only what you name, which keeps the rest out of the bundle.
+
+```tsx
+import { ChartCallout, LineChart, registerAll, registerComponents } from "insightcharts";
+
+registerAll();
+// or, to keep the bundle small:
+registerComponents({ LineChart });
+
+<ChartCallout chart={{ type: "line-chart", data, x: "month", y: "churn" }} lead="Churn was 2.1% in November" />
+```
+
+A slot spec that names an unregistered component renders an inline alert saying so, in place of the chart.
+
+## Validating a spec
+
+The component catalogue is published as JSON Schema, generated from the same metadata as this site:
+
+- [`/schema/insight-spec.json`](/schema/insight-spec.json): the schema for a spec.
+- [`/schema/manifest.json`](/schema/manifest.json): every component's name, level, props, example and what it composes.
+
+Pass the schema to a model as a structured-output or tool schema and its answers are constrained to components and props that exist.
+
+## Helpers
+
+| Export | Purpose |
+|---|---|
+| `Insight` | Render a spec. Registers every component on first render. |
+| `registerAll()` | Register every built-in component, for slot specs rendered outside `Insight`. Safe to call more than once. |
+| `registerComponents(record)` | Make components available to specs by their `meta.name`. |
+| `renderSlot(slot)` | Render a slot that may be React content or a spec. Use it in your own molecules. |
+| `isSpec(value)` | True for a plain object with a string `type`. |
+| `listComponents()` | The metadata of every registered component. |
+| `getComponent(type)` | The registered component for a name. |

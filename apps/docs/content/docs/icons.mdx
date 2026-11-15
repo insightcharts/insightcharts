@@ -1,0 +1,71 @@
+---
+title: Icons
+description: Every built-in icon by group, with its name. An icon prop takes one of these names or a custom path.
+---
+
+The library has <IconCount /> icons for unit charts, poster graphics and figures. Each is one filled path on a 24 by 24 grid. Click an icon to copy its name.
+
+<IconGallery />
+
+## Using an icon in a chart
+
+An icon prop takes a built-in name or a custom path. These components have an icon prop:
+
+<IconUsers />
+
+```json
+{ "type": "shape-fill", "data": [{ "reservoir": "Carrow", "level": 63 }], "name": "reservoir", "value": "level", "icon": "drop", "format": "{value}%" }
+```
+
+<Spec spec={{ type: "shape-fill", data: [{ reservoir: "Carrow", level: 63 }, { reservoir: "Upper Fen", level: 41 }, { reservoir: "Stonebeck", level: 88 }], name: "reservoir", value: "level", icon: "drop", format: "{value}%", title: "Carrow Reservoir was 63% full on 1 September 2025", subtitle: "Water stored as a share of capacity, three reservoirs, 1 September 2025", note: "Invented figures for fictional reservoirs" }} />
+
+## A custom icon
+
+Write a custom icon as `path://` followed by the `d` attribute of one SVG path. Draw it on the same 24 by 24 grid as a single filled shape with no strokes.
+
+```json
+{ "type": "pictogram-chart", "data": [{ "peak": "North", "tents": 12 }, { "peak": "South", "tents": 7 }], "name": "peak", "value": "tents", "icon": "path://M12 2 22 22H2Z" }
+```
+
+A name that is not built in falls back to another icon. The default fallback is `circle`.
+
+## The Icon component
+
+`Icon` draws one icon as inline SVG.
+
+```tsx
+import { Icon } from "insightcharts";
+
+<Icon name="bike" />
+<Icon name="wind-turbine" size={32} color="#0f766e" title="Wind turbine" />
+```
+
+| Prop | Default | Purpose |
+|---|---|---|
+| `name` | required | A built-in name or a `path://` string. |
+| `size` | `"1em"` | Width and height of the icon's square box, in px or any CSS length. |
+| `color` | `currentColor` | Fill colour. |
+| `title` | none | Accessible name. Without it the icon is hidden from assistive technology. |
+| `fallback` | `"circle"` | The icon drawn when `name` is not built in. |
+
+Every icon is drawn in the same 24 by 24 box, so icons of different shapes line up at one `size`.
+
+## The icon data
+
+These are exported from `insightcharts` and `insightcharts/core`.
+
+| Export | What it is |
+|---|---|
+| `icons` | A record of every icon: `{ d, aspect }` by name. `d` is the path and `aspect` is the width / height of its bounding box. |
+| `iconNames` | Every built-in name as an array. |
+| `iconGroups` | The names by subject, as on this page. |
+| `resolveIcon(icon, fallback?)` | Returns the `{ d, aspect }` shape for a name or a `path://` string. |
+| `iconSymbol(icon, fallback?)` | Returns the `path://` string ECharts takes as a `symbol`. |
+
+```ts
+import { iconGroups, iconSymbol, resolveIcon } from "insightcharts";
+
+iconGroups.Transport;        // ["car", "bus", "train", "bike", "plane", "ship", "truck", "rocket"]
+resolveIcon("bike").aspect;  // width / height of the bike's path
+iconSymbol("bike");          // "path://..." for an ECharts series symbol
+```

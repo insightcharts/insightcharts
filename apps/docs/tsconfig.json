@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true,
+    "plugins": [{ "name": "next" }],
+    "paths": {
+      "@/*": ["./src/*"],
+      "fumadocs-mdx:collections/*": ["./.source/*"],
+      "insightcharts": ["../../packages/insightcharts/src/index.ts"],
+      "insightcharts/core": ["../../packages/insightcharts/src/core/index.ts"],
+      "insightcharts/data": ["../../packages/insightcharts/src/data/index.ts"],
+      "insightcharts/story": ["../../packages/insightcharts/src/story/index.ts"],
+      "insightcharts/themes": ["../../packages/insightcharts/src/themes/index.ts"],
+      "@ic/*": ["../../packages/insightcharts/src/*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".next/dev/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}

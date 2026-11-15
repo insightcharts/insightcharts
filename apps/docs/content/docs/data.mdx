@@ -1,0 +1,99 @@
+---
+title: Data
+description: Every shape the data prop accepts, how loading works, and the JSON transforms that reshape rows before drawing.
+---
+
+InsightCharts works on plain arrays of plain objects. Whatever you pass as `data` is resolved to rows first; field props such as `x` and `y` then name keys of those rows.
+
+## Accepted shapes
+
+Switch between the shapes below. The chart is the same each time.
+
+<Demo name="data-shapes" />
+
+| Shape | Example | Notes |
+|---|---|---|
+| Row objects | `[{ team: "Design", headcount: 14 }]` | The standard form. |
+| Array of arrays | `[["team", "headcount"], ["Design", 14]]` | The first row is the header. |
+| Columns | `{ team: ["Design"], headcount: [14] }` | Every value must be an array or typed array. |
+| Table-like | An Apache Arrow table, DuckDB result or Arquero table | Anything with `toArray()` returning row objects. |
+| CSV text | `"team,headcount\nDesign,14"` | The delimiter is detected; numbers are inferred. |
+| `{ csv, delimiter }` | `{ csv: "a;b\n1;2", delimiter: ";" }` | CSV with an explicit delimiter. |
+| `{ json, path }` | `{ json: response, path: "data.results" }` | `path` is a dot path to the row array. |
+| URL string | `"/data/energy.csv"` | Fetched in the browser. See below. |
+| `{ url, format, path, init, refresh }` | `{ url: "/api/sales", path: "rows", refresh: 30000 }` | A remote source with options. |
+| Function or promise | `async () => db.query(...)` | Resolves to any shape above. |
+
+A string counts as a URL when it is a single line with no commas that starts with `http://`, `https://`, `/`, `./`, `../` or `data:`. Any other string is parsed as CSV.
+
+When a JSON value is an object rather than an array and you give no `path`, the loader looks for a row array under `data`, `rows`, `results`, `items` or `records`. If it finds none it throws an error that tells you to pass `path`.
+
+## Remote data
+
+In-memory data resolves synchronously, so there is no loading flash. URLs, promises and functions load asynchronously: the chart shows a skeleton while loading and a message if the request fails.
+
+```tsx
+<BarChart data={{ url: "/api/sales", path: "data.rows", refresh: 30_000 }} x="region" y="revenue" />
+```
+
+| Option | Purpose |
+|---|---|
+| `url` | CSV, TSV, JSON or NDJSON resource. |
+| `format` | `"csv"`, `"tsv"`, `"json"` or `"ndjson"`. Inferred from the file extension, then the content type, then the first character of the body. |
+| `path` | Dot path to the row array inside a JSON response. |
+| `init` | Passed to `fetch`: headers, method, body. |
+| `refresh` | Re-fetch interval in milliseconds, in the browser only. |
+
+URL loads are de-duplicated: two charts that ask for the same `url`, `format` and `path` share one request. Sources with `init` or `refresh` are not cached.
+
+### Loading on the server
+
+`insightcharts/data` is server-safe. Load in a server component, a route handler or a script, and pass rows down.
+
+```tsx
+import { loadData, transformRows } from "insightcharts/data";
+
+const rows = await loadData("https://example.com/energy.csv");
+const bySource = transformRows(rows, { type: "aggregate", groupBy: "source", measures: { twh: { op: "sum", field: "twh" } } });
+```
+
+## Transforms
+
+`transform` takes one transform or an array, applied in order before drawing. Transforms are plain JSON, so a data pipeline can be described without writing code. A function `(rows) => rows` is accepted anywhere a transform is.
+
+This chart loads long-format rows (year, region, source, twh), keeps one year, sums by source and sorts:
+
+<Spec spec={{ type: "bar-chart", data: "/data/energy.csv", transform: [{ type: "filter", field: "year", value: 2024 }, { type: "aggregate", groupBy: "source", measures: { twh: { op: "sum", field: "twh" } } }, { type: "sort", by: "twh", order: "desc" }], x: "source", y: "twh", format: "compact", orientation: "horizontal", title: "Hydro generated 3,900 TWh in 2024", subtitle: "Renewable generation by source in three regions, TWh, 2024", note: "Illustrative data", height: 200 }} />
+
+| Transform | Shape | What it does |
+|---|---|---|
+| `filter` | `{ type: "filter", field, op?, value? }` | Keeps matching rows. `op` defaults to `"=="`. |
+| `aggregate` | `{ type: "aggregate", groupBy?, measures }` | One row per group. `measures` maps an output name to `{ op, field? }`. |
+| `sort` | `{ type: "sort", by, order? }` | Ascending by default. Strings sort naturally, so "Q10" follows "Q9". |
+| `limit` | `{ type: "limit", n, offset? }` | A slice of rows. |
+| `top` | `{ type: "top", n, by, other?, label? }` | The largest `n` by `by`. With `other` and `label`, the rest are summed into one row whose `label` field is the `other` text. |
+| `fold` | `{ type: "fold", fields, key?, value? }` | Wide to long. The listed columns become rows with `key` and `value` columns. |
+| `pivot` | `{ type: "pivot", index, key, value, op? }` | Long to wide. One row per `index`, one column per distinct `key`; `op` defaults to `"sum"`. |
+| `bin` | `{ type: "bin", field, step?, bins?, as? }` | Adds `<field>_bin` and `<field>_bin_end` columns (or `as` and `as_end`). |
+| `derive` | `{ type: "derive", as, op, fields, groupBy?, base? }` | Adds a computed column. See below. |
+| `rename` | `{ type: "rename", fields }` | `fields` maps old names to new ones. |
+| `select` | `{ type: "select", fields }` | Keeps only the listed columns. |
+| `parse` | `{ type: "parse", fields }` | Coerces columns to `"number"`, `"date"`, `"string"` or `"boolean"`. Number parsing strips commas, `$`, `%` and spaces. |
+
+**Filter operators**: `==`, `!=`, `>`, `>=`, `<`, `<=`, `in`, `not-in`, `between` (value is `[min, max]`, inclusive), `contains` (case-insensitive substring) and `exists` (pass `value: false` for "is missing"). A missing value never passes an ordering comparison.
+
+**Aggregate operations**: `sum`, `mean`, `median`, `min`, `max`, `count`, `distinct`, `first`, `last`.
+
+**Derive operations**: `add`, `subtract`, `multiply` and `divide` take two fields. `percent-of-total`, `cumulative`, `rank` (1 is the largest), `change`, `percent-change` and `index` take one field and run down the rows in order, restarting within each `groupBy` group. `index` rebases the first row to `base`, 100 by default. A missing operand or a division by zero gives `null`, never `NaN`.
+
+Here `derive` rebases two series to 100 so their growth can be compared:
+
+<Spec spec={{ type: "line-chart", data: [{ year: "2020", source: "Solar", twh: 855 }, { year: "2021", source: "Solar", twh: 1050 }, { year: "2022", source: "Solar", twh: 1320 }, { year: "2023", source: "Solar", twh: 1640 }, { year: "2024", source: "Solar", twh: 2130 }, { year: "2020", source: "Wind", twh: 1590 }, { year: "2021", source: "Wind", twh: 1860 }, { year: "2022", source: "Wind", twh: 2110 }, { year: "2023", source: "Wind", twh: 2310 }, { year: "2024", source: "Wind", twh: 2500 }], transform: { type: "derive", as: "indexed", op: "index", fields: ["twh"], groupBy: "source" }, x: "year", y: "indexed", series: "source", format: "integer", title: "Solar generation in 2024 was 2.5 times its 2020 level", subtitle: "Generation indexed to 2020 = 100", note: "Illustrative figures", height: 280 }} />
+
+## Wide and long data
+
+Charts with series accept both layouts. Wide data has one column per series: pass several fields as `y`. Long data has one row per observation: pass one `y` and name the splitting field as `series`. Use `fold` and `pivot` to convert when you need to.
+
+## Sharing data between charts
+
+When several charts draw from the same rows, load them once with `InsightData` and omit `data` on the charts inside. That also enables [crossfiltering](/docs/crossfiltering).

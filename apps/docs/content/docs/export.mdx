@@ -1,0 +1,84 @@
+---
+title: Export
+description: Save any chart as PNG, JPEG, SVG, PDF, CSV or JSON, from a built-in menu or from your own code. Save a whole poster or social card as one PNG.
+---
+
+<Demo name="export" />
+
+Hover the chart (or tab into it) for the built-in menu in the top-right corner, or use the buttons below it, which call the same function through a ref.
+
+## The export menu
+
+`exportable` adds a small "Export" menu to the figure. `true` offers PNG, SVG, PDF and CSV; pass an array to choose the formats, in the order you want them listed.
+
+```tsx
+<LineChart exportable ... />
+<LineChart exportable={["png", "csv", "json"]} ... />
+```
+
+Set `exportable` on `InsightProvider` to turn the menu on for every figure beneath it.
+
+## Exporting from code
+
+A ref on any chart exposes `export(options)`. It triggers a download and resolves to the `Blob`; pass `download: false` to get only the blob, for example to upload it.
+
+```tsx
+import { useRef } from "react";
+import { LineChart, type ChartHandle } from "insightcharts";
+
+const chart = useRef<ChartHandle>(null);
+
+<LineChart ref={chart} ... />
+<button onClick={() => chart.current?.export({ format: "png", pixelRatio: 3 })}>Save PNG</button>
+```
+
+| Option | Default | Purpose |
+|---|---|---|
+| `format` | `"png"` | `"png"`, `"jpeg"`, `"svg"`, `"pdf"`, `"csv"` or `"json"`. |
+| `filename` | a slug of the title | File name without extension. |
+| `pixelRatio` | `2` | Raster scale for PNG, JPEG and PDF. |
+| `chrome` | `true` | Include the title, subtitle and source line in image exports. |
+| `background` | the theme surface | Background colour. Exports are never transparent by default. |
+| `download` | `true` | Set false to return the blob without downloading. |
+
+`export()` rejects if the chart has not rendered yet, which with lazy mounting includes charts that have never been scrolled into view.
+
+## What each format contains
+
+| Format | Contents |
+|---|---|
+| PNG, JPEG | The chart at its on-screen size times `pixelRatio`, with the title, subtitle and source drawn above and below it, on the theme surface colour. |
+| SVG | The same layout as vector, with the text as real `<text>` elements. |
+| PDF | A single page sized to the figure, containing the raster image. The package writes the PDF itself and has no PDF dependency. |
+| CSV, JSON | The rows the chart drew: after `transform`, and after any crossfilter selection. |
+
+Image exports are rendered off-screen with the right renderer for the format, so the result does not depend on whether the visible chart uses SVG or canvas. They use the colours the chart has on screen, including dark mode.
+
+## Whole posters and cards
+
+A chart export contains one chart. Two kinds of component save a whole designed piece as one PNG, with every chart, heading and source line in it.
+
+| Component | Prop | Default width of the image |
+|---|---|---|
+| [Poster](/molecules/poster) and every [infographic](/infographics) | `download`, default `false` | 2400 px |
+| [Social card](/templates/social-card) | `downloadable`, default `true` | 1080 px, or 1920 px at 16:9 |
+
+```tsx
+<Poster download title="..." panels={panels} />
+<Insight spec={{ type: "flow-poster", download: true, ...rest }} />
+```
+
+The control is drawn under the piece and is not part of the image. On the `poster` frame and the social card, `exportWidth` sets the width, `filename` the file name and `onExport` receives the `Blob`. See [saving a poster as a PNG](/docs/infographics#saving-a-poster-as-a-png).
+
+The image is painted from the DOM onto a canvas by `rasterize(element, pixelWidth)` from `insightcharts/core`, with no extra dependency. It paints backgrounds including linear and radial gradients, borders, corner radii, clipping, text, inline SVG and canvases. It does not paint outer or blurred shadows, CSS transforms, conic or repeating gradients, or `url()` background images. An element with the `data-ic-export-ignore` attribute is left out.
+
+```tsx
+import { canvasToBlob, downloadBlob, rasterize } from "insightcharts/core";
+
+const canvas = await rasterize(element, 2400);
+downloadBlob(await canvasToBlob(canvas), "poster.png");
+```
+
+## Lower-level helpers
+
+`exportChart`, `toSvgString`, `toCanvas` and `downloadBlob` are exported from `insightcharts/core` for building your own export flow from an ECharts option. `rasterize`, `canvasToBlob` and `backgroundGradients` are exported from the same place for painting DOM to a canvas. The ref also exposes `getOption()` and `getInstance()`.

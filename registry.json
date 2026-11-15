@@ -1,0 +1,5888 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "insightcharts",
+  "homepage": "https://insightcharts.dev",
+  "items": [
+    {
+      "name": "arc-diagram",
+      "type": "registry:component",
+      "title": "Arc diagram",
+      "description": "Places entities in order on a line and joins each related pair with a semicircular arc whose thickness is the value of the connection; dots are sized by each entity's total.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/arc-diagram.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/arc-diagram.tsx"
+        },
+        {
+          "path": "registry/insightcharts/atoms/_poster-colors.ts",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/_poster-colors.ts"
+        }
+      ],
+      "docs": "Arc diagram: https://insightcharts.dev/llms/arc-diagram.md",
+      "categories": [
+        "atom",
+        "poster"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "poster",
+        "component": "ArcDiagram",
+        "composes": []
+      }
+    },
+    {
+      "name": "area-chart",
+      "type": "registry:component",
+      "title": "Area chart",
+      "description": "Shows a quantity over time as a filled area from zero: one series, stacked series, shares of 100%, or a streamgraph.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/area-chart.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/area-chart.tsx"
+        },
+        {
+          "path": "registry/insightcharts/atoms/_annotations.ts",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/_annotations.ts"
+        }
+      ],
+      "docs": "Area chart: https://insightcharts.dev/llms/area-chart.md",
+      "categories": [
+        "atom",
+        "trend"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "trend",
+        "component": "AreaChart",
+        "composes": []
+      }
+    },
+    {
+      "name": "arrow-chart",
+      "type": "registry:component",
+      "title": "Arrow chart",
+      "description": "Draws an arrow per category from a start value to an end value, showing the direction and size of each shift.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/arrow-chart.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/arrow-chart.tsx"
+        }
+      ],
+      "docs": "Arrow chart: https://insightcharts.dev/llms/arrow-chart.md",
+      "categories": [
+        "atom",
+        "comparison"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "comparison",
+        "component": "ArrowChart",
+        "composes": []
+      }
+    },
+    {
+      "name": "bar-chart",
+      "type": "registry:component",
+      "title": "Bar chart",
+      "description": "Compares a value across categories with bars from a zero baseline.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/bar-chart.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/bar-chart.tsx"
+        },
+        {
+          "path": "registry/insightcharts/atoms/_annotations.ts",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/_annotations.ts"
+        }
+      ],
+      "docs": "Bar chart: https://insightcharts.dev/llms/bar-chart.md",
+      "categories": [
+        "atom",
+        "comparison"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "comparison",
+        "component": "BarChart",
+        "composes": []
+      }
+    },
+    {
+      "name": "beeswarm-chart",
+      "type": "registry:component",
+      "title": "Beeswarm chart",
+      "description": "Shows a distribution as one dot per row along a value axis, with dots stacked sideways where they would collide.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/beeswarm-chart.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/beeswarm-chart.tsx"
+        }
+      ],
+      "docs": "Beeswarm chart: https://insightcharts.dev/llms/beeswarm-chart.md",
+      "categories": [
+        "atom",
+        "distribution"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "distribution",
+        "component": "BeeswarmChart",
+        "composes": []
+      }
+    },
+    {
+      "name": "big-number",
+      "type": "registry:component",
+      "title": "Big number",
+      "description": "A featured statistic with its label, change and the context that gives it meaning.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/big-number.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/big-number.tsx"
+        }
+      ],
+      "docs": "Big number: https://insightcharts.dev/llms/big-number.md",
+      "categories": [
+        "atom",
+        "figure"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "figure",
+        "component": "BigNumber",
+        "composes": []
+      }
+    },
+    {
+      "name": "block-bar",
+      "type": "registry:component",
+      "title": "Block bars",
+      "description": "Compares 3 to 12 values as thick rounded bars from a zero baseline, with each value printed inside the end of its bar and the category beneath.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/block-bar.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/block-bar.tsx"
+        }
+      ],
+      "docs": "Block bars: https://insightcharts.dev/llms/block-bar.md",
+      "categories": [
+        "atom",
+        "poster"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "poster",
+        "component": "BlockBar",
+        "composes": []
+      }
+    },
+    {
+      "name": "box-plot",
+      "type": "registry:component",
+      "title": "Box plot",
+      "description": "Summarises a numeric field per group as median, quartile box, whiskers and outlier dots, computed from raw rows.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/box-plot.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/box-plot.tsx"
+        }
+      ],
+      "docs": "Box plot: https://insightcharts.dev/llms/box-plot.md",
+      "categories": [
+        "atom",
+        "distribution"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "distribution",
+        "component": "BoxPlot",
+        "composes": []
+      }
+    },
+    {
+      "name": "bubble-network",
+      "type": "registry:component",
+      "title": "Bubble network",
+      "description": "Draws a small set of circles sized by value and joined by thin lines, with one circle highlighted and tagged.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/bubble-network.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/bubble-network.tsx"
+        }
+      ],
+      "docs": "Bubble network: https://insightcharts.dev/llms/bubble-network.md",
+      "categories": [
+        "atom",
+        "poster"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "poster",
+        "component": "BubbleNetwork",
+        "composes": []
+      }
+    },
+    {
+      "name": "bubble-scale",
+      "type": "registry:component",
+      "title": "Bubble scale",
+      "description": "Places circles sized by one measure along a single value scale set by another, spread sideways so none overlap, with boxed scale marks instead of an axis.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/bubble-scale.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/bubble-scale.tsx"
+        }
+      ],
+      "docs": "Bubble scale: https://insightcharts.dev/llms/bubble-scale.md",
+      "categories": [
+        "atom",
+        "poster"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "poster",
+        "component": "BubbleScale",
+        "composes": []
+      }
+    },
+    {
+      "name": "bullet-chart",
+      "type": "registry:component",
+      "title": "Bullet chart",
+      "description": "Compares one measure per row with its target, optionally against qualitative bands such as poor / fair / good.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/bullet-chart.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/bullet-chart.tsx"
+        }
+      ],
+      "docs": "Bullet chart: https://insightcharts.dev/llms/bullet-chart.md",
+      "categories": [
+        "atom",
+        "comparison"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "comparison",
+        "component": "BulletChart",
+        "composes": []
+      }
+    },
+    {
+      "name": "bump-chart",
+      "type": "registry:component",
+      "title": "Bump chart",
+      "description": "Shows how the ranking of entities changes over time, with rank 1 at the top and each line named at its end.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/bump-chart.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/bump-chart.tsx"
+        }
+      ],
+      "docs": "Bump chart: https://insightcharts.dev/llms/bump-chart.md",
+      "categories": [
+        "atom",
+        "trend"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "trend",
+        "component": "BumpChart",
+        "composes": []
+      }
+    },
+    {
+      "name": "calendar-heatmap",
+      "type": "registry:component",
+      "title": "Calendar heatmap",
+      "description": "Colours every day of one or more years by a value, laid out as a grid of weeks.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/calendar-heatmap.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/calendar-heatmap.tsx"
+        }
+      ],
+      "docs": "Calendar heatmap: https://insightcharts.dev/llms/calendar-heatmap.md",
+      "categories": [
+        "atom",
+        "trend"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "trend",
+        "component": "CalendarHeatmap",
+        "composes": []
+      }
+    },
+    {
+      "name": "callout",
+      "type": "registry:component",
+      "title": "Callout",
+      "description": "A boxed statement of fact with a short bold lead and a sentence of explanation. The tone is marked by icon and tint.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/callout.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/callout.tsx"
+        }
+      ],
+      "docs": "Callout: https://insightcharts.dev/llms/callout.md",
+      "categories": [
+        "atom",
+        "text"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "text",
+        "component": "Callout",
+        "composes": []
+      }
+    },
+    {
+      "name": "choropleth-map",
+      "type": "registry:component",
+      "title": "Choropleth map",
+      "description": "Colours the regions of a map by a normalised value, from GeoJSON you supply.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/choropleth-map.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/choropleth-map.tsx"
+        }
+      ],
+      "docs": "Choropleth map: https://insightcharts.dev/llms/choropleth-map.md",
+      "categories": [
+        "atom",
+        "geo"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "geo",
+        "component": "ChoroplethMap",
+        "composes": []
+      }
+    },
+    {
+      "name": "circle-pack",
+      "type": "registry:component",
+      "title": "Circle pack",
+      "description": "Shows parts as tightly packed circles sized by value, optionally clustered into groups, with the value and name printed inside each circle.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/circle-pack.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/circle-pack.tsx"
+        }
+      ],
+      "docs": "Circle pack: https://insightcharts.dev/llms/circle-pack.md",
+      "categories": [
+        "atom",
+        "poster"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "poster",
+        "component": "CirclePack",
+        "composes": []
+      }
+    },
+    {
+      "name": "curve-rank",
+      "type": "registry:component",
+      "title": "Curve rank",
+      "description": "Places each entity on two parallel scales, one per measure, and joins its two positions with a smooth S-curve labelled with the name and both values.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/curve-rank.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/curve-rank.tsx"
+        },
+        {
+          "path": "registry/insightcharts/atoms/_poster-colors.ts",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/_poster-colors.ts"
+        }
+      ],
+      "docs": "Curve rank: https://insightcharts.dev/llms/curve-rank.md",
+      "categories": [
+        "atom",
+        "poster"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "poster",
+        "component": "CurveRank",
+        "composes": []
+      }
+    },
+    {
+      "name": "data-table",
+      "type": "registry:component",
+      "title": "Data table",
+      "description": "A restrained editorial table from rows and a column config: aligned tabular numbers, an optional in-cell bar, row highlight and click-to-sort headers.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/data-table.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/data-table.tsx"
+        }
+      ],
+      "docs": "Data table: https://insightcharts.dev/llms/data-table.md",
+      "categories": [
+        "atom",
+        "figure"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "figure",
+        "component": "DataTable",
+        "composes": []
+      }
+    },
+    {
+      "name": "delta",
+      "type": "registry:component",
+      "title": "Delta",
+      "description": "An inline change indicator: direction arrow, signed value and an optional baseline label.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/delta.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/delta.tsx"
+        }
+      ],
+      "docs": "Delta: https://insightcharts.dev/llms/delta.md",
+      "categories": [
+        "atom",
+        "figure"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "figure",
+        "component": "Delta",
+        "composes": []
+      }
+    },
+    {
+      "name": "diverging-bar-chart",
+      "type": "registry:component",
+      "title": "Diverging bar chart",
+      "description": "Draws bars either side of a centre line: positive against negative values, or stacked agree / disagree responses around a neutral midpoint.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/diverging-bar-chart.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/diverging-bar-chart.tsx"
+        }
+      ],
+      "docs": "Diverging bar chart: https://insightcharts.dev/llms/diverging-bar-chart.md",
+      "categories": [
+        "atom",
+        "comparison"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "comparison",
+        "component": "DivergingBarChart",
+        "composes": []
+      }
+    },
+    {
+      "name": "donut-chart",
+      "type": "registry:component",
+      "title": "Donut chart",
+      "description": "Shows how 2 to 5 parts make up one whole, with each slice labelled by name and share.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/donut-chart.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/donut-chart.tsx"
+        }
+      ],
+      "docs": "Donut chart: https://insightcharts.dev/llms/donut-chart.md",
+      "categories": [
+        "atom",
+        "part-to-whole"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "part-to-whole",
+        "component": "DonutChart",
+        "composes": []
+      }
+    },
+    {
+      "name": "dumbbell-chart",
+      "type": "registry:component",
+      "title": "Dumbbell chart",
+      "description": "Shows two values per category as dots joined by a line, so the length of the line shows the difference.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/dumbbell-chart.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/dumbbell-chart.tsx"
+        }
+      ],
+      "docs": "Dumbbell chart: https://insightcharts.dev/llms/dumbbell-chart.md",
+      "categories": [
+        "atom",
+        "comparison"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "comparison",
+        "component": "DumbbellChart",
+        "composes": []
+      }
+    },
+    {
+      "name": "fan-flow",
+      "type": "registry:component",
+      "title": "Fan flow",
+      "description": "One solid block that splits into curved ribbons, each as thick as its value, ending at an aligned column of names, values and shares.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/fan-flow.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/fan-flow.tsx"
+        },
+        {
+          "path": "registry/insightcharts/atoms/_poster-colors.ts",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/_poster-colors.ts"
+        }
+      ],
+      "docs": "Fan flow: https://insightcharts.dev/llms/fan-flow.md",
+      "categories": [
+        "atom",
+        "poster"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "poster",
+        "component": "FanFlow",
+        "composes": []
+      }
+    },
+    {
+      "name": "funnel-chart",
+      "type": "registry:component",
+      "title": "Funnel chart",
+      "description": "Shows how many remain at each step of a sequence, with conversion and drop-off between steps.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/funnel-chart.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/funnel-chart.tsx"
+        }
+      ],
+      "docs": "Funnel chart: https://insightcharts.dev/llms/funnel-chart.md",
+      "categories": [
+        "atom",
+        "flow"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "flow",
+        "component": "FunnelChart",
+        "composes": []
+      }
+    },
+    {
+      "name": "glyph-table",
+      "type": "registry:component",
+      "title": "Glyph table",
+      "description": "A table with one row per entity in which every number is drawn as a small form chosen per column (counted dots, squares or icons, a ring, a sized circle, a bar) with the value printed beside it.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/glyph-table.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/glyph-table.tsx"
+        },
+        {
+          "path": "registry/insightcharts/atoms/_poster-colors.ts",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/_poster-colors.ts"
+        }
+      ],
+      "docs": "Glyph table: https://insightcharts.dev/llms/glyph-table.md",
+      "categories": [
+        "atom",
+        "poster"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "poster",
+        "component": "GlyphTable",
+        "composes": []
+      }
+    },
+    {
+      "name": "headline",
+      "type": "registry:component",
+      "title": "Headline",
+      "description": "The opening block of a piece or section: kicker, title, one-sentence deck and a byline/date line.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/headline.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/headline.tsx"
+        }
+      ],
+      "docs": "Headline: https://insightcharts.dev/llms/headline.md",
+      "categories": [
+        "atom",
+        "text"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "text",
+        "component": "Headline",
+        "composes": []
+      }
+    },
+    {
+      "name": "heatmap",
+      "type": "registry:component",
+      "title": "Heatmap",
+      "description": "Colours a category-by-category (or time-by-category) grid by a numeric value, using a sequential or diverging scale.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/heatmap.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/heatmap.tsx"
+        }
+      ],
+      "docs": "Heatmap: https://insightcharts.dev/llms/heatmap.md",
+      "categories": [
+        "atom",
+        "comparison"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "comparison",
+        "component": "Heatmap",
+        "composes": []
+      }
+    },
+    {
+      "name": "histogram",
+      "type": "registry:component",
+      "title": "Histogram",
+      "description": "Bins a numeric field and shows how many rows fall in each bin, as touching bars on a continuous axis.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/histogram.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/histogram.tsx"
+        }
+      ],
+      "docs": "Histogram: https://insightcharts.dev/llms/histogram.md",
+      "categories": [
+        "atom",
+        "distribution"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "distribution",
+        "component": "Histogram",
+        "composes": []
+      }
+    },
+    {
+      "name": "icon-array-grid",
+      "type": "registry:component",
+      "title": "Icon array grid",
+      "description": "Compares many counts as a grid of labelled tiles, each holding an array of N icons with its name and number.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/icon-array-grid.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/icon-array-grid.tsx"
+        }
+      ],
+      "docs": "Icon array grid: https://insightcharts.dev/llms/icon-array-grid.md",
+      "categories": [
+        "atom",
+        "poster"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "poster",
+        "component": "IconArrayGrid",
+        "composes": []
+      }
+    },
+    {
+      "name": "icon-stat",
+      "type": "registry:component",
+      "title": "Icon stat",
+      "description": "A \"1 in 4\"-style statement: a row or grid of simple glyphs with some filled, and the sentence they illustrate.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/icon-stat.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/icon-stat.tsx"
+        }
+      ],
+      "docs": "Icon stat: https://insightcharts.dev/llms/icon-stat.md",
+      "categories": [
+        "atom",
+        "figure"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "figure",
+        "component": "IconStat",
+        "composes": []
+      }
+    },
+    {
+      "name": "legend-key",
+      "type": "registry:component",
+      "title": "Legend key",
+      "description": "A standalone colour key: categorical swatches, or a sequential/diverging ramp with end labels.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/legend-key.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/legend-key.tsx"
+        }
+      ],
+      "docs": "Legend key: https://insightcharts.dev/llms/legend-key.md",
+      "categories": [
+        "atom",
+        "figure"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "figure",
+        "component": "LegendKey",
+        "composes": []
+      }
+    },
+    {
+      "name": "line-chart",
+      "type": "registry:component",
+      "title": "Line chart",
+      "description": "Shows how one or more values change over time or another ordered dimension.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/line-chart.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/line-chart.tsx"
+        },
+        {
+          "path": "registry/insightcharts/atoms/_annotations.ts",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/_annotations.ts"
+        }
+      ],
+      "docs": "Line chart: https://insightcharts.dev/llms/line-chart.md",
+      "categories": [
+        "atom",
+        "trend"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "trend",
+        "component": "LineChart",
+        "composes": []
+      }
+    },
+    {
+      "name": "lollipop-chart",
+      "type": "registry:component",
+      "title": "Lollipop chart",
+      "description": "Ranks categories with a dot on a thin stem from zero, or as a stemless dot plot on a free scale.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/lollipop-chart.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/lollipop-chart.tsx"
+        }
+      ],
+      "docs": "Lollipop chart: https://insightcharts.dev/llms/lollipop-chart.md",
+      "categories": [
+        "atom",
+        "comparison"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "comparison",
+        "component": "LollipopChart",
+        "composes": []
+      }
+    },
+    {
+      "name": "nested-shares",
+      "type": "registry:component",
+      "title": "Nested shares",
+      "description": "Shows several shares of the same whole, such as one share at five dates, as outlines nested from one corner of a square, each enclosing an area equal to its share.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/nested-shares.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/nested-shares.tsx"
+        }
+      ],
+      "docs": "Nested shares: https://insightcharts.dev/llms/nested-shares.md",
+      "categories": [
+        "atom",
+        "poster"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "poster",
+        "component": "NestedShares",
+        "composes": []
+      }
+    },
+    {
+      "name": "orbit-chart",
+      "type": "registry:component",
+      "title": "Orbit chart",
+      "description": "Places items as dots on concentric rings round a centre, one ring per category, level or period, with a key that explains rings, angle and dot area.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/orbit-chart.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/orbit-chart.tsx"
+        }
+      ],
+      "docs": "Orbit chart: https://insightcharts.dev/llms/orbit-chart.md",
+      "categories": [
+        "atom",
+        "poster"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "poster",
+        "component": "OrbitChart",
+        "composes": []
+      }
+    },
+    {
+      "name": "pictogram-chart",
+      "type": "registry:component",
+      "title": "Pictogram chart",
+      "description": "Compares quantities with rows of repeated icons, each icon standing for a fixed number of units.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/pictogram-chart.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/pictogram-chart.tsx"
+        }
+      ],
+      "docs": "Pictogram chart: https://insightcharts.dev/llms/pictogram-chart.md",
+      "categories": [
+        "atom",
+        "comparison"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "comparison",
+        "component": "PictogramChart",
+        "composes": []
+      }
+    },
+    {
+      "name": "pill-rank",
+      "type": "registry:component",
+      "title": "Pill rank",
+      "description": "Shows a ranked list as horizontally centred rounded bars, with each name in capitals on its pill, the value at the left edge and the rank at the right.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/pill-rank.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/pill-rank.tsx"
+        }
+      ],
+      "docs": "Pill rank: https://insightcharts.dev/llms/pill-rank.md",
+      "categories": [
+        "atom",
+        "poster"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "poster",
+        "component": "PillRank",
+        "composes": []
+      }
+    },
+    {
+      "name": "progress-meter",
+      "type": "registry:component",
+      "title": "Progress meter",
+      "description": "A labelled horizontal meter of one value against a maximum or target, with the target marked and the value printed.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/progress-meter.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/progress-meter.tsx"
+        }
+      ],
+      "docs": "Progress meter: https://insightcharts.dev/llms/progress-meter.md",
+      "categories": [
+        "atom",
+        "figure"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "figure",
+        "component": "ProgressMeter",
+        "composes": []
+      }
+    },
+    {
+      "name": "proportional-area",
+      "type": "registry:component",
+      "title": "Proportional area",
+      "description": "Compares two to eight values as squares or circles whose areas are proportional to the values, each printed with its name and number.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/proportional-area.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/proportional-area.tsx"
+        }
+      ],
+      "docs": "Proportional area: https://insightcharts.dev/llms/proportional-area.md",
+      "categories": [
+        "atom",
+        "poster"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "poster",
+        "component": "ProportionalArea",
+        "composes": []
+      }
+    },
+    {
+      "name": "prose",
+      "type": "registry:component",
+      "title": "Prose",
+      "description": "A readable block of narration at a 45-75 character measure, for the text between charts.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/prose.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/prose.tsx"
+        }
+      ],
+      "docs": "Prose: https://insightcharts.dev/llms/prose.md",
+      "categories": [
+        "atom",
+        "text"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "text",
+        "component": "Prose",
+        "composes": []
+      }
+    },
+    {
+      "name": "pull-quote",
+      "type": "registry:component",
+      "title": "Pull quote",
+      "description": "A large quotation with its attribution.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/pull-quote.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/pull-quote.tsx"
+        }
+      ],
+      "docs": "Pull quote: https://insightcharts.dev/llms/pull-quote.md",
+      "categories": [
+        "atom",
+        "text"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "text",
+        "component": "PullQuote",
+        "composes": []
+      }
+    },
+    {
+      "name": "radial-bar-chart",
+      "type": "registry:component",
+      "title": "Radial bar chart",
+      "description": "Draws bars around a circle for data that repeats in a cycle, such as hours of the day or months of the year.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/radial-bar-chart.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/radial-bar-chart.tsx"
+        }
+      ],
+      "docs": "Radial bar chart: https://insightcharts.dev/llms/radial-bar-chart.md",
+      "categories": [
+        "atom",
+        "trend"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "trend",
+        "component": "RadialBarChart",
+        "composes": []
+      }
+    },
+    {
+      "name": "radial-spokes",
+      "type": "registry:component",
+      "title": "Radial spokes",
+      "description": "Draws one spoke per row radiating from a centre disc, each as long as its value, with the name and value set on an outer ring.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/radial-spokes.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/radial-spokes.tsx"
+        }
+      ],
+      "docs": "Radial spokes: https://insightcharts.dev/llms/radial-spokes.md",
+      "categories": [
+        "atom",
+        "poster"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "poster",
+        "component": "RadialSpokes",
+        "composes": []
+      }
+    },
+    {
+      "name": "ribbon-chart",
+      "type": "registry:component",
+      "title": "Ribbon chart",
+      "description": "One filled band per entity across periods: its thickness is its value in each period and its vertical position is its rank, so bands cross as the order changes.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/ribbon-chart.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/ribbon-chart.tsx"
+        },
+        {
+          "path": "registry/insightcharts/atoms/_poster-colors.ts",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/_poster-colors.ts"
+        }
+      ],
+      "docs": "Ribbon chart: https://insightcharts.dev/llms/ribbon-chart.md",
+      "categories": [
+        "atom",
+        "poster"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "poster",
+        "component": "RibbonChart",
+        "composes": []
+      }
+    },
+    {
+      "name": "sankey-chart",
+      "type": "registry:component",
+      "title": "Sankey chart",
+      "description": "Shows how a quantity flows from sources through stages to destinations, with link width proportional to the flow.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/sankey-chart.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/sankey-chart.tsx"
+        }
+      ],
+      "docs": "Sankey chart: https://insightcharts.dev/llms/sankey-chart.md",
+      "categories": [
+        "atom",
+        "flow"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "flow",
+        "component": "SankeyChart",
+        "composes": []
+      }
+    },
+    {
+      "name": "scale-ladder",
+      "type": "registry:component",
+      "title": "Scale ladder",
+      "description": "A tall vertical band graded along one scale (linear or log, running up or down) with each item placed at its true position and labelled with an icon, its name and its value on alternating sides.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/scale-ladder.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/scale-ladder.tsx"
+        }
+      ],
+      "docs": "Scale ladder: https://insightcharts.dev/llms/scale-ladder.md",
+      "categories": [
+        "atom",
+        "poster"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "poster",
+        "component": "ScaleLadder",
+        "composes": []
+      }
+    },
+    {
+      "name": "scatter-chart",
+      "type": "registry:component",
+      "title": "Scatter chart",
+      "description": "Plots two numeric measures against each other, one dot per row, with optional bubble size, group colour, selective labels and a trend line.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/scatter-chart.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/scatter-chart.tsx"
+        },
+        {
+          "path": "registry/insightcharts/atoms/_annotations.ts",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/_annotations.ts"
+        }
+      ],
+      "docs": "Scatter chart: https://insightcharts.dev/llms/scatter-chart.md",
+      "categories": [
+        "atom",
+        "relationship"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "relationship",
+        "component": "ScatterChart",
+        "composes": []
+      }
+    },
+    {
+      "name": "segmented-bar",
+      "type": "registry:component",
+      "title": "Segmented bar",
+      "description": "Splits one whole into proportional segments along a single horizontal bar.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/segmented-bar.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/segmented-bar.tsx"
+        }
+      ],
+      "docs": "Segmented bar: https://insightcharts.dev/llms/segmented-bar.md",
+      "categories": [
+        "atom",
+        "part-to-whole"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "part-to-whole",
+        "component": "SegmentedBar",
+        "composes": []
+      }
+    },
+    {
+      "name": "shape-fill",
+      "type": "registry:component",
+      "title": "Shape fill",
+      "description": "Shows one or more percentages as icon silhouettes filled from the bottom to that level, with the number printed large beside each.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/shape-fill.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/shape-fill.tsx"
+        }
+      ],
+      "docs": "Shape fill: https://insightcharts.dev/llms/shape-fill.md",
+      "categories": [
+        "atom",
+        "poster"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "poster",
+        "component": "ShapeFill",
+        "composes": []
+      }
+    },
+    {
+      "name": "slope-chart",
+      "type": "registry:component",
+      "title": "Slope chart",
+      "description": "Connects each entity's value at two (or a few) points with a straight line, labelled with name and value at both ends.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/slope-chart.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/slope-chart.tsx"
+        }
+      ],
+      "docs": "Slope chart: https://insightcharts.dev/llms/slope-chart.md",
+      "categories": [
+        "atom",
+        "trend"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "trend",
+        "component": "SlopeChart",
+        "composes": []
+      }
+    },
+    {
+      "name": "small-multiples",
+      "type": "registry:component",
+      "title": "Small multiples",
+      "description": "Repeats one small line, area or bar chart per value of a facet field on a shared scale, each panel titled.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/small-multiples.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/small-multiples.tsx"
+        }
+      ],
+      "docs": "Small multiples: https://insightcharts.dev/llms/small-multiples.md",
+      "categories": [
+        "atom",
+        "trend"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "trend",
+        "component": "SmallMultiples",
+        "composes": []
+      }
+    },
+    {
+      "name": "source-note",
+      "type": "registry:component",
+      "title": "Source note",
+      "description": "A sourcing footer for a whole piece: sources with optional links, the period covered, method, caveats and credit.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/source-note.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/source-note.tsx"
+        }
+      ],
+      "docs": "Source note: https://insightcharts.dev/llms/source-note.md",
+      "categories": [
+        "atom",
+        "text"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "text",
+        "component": "SourceNote",
+        "composes": []
+      }
+    },
+    {
+      "name": "sparkline",
+      "type": "registry:component",
+      "title": "Sparkline",
+      "description": "A word-sized line or bar series without axes, with the latest point marked.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/sparkline.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/sparkline.tsx"
+        }
+      ],
+      "docs": "Sparkline: https://insightcharts.dev/llms/sparkline.md",
+      "categories": [
+        "atom",
+        "trend"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "trend",
+        "component": "Sparkline",
+        "composes": []
+      }
+    },
+    {
+      "name": "stat-circles",
+      "type": "registry:component",
+      "title": "Stat circles",
+      "description": "Shows a few related magnitudes as plain circles sized by area, each with its number set large and a short label.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/stat-circles.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/stat-circles.tsx"
+        }
+      ],
+      "docs": "Stat circles: https://insightcharts.dev/llms/stat-circles.md",
+      "categories": [
+        "atom",
+        "poster"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "poster",
+        "component": "StatCircles",
+        "composes": []
+      }
+    },
+    {
+      "name": "stat-tile",
+      "type": "registry:component",
+      "title": "Stat tile",
+      "description": "A compact, bordered KPI tile: label, value, change against a baseline and an optional trend graphic.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/stat-tile.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/stat-tile.tsx"
+        }
+      ],
+      "docs": "Stat tile: https://insightcharts.dev/llms/stat-tile.md",
+      "categories": [
+        "atom",
+        "figure"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "figure",
+        "component": "StatTile",
+        "composes": []
+      }
+    },
+    {
+      "name": "step-marker",
+      "type": "registry:component",
+      "title": "Step marker",
+      "description": "A numbered chapter or step heading (\"01 — Electricity sources in 2015\") for sequencing the sections of a story.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/step-marker.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/step-marker.tsx"
+        }
+      ],
+      "docs": "Step marker: https://insightcharts.dev/llms/step-marker.md",
+      "categories": [
+        "atom",
+        "text"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "text",
+        "component": "StepMarker",
+        "composes": []
+      }
+    },
+    {
+      "name": "strip-plot",
+      "type": "registry:component",
+      "title": "Strip plot",
+      "description": "Shows every observation as a tick or dot along a value axis, one row per category.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/strip-plot.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/strip-plot.tsx"
+        }
+      ],
+      "docs": "Strip plot: https://insightcharts.dev/llms/strip-plot.md",
+      "categories": [
+        "atom",
+        "distribution"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "distribution",
+        "component": "StripPlot",
+        "composes": []
+      }
+    },
+    {
+      "name": "timeline-chart",
+      "type": "registry:component",
+      "title": "Timeline chart",
+      "description": "Places events and spans on a time axis in labelled lanes, with each item named directly.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/timeline-chart.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/timeline-chart.tsx"
+        }
+      ],
+      "docs": "Timeline chart: https://insightcharts.dev/llms/timeline-chart.md",
+      "categories": [
+        "atom",
+        "trend"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "trend",
+        "component": "TimelineChart",
+        "composes": []
+      }
+    },
+    {
+      "name": "treemap",
+      "type": "registry:component",
+      "title": "Treemap",
+      "description": "Shows parts of a whole as nested rectangles sized by value, optionally grouped into categories.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/treemap.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/treemap.tsx"
+        }
+      ],
+      "docs": "Treemap: https://insightcharts.dev/llms/treemap.md",
+      "categories": [
+        "atom",
+        "part-to-whole"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "part-to-whole",
+        "component": "Treemap",
+        "composes": []
+      }
+    },
+    {
+      "name": "unit-blocks",
+      "type": "registry:component",
+      "title": "Unit blocks",
+      "description": "Shows the size of each group as a solid block of small icons, one icon per fixed number of units.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/unit-blocks.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/unit-blocks.tsx"
+        }
+      ],
+      "docs": "Unit blocks: https://insightcharts.dev/llms/unit-blocks.md",
+      "categories": [
+        "atom",
+        "poster"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "poster",
+        "component": "UnitBlocks",
+        "composes": []
+      }
+    },
+    {
+      "name": "waffle-chart",
+      "type": "registry:component",
+      "title": "Waffle chart",
+      "description": "Shows shares of a whole as counted cells in a grid, such as 37 in every 100.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/atoms/waffle-chart.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/waffle-chart.tsx"
+        }
+      ],
+      "docs": "Waffle chart: https://insightcharts.dev/llms/waffle-chart.md",
+      "categories": [
+        "atom",
+        "part-to-whole"
+      ],
+      "meta": {
+        "level": "atom",
+        "category": "part-to-whole",
+        "component": "WaffleChart",
+        "composes": []
+      }
+    },
+    {
+      "name": "annotated-timeline",
+      "type": "registry:component",
+      "title": "Annotated timeline",
+      "description": "A vertical sequence of dated events along a rail, each with a short explanation and, optionally, a small chart or figure.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/prose",
+        "@insightcharts/step-marker"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/molecules/annotated-timeline.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/annotated-timeline.tsx"
+        },
+        {
+          "path": "registry/insightcharts/molecules/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/_shared.tsx"
+        }
+      ],
+      "docs": "Annotated timeline: https://insightcharts.dev/llms/annotated-timeline.md",
+      "categories": [
+        "molecule",
+        "story"
+      ],
+      "meta": {
+        "level": "molecule",
+        "category": "story",
+        "component": "AnnotatedTimeline",
+        "composes": [
+          "step-marker",
+          "prose",
+          "sparkline",
+          "big-number"
+        ]
+      }
+    },
+    {
+      "name": "before-after",
+      "type": "registry:component",
+      "title": "Before and after",
+      "description": "Two states of one measure side by side, as figures or small charts, with the change between them stated in the middle.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/big-number",
+        "@insightcharts/delta"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/molecules/before-after.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/before-after.tsx"
+        },
+        {
+          "path": "registry/insightcharts/molecules/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/_shared.tsx"
+        }
+      ],
+      "docs": "Before and after: https://insightcharts.dev/llms/before-after.md",
+      "categories": [
+        "molecule",
+        "layout"
+      ],
+      "meta": {
+        "level": "molecule",
+        "category": "layout",
+        "component": "BeforeAfter",
+        "composes": [
+          "big-number",
+          "delta",
+          "bar-chart",
+          "sparkline"
+        ]
+      }
+    },
+    {
+      "name": "chart-callout",
+      "type": "registry:component",
+      "title": "Chart with callout",
+      "description": "A chart with a callout beside it that states the main fact. In narrow containers the callout goes underneath.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/callout"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/molecules/chart-callout.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/chart-callout.tsx"
+        },
+        {
+          "path": "registry/insightcharts/molecules/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/_shared.tsx"
+        }
+      ],
+      "docs": "Chart with callout: https://insightcharts.dev/llms/chart-callout.md",
+      "categories": [
+        "molecule",
+        "layout"
+      ],
+      "meta": {
+        "level": "molecule",
+        "category": "layout",
+        "component": "ChartCallout",
+        "composes": [
+          "callout",
+          "line-chart",
+          "bar-chart"
+        ]
+      }
+    },
+    {
+      "name": "chart-tabs",
+      "type": "registry:component",
+      "title": "Chart tabs",
+      "description": "One chart frame with a segmented control that switches between several views of the same data, morphing between views that share a chart type.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/molecules/chart-tabs.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/chart-tabs.tsx"
+        },
+        {
+          "path": "registry/insightcharts/molecules/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/_shared.tsx"
+        }
+      ],
+      "docs": "Chart tabs: https://insightcharts.dev/llms/chart-tabs.md",
+      "categories": [
+        "molecule",
+        "layout"
+      ],
+      "meta": {
+        "level": "molecule",
+        "category": "layout",
+        "component": "ChartTabs",
+        "composes": [
+          "bar-chart",
+          "line-chart"
+        ]
+      }
+    },
+    {
+      "name": "comparison-table",
+      "type": "registry:component",
+      "title": "Comparison table",
+      "description": "A table whose rows carry inline sparklines, deltas and in-cell bars beside their exact values, from rows and a column config.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/delta",
+        "@insightcharts/sparkline"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/molecules/comparison-table.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/comparison-table.tsx"
+        },
+        {
+          "path": "registry/insightcharts/molecules/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/_shared.tsx"
+        }
+      ],
+      "docs": "Comparison table: https://insightcharts.dev/llms/comparison-table.md",
+      "categories": [
+        "molecule",
+        "layout"
+      ],
+      "meta": {
+        "level": "molecule",
+        "category": "layout",
+        "component": "ComparisonTable",
+        "composes": [
+          "sparkline",
+          "delta"
+        ]
+      }
+    },
+    {
+      "name": "filter-chips",
+      "type": "registry:component",
+      "title": "Filter chips",
+      "description": "The active crossfilter selections of the surrounding `InsightData`, shown as removable chips with a reset control.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/molecules/filter-chips.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/filter-chips.tsx"
+        },
+        {
+          "path": "registry/insightcharts/molecules/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/_shared.tsx"
+        }
+      ],
+      "docs": "Filter chips: https://insightcharts.dev/llms/filter-chips.md",
+      "categories": [
+        "molecule",
+        "layout"
+      ],
+      "meta": {
+        "level": "molecule",
+        "category": "layout",
+        "component": "FilterChips",
+        "composes": []
+      }
+    },
+    {
+      "name": "hero-figure",
+      "type": "registry:component",
+      "title": "Hero figure",
+      "description": "The opening exhibit of a piece: kicker, headline and deck above one large chart, with a source line underneath.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/headline",
+        "@insightcharts/source-note"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/molecules/hero-figure.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/hero-figure.tsx"
+        },
+        {
+          "path": "registry/insightcharts/molecules/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/_shared.tsx"
+        }
+      ],
+      "docs": "Hero figure: https://insightcharts.dev/llms/hero-figure.md",
+      "categories": [
+        "molecule",
+        "story"
+      ],
+      "meta": {
+        "level": "molecule",
+        "category": "story",
+        "component": "HeroFigure",
+        "composes": [
+          "headline",
+          "source-note",
+          "line-chart",
+          "big-number"
+        ]
+      }
+    },
+    {
+      "name": "kpi-grid",
+      "type": "registry:component",
+      "title": "KPI grid",
+      "description": "A responsive grid of trend cards drawn from one dataset: each metric shows its latest value, its change and a sparkline.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/trend-card"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/molecules/kpi-grid.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/kpi-grid.tsx"
+        },
+        {
+          "path": "registry/insightcharts/molecules/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/_shared.tsx"
+        }
+      ],
+      "docs": "KPI grid: https://insightcharts.dev/llms/kpi-grid.md",
+      "categories": [
+        "molecule",
+        "layout"
+      ],
+      "meta": {
+        "level": "molecule",
+        "category": "layout",
+        "component": "KpiGrid",
+        "composes": [
+          "trend-card"
+        ]
+      }
+    },
+    {
+      "name": "linked-charts",
+      "type": "registry:component",
+      "title": "Linked charts",
+      "description": "Two to four charts over one shared dataset in a responsive grid: clicking a mark in one filters the others, with the active filters shown as removable chips.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/filter-chips"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/molecules/linked-charts.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/linked-charts.tsx"
+        },
+        {
+          "path": "registry/insightcharts/molecules/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/_shared.tsx"
+        }
+      ],
+      "docs": "Linked charts: https://insightcharts.dev/llms/linked-charts.md",
+      "categories": [
+        "molecule",
+        "layout"
+      ],
+      "meta": {
+        "level": "molecule",
+        "category": "layout",
+        "component": "LinkedCharts",
+        "composes": [
+          "filter-chips",
+          "bar-chart",
+          "line-chart"
+        ]
+      }
+    },
+    {
+      "name": "metric-breakdown",
+      "type": "registry:component",
+      "title": "Metric breakdown",
+      "description": "A headline number with its composition underneath: one segmented bar and a key giving each part's value and share.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/big-number",
+        "@insightcharts/segmented-bar"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/molecules/metric-breakdown.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/metric-breakdown.tsx"
+        },
+        {
+          "path": "registry/insightcharts/molecules/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/_shared.tsx"
+        }
+      ],
+      "docs": "Metric breakdown: https://insightcharts.dev/llms/metric-breakdown.md",
+      "categories": [
+        "molecule",
+        "layout"
+      ],
+      "meta": {
+        "level": "molecule",
+        "category": "layout",
+        "component": "MetricBreakdown",
+        "composes": [
+          "big-number",
+          "segmented-bar"
+        ]
+      }
+    },
+    {
+      "name": "poster",
+      "type": "registry:component",
+      "title": "Poster",
+      "description": "The sheet an infographic is composed on. It paints a full-bleed ground from a poster theme, forces one theme and colour mode on everything inside, and lays out a masthead, a grid of panels and a footer. It can save the whole sheet as one PNG.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/molecules/poster.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/poster.tsx"
+        }
+      ],
+      "docs": "Poster: https://insightcharts.dev/llms/poster.md",
+      "categories": [
+        "molecule",
+        "poster"
+      ],
+      "meta": {
+        "level": "molecule",
+        "category": "poster",
+        "component": "Poster",
+        "composes": [
+          "big-number",
+          "pictogram-chart",
+          "bar-chart",
+          "donut-chart",
+          "treemap",
+          "waffle-chart",
+          "segmented-bar",
+          "icon-stat"
+        ]
+      }
+    },
+    {
+      "name": "proportion-statement",
+      "type": "registry:component",
+      "title": "Proportion statement",
+      "description": "A share stated as a countable sentence (\"37 in every 100…\"): a waffle grid or a row of icons beside the statement in large type, with the number emphasised.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/icon-stat",
+        "@insightcharts/waffle-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/molecules/proportion-statement.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/proportion-statement.tsx"
+        },
+        {
+          "path": "registry/insightcharts/molecules/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/_shared.tsx"
+        }
+      ],
+      "docs": "Proportion statement: https://insightcharts.dev/llms/proportion-statement.md",
+      "categories": [
+        "molecule",
+        "story"
+      ],
+      "meta": {
+        "level": "molecule",
+        "category": "story",
+        "component": "ProportionStatement",
+        "composes": [
+          "waffle-chart",
+          "icon-stat"
+        ]
+      }
+    },
+    {
+      "name": "quote-figure",
+      "type": "registry:component",
+      "title": "Quote with figure",
+      "description": "A pull-quote paired with the statistic or small chart that backs it up, side by side and stacking in narrow containers.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/big-number",
+        "@insightcharts/pull-quote"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/molecules/quote-figure.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/quote-figure.tsx"
+        },
+        {
+          "path": "registry/insightcharts/molecules/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/_shared.tsx"
+        }
+      ],
+      "docs": "Quote with figure: https://insightcharts.dev/llms/quote-figure.md",
+      "categories": [
+        "molecule",
+        "story"
+      ],
+      "meta": {
+        "level": "molecule",
+        "category": "story",
+        "component": "QuoteFigure",
+        "composes": [
+          "pull-quote",
+          "big-number",
+          "sparkline"
+        ]
+      }
+    },
+    {
+      "name": "ranked-list",
+      "type": "registry:component",
+      "title": "Ranked list",
+      "description": "A ranking as a list: position, name, value and a thin in-row bar, with an optional change indicator and highlighted rows.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/delta"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/molecules/ranked-list.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/ranked-list.tsx"
+        },
+        {
+          "path": "registry/insightcharts/molecules/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/_shared.tsx"
+        }
+      ],
+      "docs": "Ranked list: https://insightcharts.dev/llms/ranked-list.md",
+      "categories": [
+        "molecule",
+        "layout"
+      ],
+      "meta": {
+        "level": "molecule",
+        "category": "layout",
+        "component": "RankedList",
+        "composes": [
+          "delta"
+        ]
+      }
+    },
+    {
+      "name": "scrolly-chart",
+      "type": "registry:component",
+      "title": "Scrolly chart",
+      "description": "A scroll-driven story from JSON: one base chart spec and a list of steps, each with narration and a patch of chart props applied while that step is active.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/prose"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/molecules/scrolly-chart.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/scrolly-chart.tsx"
+        },
+        {
+          "path": "registry/insightcharts/molecules/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/_shared.tsx"
+        }
+      ],
+      "docs": "Scrolly chart: https://insightcharts.dev/llms/scrolly-chart.md",
+      "categories": [
+        "molecule",
+        "story"
+      ],
+      "meta": {
+        "level": "molecule",
+        "category": "story",
+        "component": "ScrollyChart",
+        "composes": [
+          "prose",
+          "bar-chart"
+        ]
+      }
+    },
+    {
+      "name": "section",
+      "type": "registry:component",
+      "title": "Section",
+      "description": "A story section: a numbered step marker or a headline, introductory prose, then one or more exhibits in a responsive one- to three-column grid.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/headline",
+        "@insightcharts/prose",
+        "@insightcharts/step-marker"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/molecules/section.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/section.tsx"
+        },
+        {
+          "path": "registry/insightcharts/molecules/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/_shared.tsx"
+        }
+      ],
+      "docs": "Section: https://insightcharts.dev/llms/section.md",
+      "categories": [
+        "molecule",
+        "story"
+      ],
+      "meta": {
+        "level": "molecule",
+        "category": "story",
+        "component": "Section",
+        "composes": [
+          "step-marker",
+          "headline",
+          "prose",
+          "line-chart",
+          "bar-chart",
+          "stat-tile"
+        ]
+      }
+    },
+    {
+      "name": "small-multiple-grid",
+      "type": "registry:component",
+      "title": "Small multiple grid",
+      "description": "Repeats any chart spec once per value of a facet field, each panel with its own filtered rows and a title, in a grid that follows the container width.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/legend-key"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/molecules/small-multiple-grid.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/small-multiple-grid.tsx"
+        },
+        {
+          "path": "registry/insightcharts/molecules/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/_shared.tsx"
+        }
+      ],
+      "docs": "Small multiple grid: https://insightcharts.dev/llms/small-multiple-grid.md",
+      "categories": [
+        "molecule",
+        "layout"
+      ],
+      "meta": {
+        "level": "molecule",
+        "category": "layout",
+        "component": "SmallMultipleGrid",
+        "composes": [
+          "legend-key",
+          "bar-chart",
+          "waffle-chart"
+        ]
+      }
+    },
+    {
+      "name": "stat-row",
+      "type": "registry:component",
+      "title": "Stat row",
+      "description": "Two to five key figures in one row separated by hairlines, collapsing to two columns and then one as the container narrows.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/big-number",
+        "@insightcharts/stat-tile"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/molecules/stat-row.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/stat-row.tsx"
+        },
+        {
+          "path": "registry/insightcharts/molecules/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/_shared.tsx"
+        }
+      ],
+      "docs": "Stat row: https://insightcharts.dev/llms/stat-row.md",
+      "categories": [
+        "molecule",
+        "layout"
+      ],
+      "meta": {
+        "level": "molecule",
+        "category": "layout",
+        "component": "StatRow",
+        "composes": [
+          "big-number",
+          "stat-tile"
+        ]
+      }
+    },
+    {
+      "name": "trend-card",
+      "type": "registry:component",
+      "title": "Trend card",
+      "description": "A KPI card computed from a series: the latest value, its change against a baseline in the same data, and a sparkline of the series.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/sparkline",
+        "@insightcharts/stat-tile"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/molecules/trend-card.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/trend-card.tsx"
+        },
+        {
+          "path": "registry/insightcharts/molecules/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/_shared.tsx"
+        }
+      ],
+      "docs": "Trend card: https://insightcharts.dev/llms/trend-card.md",
+      "categories": [
+        "molecule",
+        "layout"
+      ],
+      "meta": {
+        "level": "molecule",
+        "category": "layout",
+        "component": "TrendCard",
+        "composes": [
+          "stat-tile",
+          "sparkline"
+        ]
+      }
+    },
+    {
+      "name": "atlas-poster",
+      "type": "registry:component",
+      "title": "Atlas poster",
+      "description": "A landscape spread of up to eleven small illustrations of one subject, each a different graphic form, in three bands of unequal panels: a statement in large type, spokes round an icon and a network of circles; a smooth trend with its peak labelled, nested squares and a slope chart; a pill ranking, a treemap, a tile map and sized circles; and a closing row of icon statements.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/poster"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/templates/atlas-poster.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/atlas-poster.tsx"
+        },
+        {
+          "path": "registry/insightcharts/templates/_infographic-layout.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/_infographic-layout.tsx"
+        }
+      ],
+      "docs": "Atlas poster: https://insightcharts.dev/llms/atlas-poster.md",
+      "categories": [
+        "template",
+        "infographic"
+      ],
+      "meta": {
+        "level": "template",
+        "category": "infographic",
+        "component": "AtlasPoster",
+        "composes": [
+          "poster",
+          "radial-spokes",
+          "bubble-network",
+          "area-chart",
+          "proportional-area",
+          "slope-chart",
+          "pill-rank",
+          "treemap",
+          "choropleth-map",
+          "stat-circles",
+          "icon-stat"
+        ]
+      }
+    },
+    {
+      "name": "comparison-brief",
+      "type": "registry:component",
+      "title": "Comparison brief",
+      "description": "A compared with B on one page. It has a headline that states the result, the headline figures mirrored either side of their labels, one hero exhibit that shows both sides, paired exhibits on a shared scale, a verdict callout and a source note.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/callout",
+        "@insightcharts/headline",
+        "@insightcharts/prose",
+        "@insightcharts/source-note"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/templates/comparison-brief.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/comparison-brief.tsx"
+        },
+        {
+          "path": "registry/insightcharts/molecules/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/_shared.tsx"
+        },
+        {
+          "path": "registry/insightcharts/templates/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/_shared.tsx"
+        }
+      ],
+      "docs": "Comparison brief: https://insightcharts.dev/llms/comparison-brief.md",
+      "categories": [
+        "template",
+        "layout"
+      ],
+      "meta": {
+        "level": "template",
+        "category": "layout",
+        "component": "ComparisonBrief",
+        "composes": [
+          "headline",
+          "prose",
+          "callout",
+          "source-note",
+          "line-chart",
+          "bar-chart",
+          "segmented-bar"
+        ]
+      }
+    },
+    {
+      "name": "count-poster",
+      "type": "registry:component",
+      "title": "Count poster",
+      "description": "A poster that counts at scale. Blocks of thousands of unit icons fill most of the sheet, a second band counts reference groups with the same icon at the same size in a muted colour, and a bottom row holds three small graphics: squares sized by area with a ratio bracket, thick bars with the numbers inside, and shares as nested outlines or filled silhouettes.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/poster"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/templates/count-poster.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/count-poster.tsx"
+        },
+        {
+          "path": "registry/insightcharts/templates/_infographic-layout.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/_infographic-layout.tsx"
+        }
+      ],
+      "docs": "Count poster: https://insightcharts.dev/llms/count-poster.md",
+      "categories": [
+        "template",
+        "infographic"
+      ],
+      "meta": {
+        "level": "template",
+        "category": "infographic",
+        "component": "CountPoster",
+        "composes": [
+          "poster",
+          "unit-blocks",
+          "proportional-area",
+          "block-bar",
+          "nested-shares",
+          "shape-fill"
+        ]
+      }
+    },
+    {
+      "name": "data-explorer",
+      "type": "registry:component",
+      "title": "Data explorer",
+      "description": "A set of linked charts over one shared dataset that filter each other. It has a headline, a sentence of instructions with filter chips, a row of figures that recompute from the filtered rows, two to four charts and an optional detail table. It opens on selections the author chooses.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/callout",
+        "@insightcharts/data-table",
+        "@insightcharts/headline",
+        "@insightcharts/filter-chips",
+        "@insightcharts/linked-charts",
+        "@insightcharts/stat-row",
+        "@insightcharts/source-note"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/templates/data-explorer.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/data-explorer.tsx"
+        },
+        {
+          "path": "registry/insightcharts/molecules/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/_shared.tsx"
+        },
+        {
+          "path": "registry/insightcharts/templates/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/_shared.tsx"
+        }
+      ],
+      "docs": "Data explorer: https://insightcharts.dev/llms/data-explorer.md",
+      "categories": [
+        "template",
+        "story"
+      ],
+      "meta": {
+        "level": "template",
+        "category": "story",
+        "component": "DataExplorer",
+        "composes": [
+          "headline",
+          "callout",
+          "filter-chips",
+          "stat-row",
+          "linked-charts",
+          "data-table",
+          "source-note",
+          "bar-chart"
+        ]
+      }
+    },
+    {
+      "name": "executive-brief",
+      "type": "registry:component",
+      "title": "Executive brief",
+      "description": "A one-page summary. It has a headline that states the main finding with its number, a deck, a row of three or four key figures, one hero chart with a takeaway callout, two smaller supporting exhibits, a short list of actions and a source note.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/headline",
+        "@insightcharts/prose",
+        "@insightcharts/chart-callout",
+        "@insightcharts/stat-row",
+        "@insightcharts/source-note"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/templates/executive-brief.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/executive-brief.tsx"
+        },
+        {
+          "path": "registry/insightcharts/molecules/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/_shared.tsx"
+        },
+        {
+          "path": "registry/insightcharts/templates/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/_shared.tsx"
+        }
+      ],
+      "docs": "Executive brief: https://insightcharts.dev/llms/executive-brief.md",
+      "categories": [
+        "template",
+        "layout"
+      ],
+      "meta": {
+        "level": "template",
+        "category": "layout",
+        "component": "ExecutiveBrief",
+        "composes": [
+          "headline",
+          "stat-row",
+          "chart-callout",
+          "prose",
+          "source-note",
+          "line-chart",
+          "dumbbell-chart",
+          "bar-chart"
+        ]
+      }
+    },
+    {
+      "name": "explainer",
+      "type": "registry:component",
+      "title": "Explainer",
+      "description": "A vertical infographic in one narrow column. It opens with a big number or a proportion statement (`hook`), then the hero exhibit, then numbered sections with one exhibit each, a conclusion with an optional link, and sources.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/big-number",
+        "@insightcharts/callout",
+        "@insightcharts/headline",
+        "@insightcharts/prose",
+        "@insightcharts/step-marker",
+        "@insightcharts/proportion-statement",
+        "@insightcharts/source-note"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/templates/explainer.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/explainer.tsx"
+        },
+        {
+          "path": "registry/insightcharts/molecules/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/_shared.tsx"
+        },
+        {
+          "path": "registry/insightcharts/templates/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/_shared.tsx"
+        }
+      ],
+      "docs": "Explainer: https://insightcharts.dev/llms/explainer.md",
+      "categories": [
+        "template",
+        "story"
+      ],
+      "meta": {
+        "level": "template",
+        "category": "story",
+        "component": "Explainer",
+        "composes": [
+          "headline",
+          "big-number",
+          "proportion-statement",
+          "step-marker",
+          "prose",
+          "callout",
+          "source-note",
+          "bar-chart",
+          "icon-stat",
+          "line-chart",
+          "segmented-bar"
+        ]
+      }
+    },
+    {
+      "name": "flow-poster",
+      "type": "registry:component",
+      "title": "Flow poster",
+      "description": "A portrait poster of where something comes from and where it goes, in three stacked bands painted in one colour: the producers as large labelled tiles, the leading producer's output fanning out as ribbons to an aligned column of destinations, and the destinations as bubbles on a scale of how much each depends on that producer.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/poster"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/templates/flow-poster.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/flow-poster.tsx"
+        },
+        {
+          "path": "registry/insightcharts/templates/_infographic-layout.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/_infographic-layout.tsx"
+        }
+      ],
+      "docs": "Flow poster: https://insightcharts.dev/llms/flow-poster.md",
+      "categories": [
+        "template",
+        "infographic"
+      ],
+      "meta": {
+        "level": "template",
+        "category": "infographic",
+        "component": "FlowPoster",
+        "composes": [
+          "poster",
+          "treemap",
+          "fan-flow",
+          "bubble-scale"
+        ]
+      }
+    },
+    {
+      "name": "matrix-poster",
+      "type": "registry:component",
+      "title": "Matrix poster",
+      "description": "One wide landscape graphic that compares 4 to 12 entities on five to seven measures: two measures as S-curves between parallel scales on the left, joined to a table on the right in which every other number is drawn as dots, squares, icons, a ring, a circle or a bar. Both halves share one row order and one colour per entity.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/poster"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/templates/matrix-poster.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/matrix-poster.tsx"
+        },
+        {
+          "path": "registry/insightcharts/templates/_infographic-layout.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/_infographic-layout.tsx"
+        }
+      ],
+      "docs": "Matrix poster: https://insightcharts.dev/llms/matrix-poster.md",
+      "categories": [
+        "template",
+        "infographic"
+      ],
+      "meta": {
+        "level": "template",
+        "category": "infographic",
+        "component": "MatrixPoster",
+        "composes": [
+          "poster",
+          "curve-rank",
+          "glyph-table"
+        ]
+      }
+    },
+    {
+      "name": "network-poster",
+      "type": "registry:component",
+      "title": "Network poster",
+      "description": "A poster of who is connected to whom: a full-width arc diagram with one arc per connection, as thick as its value (`arc-diagram`), a strip of two to four large figures, and a bottom row where the same entities return as circles joined by lines (`bubble-network`) and as a ranking of centred pills (`pill-rank`).",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/arc-diagram",
+        "@insightcharts/bubble-network",
+        "@insightcharts/pill-rank",
+        "@insightcharts/poster"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/templates/network-poster.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/network-poster.tsx"
+        },
+        {
+          "path": "registry/insightcharts/templates/_infographic-layout.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/_infographic-layout.tsx"
+        },
+        {
+          "path": "registry/insightcharts/templates/_poster-figures.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/_poster-figures.tsx"
+        }
+      ],
+      "docs": "Network poster: https://insightcharts.dev/llms/network-poster.md",
+      "categories": [
+        "template",
+        "infographic"
+      ],
+      "meta": {
+        "level": "template",
+        "category": "infographic",
+        "component": "NetworkPoster",
+        "composes": [
+          "poster",
+          "arc-diagram",
+          "bubble-network",
+          "pill-rank"
+        ]
+      }
+    },
+    {
+      "name": "profile-poster",
+      "type": "registry:component",
+      "title": "Profile poster",
+      "description": "A poster that describes one subject from four sides: the subject as one large silhouette filled to a share (`shape-fill`), two to four large figures, its place among other things on one scale (`scale-ladder`), and a table that sets it beside its peers with every number drawn as a small form (`glyph-table`).",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/glyph-table",
+        "@insightcharts/scale-ladder",
+        "@insightcharts/shape-fill",
+        "@insightcharts/poster"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/templates/profile-poster.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/profile-poster.tsx"
+        },
+        {
+          "path": "registry/insightcharts/templates/_infographic-layout.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/_infographic-layout.tsx"
+        },
+        {
+          "path": "registry/insightcharts/templates/_poster-figures.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/_poster-figures.tsx"
+        }
+      ],
+      "docs": "Profile poster: https://insightcharts.dev/llms/profile-poster.md",
+      "categories": [
+        "template",
+        "infographic"
+      ],
+      "meta": {
+        "level": "template",
+        "category": "infographic",
+        "component": "ProfilePoster",
+        "composes": [
+          "poster",
+          "shape-fill",
+          "scale-ladder",
+          "glyph-table"
+        ]
+      }
+    },
+    {
+      "name": "radial-poster",
+      "type": "registry:component",
+      "title": "Radial poster",
+      "description": "A poster with one subject in the middle of the sheet: a wheel of spokes round an icon (`radial-spokes`), two to four large figures standing either side of it, and a bottom row with the same subject's surroundings on concentric rings (`orbit-chart`) and a ranking as centred pills (`pill-rank`).",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/orbit-chart",
+        "@insightcharts/pill-rank",
+        "@insightcharts/radial-spokes",
+        "@insightcharts/poster"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/templates/radial-poster.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/radial-poster.tsx"
+        },
+        {
+          "path": "registry/insightcharts/templates/_infographic-layout.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/_infographic-layout.tsx"
+        },
+        {
+          "path": "registry/insightcharts/templates/_poster-figures.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/_poster-figures.tsx"
+        }
+      ],
+      "docs": "Radial poster: https://insightcharts.dev/llms/radial-poster.md",
+      "categories": [
+        "template",
+        "infographic"
+      ],
+      "meta": {
+        "level": "template",
+        "category": "infographic",
+        "component": "RadialPoster",
+        "composes": [
+          "poster",
+          "radial-spokes",
+          "orbit-chart",
+          "pill-rank"
+        ]
+      }
+    },
+    {
+      "name": "ranking-poster",
+      "type": "registry:component",
+      "title": "Ranking poster",
+      "description": "A poster of one subject by the numbers, in four rows: two figures in large type or as filled silhouettes, two treemaps side by side, a full-width ranking of centred pills with one row highlighted, and packed circles with icons beside a column of sized circles and a closing figure.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/poster"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/templates/ranking-poster.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/ranking-poster.tsx"
+        },
+        {
+          "path": "registry/insightcharts/templates/_infographic-layout.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/_infographic-layout.tsx"
+        }
+      ],
+      "docs": "Ranking poster: https://insightcharts.dev/llms/ranking-poster.md",
+      "categories": [
+        "template",
+        "infographic"
+      ],
+      "meta": {
+        "level": "template",
+        "category": "infographic",
+        "component": "RankingPoster",
+        "composes": [
+          "poster",
+          "shape-fill",
+          "treemap",
+          "pill-rank",
+          "circle-pack",
+          "stat-circles"
+        ]
+      }
+    },
+    {
+      "name": "report-page",
+      "type": "registry:component",
+      "title": "Report page",
+      "description": "A section of an analytical report laid out as a document. It has a title block, a summary, numbered findings, then method, limitations and sources. Each finding has one exhibit, an observation and a separately labelled interpretation with a confidence rating and a caveat.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/headline",
+        "@insightcharts/prose",
+        "@insightcharts/source-note"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/templates/report-page.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/report-page.tsx"
+        },
+        {
+          "path": "registry/insightcharts/molecules/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/_shared.tsx"
+        },
+        {
+          "path": "registry/insightcharts/templates/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/_shared.tsx"
+        }
+      ],
+      "docs": "Report page: https://insightcharts.dev/llms/report-page.md",
+      "categories": [
+        "template",
+        "layout"
+      ],
+      "meta": {
+        "level": "template",
+        "category": "layout",
+        "component": "ReportPage",
+        "composes": [
+          "headline",
+          "prose",
+          "source-note",
+          "bar-chart",
+          "progress-meter",
+          "line-chart"
+        ]
+      }
+    },
+    {
+      "name": "scale-poster",
+      "type": "registry:component",
+      "title": "Scale poster",
+      "description": "A tall poster that is one illustrated scale: a full-height `scale-ladder` with icons, leader-labelled items and named zones, and a narrow side column of large figures and one small graphic, each set level with the part of the scale it describes.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/scale-ladder",
+        "@insightcharts/stat-circles",
+        "@insightcharts/poster"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/templates/scale-poster.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/scale-poster.tsx"
+        },
+        {
+          "path": "registry/insightcharts/templates/_infographic-layout.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/_infographic-layout.tsx"
+        }
+      ],
+      "docs": "Scale poster: https://insightcharts.dev/llms/scale-poster.md",
+      "categories": [
+        "template",
+        "infographic"
+      ],
+      "meta": {
+        "level": "template",
+        "category": "infographic",
+        "component": "ScalePoster",
+        "composes": [
+          "poster",
+          "scale-ladder",
+          "stat-circles"
+        ]
+      }
+    },
+    {
+      "name": "scorecard",
+      "type": "registry:component",
+      "title": "Scorecard",
+      "description": "A recurring report. It has a masthead with the report name and period, a headline that states the main change, a KPI grid with changes and sparklines, a ranked list beside one or two trend charts, an optional comparison table, short notes and a source note.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/headline",
+        "@insightcharts/prose",
+        "@insightcharts/comparison-table",
+        "@insightcharts/kpi-grid",
+        "@insightcharts/ranked-list",
+        "@insightcharts/source-note"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/templates/scorecard.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/scorecard.tsx"
+        },
+        {
+          "path": "registry/insightcharts/molecules/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/_shared.tsx"
+        },
+        {
+          "path": "registry/insightcharts/templates/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/_shared.tsx"
+        }
+      ],
+      "docs": "Scorecard: https://insightcharts.dev/llms/scorecard.md",
+      "categories": [
+        "template",
+        "layout"
+      ],
+      "meta": {
+        "level": "template",
+        "category": "layout",
+        "component": "Scorecard",
+        "composes": [
+          "headline",
+          "kpi-grid",
+          "ranked-list",
+          "comparison-table",
+          "prose",
+          "source-note",
+          "line-chart",
+          "bar-chart"
+        ]
+      }
+    },
+    {
+      "name": "social-card",
+      "type": "registry:component",
+      "title": "Social card",
+      "description": "A graphic that states one fact, at a fixed aspect ratio (1:1, 4:5, 16:9 or 9:16). It has a kicker, a headline, one exhibit, a source and a credit, painted on the theme surface. A button downloads the whole card as a PNG.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/source-note"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/templates/social-card.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/social-card.tsx"
+        },
+        {
+          "path": "registry/insightcharts/molecules/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/_shared.tsx"
+        },
+        {
+          "path": "registry/insightcharts/templates/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/_shared.tsx"
+        }
+      ],
+      "docs": "Social card: https://insightcharts.dev/llms/social-card.md",
+      "categories": [
+        "template",
+        "layout"
+      ],
+      "meta": {
+        "level": "template",
+        "category": "layout",
+        "component": "SocialCard",
+        "composes": [
+          "bar-chart",
+          "big-number",
+          "waffle-chart",
+          "source-note"
+        ]
+      }
+    },
+    {
+      "name": "story-deck",
+      "type": "registry:component",
+      "title": "Story deck",
+      "description": "A sequence of full-frame cards (title, stat, chart, quote, closing) that the reader swipes or steps through. Each card states one fact. It has an optional fixed aspect ratio, a keyboard-accessible pager and a stacked layout for print.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/big-number",
+        "@insightcharts/prose",
+        "@insightcharts/pull-quote",
+        "@insightcharts/source-note"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/templates/story-deck.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/story-deck.tsx"
+        },
+        {
+          "path": "registry/insightcharts/molecules/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/_shared.tsx"
+        },
+        {
+          "path": "registry/insightcharts/templates/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/_shared.tsx"
+        }
+      ],
+      "docs": "Story deck: https://insightcharts.dev/llms/story-deck.md",
+      "categories": [
+        "template",
+        "story"
+      ],
+      "meta": {
+        "level": "template",
+        "category": "story",
+        "component": "StoryDeck",
+        "composes": [
+          "big-number",
+          "prose",
+          "pull-quote",
+          "source-note",
+          "bar-chart",
+          "line-chart",
+          "radial-bar-chart"
+        ]
+      }
+    },
+    {
+      "name": "timeline-poster",
+      "type": "registry:component",
+      "title": "Timeline poster",
+      "description": "A poster of change over a run of periods: a full-width ribbon of bands whose thickness is each entity's value and whose order is its rank (`ribbon-chart`), a strip of two to four dated figures under it, and a bottom row with one measure per period as thick bars (`block-bar`) and one share at several dates as nested outlines (`nested-shares`).",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/block-bar",
+        "@insightcharts/nested-shares",
+        "@insightcharts/ribbon-chart",
+        "@insightcharts/poster"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/templates/timeline-poster.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/timeline-poster.tsx"
+        },
+        {
+          "path": "registry/insightcharts/templates/_infographic-layout.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/_infographic-layout.tsx"
+        },
+        {
+          "path": "registry/insightcharts/templates/_poster-figures.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/_poster-figures.tsx"
+        }
+      ],
+      "docs": "Timeline poster: https://insightcharts.dev/llms/timeline-poster.md",
+      "categories": [
+        "template",
+        "infographic"
+      ],
+      "meta": {
+        "level": "template",
+        "category": "infographic",
+        "component": "TimelinePoster",
+        "composes": [
+          "poster",
+          "ribbon-chart",
+          "block-bar",
+          "nested-shares"
+        ]
+      }
+    },
+    {
+      "name": "timeline-story",
+      "type": "registry:component",
+      "title": "Timeline story",
+      "description": "A story told in date order. It has a headline, one overview exhibit of the whole period (a timeline chart or an annotated line), dated chapters along a rail, a closing paragraph and a source note. Each chapter has a short text and an optional small exhibit.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/headline",
+        "@insightcharts/prose",
+        "@insightcharts/annotated-timeline",
+        "@insightcharts/source-note"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/templates/timeline-story.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/timeline-story.tsx"
+        },
+        {
+          "path": "registry/insightcharts/molecules/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/_shared.tsx"
+        },
+        {
+          "path": "registry/insightcharts/templates/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/_shared.tsx"
+        }
+      ],
+      "docs": "Timeline story: https://insightcharts.dev/llms/timeline-story.md",
+      "categories": [
+        "template",
+        "story"
+      ],
+      "meta": {
+        "level": "template",
+        "category": "story",
+        "component": "TimelineStory",
+        "composes": [
+          "headline",
+          "prose",
+          "annotated-timeline",
+          "source-note",
+          "line-chart",
+          "timeline-chart",
+          "bar-chart",
+          "big-number"
+        ]
+      }
+    },
+    {
+      "name": "visual-essay",
+      "type": "registry:component",
+      "title": "Visual essay",
+      "description": "A long article read by scrolling. It has a headline, then an ordered list of blocks in a reading column, then a source note. The blocks are prose, figures, charts with a callout, scrolly sequences, pull quotes, stat rows, small multiples and chapter breaks. Exhibits can be wider than the column.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "registryDependencies": [
+        "@insightcharts/headline",
+        "@insightcharts/prose",
+        "@insightcharts/pull-quote",
+        "@insightcharts/small-multiples",
+        "@insightcharts/step-marker",
+        "@insightcharts/chart-callout",
+        "@insightcharts/scrolly-chart",
+        "@insightcharts/small-multiple-grid",
+        "@insightcharts/stat-row",
+        "@insightcharts/source-note"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/templates/visual-essay.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/visual-essay.tsx"
+        },
+        {
+          "path": "registry/insightcharts/molecules/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/molecules/_shared.tsx"
+        },
+        {
+          "path": "registry/insightcharts/templates/_shared.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/templates/_shared.tsx"
+        }
+      ],
+      "docs": "Visual essay: https://insightcharts.dev/llms/visual-essay.md",
+      "categories": [
+        "template",
+        "story"
+      ],
+      "meta": {
+        "level": "template",
+        "category": "story",
+        "component": "VisualEssay",
+        "composes": [
+          "headline",
+          "prose",
+          "pull-quote",
+          "step-marker",
+          "small-multiples",
+          "chart-callout",
+          "scrolly-chart",
+          "small-multiple-grid",
+          "stat-row",
+          "source-note",
+          "line-chart",
+          "bar-chart"
+        ]
+      }
+    },
+    {
+      "name": "arc-diagram-demo",
+      "type": "registry:block",
+      "title": "Arc diagram demo",
+      "description": "Arc diagram rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/arc-diagram"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/arc-diagram-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/arc-diagram-demo.tsx"
+        }
+      ],
+      "docs": "Render <ArcDiagramDemo /> from @/components/insightcharts/demos/arc-diagram-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "poster"
+      ]
+    },
+    {
+      "name": "area-chart-demo",
+      "type": "registry:block",
+      "title": "Area chart demo",
+      "description": "Area chart rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/area-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/area-chart-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/area-chart-demo.tsx"
+        }
+      ],
+      "docs": "Render <AreaChartDemo /> from @/components/insightcharts/demos/area-chart-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "trend"
+      ]
+    },
+    {
+      "name": "arrow-chart-demo",
+      "type": "registry:block",
+      "title": "Arrow chart demo",
+      "description": "Arrow chart rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/arrow-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/arrow-chart-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/arrow-chart-demo.tsx"
+        }
+      ],
+      "docs": "Render <ArrowChartDemo /> from @/components/insightcharts/demos/arrow-chart-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "comparison"
+      ]
+    },
+    {
+      "name": "bar-chart-demo",
+      "type": "registry:block",
+      "title": "Bar chart demo",
+      "description": "Bar chart rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/bar-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/bar-chart-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/bar-chart-demo.tsx"
+        }
+      ],
+      "docs": "Render <BarChartDemo /> from @/components/insightcharts/demos/bar-chart-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "comparison"
+      ]
+    },
+    {
+      "name": "beeswarm-chart-demo",
+      "type": "registry:block",
+      "title": "Beeswarm chart demo",
+      "description": "Beeswarm chart rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/beeswarm-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/beeswarm-chart-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/beeswarm-chart-demo.tsx"
+        }
+      ],
+      "docs": "Render <BeeswarmChartDemo /> from @/components/insightcharts/demos/beeswarm-chart-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "distribution"
+      ]
+    },
+    {
+      "name": "big-number-demo",
+      "type": "registry:block",
+      "title": "Big number demo",
+      "description": "Big number rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/big-number"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/big-number-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/big-number-demo.tsx"
+        }
+      ],
+      "docs": "Render <BigNumberDemo /> from @/components/insightcharts/demos/big-number-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "figure"
+      ]
+    },
+    {
+      "name": "block-bar-demo",
+      "type": "registry:block",
+      "title": "Block bars demo",
+      "description": "Block bars rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/block-bar"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/block-bar-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/block-bar-demo.tsx"
+        }
+      ],
+      "docs": "Render <BlockBarDemo /> from @/components/insightcharts/demos/block-bar-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "poster"
+      ]
+    },
+    {
+      "name": "box-plot-demo",
+      "type": "registry:block",
+      "title": "Box plot demo",
+      "description": "Box plot rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/box-plot"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/box-plot-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/box-plot-demo.tsx"
+        }
+      ],
+      "docs": "Render <BoxPlotDemo /> from @/components/insightcharts/demos/box-plot-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "distribution"
+      ]
+    },
+    {
+      "name": "bubble-network-demo",
+      "type": "registry:block",
+      "title": "Bubble network demo",
+      "description": "Bubble network rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/bubble-network"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/bubble-network-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/bubble-network-demo.tsx"
+        }
+      ],
+      "docs": "Render <BubbleNetworkDemo /> from @/components/insightcharts/demos/bubble-network-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "poster"
+      ]
+    },
+    {
+      "name": "bubble-scale-demo",
+      "type": "registry:block",
+      "title": "Bubble scale demo",
+      "description": "Bubble scale rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/bubble-scale"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/bubble-scale-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/bubble-scale-demo.tsx"
+        }
+      ],
+      "docs": "Render <BubbleScaleDemo /> from @/components/insightcharts/demos/bubble-scale-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "poster"
+      ]
+    },
+    {
+      "name": "bullet-chart-demo",
+      "type": "registry:block",
+      "title": "Bullet chart demo",
+      "description": "Bullet chart rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/bullet-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/bullet-chart-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/bullet-chart-demo.tsx"
+        }
+      ],
+      "docs": "Render <BulletChartDemo /> from @/components/insightcharts/demos/bullet-chart-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "comparison"
+      ]
+    },
+    {
+      "name": "bump-chart-demo",
+      "type": "registry:block",
+      "title": "Bump chart demo",
+      "description": "Bump chart rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/bump-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/bump-chart-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/bump-chart-demo.tsx"
+        }
+      ],
+      "docs": "Render <BumpChartDemo /> from @/components/insightcharts/demos/bump-chart-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "trend"
+      ]
+    },
+    {
+      "name": "calendar-heatmap-demo",
+      "type": "registry:block",
+      "title": "Calendar heatmap demo",
+      "description": "Calendar heatmap rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/calendar-heatmap"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/calendar-heatmap-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/calendar-heatmap-demo.tsx"
+        }
+      ],
+      "docs": "Render <CalendarHeatmapDemo /> from @/components/insightcharts/demos/calendar-heatmap-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "trend"
+      ]
+    },
+    {
+      "name": "callout-demo",
+      "type": "registry:block",
+      "title": "Callout demo",
+      "description": "Callout rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/callout"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/callout-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/callout-demo.tsx"
+        }
+      ],
+      "docs": "Render <CalloutDemo /> from @/components/insightcharts/demos/callout-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "text"
+      ]
+    },
+    {
+      "name": "choropleth-map-demo",
+      "type": "registry:block",
+      "title": "Choropleth map demo",
+      "description": "Choropleth map rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/choropleth-map"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/choropleth-map-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/choropleth-map-demo.tsx"
+        }
+      ],
+      "docs": "Render <ChoroplethMapDemo /> from @/components/insightcharts/demos/choropleth-map-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "geo"
+      ]
+    },
+    {
+      "name": "circle-pack-demo",
+      "type": "registry:block",
+      "title": "Circle pack demo",
+      "description": "Circle pack rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/circle-pack"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/circle-pack-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/circle-pack-demo.tsx"
+        }
+      ],
+      "docs": "Render <CirclePackDemo /> from @/components/insightcharts/demos/circle-pack-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "poster"
+      ]
+    },
+    {
+      "name": "curve-rank-demo",
+      "type": "registry:block",
+      "title": "Curve rank demo",
+      "description": "Curve rank rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/curve-rank"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/curve-rank-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/curve-rank-demo.tsx"
+        }
+      ],
+      "docs": "Render <CurveRankDemo /> from @/components/insightcharts/demos/curve-rank-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "poster"
+      ]
+    },
+    {
+      "name": "data-table-demo",
+      "type": "registry:block",
+      "title": "Data table demo",
+      "description": "Data table rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/data-table"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/data-table-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/data-table-demo.tsx"
+        }
+      ],
+      "docs": "Render <DataTableDemo /> from @/components/insightcharts/demos/data-table-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "figure"
+      ]
+    },
+    {
+      "name": "delta-demo",
+      "type": "registry:block",
+      "title": "Delta demo",
+      "description": "Delta rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/delta"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/delta-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/delta-demo.tsx"
+        }
+      ],
+      "docs": "Render <DeltaDemo /> from @/components/insightcharts/demos/delta-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "figure"
+      ]
+    },
+    {
+      "name": "diverging-bar-chart-demo",
+      "type": "registry:block",
+      "title": "Diverging bar chart demo",
+      "description": "Diverging bar chart rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/diverging-bar-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/diverging-bar-chart-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/diverging-bar-chart-demo.tsx"
+        }
+      ],
+      "docs": "Render <DivergingBarChartDemo /> from @/components/insightcharts/demos/diverging-bar-chart-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "comparison"
+      ]
+    },
+    {
+      "name": "donut-chart-demo",
+      "type": "registry:block",
+      "title": "Donut chart demo",
+      "description": "Donut chart rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/donut-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/donut-chart-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/donut-chart-demo.tsx"
+        }
+      ],
+      "docs": "Render <DonutChartDemo /> from @/components/insightcharts/demos/donut-chart-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "part-to-whole"
+      ]
+    },
+    {
+      "name": "dumbbell-chart-demo",
+      "type": "registry:block",
+      "title": "Dumbbell chart demo",
+      "description": "Dumbbell chart rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/dumbbell-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/dumbbell-chart-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/dumbbell-chart-demo.tsx"
+        }
+      ],
+      "docs": "Render <DumbbellChartDemo /> from @/components/insightcharts/demos/dumbbell-chart-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "comparison"
+      ]
+    },
+    {
+      "name": "fan-flow-demo",
+      "type": "registry:block",
+      "title": "Fan flow demo",
+      "description": "Fan flow rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/fan-flow"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/fan-flow-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/fan-flow-demo.tsx"
+        }
+      ],
+      "docs": "Render <FanFlowDemo /> from @/components/insightcharts/demos/fan-flow-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "poster"
+      ]
+    },
+    {
+      "name": "funnel-chart-demo",
+      "type": "registry:block",
+      "title": "Funnel chart demo",
+      "description": "Funnel chart rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/funnel-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/funnel-chart-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/funnel-chart-demo.tsx"
+        }
+      ],
+      "docs": "Render <FunnelChartDemo /> from @/components/insightcharts/demos/funnel-chart-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "flow"
+      ]
+    },
+    {
+      "name": "glyph-table-demo",
+      "type": "registry:block",
+      "title": "Glyph table demo",
+      "description": "Glyph table rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/glyph-table"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/glyph-table-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/glyph-table-demo.tsx"
+        }
+      ],
+      "docs": "Render <GlyphTableDemo /> from @/components/insightcharts/demos/glyph-table-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "poster"
+      ]
+    },
+    {
+      "name": "headline-demo",
+      "type": "registry:block",
+      "title": "Headline demo",
+      "description": "Headline rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/headline"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/headline-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/headline-demo.tsx"
+        }
+      ],
+      "docs": "Render <HeadlineDemo /> from @/components/insightcharts/demos/headline-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "text"
+      ]
+    },
+    {
+      "name": "heatmap-demo",
+      "type": "registry:block",
+      "title": "Heatmap demo",
+      "description": "Heatmap rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/heatmap"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/heatmap-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/heatmap-demo.tsx"
+        }
+      ],
+      "docs": "Render <HeatmapDemo /> from @/components/insightcharts/demos/heatmap-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "comparison"
+      ]
+    },
+    {
+      "name": "histogram-demo",
+      "type": "registry:block",
+      "title": "Histogram demo",
+      "description": "Histogram rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/histogram"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/histogram-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/histogram-demo.tsx"
+        }
+      ],
+      "docs": "Render <HistogramDemo /> from @/components/insightcharts/demos/histogram-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "distribution"
+      ]
+    },
+    {
+      "name": "icon-array-grid-demo",
+      "type": "registry:block",
+      "title": "Icon array grid demo",
+      "description": "Icon array grid rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/icon-array-grid"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/icon-array-grid-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/icon-array-grid-demo.tsx"
+        }
+      ],
+      "docs": "Render <IconArrayGridDemo /> from @/components/insightcharts/demos/icon-array-grid-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "poster"
+      ]
+    },
+    {
+      "name": "icon-stat-demo",
+      "type": "registry:block",
+      "title": "Icon stat demo",
+      "description": "Icon stat rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/icon-stat"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/icon-stat-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/icon-stat-demo.tsx"
+        }
+      ],
+      "docs": "Render <IconStatDemo /> from @/components/insightcharts/demos/icon-stat-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "figure"
+      ]
+    },
+    {
+      "name": "legend-key-demo",
+      "type": "registry:block",
+      "title": "Legend key demo",
+      "description": "Legend key rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/legend-key"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/legend-key-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/legend-key-demo.tsx"
+        }
+      ],
+      "docs": "Render <LegendKeyDemo /> from @/components/insightcharts/demos/legend-key-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "figure"
+      ]
+    },
+    {
+      "name": "line-chart-demo",
+      "type": "registry:block",
+      "title": "Line chart demo",
+      "description": "Line chart rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/line-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/line-chart-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/line-chart-demo.tsx"
+        }
+      ],
+      "docs": "Render <LineChartDemo /> from @/components/insightcharts/demos/line-chart-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "trend"
+      ]
+    },
+    {
+      "name": "lollipop-chart-demo",
+      "type": "registry:block",
+      "title": "Lollipop chart demo",
+      "description": "Lollipop chart rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/lollipop-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/lollipop-chart-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/lollipop-chart-demo.tsx"
+        }
+      ],
+      "docs": "Render <LollipopChartDemo /> from @/components/insightcharts/demos/lollipop-chart-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "comparison"
+      ]
+    },
+    {
+      "name": "nested-shares-demo",
+      "type": "registry:block",
+      "title": "Nested shares demo",
+      "description": "Nested shares rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/nested-shares"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/nested-shares-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/nested-shares-demo.tsx"
+        }
+      ],
+      "docs": "Render <NestedSharesDemo /> from @/components/insightcharts/demos/nested-shares-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "poster"
+      ]
+    },
+    {
+      "name": "orbit-chart-demo",
+      "type": "registry:block",
+      "title": "Orbit chart demo",
+      "description": "Orbit chart rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/orbit-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/orbit-chart-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/orbit-chart-demo.tsx"
+        }
+      ],
+      "docs": "Render <OrbitChartDemo /> from @/components/insightcharts/demos/orbit-chart-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "poster"
+      ]
+    },
+    {
+      "name": "pictogram-chart-demo",
+      "type": "registry:block",
+      "title": "Pictogram chart demo",
+      "description": "Pictogram chart rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/pictogram-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/pictogram-chart-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/pictogram-chart-demo.tsx"
+        }
+      ],
+      "docs": "Render <PictogramChartDemo /> from @/components/insightcharts/demos/pictogram-chart-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "comparison"
+      ]
+    },
+    {
+      "name": "pill-rank-demo",
+      "type": "registry:block",
+      "title": "Pill rank demo",
+      "description": "Pill rank rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/pill-rank"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/pill-rank-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/pill-rank-demo.tsx"
+        }
+      ],
+      "docs": "Render <PillRankDemo /> from @/components/insightcharts/demos/pill-rank-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "poster"
+      ]
+    },
+    {
+      "name": "progress-meter-demo",
+      "type": "registry:block",
+      "title": "Progress meter demo",
+      "description": "Progress meter rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/progress-meter"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/progress-meter-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/progress-meter-demo.tsx"
+        }
+      ],
+      "docs": "Render <ProgressMeterDemo /> from @/components/insightcharts/demos/progress-meter-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "figure"
+      ]
+    },
+    {
+      "name": "proportional-area-demo",
+      "type": "registry:block",
+      "title": "Proportional area demo",
+      "description": "Proportional area rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/proportional-area"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/proportional-area-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/proportional-area-demo.tsx"
+        }
+      ],
+      "docs": "Render <ProportionalAreaDemo /> from @/components/insightcharts/demos/proportional-area-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "poster"
+      ]
+    },
+    {
+      "name": "prose-demo",
+      "type": "registry:block",
+      "title": "Prose demo",
+      "description": "Prose rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/prose"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/prose-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/prose-demo.tsx"
+        }
+      ],
+      "docs": "Render <ProseDemo /> from @/components/insightcharts/demos/prose-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "text"
+      ]
+    },
+    {
+      "name": "pull-quote-demo",
+      "type": "registry:block",
+      "title": "Pull quote demo",
+      "description": "Pull quote rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/pull-quote"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/pull-quote-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/pull-quote-demo.tsx"
+        }
+      ],
+      "docs": "Render <PullQuoteDemo /> from @/components/insightcharts/demos/pull-quote-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "text"
+      ]
+    },
+    {
+      "name": "radial-bar-chart-demo",
+      "type": "registry:block",
+      "title": "Radial bar chart demo",
+      "description": "Radial bar chart rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/radial-bar-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/radial-bar-chart-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/radial-bar-chart-demo.tsx"
+        }
+      ],
+      "docs": "Render <RadialBarChartDemo /> from @/components/insightcharts/demos/radial-bar-chart-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "trend"
+      ]
+    },
+    {
+      "name": "radial-spokes-demo",
+      "type": "registry:block",
+      "title": "Radial spokes demo",
+      "description": "Radial spokes rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/radial-spokes"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/radial-spokes-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/radial-spokes-demo.tsx"
+        }
+      ],
+      "docs": "Render <RadialSpokesDemo /> from @/components/insightcharts/demos/radial-spokes-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "poster"
+      ]
+    },
+    {
+      "name": "ribbon-chart-demo",
+      "type": "registry:block",
+      "title": "Ribbon chart demo",
+      "description": "Ribbon chart rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/ribbon-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/ribbon-chart-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/ribbon-chart-demo.tsx"
+        }
+      ],
+      "docs": "Render <RibbonChartDemo /> from @/components/insightcharts/demos/ribbon-chart-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "poster"
+      ]
+    },
+    {
+      "name": "sankey-chart-demo",
+      "type": "registry:block",
+      "title": "Sankey chart demo",
+      "description": "Sankey chart rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/sankey-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/sankey-chart-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/sankey-chart-demo.tsx"
+        }
+      ],
+      "docs": "Render <SankeyChartDemo /> from @/components/insightcharts/demos/sankey-chart-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "flow"
+      ]
+    },
+    {
+      "name": "scale-ladder-demo",
+      "type": "registry:block",
+      "title": "Scale ladder demo",
+      "description": "Scale ladder rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/scale-ladder"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/scale-ladder-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/scale-ladder-demo.tsx"
+        }
+      ],
+      "docs": "Render <ScaleLadderDemo /> from @/components/insightcharts/demos/scale-ladder-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "poster"
+      ]
+    },
+    {
+      "name": "scatter-chart-demo",
+      "type": "registry:block",
+      "title": "Scatter chart demo",
+      "description": "Scatter chart rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/scatter-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/scatter-chart-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/scatter-chart-demo.tsx"
+        }
+      ],
+      "docs": "Render <ScatterChartDemo /> from @/components/insightcharts/demos/scatter-chart-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "relationship"
+      ]
+    },
+    {
+      "name": "segmented-bar-demo",
+      "type": "registry:block",
+      "title": "Segmented bar demo",
+      "description": "Segmented bar rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/segmented-bar"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/segmented-bar-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/segmented-bar-demo.tsx"
+        }
+      ],
+      "docs": "Render <SegmentedBarDemo /> from @/components/insightcharts/demos/segmented-bar-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "part-to-whole"
+      ]
+    },
+    {
+      "name": "shape-fill-demo",
+      "type": "registry:block",
+      "title": "Shape fill demo",
+      "description": "Shape fill rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/shape-fill"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/shape-fill-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/shape-fill-demo.tsx"
+        }
+      ],
+      "docs": "Render <ShapeFillDemo /> from @/components/insightcharts/demos/shape-fill-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "poster"
+      ]
+    },
+    {
+      "name": "slope-chart-demo",
+      "type": "registry:block",
+      "title": "Slope chart demo",
+      "description": "Slope chart rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/slope-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/slope-chart-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/slope-chart-demo.tsx"
+        }
+      ],
+      "docs": "Render <SlopeChartDemo /> from @/components/insightcharts/demos/slope-chart-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "trend"
+      ]
+    },
+    {
+      "name": "small-multiples-demo",
+      "type": "registry:block",
+      "title": "Small multiples demo",
+      "description": "Small multiples rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/small-multiples"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/small-multiples-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/small-multiples-demo.tsx"
+        }
+      ],
+      "docs": "Render <SmallMultiplesDemo /> from @/components/insightcharts/demos/small-multiples-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "trend"
+      ]
+    },
+    {
+      "name": "source-note-demo",
+      "type": "registry:block",
+      "title": "Source note demo",
+      "description": "Source note rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/source-note"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/source-note-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/source-note-demo.tsx"
+        }
+      ],
+      "docs": "Render <SourceNoteDemo /> from @/components/insightcharts/demos/source-note-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "text"
+      ]
+    },
+    {
+      "name": "sparkline-demo",
+      "type": "registry:block",
+      "title": "Sparkline demo",
+      "description": "Sparkline rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/sparkline"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/sparkline-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/sparkline-demo.tsx"
+        }
+      ],
+      "docs": "Render <SparklineDemo /> from @/components/insightcharts/demos/sparkline-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "trend"
+      ]
+    },
+    {
+      "name": "stat-circles-demo",
+      "type": "registry:block",
+      "title": "Stat circles demo",
+      "description": "Stat circles rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/stat-circles"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/stat-circles-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/stat-circles-demo.tsx"
+        }
+      ],
+      "docs": "Render <StatCirclesDemo /> from @/components/insightcharts/demos/stat-circles-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "poster"
+      ]
+    },
+    {
+      "name": "stat-tile-demo",
+      "type": "registry:block",
+      "title": "Stat tile demo",
+      "description": "Stat tile rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/stat-tile"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/stat-tile-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/stat-tile-demo.tsx"
+        }
+      ],
+      "docs": "Render <StatTileDemo /> from @/components/insightcharts/demos/stat-tile-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "figure"
+      ]
+    },
+    {
+      "name": "step-marker-demo",
+      "type": "registry:block",
+      "title": "Step marker demo",
+      "description": "Step marker rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/step-marker"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/step-marker-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/step-marker-demo.tsx"
+        }
+      ],
+      "docs": "Render <StepMarkerDemo /> from @/components/insightcharts/demos/step-marker-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "text"
+      ]
+    },
+    {
+      "name": "strip-plot-demo",
+      "type": "registry:block",
+      "title": "Strip plot demo",
+      "description": "Strip plot rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/strip-plot"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/strip-plot-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/strip-plot-demo.tsx"
+        }
+      ],
+      "docs": "Render <StripPlotDemo /> from @/components/insightcharts/demos/strip-plot-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "distribution"
+      ]
+    },
+    {
+      "name": "timeline-chart-demo",
+      "type": "registry:block",
+      "title": "Timeline chart demo",
+      "description": "Timeline chart rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/timeline-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/timeline-chart-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/timeline-chart-demo.tsx"
+        }
+      ],
+      "docs": "Render <TimelineChartDemo /> from @/components/insightcharts/demos/timeline-chart-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "trend"
+      ]
+    },
+    {
+      "name": "treemap-demo",
+      "type": "registry:block",
+      "title": "Treemap demo",
+      "description": "Treemap rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/treemap"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/treemap-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/treemap-demo.tsx"
+        }
+      ],
+      "docs": "Render <TreemapDemo /> from @/components/insightcharts/demos/treemap-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "part-to-whole"
+      ]
+    },
+    {
+      "name": "unit-blocks-demo",
+      "type": "registry:block",
+      "title": "Unit blocks demo",
+      "description": "Unit blocks rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/unit-blocks"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/unit-blocks-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/unit-blocks-demo.tsx"
+        }
+      ],
+      "docs": "Render <UnitBlocksDemo /> from @/components/insightcharts/demos/unit-blocks-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "poster"
+      ]
+    },
+    {
+      "name": "waffle-chart-demo",
+      "type": "registry:block",
+      "title": "Waffle chart demo",
+      "description": "Waffle chart rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/waffle-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/waffle-chart-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/waffle-chart-demo.tsx"
+        }
+      ],
+      "docs": "Render <WaffleChartDemo /> from @/components/insightcharts/demos/waffle-chart-demo.",
+      "categories": [
+        "demo",
+        "atom",
+        "part-to-whole"
+      ]
+    },
+    {
+      "name": "annotated-timeline-demo",
+      "type": "registry:block",
+      "title": "Annotated timeline demo",
+      "description": "Annotated timeline rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/annotated-timeline",
+        "@insightcharts/big-number",
+        "@insightcharts/sparkline"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/annotated-timeline-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/annotated-timeline-demo.tsx"
+        }
+      ],
+      "docs": "Render <AnnotatedTimelineDemo /> from @/components/insightcharts/demos/annotated-timeline-demo.",
+      "categories": [
+        "demo",
+        "molecule",
+        "story"
+      ]
+    },
+    {
+      "name": "before-after-demo",
+      "type": "registry:block",
+      "title": "Before and after demo",
+      "description": "Before and after rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/before-after"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/before-after-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/before-after-demo.tsx"
+        }
+      ],
+      "docs": "Render <BeforeAfterDemo /> from @/components/insightcharts/demos/before-after-demo.",
+      "categories": [
+        "demo",
+        "molecule",
+        "layout"
+      ]
+    },
+    {
+      "name": "chart-callout-demo",
+      "type": "registry:block",
+      "title": "Chart with callout demo",
+      "description": "Chart with callout rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/chart-callout",
+        "@insightcharts/line-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/chart-callout-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/chart-callout-demo.tsx"
+        }
+      ],
+      "docs": "Render <ChartCalloutDemo /> from @/components/insightcharts/demos/chart-callout-demo.",
+      "categories": [
+        "demo",
+        "molecule",
+        "layout"
+      ]
+    },
+    {
+      "name": "chart-tabs-demo",
+      "type": "registry:block",
+      "title": "Chart tabs demo",
+      "description": "Chart tabs rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/chart-tabs",
+        "@insightcharts/bar-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/chart-tabs-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/chart-tabs-demo.tsx"
+        }
+      ],
+      "docs": "Render <ChartTabsDemo /> from @/components/insightcharts/demos/chart-tabs-demo.",
+      "categories": [
+        "demo",
+        "molecule",
+        "layout"
+      ]
+    },
+    {
+      "name": "comparison-table-demo",
+      "type": "registry:block",
+      "title": "Comparison table demo",
+      "description": "Comparison table rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/comparison-table"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/comparison-table-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/comparison-table-demo.tsx"
+        }
+      ],
+      "docs": "Render <ComparisonTableDemo /> from @/components/insightcharts/demos/comparison-table-demo.",
+      "categories": [
+        "demo",
+        "molecule",
+        "layout"
+      ]
+    },
+    {
+      "name": "filter-chips-demo",
+      "type": "registry:block",
+      "title": "Filter chips demo",
+      "description": "Filter chips rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/filter-chips"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/filter-chips-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/filter-chips-demo.tsx"
+        }
+      ],
+      "docs": "Render <FilterChipsDemo /> from @/components/insightcharts/demos/filter-chips-demo.",
+      "categories": [
+        "demo",
+        "molecule",
+        "layout"
+      ]
+    },
+    {
+      "name": "hero-figure-demo",
+      "type": "registry:block",
+      "title": "Hero figure demo",
+      "description": "Hero figure rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/hero-figure",
+        "@insightcharts/line-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/hero-figure-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/hero-figure-demo.tsx"
+        }
+      ],
+      "docs": "Render <HeroFigureDemo /> from @/components/insightcharts/demos/hero-figure-demo.",
+      "categories": [
+        "demo",
+        "molecule",
+        "story"
+      ]
+    },
+    {
+      "name": "kpi-grid-demo",
+      "type": "registry:block",
+      "title": "KPI grid demo",
+      "description": "KPI grid rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/kpi-grid"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/kpi-grid-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/kpi-grid-demo.tsx"
+        }
+      ],
+      "docs": "Render <KpiGridDemo /> from @/components/insightcharts/demos/kpi-grid-demo.",
+      "categories": [
+        "demo",
+        "molecule",
+        "layout"
+      ]
+    },
+    {
+      "name": "linked-charts-demo",
+      "type": "registry:block",
+      "title": "Linked charts demo",
+      "description": "Linked charts rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/linked-charts",
+        "@insightcharts/bar-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/linked-charts-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/linked-charts-demo.tsx"
+        }
+      ],
+      "docs": "Render <LinkedChartsDemo /> from @/components/insightcharts/demos/linked-charts-demo.",
+      "categories": [
+        "demo",
+        "molecule",
+        "layout"
+      ]
+    },
+    {
+      "name": "metric-breakdown-demo",
+      "type": "registry:block",
+      "title": "Metric breakdown demo",
+      "description": "Metric breakdown rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/metric-breakdown"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/metric-breakdown-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/metric-breakdown-demo.tsx"
+        }
+      ],
+      "docs": "Render <MetricBreakdownDemo /> from @/components/insightcharts/demos/metric-breakdown-demo.",
+      "categories": [
+        "demo",
+        "molecule",
+        "layout"
+      ]
+    },
+    {
+      "name": "poster-demo",
+      "type": "registry:block",
+      "title": "Poster demo",
+      "description": "Poster rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/poster",
+        "@insightcharts/big-number",
+        "@insightcharts/pictogram-chart",
+        "@insightcharts/bar-chart",
+        "@insightcharts/donut-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/poster-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/poster-demo.tsx"
+        }
+      ],
+      "docs": "Render <PosterDemo /> from @/components/insightcharts/demos/poster-demo.",
+      "categories": [
+        "demo",
+        "molecule",
+        "poster"
+      ]
+    },
+    {
+      "name": "proportion-statement-demo",
+      "type": "registry:block",
+      "title": "Proportion statement demo",
+      "description": "Proportion statement rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/proportion-statement"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/proportion-statement-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/proportion-statement-demo.tsx"
+        }
+      ],
+      "docs": "Render <ProportionStatementDemo /> from @/components/insightcharts/demos/proportion-statement-demo.",
+      "categories": [
+        "demo",
+        "molecule",
+        "story"
+      ]
+    },
+    {
+      "name": "quote-figure-demo",
+      "type": "registry:block",
+      "title": "Quote with figure demo",
+      "description": "Quote with figure rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/quote-figure",
+        "@insightcharts/sparkline"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/quote-figure-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/quote-figure-demo.tsx"
+        }
+      ],
+      "docs": "Render <QuoteFigureDemo /> from @/components/insightcharts/demos/quote-figure-demo.",
+      "categories": [
+        "demo",
+        "molecule",
+        "story"
+      ]
+    },
+    {
+      "name": "ranked-list-demo",
+      "type": "registry:block",
+      "title": "Ranked list demo",
+      "description": "Ranked list rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/ranked-list"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/ranked-list-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/ranked-list-demo.tsx"
+        }
+      ],
+      "docs": "Render <RankedListDemo /> from @/components/insightcharts/demos/ranked-list-demo.",
+      "categories": [
+        "demo",
+        "molecule",
+        "layout"
+      ]
+    },
+    {
+      "name": "scrolly-chart-demo",
+      "type": "registry:block",
+      "title": "Scrolly chart demo",
+      "description": "Scrolly chart rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/scrolly-chart",
+        "@insightcharts/bar-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/scrolly-chart-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/scrolly-chart-demo.tsx"
+        }
+      ],
+      "docs": "Render <ScrollyChartDemo /> from @/components/insightcharts/demos/scrolly-chart-demo.",
+      "categories": [
+        "demo",
+        "molecule",
+        "story"
+      ]
+    },
+    {
+      "name": "section-demo",
+      "type": "registry:block",
+      "title": "Section demo",
+      "description": "Section rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/section",
+        "@insightcharts/line-chart",
+        "@insightcharts/bar-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/section-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/section-demo.tsx"
+        }
+      ],
+      "docs": "Render <SectionDemo /> from @/components/insightcharts/demos/section-demo.",
+      "categories": [
+        "demo",
+        "molecule",
+        "story"
+      ]
+    },
+    {
+      "name": "small-multiple-grid-demo",
+      "type": "registry:block",
+      "title": "Small multiple grid demo",
+      "description": "Small multiple grid rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/small-multiple-grid",
+        "@insightcharts/bar-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/small-multiple-grid-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/small-multiple-grid-demo.tsx"
+        }
+      ],
+      "docs": "Render <SmallMultipleGridDemo /> from @/components/insightcharts/demos/small-multiple-grid-demo.",
+      "categories": [
+        "demo",
+        "molecule",
+        "layout"
+      ]
+    },
+    {
+      "name": "stat-row-demo",
+      "type": "registry:block",
+      "title": "Stat row demo",
+      "description": "Stat row rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/stat-row"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/stat-row-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/stat-row-demo.tsx"
+        }
+      ],
+      "docs": "Render <StatRowDemo /> from @/components/insightcharts/demos/stat-row-demo.",
+      "categories": [
+        "demo",
+        "molecule",
+        "layout"
+      ]
+    },
+    {
+      "name": "trend-card-demo",
+      "type": "registry:block",
+      "title": "Trend card demo",
+      "description": "Trend card rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/trend-card"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/trend-card-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/trend-card-demo.tsx"
+        }
+      ],
+      "docs": "Render <TrendCardDemo /> from @/components/insightcharts/demos/trend-card-demo.",
+      "categories": [
+        "demo",
+        "molecule",
+        "layout"
+      ]
+    },
+    {
+      "name": "atlas-poster-demo",
+      "type": "registry:block",
+      "title": "Atlas poster demo",
+      "description": "Atlas poster rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/atlas-poster"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/atlas-poster-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/atlas-poster-demo.tsx"
+        }
+      ],
+      "docs": "Render <AtlasPosterDemo /> from @/components/insightcharts/demos/atlas-poster-demo.",
+      "categories": [
+        "demo",
+        "template",
+        "infographic"
+      ]
+    },
+    {
+      "name": "comparison-brief-demo",
+      "type": "registry:block",
+      "title": "Comparison brief demo",
+      "description": "Comparison brief rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/comparison-brief",
+        "@insightcharts/line-chart",
+        "@insightcharts/bar-chart",
+        "@insightcharts/segmented-bar"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/comparison-brief-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/comparison-brief-demo.tsx"
+        }
+      ],
+      "docs": "Render <ComparisonBriefDemo /> from @/components/insightcharts/demos/comparison-brief-demo.",
+      "categories": [
+        "demo",
+        "template",
+        "layout"
+      ]
+    },
+    {
+      "name": "count-poster-demo",
+      "type": "registry:block",
+      "title": "Count poster demo",
+      "description": "Count poster rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/count-poster"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/count-poster-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/count-poster-demo.tsx"
+        }
+      ],
+      "docs": "Render <CountPosterDemo /> from @/components/insightcharts/demos/count-poster-demo.",
+      "categories": [
+        "demo",
+        "template",
+        "infographic"
+      ]
+    },
+    {
+      "name": "data-explorer-demo",
+      "type": "registry:block",
+      "title": "Data explorer demo",
+      "description": "Data explorer rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/data-explorer",
+        "@insightcharts/bar-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/data-explorer-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/data-explorer-demo.tsx"
+        }
+      ],
+      "docs": "Render <DataExplorerDemo /> from @/components/insightcharts/demos/data-explorer-demo.",
+      "categories": [
+        "demo",
+        "template",
+        "story"
+      ]
+    },
+    {
+      "name": "executive-brief-demo",
+      "type": "registry:block",
+      "title": "Executive brief demo",
+      "description": "Executive brief rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/executive-brief",
+        "@insightcharts/line-chart",
+        "@insightcharts/dumbbell-chart",
+        "@insightcharts/bar-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/executive-brief-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/executive-brief-demo.tsx"
+        }
+      ],
+      "docs": "Render <ExecutiveBriefDemo /> from @/components/insightcharts/demos/executive-brief-demo.",
+      "categories": [
+        "demo",
+        "template",
+        "layout"
+      ]
+    },
+    {
+      "name": "explainer-demo",
+      "type": "registry:block",
+      "title": "Explainer demo",
+      "description": "Explainer rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/explainer",
+        "@insightcharts/bar-chart",
+        "@insightcharts/icon-stat"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/explainer-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/explainer-demo.tsx"
+        }
+      ],
+      "docs": "Render <ExplainerDemo /> from @/components/insightcharts/demos/explainer-demo.",
+      "categories": [
+        "demo",
+        "template",
+        "story"
+      ]
+    },
+    {
+      "name": "flow-poster-demo",
+      "type": "registry:block",
+      "title": "Flow poster demo",
+      "description": "Flow poster rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/flow-poster"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/flow-poster-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/flow-poster-demo.tsx"
+        }
+      ],
+      "docs": "Render <FlowPosterDemo /> from @/components/insightcharts/demos/flow-poster-demo.",
+      "categories": [
+        "demo",
+        "template",
+        "infographic"
+      ]
+    },
+    {
+      "name": "matrix-poster-demo",
+      "type": "registry:block",
+      "title": "Matrix poster demo",
+      "description": "Matrix poster rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/matrix-poster"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/matrix-poster-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/matrix-poster-demo.tsx"
+        }
+      ],
+      "docs": "Render <MatrixPosterDemo /> from @/components/insightcharts/demos/matrix-poster-demo.",
+      "categories": [
+        "demo",
+        "template",
+        "infographic"
+      ]
+    },
+    {
+      "name": "network-poster-demo",
+      "type": "registry:block",
+      "title": "Network poster demo",
+      "description": "Network poster rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/network-poster"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/network-poster-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/network-poster-demo.tsx"
+        }
+      ],
+      "docs": "Render <NetworkPosterDemo /> from @/components/insightcharts/demos/network-poster-demo.",
+      "categories": [
+        "demo",
+        "template",
+        "infographic"
+      ]
+    },
+    {
+      "name": "profile-poster-demo",
+      "type": "registry:block",
+      "title": "Profile poster demo",
+      "description": "Profile poster rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/profile-poster"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/profile-poster-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/profile-poster-demo.tsx"
+        }
+      ],
+      "docs": "Render <ProfilePosterDemo /> from @/components/insightcharts/demos/profile-poster-demo.",
+      "categories": [
+        "demo",
+        "template",
+        "infographic"
+      ]
+    },
+    {
+      "name": "radial-poster-demo",
+      "type": "registry:block",
+      "title": "Radial poster demo",
+      "description": "Radial poster rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/radial-poster"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/radial-poster-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/radial-poster-demo.tsx"
+        }
+      ],
+      "docs": "Render <RadialPosterDemo /> from @/components/insightcharts/demos/radial-poster-demo.",
+      "categories": [
+        "demo",
+        "template",
+        "infographic"
+      ]
+    },
+    {
+      "name": "ranking-poster-demo",
+      "type": "registry:block",
+      "title": "Ranking poster demo",
+      "description": "Ranking poster rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/ranking-poster"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/ranking-poster-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/ranking-poster-demo.tsx"
+        }
+      ],
+      "docs": "Render <RankingPosterDemo /> from @/components/insightcharts/demos/ranking-poster-demo.",
+      "categories": [
+        "demo",
+        "template",
+        "infographic"
+      ]
+    },
+    {
+      "name": "report-page-demo",
+      "type": "registry:block",
+      "title": "Report page demo",
+      "description": "Report page rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/report-page",
+        "@insightcharts/bar-chart",
+        "@insightcharts/progress-meter"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/report-page-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/report-page-demo.tsx"
+        }
+      ],
+      "docs": "Render <ReportPageDemo /> from @/components/insightcharts/demos/report-page-demo.",
+      "categories": [
+        "demo",
+        "template",
+        "layout"
+      ]
+    },
+    {
+      "name": "scale-poster-demo",
+      "type": "registry:block",
+      "title": "Scale poster demo",
+      "description": "Scale poster rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/scale-poster"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/scale-poster-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/scale-poster-demo.tsx"
+        }
+      ],
+      "docs": "Render <ScalePosterDemo /> from @/components/insightcharts/demos/scale-poster-demo.",
+      "categories": [
+        "demo",
+        "template",
+        "infographic"
+      ]
+    },
+    {
+      "name": "scorecard-demo",
+      "type": "registry:block",
+      "title": "Scorecard demo",
+      "description": "Scorecard rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/scorecard",
+        "@insightcharts/line-chart",
+        "@insightcharts/bar-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/scorecard-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/scorecard-demo.tsx"
+        }
+      ],
+      "docs": "Render <ScorecardDemo /> from @/components/insightcharts/demos/scorecard-demo.",
+      "categories": [
+        "demo",
+        "template",
+        "layout"
+      ]
+    },
+    {
+      "name": "social-card-demo",
+      "type": "registry:block",
+      "title": "Social card demo",
+      "description": "Social card rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/social-card",
+        "@insightcharts/bar-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/social-card-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/social-card-demo.tsx"
+        }
+      ],
+      "docs": "Render <SocialCardDemo /> from @/components/insightcharts/demos/social-card-demo.",
+      "categories": [
+        "demo",
+        "template",
+        "layout"
+      ]
+    },
+    {
+      "name": "story-deck-demo",
+      "type": "registry:block",
+      "title": "Story deck demo",
+      "description": "Story deck rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/story-deck",
+        "@insightcharts/bar-chart",
+        "@insightcharts/line-chart",
+        "@insightcharts/radial-bar-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/story-deck-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/story-deck-demo.tsx"
+        }
+      ],
+      "docs": "Render <StoryDeckDemo /> from @/components/insightcharts/demos/story-deck-demo.",
+      "categories": [
+        "demo",
+        "template",
+        "story"
+      ]
+    },
+    {
+      "name": "timeline-poster-demo",
+      "type": "registry:block",
+      "title": "Timeline poster demo",
+      "description": "Timeline poster rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/timeline-poster"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/timeline-poster-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/timeline-poster-demo.tsx"
+        }
+      ],
+      "docs": "Render <TimelinePosterDemo /> from @/components/insightcharts/demos/timeline-poster-demo.",
+      "categories": [
+        "demo",
+        "template",
+        "infographic"
+      ]
+    },
+    {
+      "name": "timeline-story-demo",
+      "type": "registry:block",
+      "title": "Timeline story demo",
+      "description": "Timeline story rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/timeline-story",
+        "@insightcharts/line-chart",
+        "@insightcharts/bar-chart",
+        "@insightcharts/big-number"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/timeline-story-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/timeline-story-demo.tsx"
+        }
+      ],
+      "docs": "Render <TimelineStoryDemo /> from @/components/insightcharts/demos/timeline-story-demo.",
+      "categories": [
+        "demo",
+        "template",
+        "story"
+      ]
+    },
+    {
+      "name": "visual-essay-demo",
+      "type": "registry:block",
+      "title": "Visual essay demo",
+      "description": "Visual essay rendered with its example data, ready to paste into a page.",
+      "registryDependencies": [
+        "@insightcharts/visual-essay",
+        "@insightcharts/line-chart",
+        "@insightcharts/bar-chart"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/demos/visual-essay-demo.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/demos/visual-essay-demo.tsx"
+        }
+      ],
+      "docs": "Render <VisualEssayDemo /> from @/components/insightcharts/demos/visual-essay-demo.",
+      "categories": [
+        "demo",
+        "template",
+        "story"
+      ]
+    },
+    {
+      "name": "theme",
+      "type": "registry:theme",
+      "title": "InsightCharts theme variables",
+      "description": "Adds the --ic-* CSS variables (light and dark) to your stylesheet so charts can be restyled from CSS. The values are the library defaults; edit them to re-skin.",
+      "css": {
+        ":root": {
+          "--ic-surface": "var(--background, #fcfcfb)",
+          "--ic-ink": "var(--foreground, #0b0b0b)",
+          "--ic-ink-secondary": "#52514e",
+          "--ic-muted": "var(--muted-foreground, #898781)",
+          "--ic-grid": "#e1e0d9",
+          "--ic-axis": "#c3c2b7",
+          "--ic-accent": "#2a78d6",
+          "--ic-context": "#c3c2b7",
+          "--ic-positive": "#0ca30c",
+          "--ic-negative": "#d03b3b",
+          "--ic-series-1": "#2a78d6",
+          "--ic-series-2": "#eb6834",
+          "--ic-series-3": "#1baf7a",
+          "--ic-series-4": "#eda100",
+          "--ic-series-5": "#e87ba4",
+          "--ic-series-6": "#008300",
+          "--ic-series-7": "#6250d6",
+          "--ic-series-8": "#e34948",
+          "--ic-font": "inherit",
+          "--ic-font-display": "var(--ic-font, inherit)"
+        },
+        ".dark": {
+          "--ic-surface": "var(--background, #1a1a19)",
+          "--ic-ink": "var(--foreground, #f0efec)",
+          "--ic-ink-secondary": "#c3c2b7",
+          "--ic-grid": "#2c2c2a",
+          "--ic-axis": "#383835",
+          "--ic-accent": "#3987e5",
+          "--ic-context": "#52514e",
+          "--ic-negative": "#e66767",
+          "--ic-series-1": "#3987e5",
+          "--ic-series-2": "#d95926",
+          "--ic-series-3": "#199e70",
+          "--ic-series-4": "#c98500",
+          "--ic-series-5": "#d55181",
+          "--ic-series-6": "#0ca30c",
+          "--ic-series-7": "#9085e9",
+          "--ic-series-8": "#e66767"
+        }
+      },
+      "docs": "Edit the --ic-* variables in your global CSS. Guide: https://insightcharts.dev/llms/guides/theming.md",
+      "categories": [
+        "theme"
+      ]
+    },
+    {
+      "name": "insight",
+      "type": "registry:component",
+      "title": "Insight spec renderer",
+      "description": "Renders any InsightCharts component from a JSON spec ({ type, ...props }), with a place to register customised local copies.",
+      "dependencies": [
+        "insightcharts",
+        "echarts"
+      ],
+      "files": [
+        {
+          "path": "registry/insightcharts/insight.tsx",
+          "type": "registry:component",
+          "target": "components/insightcharts/insight.tsx"
+        }
+      ],
+      "docs": "Spec format: https://insightcharts.dev/llms/guides/json-spec.md  JSON Schema: https://insightcharts.dev/schema/insight-spec.json",
+      "categories": [
+        "spec"
+      ]
+    },
+    {
+      "name": "agent-skill",
+      "type": "registry:file",
+      "title": "InsightCharts agent skill (Claude Code)",
+      "description": "Installs the InsightCharts agent skill into .claude/skills/insightcharts so coding agents know how to build data stories with the library.",
+      "files": [
+        {
+          "path": "skills/insightcharts/references/components.md",
+          "type": "registry:file",
+          "target": "~/.claude/skills/insightcharts/references/components.md"
+        },
+        {
+          "path": "skills/insightcharts/references/data.md",
+          "type": "registry:file",
+          "target": "~/.claude/skills/insightcharts/references/data.md"
+        },
+        {
+          "path": "skills/insightcharts/references/recipes.md",
+          "type": "registry:file",
+          "target": "~/.claude/skills/insightcharts/references/recipes.md"
+        },
+        {
+          "path": "skills/insightcharts/references/story-design.md",
+          "type": "registry:file",
+          "target": "~/.claude/skills/insightcharts/references/story-design.md"
+        },
+        {
+          "path": "skills/insightcharts/SKILL.md",
+          "type": "registry:file",
+          "target": "~/.claude/skills/insightcharts/SKILL.md"
+        }
+      ],
+      "categories": [
+        "agent"
+      ]
+    },
+    {
+      "name": "agent-skill-agents",
+      "type": "registry:file",
+      "title": "InsightCharts agent skill (.agents)",
+      "description": "Installs the InsightCharts agent skill into .agents/skills/insightcharts so coding agents know how to build data stories with the library.",
+      "files": [
+        {
+          "path": "skills/insightcharts/references/components.md",
+          "type": "registry:file",
+          "target": "~/.agents/skills/insightcharts/references/components.md"
+        },
+        {
+          "path": "skills/insightcharts/references/data.md",
+          "type": "registry:file",
+          "target": "~/.agents/skills/insightcharts/references/data.md"
+        },
+        {
+          "path": "skills/insightcharts/references/recipes.md",
+          "type": "registry:file",
+          "target": "~/.agents/skills/insightcharts/references/recipes.md"
+        },
+        {
+          "path": "skills/insightcharts/references/story-design.md",
+          "type": "registry:file",
+          "target": "~/.agents/skills/insightcharts/references/story-design.md"
+        },
+        {
+          "path": "skills/insightcharts/SKILL.md",
+          "type": "registry:file",
+          "target": "~/.agents/skills/insightcharts/SKILL.md"
+        }
+      ],
+      "categories": [
+        "agent"
+      ]
+    }
+  ]
+}

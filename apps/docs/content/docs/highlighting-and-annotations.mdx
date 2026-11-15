@@ -1,0 +1,55 @@
+---
+title: Highlighting and annotations
+description: The highlight prop colours one series and greys the others. The annotations prop marks a date, a threshold or a single value. This page also has the rules for writing titles.
+---
+
+## Highlight
+
+`highlight` names the entity the title is about. That entity takes the accent colour and every other series is drawn in the theme's `context` grey. On a multi-series chart it names a series; on a single-series bar chart it names a category.
+
+<Spec spec={{ type: "line-chart", data: [{ month: "Jan", Acme: 100, Globex: 96, Initech: 88, Hooli: 94 }, { month: "Feb", Acme: 104, Globex: 99, Initech: 87, Hooli: 93 }, { month: "Mar", Acme: 109, Globex: 101, Initech: 90, Hooli: 91 }, { month: "Apr", Acme: 121, Globex: 100, Initech: 92, Hooli: 90 }, { month: "May", Acme: 138, Globex: 103, Initech: 91, Hooli: 88 }, { month: "Jun", Acme: 156, Globex: 104, Initech: 94, Hooli: 87 }], x: "month", y: ["Acme", "Globex", "Initech", "Hooli"], highlight: "Acme", title: "Acme's active teams index rose from 100 in January to 156 in June", subtitle: "Monthly active teams, indexed to January = 100", note: "Illustrative data", height: 280 }} />
+
+Pass an array to highlight several. The first takes the accent; the rest take the following categorical colours, in the order you list them.
+
+<Spec spec={{ type: "bar-chart", data: [{ country: "Norway", share: 98 }, { country: "Brazil", share: 89 }, { country: "Canada", share: 68 }, { country: "Germany", share: 52 }, { country: "Japan", share: 24 }, { country: "United States", share: 23 }], x: "country", y: "share", format: "{value}%", highlight: ["Germany", "Japan"], title: "Renewables supplied 52% of electricity in Germany and 24% in Japan", subtitle: "Share of electricity generation from renewables", note: "Illustrative figures", height: 260 }} />
+
+Without `highlight`, a single series draws in the accent and several series take the categorical colours in a stable order.
+
+## Annotations
+
+Annotations are plain JSON, positioned in data coordinates. They stay in place when the chart is resized, and an agent can write them. There are three kinds.
+
+<Spec spec={{ type: "line-chart", data: [{ date: "2024-01-01", signups: 310 }, { date: "2024-02-01", signups: 324 }, { date: "2024-03-01", signups: 331 }, { date: "2024-04-01", signups: 298 }, { date: "2024-05-01", signups: 285 }, { date: "2024-06-01", signups: 352 }, { date: "2024-07-01", signups: 418 }, { date: "2024-08-01", signups: 467 }, { date: "2024-09-01", signups: 512 }], x: "date", y: "signups", title: "Monthly signups rose from 285 in May to 512 in September 2024", subtitle: "New accounts per month, 2024", note: "Illustrative data", annotations: [{ type: "band", axis: "x", from: "2024-04-01", to: "2024-05-15", label: "Checkout bug" }, { type: "line", axis: "x", value: "2024-06-01", label: "New pricing page" }, { type: "line", axis: "y", value: 400, label: "Target", dashed: true }, { type: "point", x: "2024-09-01", y: 512, label: "512 in\nSeptember", position: "left" }], height: 300 }} />
+
+| Type | Fields | Use it for |
+|---|---|---|
+| `line` | `axis` (`"x"` or `"y"`), `value`, `label?`, `dashed?`, `emphasis?` | A target, an average, the date something happened. Dashed by default; `dashed: false` draws it solid, `emphasis: true` draws it in ink rather than muted grey. |
+| `band` | `axis`, `from`, `to`, `label?` | A shaded range: a recession, an outage, a target zone. |
+| `point` | `x`, `y`, `label`, `position?`, `dot?` | A callout anchored to one data point. `position` is `"top"` (default), `"bottom"`, `"left"` or `"right"`; `dot: false` hides the marker. Use `\n` for line breaks. |
+
+Annotations attach to the chart's first cartesian series as ECharts mark lines, areas and points. Values on a category axis are category names; values on a time axis are ISO dates.
+
+<Callout>
+Use one or two annotations per chart, and three at most. With more than that, the reader cannot tell which one matters.
+</Callout>
+
+## Writing titles
+
+Write the title as one plain statement of what the data shows, the way a person would say it out loud, with the real number and the period in it. These rules also apply to subtitles, callouts, annotation labels and story steps.
+
+| Write this | Not this |
+|---|---|
+| Monthly churn fell from 4.2% to 2.1% in 2024 | Churn halved after the March onboarding revamp, and the gain has held for six months |
+| Renewables supplied 98% of Norway's electricity in 2023 | Norway runs almost entirely on renewable electricity |
+| Acme had 266 active teams in December 2024, 2.4 times Globex | Acme pulled away from the pack in late 2023 |
+| Solar's share rose from 2.7% to 5.5% between 2019 and 2023 | Solar is closing the gap with wind |
+| Households wasted 631 million tonnes of food in 2022 | It is not a rich-country habit |
+
+- Write one clause. Do not add a second half joined with a comma, "and", "but", "while", "yet", a semicolon, a colon or a dash. If there are two facts, write two sentences or put the second in the subtitle.
+- Put the number in. Write "fell from 4.2% to 2.1%", not "halved". Write "98%", not "almost entirely".
+- Take every number from the data. Do not state a cause or an event that the data does not show.
+- Do not use metaphors, idioms or dramatic verbs such as "soared" or "plunged".
+- Do not hint at something the reader has to work out.
+- A plain label is acceptable when there is no single fact to state: "Monthly churn, 2024".
+
+The subtitle names the measure, the unit, the population and the period. `source` says where the numbers come from.

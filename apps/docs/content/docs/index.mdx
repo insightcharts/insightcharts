@@ -1,0 +1,54 @@
+---
+title: Introduction
+description: InsightCharts is a React library of charts, figures, page layouts and infographic posters built on Apache ECharts 6. Every component can be written as JSX or as a JSON spec.
+---
+
+Every chart takes a **title** that states one fact with its number, an entity to **highlight**, and **annotations** that mark a date, a threshold or a single value. The defaults follow common practice in news graphics. Lines and bars are labelled directly where possible. Bars start at zero. The highlighted series is drawn in colour and the other series in grey.
+
+<Spec spec={{ type: "line-chart", data: [{ year: "2019", Solar: 705, Wind: 1420 }, { year: "2020", Solar: 855, Wind: 1590 }, { year: "2021", Solar: 1050, Wind: 1860 }, { year: "2022", Solar: 1320, Wind: 2110 }, { year: "2023", Solar: 1640, Wind: 2310 }, { year: "2024", Solar: 2130, Wind: 2500 }], x: "year", y: ["Solar", "Wind"], highlight: "Solar", title: "Solar generation rose from 705 TWh in 2019 to 2,130 TWh in 2024", subtitle: "Global electricity generation from solar and wind, TWh", note: "Illustrative figures", annotations: [{ type: "point", x: "2024", y: 2130, label: "+30% from 2023", position: "left" }], height: 300 }} />
+
+Open the **Code** and **JSON** tabs above. They show the same chart as JSX and as a plain JSON spec. Every component in this library can be written both ways.
+
+## Three levels
+
+Components are grouped into three levels by size.
+
+| Level | What it is | Examples |
+|---|---|---|
+| [Atoms](/atoms) | One chart form or one figure primitive. | Bar chart, line chart, big number |
+| [Molecules](/molecules) | A combination of atoms that is used often. | A row of statistics, a chart with a callout beside it |
+| [Templates](/templates) | A complete page built from molecules and atoms. | A one-page executive brief, a scroll-driven essay |
+
+Every component page lists what the component is built from and where it is used. For example, a big number is an atom. A stat row is a molecule that repeats the big number. The executive brief is a template that starts with a stat row.
+
+<Components names={["big-number", "stat-row", "executive-brief"]} />
+
+## Infographics
+
+<Count of="infographics" /> of the templates are [infographics](/infographics). An infographic draws one poster: a painted background, a large title and one large graphic or several graphics laid out together. Infographics are built on the [poster](/molecules/poster) frame from <Count of="poster-primitives" /> poster primitives, in eight poster themes, with <IconCount /> built-in [icons](/docs/icons). See the [infographics guide](/docs/infographics).
+
+<Example name="flow-poster" maxHeight={520} />
+
+## Features every chart has
+
+Each chart is defined by one pure function that turns props and rows into an ECharts option. A shared factory supplies the features below, so they work the same way on every chart.
+
+- **Data loading** from rows, columns, CSV text, a URL, an async function or an Arrow-style table, with JSON [transforms](/docs/data#transforms).
+- **Figure text** as HTML: title, subtitle, legend, source line, and loading, empty and error states.
+- **Theme and dark mode** resolved from CSS variables, following a shadcn/ui theme when one is present. See [theming](/docs/theming) and [dark mode](/docs/dark-mode).
+- **Highlight and annotations**: see [highlighting and annotations](/docs/highlighting-and-annotations).
+- **Crossfiltering** through a shared store: see [crossfiltering](/docs/crossfiltering).
+- **Export** to PNG, JPEG, SVG, PDF, CSV and JSON: see [export](/docs/export). A whole poster or social card is saved as one PNG.
+- **The `option` prop** for any ECharts setting that no prop covers: see [custom ECharts options](/docs/escape-hatch).
+
+## Metadata for AI agents
+
+InsightCharts pages are expected to be written mostly by AI agents and read by people. Each component carries machine-readable metadata: what it shows, when to use it, when to pick something else, its props and a working example. That metadata generates this site, [`llms.txt`](/llms.txt), a JSON Schema, a shadcn registry and an installable agent skill. See [for AI agents](/docs/ai-agents).
+
+## Next steps
+
+- [Installation](/docs/installation): npm, or the shadcn registry.
+- [Quickstart](/docs/quickstart): a first chart, the shape every chart follows, server and client components.
+- [Templates](/docs/templates): a whole page written as one JSON document.
+- [Infographics](/docs/infographics): a whole poster written as one JSON document.
+- [Atoms](/atoms), [molecules](/molecules), [templates](/templates) and [infographics](/infographics): the full catalogue.

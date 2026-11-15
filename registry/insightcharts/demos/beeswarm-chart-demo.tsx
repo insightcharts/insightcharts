@@ -1,0 +1,103 @@
+import { BeeswarmChart } from "@/components/insightcharts/atoms/beeswarm-chart";
+
+const data = [
+  { country: "Qatar", rate: 0.4 },
+  { country: "Kuwait", rate: 0.6 },
+  { country: "UAE", rate: 0.9 },
+  { country: "Saudi Arabia", rate: 1.2 },
+  { country: "Japan", rate: 2.5 },
+  { country: "Italy", rate: 2.9 },
+  { country: "Germany", rate: 3 },
+  { country: "United States", rate: 3.6 },
+  { country: "France", rate: 3.1 },
+  { country: "Spain", rate: 3.3 },
+  { country: "United Kingdom", rate: 3.4 },
+  { country: "Canada", rate: 3.2 },
+  { country: "Australia", rate: 3.1 },
+  { country: "South Korea", rate: 2.4 },
+  { country: "Netherlands", rate: 2.8 },
+  { country: "Sweden", rate: 2.6 },
+  { country: "Norway", rate: 2.5 },
+  { country: "Switzerland", rate: 2.3 },
+  { country: "Poland", rate: 4.2 },
+  { country: "Portugal", rate: 3.1 },
+  { country: "Greece", rate: 3.9 },
+  { country: "Ireland", rate: 2.7 },
+  { country: "Denmark", rate: 2.4 },
+  { country: "Finland", rate: 2.9 },
+  { country: "Austria", rate: 2.7 },
+  { country: "Belgium", rate: 2.9 },
+  { country: "Czechia", rate: 3.4 },
+  { country: "Hungary", rate: 4.4 },
+  { country: "Romania", rate: 5.6 },
+  { country: "Bulgaria", rate: 5.9 },
+  { country: "Mexico", rate: 12.4 },
+  { country: "Brazil", rate: 14.2 },
+  { country: "Argentina", rate: 9.8 },
+  { country: "Chile", rate: 7.9 },
+  { country: "Colombia", rate: 13.1 },
+  { country: "Peru", rate: 11.6 },
+  { country: "China", rate: 6.3 },
+  { country: "India", rate: 26.6 },
+  { country: "Indonesia", rate: 21 },
+  { country: "Vietnam", rate: 19.8 },
+  { country: "Thailand", rate: 8.1 },
+  { country: "Malaysia", rate: 7.4 },
+  { country: "Philippines", rate: 24.3 },
+  { country: "Pakistan", rate: 55.8 },
+  { country: "Bangladesh", rate: 28.9 },
+  { country: "Turkey", rate: 9.1 },
+  { country: "Iran", rate: 12 },
+  { country: "Egypt", rate: 19.2 },
+  { country: "South Africa", rate: 33.5 },
+  { country: "Kenya", rate: 37.2 },
+  { country: "Ghana", rate: 42.1 },
+  { country: "Ethiopia", rate: 46.8 },
+  { country: "Tanzania", rate: 44.3 },
+  { country: "Uganda", rate: 41 },
+  { country: "Nigeria", rate: 107.2 },
+  { country: "Niger", rate: 115.2 },
+  { country: "Chad", rate: 101.1 },
+  { country: "Mali", rate: 94 },
+  { country: "Somalia", rate: 106.1 },
+  { country: "Sierra Leone", rate: 100.8 },
+  { country: "DR Congo", rate: 76 },
+  { country: "Angola", rate: 66.5 },
+  { country: "Mozambique", rate: 67.2 },
+  { country: "Cameroon", rate: 69.8 },
+  { country: "Senegal", rate: 37.4 },
+  { country: "Rwanda", rate: 38.3 },
+  { country: "Zambia", rate: 56.2 },
+  { country: "Sudan", rate: 52.9 },
+  { country: "Afghanistan", rate: 55.5 },
+  { country: "Yemen", rate: 39.9 },
+  { country: "Haiti", rate: 56.3 },
+  { country: "Bolivia", rate: 23.7 },
+  { country: "Guatemala", rate: 22.1 },
+  { country: "Nepal", rate: 26.2 },
+  { country: "Myanmar", rate: 40.1 },
+  { country: "Cambodia", rate: 23.6 },
+  { country: "Morocco", rate: 16.7 },
+  { country: "Algeria", rate: 21.5 },
+  { country: "Iraq", rate: 23.4 },
+  { country: "Ukraine", rate: 7.8 },
+  { country: "Russia", rate: 4.8 },
+  { country: "Kazakhstan", rate: 9.7 },
+  { country: "Uzbekistan", rate: 13.6 },
+  { country: "Sri Lanka", rate: 6.4 },
+];
+
+export function BeeswarmChartDemo() {
+  return (
+    <BeeswarmChart
+      data={data}
+      value="rate"
+      label="country"
+      highlight={["Nigeria", "India", "United States"]}
+      title="Nigeria had 107.2 under-five deaths per 1,000 live births in 2022"
+      subtitle="Deaths before age five per 1,000 live births, 84 countries, 2022"
+      source="UN IGME (rounded)"
+      note="Figures are approximate, for illustration"
+    />
+  );
+}

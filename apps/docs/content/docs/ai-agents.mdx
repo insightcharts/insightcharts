@@ -1,0 +1,124 @@
+---
+title: For AI agents
+description: The files InsightCharts publishes for AI agents. They are llms.txt, a Markdown page per component, a JSON Schema, an installable skill and a shadcn registry.
+---
+
+Agents should read the generated Markdown files instead of this site. The Markdown has the same content without the page layout. It is rebuilt from component metadata on every release.
+
+## Files for agents
+
+Every URL below is a static file on this site, regenerated from the library source.
+
+| Resource | URL | Use it for |
+|---|---|---|
+| Index | [`/llms.txt`](/llms.txt) | A list of every guide and component, with one line each. Start here. |
+| Everything | [`/llms-full.txt`](/llms-full.txt) | All guides and all component pages in one file, for large context windows. |
+| One component | `/llms/<name>.md`, e.g. [`/llms/bar-chart.md`](/llms/bar-chart.md), [`/llms/stat-row.md`](/llms/stat-row.md), [`/llms/executive-brief.md`](/llms/executive-brief.md), [`/llms/count-poster.md`](/llms/count-poster.md) | Description, when to use and avoid, install, props, example JSX and JSON. One per atom, molecule and template, including every infographic and poster primitive. |
+| One guide | `/llms/guides/<name>.md` | Task-oriented guides written for agents; listed below. |
+| Spec schema | [`/schema/insight-spec.json`](/schema/insight-spec.json) | JSON Schema for a spec. Use it as a structured-output or tool schema. |
+| Manifest | [`/schema/manifest.json`](/schema/manifest.json) | Every component's metadata as data: name, level, props, example, what it composes. |
+| Registry index | [`/r/registry.json`](/r/registry.json) | The shadcn registry: every installable item. |
+| One registry item | `/r/<name>.json`, e.g. [`/r/bar-chart.json`](/r/bar-chart.json) | The source of one component, as the shadcn CLI installs it. `/r/<name>-demo.json` is the same component with an example. |
+| Skill | [`/r/agent-skill.json`](/r/agent-skill.json) | The agent skill as a registry item; see [the skill](#the-skill). |
+
+The agent guides:
+
+| Guide | URL |
+|---|---|
+| Quickstart | [`/llms/guides/quickstart.md`](/llms/guides/quickstart.md) |
+| Choosing a form | [`/llms/guides/choosing-a-form.md`](/llms/guides/choosing-a-form.md) |
+| Common chart props | [`/llms/guides/common-props.md`](/llms/guides/common-props.md) |
+| Data | [`/llms/guides/data.md`](/llms/guides/data.md) |
+| Theming and dark mode | [`/llms/guides/theming.md`](/llms/guides/theming.md) |
+| Crossfiltering | [`/llms/guides/crossfiltering.md`](/llms/guides/crossfiltering.md) |
+| Stories | [`/llms/guides/stories.md`](/llms/guides/stories.md) |
+| Infographics | [`/llms/guides/infographics.md`](/llms/guides/infographics.md) |
+| Export | [`/llms/guides/export.md`](/llms/guides/export.md) |
+| The JSON spec | [`/llms/guides/json-spec.md`](/llms/guides/json-spec.md) |
+| Recipes | [`/llms/guides/recipes.md`](/llms/guides/recipes.md) |
+
+Every component page on this site has a **Copy as Markdown** button, which copies that component's `/llms/<name>.md`, and a menu to view the file or open it in ChatGPT or Claude. Each page also declares it as a `text/markdown` alternate in its `<head>`.
+
+## Component metadata
+
+Each component carries a `meta` object, and everything above is generated from it.
+
+```ts
+BarChart.meta = {
+  name: "bar-chart",              // the spec type and registry id
+  component: "BarChart",          // the React export
+  level: "atom",                  // atom | molecule | template
+  category: "comparison",         // "poster" marks a poster primitive, "infographic" an infographic template
+  description: "Compares a value across categories with bars from a zero baseline.",
+  whenToUse: "Ranking or comparing up to about 20 categories ...",
+  avoid: "Change over many time points (use line-chart) ...",
+  props: [{ name: "x", type: "string", required: true, description: "Category field." }],
+  composes: [],                   // what it is built from
+  example: { type: "bar-chart", data: [...], x: "country", y: "share" },
+};
+```
+
+An agent chooses a chart form from `whenToUse` and `avoid`. `avoid` names the component to use instead. At runtime, `listComponents()` returns the metadata of everything registered.
+
+## The JSON spec
+
+An agent that does not write JSX can produce a [JSON spec](/docs/json-spec), which your application renders with `Insight`. With the schema as the output format, the model can only name components and props that exist.
+
+```tsx
+import { Insight } from "insightcharts";
+
+<Insight spec={specFromModel} />
+```
+
+Specs nest, so one document can be a whole page: a [template](/docs/templates) whose slots hold chart specs. A template spec is a good thing to ask a model for, because the template has already fixed the layout of the page.
+
+One document can also be a whole poster. An [infographic](/docs/infographics) spec names an infographic template, a poster theme and a compact config for each region. The agent guide [`/llms/guides/infographics.md`](/llms/guides/infographics.md) says when to choose a poster over a report-style template and how to write the spec.
+
+```json
+{
+  "type": "count-poster",
+  "theme": "noir",
+  "title": "Norland's schools taught 1.84 million pupils in 2025",
+  "unit": 1000,
+  "unitLabel": "1,000 people",
+  "hero": { "data": [{ "stage": "Primary", "pupils": 820000 }, { "stage": "Lower secondary", "pupils": 480000 }], "name": "stage", "value": "pupils" },
+  "sources": "Norland Ministry of Education, school census 2025"
+}
+```
+
+## The skill
+
+The repository ships an agent skill at `skills/insightcharts`: a `SKILL.md` workflow for building a figure from data, the rules for writing titles, a decision table for choosing a form, and four reference files beside it (`references/components.md`, `data.md`, `story-design.md` and `recipes.md`) that are regenerated with the other files on this page.
+
+It is published as two registry items, which differ only in where the files land:
+
+```bash
+npx shadcn@latest add @insightcharts/agent-skill          # .claude/skills/insightcharts in the project
+npx shadcn@latest add @insightcharts/agent-skill-agents   # .agents/skills/insightcharts in the project
+```
+
+Or copy the `skills/insightcharts` folder from the repository into your agent's skills directory.
+
+## The shadcn registry and MCP
+
+Components are published as a shadcn registry under the `@insightcharts` namespace. Once the namespace is in `components.json` (see [installation](/docs/installation#shadcn-registry)), an agent can add a component with one command:
+
+```bash
+npx shadcn@latest add @insightcharts/line-chart
+```
+
+The shadcn MCP server reads the same `registries` entry, so an assistant connected to it can search, inspect and install InsightCharts components by asking in plain language. Set it up once in your project:
+
+```bash
+npx shadcn@latest mcp init
+```
+
+Then ask for, say, "the InsightCharts component for comparing two values per category", and the assistant can find `dumbbell-chart` in the registry and install it.
+
+## Prompting tips
+
+- Give the model the data and say which fact the chart should show. A model that knows the fact picks a better form and highlight.
+- Tell the model to write each title as one plain statement with the number and the period from the data, such as "Monthly churn fell from 4.2% to 2.1% in 2024". The skill and the [choosing a form](/llms/guides/choosing-a-form.md) guide contain the full writing rules with examples.
+- Ask for a spec, then validate it against the schema before rendering.
+- For a poster, name the infographic template and the poster theme in the prompt. Icon props take only the names on the [icons](/docs/icons) page or a `path://` string.
+- For a new component or a non-trivial edit, point a coding agent at `AGENTS.md` in the repository. It is the contributor guide.

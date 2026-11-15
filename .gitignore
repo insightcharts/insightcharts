@@ -1,0 +1,11 @@
+node_modules
+dist
+.next
+.turbo
+.source
+*.tsbuildinfo
+.DS_Store
+.env*
+apps/docs/public/r
+apps/docs/src/generated
+apps/docs/.source

@@ -1,0 +1,70 @@
+---
+title: Installation
+description: Install the npm package, or copy component source into your project with the shadcn CLI.
+---
+
+## npm package
+
+Install the library and ECharts.
+
+<Install only="package" />
+
+`react` and `react-dom` (18 or later) and `echarts` (6 or later) are peer dependencies. There is no stylesheet to import and no Tailwind setup: the small amount of CSS the figure chrome needs is injected once at runtime.
+
+```tsx
+import { BarChart } from "insightcharts";
+```
+
+The package has five entry points.
+
+| Import | Contents |
+|---|---|
+| `insightcharts` | Everything: components, `Insight` and `registerAll`, the engine, data helpers, `Scrolly`, the theme presets. |
+| `insightcharts/core` | The engine: `Chart`, `Figure`, `defineChart`, `InsightProvider`, `InsightData`, theme and export helpers, and the layout helpers `useContainerWidth`, `measureText`, `truncateText`, `wrapText` and `dodge`. |
+| `insightcharts/data` | `loadData`, `transformRows`, `parseCsv` and the other data helpers. Server-safe. |
+| `insightcharts/story` | `Scrolly`. |
+| `insightcharts/themes` | `themes`, `themeSurfaces`, `presetThemes`, each preset by name (`editorialTheme`, `ledgerTheme`, ...), `shadcnTheme`, `defaultTheme`, `createTheme`. |
+
+## shadcn registry
+
+To copy the component source into your project so you can edit it, use the shadcn CLI. The components are published under the `@insightcharts` namespace. Add the registry to `components.json` once:
+
+```json title="components.json"
+{
+  "registries": {
+    "@insightcharts": "https://insightcharts.dev/r/{name}.json"
+  }
+}
+```
+
+Then add components by name.
+
+<Install item="@insightcharts/bar-chart" only="cli" />
+
+The CLI copies the component file into your project and installs `insightcharts` and `echarts`, because the engine (data loading, theming, the figure chrome) still comes from the package. Every component page has the exact command for that component, and [the registry index](/r/registry.json) lists everything available.
+
+<Callout>
+The site URL in these examples is `https://insightcharts.dev`. If you self-host the docs, the registry lives at `/r/{name}.json` on your own origin.
+</Callout>
+
+## Next.js and server components
+
+The built `insightcharts`, `insightcharts/core`, `insightcharts/story` and `insightcharts/themes` modules start with `"use client"`, so you can import a chart into a server component and pass it serialisable props. `insightcharts/data` has no client directive and runs anywhere, including server components and plain Node.
+
+```tsx title="app/page.tsx"
+import { LineChart } from "insightcharts";
+import { loadData } from "insightcharts/data";
+
+export default async function Page() {
+  const rows = await loadData("https://example.com/energy.csv");
+  return <LineChart data={rows} x="year" y="solar" title="Solar generation by year" />;
+}
+```
+
+Function props (`onSelect`, `onEvents`, `onReady`, a function `option`, `format`, `transform` or `data`) cannot cross the server/client boundary. Put the chart in a file that starts with `"use client"` when you need them.
+
+## Requirements
+
+- React 18 or later.
+- ECharts 6 or later.
+- Any bundler that understands ES modules. The package is ESM only.
