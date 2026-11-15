@@ -5,13 +5,13 @@ import { PosterThumb } from "@/components/catalog/poster-thumb";
 import { DocsPage } from "@/components/site/docs-shell";
 import { Heading } from "@/components/site/heading";
 import { builtFrom, getComponent, hrefOf, infographics, INFOGRAPHICS, isPosterPrimitive, pageTemplates, posterPrimitives, type CatalogEntry } from "@/lib/catalog";
+import { infographicsCard, social } from "@/lib/og";
 import { posterGround, posterWidth } from "@/lib/posters";
 
 export const metadata: Metadata = {
   title: INFOGRAPHICS.title,
   description: INFOGRAPHICS.summary,
-  alternates: { canonical: `/${INFOGRAPHICS.slug}` },
-  openGraph: { title: `${INFOGRAPHICS.title} - InsightCharts`, description: INFOGRAPHICS.summary, url: `/${INFOGRAPHICS.slug}` },
+  ...social({ path: `/${INFOGRAPHICS.slug}`, title: INFOGRAPHICS.title, description: INFOGRAPHICS.summary, type: "website", card: infographicsCard(), alt: "Four of the infographic posters in the catalogue." }),
 };
 
 const link = "font-medium text-foreground underline decoration-border underline-offset-4 hover:decoration-foreground";

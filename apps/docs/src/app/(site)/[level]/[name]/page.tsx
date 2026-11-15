@@ -15,6 +15,7 @@ import { Pager } from "@/components/site/pager";
 import type { TocItem } from "@/components/site/toc";
 import { Composition, compositionToc } from "@/components/catalog/composition";
 import { byLevel, categoryTitle, commonProps, components, getComponent, hrefOf, infographics, INFOGRAPHICS, isInfographic, isPoster, levelBySlug, levelInfo, LEVELS, neighbours, sectionOf, type CatalogEntry } from "@/lib/catalog";
+import { componentCard, social } from "@/lib/og";
 import { abs, site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -33,7 +34,8 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const c = await resolve(params);
   if (!c) return {};
   const title = `${c.title} (${sectionOf(c).singular.toLowerCase()})`;
-  return { title, description: c.description, alternates: { canonical: hrefOf(c), types: { "text/markdown": `/llms/${c.name}.md` } }, openGraph: { title: `${c.title} - InsightCharts`, description: c.description, url: hrefOf(c), type: "article" } };
+  const tags = social({ path: hrefOf(c), title: c.title, description: c.description, type: "article", card: componentCard(c), alt: `The ${c.title} ${sectionOf(c).singular.toLowerCase()}, drawn from its main example.` });
+  return { title, description: c.description, ...tags, alternates: { ...tags.alternates, types: { "text/markdown": `/llms/${c.name}.md` } } };
 }
 
 const slug = (s: string) =>

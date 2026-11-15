@@ -1,4 +1,5 @@
 import { ArrowRight, Braces, FileText, Package, Sparkles } from "lucide-react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ComponentCard } from "@/components/catalog/component-card";
 import { PosterThumb } from "@/components/catalog/poster-thumb";
@@ -8,8 +9,18 @@ import { Section } from "@/components/landing/section";
 import { BareDemo, Demo } from "@/components/mdx/demo";
 import { CopyButton } from "@/components/site/copy-button";
 import { byLevel, components, hrefOf, infographics, INFOGRAPHICS, LEVELS, pageTemplates, type CatalogEntry } from "@/lib/catalog";
+import { homeCard, social } from "@/lib/og";
 import { groundOfTheme, posterGround, posterWidth } from "@/lib/posters";
+import { site } from "@/lib/site";
 import { STORIES } from "@/lib/stories";
+
+const title = `${site.name}: ${site.tagline}`;
+
+export const metadata: Metadata = {
+  title: { absolute: title },
+  description: site.description,
+  ...social({ path: "/", title, description: site.description, type: "website", card: homeCard(), alt: `${site.name}: the graphic at the top of the landing page.` }),
+};
 
 const INSTALL = "npm i insightcharts echarts";
 

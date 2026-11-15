@@ -247,3 +247,13 @@
 .docs-table td:first-child code {
   @apply bg-transparent p-0 font-medium text-foreground;
 }
+
+/* The landing hero: the bar on the active theme pill fills while that theme is on show. */
+@keyframes hero-pill-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}

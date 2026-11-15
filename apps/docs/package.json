@@ -9,6 +9,7 @@
     "prebuild": "tsx scripts/generate.ts",
     "build": "next build",
     "start": "next start --port 3100",
+    "og": "node scripts/og-capture.mjs",
     "typecheck": "tsx scripts/generate.ts && fumadocs-mdx && tsc --noEmit"
   },
   "dependencies": {

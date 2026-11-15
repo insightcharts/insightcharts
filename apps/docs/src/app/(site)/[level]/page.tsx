@@ -5,6 +5,7 @@ import { ComponentCard } from "@/components/catalog/component-card";
 import { DocsPage } from "@/components/site/docs-shell";
 import { Heading } from "@/components/site/heading";
 import { ArrowRight } from "lucide-react";
+import { levelCard, social } from "@/lib/og";
 import { byLevel, groupByCategory, infographics, INFOGRAPHICS, isInfographic, levelBySlug, LEVELS, POSTER } from "@/lib/catalog";
 
 // A line under a group heading, where the group needs one.
@@ -19,7 +20,7 @@ export const generateStaticParams = () => LEVELS.map((l) => ({ level: l.slug }))
 export async function generateMetadata({ params }: { params: Promise<{ level: string }> }): Promise<Metadata> {
   const info = levelBySlug((await params).level);
   if (!info) return {};
-  return { title: info.title, description: info.summary, alternates: { canonical: `/${info.slug}` }, openGraph: { title: `${info.title} - InsightCharts`, description: info.summary, url: `/${info.slug}` } };
+  return { title: info.title, description: info.summary, ...social({ path: `/${info.slug}`, title: info.title, description: info.summary, type: "website", card: levelCard(info.level), alt: `Four of the ${info.title.toLowerCase()} in the catalogue.` }) };
 }
 
 export default async function LevelIndex({ params }: { params: Promise<{ level: string }> }) {

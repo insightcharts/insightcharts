@@ -3,6 +3,7 @@ import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { ReactNode } from "react";
 import { Providers } from "@/components/site/providers";
+import { homeCard, social } from "@/lib/og";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -12,9 +13,8 @@ export const metadata: Metadata = {
   description: site.description,
   applicationName: site.name,
   keywords: ["charts", "infographics", "data storytelling", "React", "ECharts", "scrollytelling", "shadcn", "AI agents"],
-  openGraph: { type: "website", siteName: site.name, url: site.url, title: `${site.name}: ${site.tagline}`, description: site.description },
-  twitter: { card: "summary_large_image", title: `${site.name}: ${site.tagline}`, description: site.description },
-  alternates: { canonical: "/" },
+  // The landing page's tags. Every other page sets its own with `social`; a page that sets none shares these.
+  ...social({ path: "/", title: `${site.name}: ${site.tagline}`, description: site.description, type: "website", card: homeCard(), alt: `${site.name}: the graphic at the top of the landing page.` }),
 };
 
 export const viewport: Viewport = {

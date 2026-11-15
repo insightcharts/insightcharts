@@ -1,3 +1,5 @@
+<img src="apps/docs/public/logo.svg" width="72" height="72" alt="The InsightCharts logo: a red-orange circle with a lower-case i cut into it.">
+
 # InsightCharts
 
 InsightCharts is an open-source React library of charts, figures, page layouts and infographic posters built on Apache ECharts 6. It has 100 components: 61 atoms, 19 molecules and 20 templates. 10 of the templates are infographics.

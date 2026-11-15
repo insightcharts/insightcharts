@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BareDemo } from "@/components/mdx/demo";
+import { social, storiesCard } from "@/lib/og";
 import { STORIES } from "@/lib/stories";
 
 const description = `${STORIES.length} scroll stories built with Scrolly. Each one pins a chart and changes one prop at every step, in a different theme and chart form.`;
@@ -8,8 +9,7 @@ const description = `${STORIES.length} scroll stories built with Scrolly. Each o
 export const metadata: Metadata = {
   title: "Scroll stories",
   description,
-  alternates: { canonical: "/stories" },
-  openGraph: { title: "Scroll stories - InsightCharts", description, url: "/stories" },
+  ...social({ path: "/stories", title: "Scroll stories", description, type: "website", card: storiesCard(), alt: "Four of the scroll stories at their first step." }),
 };
 
 const link = "font-medium text-foreground underline decoration-border underline-offset-4 hover:decoration-foreground";

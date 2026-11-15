@@ -5,6 +5,8 @@ import { DocsPage } from "@/components/site/docs-shell";
 import { Pager } from "@/components/site/pager";
 import { byLevel } from "@/lib/catalog";
 import { getNav, guideOrder } from "@/lib/nav";
+import { guideCard, social } from "@/lib/og";
+import { site } from "@/lib/site";
 import { source } from "@/lib/source";
 
 export const dynamicParams = false;
@@ -15,7 +17,7 @@ type Params = Promise<{ slug?: string[] }>;
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const page = source.getPage((await params).slug);
   if (!page) return {};
-  return { title: page.data.title, description: page.data.description, alternates: { canonical: page.url }, openGraph: { title: `${page.data.title} - InsightCharts`, description: page.data.description, url: page.url, type: "article" } };
+  return { title: page.data.title, description: page.data.description, ...social({ path: page.url, title: page.data.title, description: page.data.description ?? site.description, type: "article", card: guideCard(page) }) };
 }
 
 const flatten = (node: unknown): string => (typeof node === "string" || typeof node === "number" ? String(node) : Array.isArray(node) ? node.map(flatten).join("") : node && typeof node === "object" && "props" in node ? flatten((node as { props: { children?: unknown } }).props.children) : "");
