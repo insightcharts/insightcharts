@@ -1,5 +1,6 @@
 import { byLevel, groupByCategory, hrefOf, infographics, INFOGRAPHICS, isInfographic, LEVELS } from "./catalog";
 import { source } from "./source";
+import { STORIES } from "./stories";
 
 export interface NavItem {
   title: string;
@@ -42,7 +43,9 @@ export function getNav(): NavGroup[] {
   });
   const posters = infographics();
   const set: NavGroup = { title: INFOGRAPHICS.title, href: `/${INFOGRAPHICS.slug}`, blocks: [{ items: posters.map((c) => ({ title: c.title, href: hrefOf(c) })) }], empty: posters.length ? undefined : "Coming soon" };
-  return [...guides, ...levels, set];
+  // Story entries are anchors on one page, so only the group heading can be the current page.
+  const stories: NavGroup = { title: "Stories", href: "/stories", blocks: [{ items: STORIES.map((s) => ({ title: s.title, href: `/stories#${s.id}` })) }] };
+  return [...guides, ...levels, set, stories];
 }
 
 /** Guide pages in reading order, for previous / next. */

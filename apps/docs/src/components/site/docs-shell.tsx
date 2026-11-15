@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { getNav } from "@/lib/nav";
 import { SidebarNav } from "./sidebar-nav";
+import { SidebarScroll } from "./sidebar-scroll";
 import { Toc, type TocItem } from "./toc";
 
 /** Sidebar + content frame shared by guides and the catalogue. */
@@ -8,9 +9,9 @@ export function DocsFrame({ children }: { children: ReactNode }) {
   return (
     <div className="container-page lg:grid lg:grid-cols-[232px_minmax(0,1fr)] lg:gap-10">
       <aside className="sticky top-14 hidden h-[calc(100dvh-3.5rem)] lg:block">
-        <div className="scroll-quiet -ml-2 h-full overflow-y-auto py-8 pr-3">
+        <SidebarScroll className="scroll-quiet -ml-2 h-full overflow-y-auto py-8 pr-3">
           <SidebarNav nav={getNav()} />
-        </div>
+        </SidebarScroll>
       </aside>
       <div className="min-w-0">{children}</div>
     </div>

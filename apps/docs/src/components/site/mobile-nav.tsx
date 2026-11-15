@@ -8,6 +8,7 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
 import type { NavGroup } from "@/lib/nav";
 import { Wordmark } from "./logo";
 import { SidebarNav } from "./sidebar-nav";
+import { SidebarScroll } from "./sidebar-scroll";
 
 export function MobileNav({ nav }: { nav: NavGroup[] }) {
   const [open, setOpen] = useState(false);
@@ -27,9 +28,10 @@ export function MobileNav({ nav }: { nav: NavGroup[] }) {
           </SheetTitle>
           <SheetDescription className="sr-only">Site navigation</SheetDescription>
         </SheetHeader>
-        <div className="scroll-quiet overflow-y-auto px-3 py-5">
+        {/* Mounted each time the drawer opens, so it always opens at the current page. */}
+        <SidebarScroll persist={false} className="scroll-quiet overflow-y-auto px-3 py-5">
           <SidebarNav nav={nav} onNavigate={() => setOpen(false)} />
-        </div>
+        </SidebarScroll>
       </SheetContent>
     </Sheet>
   );

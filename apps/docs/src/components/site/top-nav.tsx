@@ -14,7 +14,7 @@ export function TopNav({ items }: { items: NavItem[] }) {
         const claimed = items.some((other) => other.paths?.includes(pathname));
         const active = claimed ? !!item.paths?.includes(pathname) : pathname === item.href || pathname.startsWith(`${item.href}/`);
         return (
-          <Link key={item.href} href={item.href} aria-current={active ? "page" : undefined} className={cn("rounded-md px-2.5 py-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none", active && "text-foreground")}>
+          <Link key={item.href} href={item.href} aria-current={active ? "page" : undefined} className={cn("rounded-md px-2.5 py-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none", active && "bg-accent font-medium text-foreground")}>
             {item.title}
           </Link>
         );

@@ -16,7 +16,7 @@ const link = "font-medium text-foreground underline decoration-border underline-
 
 export default function Stories() {
   return (
-    <main id="content" className="container-page pb-24">
+    <main id="content" className="min-w-0 pb-24">
       <header className="py-10 sm:py-14">
         <p className="mb-3 font-mono text-xs tracking-wide text-muted-foreground">{STORIES.length} examples</p>
         <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Scroll stories</h1>
