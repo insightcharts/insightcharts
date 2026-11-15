@@ -2,11 +2,11 @@
 // coding agent. Called by build-llms.ts.
 //
 // Writes:
-//   apps/docs/public/agents/index.md                         home (strategic)
-//   apps/docs/public/agents/docs.md, docs/<guide>.md         guides (operational)
+//   apps/docs/public/agents/index.md                         home
+//   apps/docs/public/agents/docs.md, docs/<guide>.md         guides
 //   apps/docs/public/agents/docs/agents.md, docs/agents/*.md the "For agents" pages
 //   apps/docs/public/agents/<level>.md, infographics.md, stories.md   index pages (selection)
-//   apps/docs/public/agents/<level>/<name>.md                components (tactical)
+//   apps/docs/public/agents/<level>/<name>.md                components
 //   apps/docs/public/agents/<level>/<name>/<example>.md      one example of a component
 //   apps/docs/public/agents/prompts/<id>.md                  the prompt library
 //   apps/docs/public/agents/index.json                       every prompt: path, title, kind
@@ -258,10 +258,10 @@ export async function buildAgentPrompts(input: AgentInput, out: Output): Promise
     ["Everything", "/llms-full.txt", "All guides and all component reference pages in one file."],
     ["One component reference", "/llms/<name>.md", "Description, when to use and avoid, install, props, example JSX and JSON for one component."],
     ["One guide", "/llms/guides/<slug>.md", `The long guides written for agents: ${helpers.guideSlugs.join(", ")}.`],
-    ["Home prompt", "/agents/index.md", "The strategic instructions: what the library is, how to choose a form, how to install, the working method."],
-    ["Guide prompt", "/agents/docs/<slug>.md", "Operational instructions for one guide: the steps, the API, an example, how to verify. The introduction is `/agents/docs.md`."],
+    ["Home prompt", "/agents/index.md", "What the library is, how to choose a form, how to install, the working method."],
+    ["Guide prompt", "/agents/docs/<slug>.md", "Instructions for one guide: the steps, the API, an example, how to verify. The introduction is `/agents/docs.md`."],
     ["Index prompt", "/agents/<index>.md", "How to choose among the components of one level, as a decision table. `<index>` is `atoms`, `molecules`, `templates`, `infographics` or `stories`."],
-    ["Component prompt", "/agents/<level>/<name>.md", "Tactical instructions for one component: install, import, props, data shape, JSX, JSON spec, rules, checklist. `<level>` is `atoms`, `molecules` or `templates`."],
+    ["Component prompt", "/agents/<level>/<name>.md", "Instructions for one component: install, import, props, data shape, JSX, JSON spec, rules, checklist. `<level>` is `atoms`, `molecules` or `templates`."],
     ["Example prompt", "/agents/<level>/<name>/<example>.md", "The component prompt with one example's exact code and theme."],
     ["Prompt library", "/agents/prompts/<id>.md", "Ready-to-copy prompts for common jobs."],
     ["Prompt list", "/agents/index.json", "Every prompt as JSON: path, title and kind."],

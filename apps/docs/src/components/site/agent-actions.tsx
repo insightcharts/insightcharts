@@ -1,9 +1,9 @@
 "use client";
 
-import { Bot, Check, ChevronDown, Copy, ExternalLink, FileText } from "lucide-react";
+import { Check, ChevronDown, Copy, ExternalLink, FileText } from "lucide-react";
 import { useEffect, useState } from "react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { LOGO_COLOR } from "@/lib/brand";
+import { AgentIcon } from "./agent-icon";
 import { cn } from "@/lib/utils";
 import { copyText } from "./copy-button";
 
@@ -77,7 +77,7 @@ export function AgentActions({ href, prefill, markdownHref, size = "default", me
         onClick={() => copy(href, "copied")}
         className={cn("inline-flex items-center gap-1.5 border border-input bg-background text-foreground transition-colors hover:bg-accent dark:bg-input/30 dark:hover:bg-input/50", height, size === "hero" ? "px-3.5" : size === "compact" ? "px-2" : "px-3", menu ? "rounded-l-md" : "rounded-md", ring)}
       >
-        {done ? <Check className="size-3.5" aria-hidden /> : <Bot className={size === "compact" ? "size-3.5" : "size-4"} style={{ color: LOGO_COLOR }} aria-hidden />}
+        {done ? <Check className="size-3.5" aria-hidden /> : <AgentIcon className={size === "compact" ? "size-3.5" : "size-4"} />}
         <span aria-live="polite" className="whitespace-nowrap">
           {label}
         </span>

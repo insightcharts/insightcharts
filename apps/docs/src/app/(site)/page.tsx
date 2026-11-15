@@ -4,17 +4,17 @@ import Link from "next/link";
 import { ComponentCard } from "@/components/catalog/component-card";
 import { PosterThumb } from "@/components/catalog/poster-thumb";
 import { Render } from "@/components/catalog/render";
-import { AgentLevels, type AgentLevel } from "@/components/landing/agent-levels";
-import { marked } from "marked";
 import { HeroStory } from "@/components/landing/hero-story";
 import { Section } from "@/components/landing/section";
 import { BareDemo, Demo } from "@/components/mdx/demo";
 import { AgentActions } from "@/components/site/agent-actions";
+import { AgentIcon } from "@/components/site/agent-icon";
 import { CopyButton } from "@/components/site/copy-button";
-import { agentPrompt, agentPromptText } from "@/lib/agent";
-import { byLevel, components, getComponent, hrefOf, infographics, INFOGRAPHICS, LEVELS, pageTemplates, type CatalogEntry } from "@/lib/catalog";
+import { agentPrompt } from "@/lib/agent";
+import { byLevel, components, hrefOf, infographics, INFOGRAPHICS, LEVELS, pageTemplates, type CatalogEntry } from "@/lib/catalog";
 import { homeCard, social } from "@/lib/og";
 import { groundOfTheme, posterGround, posterWidth } from "@/lib/posters";
+import { LOGO_COLOR } from "@/lib/brand";
 import { site } from "@/lib/site";
 import { STORIES } from "@/lib/stories";
 
@@ -80,15 +80,6 @@ function Links({ label, items }: { label: string; items: CatalogEntry[] }) {
 
 const button = "inline-flex h-9 items-center gap-1.5 rounded-md px-3.5 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none";
 
-/**
- * A prompt as HTML for the preview pane. The text is this site's own generated Markdown, so
- * it is rendered as written; tables get a wrapper so a wide one scrolls inside the pane.
- */
-function renderPrompt(markdown: string): string {
-  const html = marked.parse(markdown, { gfm: true, async: false }) as string;
-  return html.replace(/<table>/g, '<div class="md-table"><table>').replace(/<\/table>/g, "</table></div>").replace(/<a href="http/g, '<a target="_blank" rel="noreferrer" href="http');
-}
-
 export default function Home() {
   const counts = LEVELS.map((l) => byLevel(l.level).length);
   const picks = Object.fromEntries(LEVELS.map((l) => [l.level, featured(l.level, l.level === "template" ? 2 : 3)])) as Record<CatalogEntry["level"], CatalogEntry[]>;
@@ -96,16 +87,6 @@ export default function Home() {
   const posters = featuredPosters(3);
   const posterCount = infographics().length;
   const agent = agentPrompt("/");
-  // The same three prompts the buttons copy, shown in full: the home page, a guide and a component.
-  const tactical = getComponent("bar-chart") ?? byLevel("atom")[0];
-  const agentLevels: AgentLevel[] = [
-    { key: "strategic", label: "Strategic", page: "Home page", pageHref: "/", path: "/", summary: "What the library is, how to choose between an atom, a molecule, a template and a poster, how to install it and the order to work in." },
-    { key: "operational", label: "Operational", page: "Quickstart guide", pageHref: "/docs/quickstart", path: "/docs/quickstart", summary: "The steps and commands for one task, the props and functions it uses, a working example and how to check the result." },
-    { key: "tactical", label: "Tactical", page: tactical.title, pageHref: hrefOf(tactical), path: hrefOf(tactical), summary: "One component: the install command, the import, every prop, the data shape, the example as JSX and as JSON, the rules for the form and a checklist." },
-  ].map(({ path, ...level }) => {
-    const text = agentPromptText(path) ?? "";
-    return { ...level, ...agentPrompt(path), text, html: renderPrompt(text) };
-  });
   const agentLinks = [
     { icon: Braces, title: "JSON spec", body: "Every component can be written as { type, ...props } and rendered by the Insight component. A JSON Schema validates the spec.", href: "/docs/json-spec" },
     { icon: FileText, title: "llms.txt", body: "An index, a full-text file and a Markdown page per component. They are generated from the same metadata as this site.", href: "/llms.txt", external: true },
@@ -144,20 +125,35 @@ export default function Home() {
         </div>
       </section>
 
-      <Section
-        id="agent-instructions"
-        label="For agents"
-        title="Copy agent instructions from any page"
-        intro={
-          <>
-            <p>
-              Every page has a <strong className="font-medium text-foreground">Copy agent instructions</strong> button. It copies a prompt written to a coding agent for that page. Paste it into Claude Code, Cursor, Codex or another agent.
-            </p>
-          </>
-        }
-      >
-        <AgentLevels levels={agentLevels} />
-      </Section>
+      <section id="agent-instructions" aria-labelledby="agent-instructions-title" className="border-t">
+        <div className="container-page py-12 sm:py-16">
+          <Link
+            href="/docs/agents"
+            className="group relative block overflow-hidden rounded-2xl border bg-muted/30 px-6 py-8 transition-colors hover:border-foreground/25 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none sm:px-10 sm:py-10 dark:bg-muted/10"
+          >
+            {/* A wash of the logo's red in one corner. Decoration only. */}
+            <span aria-hidden className="pointer-events-none absolute -right-24 -top-32 size-[420px] rounded-full opacity-25 blur-3xl transition-opacity group-hover:opacity-40" style={{ background: LOGO_COLOR }} />
+            <span aria-hidden className="pointer-events-none absolute inset-0 opacity-[0.35] [background-image:radial-gradient(color-mix(in_oklch,var(--foreground)_14%,transparent)_1px,transparent_1px)] [background-size:18px_18px] [mask-image:linear-gradient(to_left,black,transparent_70%)]" />
+            <div className="relative flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-start gap-4 sm:gap-5">
+                <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border bg-background shadow-xs">
+                  <AgentIcon className="size-5" />
+                </span>
+                <div>
+                  <p className="mb-1.5 font-mono text-xs tracking-wide text-muted-foreground">For agents</p>
+                  <h2 id="agent-instructions-title" className="text-2xl font-semibold tracking-tight text-balance sm:text-[28px] sm:leading-9">
+                    Copy agent instructions from any page
+                  </h2>
+                  <p className="mt-2 max-w-[60ch] text-[15px] leading-7 text-muted-foreground">Every page has a button that copies a prompt for Claude Code, Cursor, Codex or another coding agent.</p>
+                </div>
+              </div>
+              <span className="inline-flex h-10 shrink-0 items-center gap-2 self-start rounded-md border bg-background px-4 text-sm font-medium shadow-xs transition-colors group-hover:bg-accent sm:self-center">
+                Read the agent docs <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
+              </span>
+            </div>
+          </Link>
+        </div>
+      </section>
 
       {posters.length ? (
         <Section
