@@ -143,3 +143,5 @@ To add or change a component, read [AGENTS.md](./AGENTS.md).
 ## License
 
 Apache-2.0. See [LICENSE](./LICENSE).
+
+Copyright © 2026 [Kyle Ledbetter](https://x.com/kyleledbetter).

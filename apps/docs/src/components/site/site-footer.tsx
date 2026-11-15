@@ -15,10 +15,18 @@ export function SiteFooter() {
   return (
     <footer className="border-t">
       <div className="container-page flex flex-col gap-4 py-8 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-        <p className="flex items-center gap-2">
-          <LogoMark className="size-4 text-foreground" />
-          InsightCharts. Apache 2.0 licensed. Built on Apache ECharts.
-        </p>
+        <div className="flex flex-col gap-1.5">
+          <p className="flex items-center gap-2">
+            <LogoMark className="size-4 text-foreground" />
+            InsightCharts. Apache 2.0 licensed. Built on Apache ECharts.
+          </p>
+          <p>
+            © {new Date().getFullYear()}{" "}
+            <a href="https://x.com/kyleledbetter" target="_blank" rel="noreferrer" className="font-medium text-foreground underline decoration-border underline-offset-4 transition-colors hover:decoration-foreground">
+              Kyle Ledbetter
+            </a>
+          </p>
+        </div>
         <nav aria-label="Footer" className="flex flex-wrap gap-x-5 gap-y-2">
           {links.map((l) =>
             l.external ? (

@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "description": "Composable, AI-native infographics and data stories for React, built on Apache ECharts.",
   "license": "Apache-2.0",
+  "author": {
+    "name": "Kyle Ledbetter",
+    "url": "https://x.com/kyleledbetter"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/insightcharts/insightcharts.git",

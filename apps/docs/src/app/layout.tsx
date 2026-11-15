@@ -12,6 +12,8 @@ export const metadata: Metadata = {
   title: { default: `${site.name}: ${site.tagline}`, template: "%s - InsightCharts" },
   description: site.description,
   applicationName: site.name,
+  authors: [{ name: "Kyle Ledbetter", url: "https://x.com/kyleledbetter" }],
+  creator: "Kyle Ledbetter",
   keywords: ["charts", "infographics", "data storytelling", "React", "ECharts", "scrollytelling", "shadcn", "AI agents"],
   // The landing page's tags. Every other page sets its own with `social`; a page that sets none shares these.
   ...social({ path: "/", title: `${site.name}: ${site.tagline}`, description: site.description, type: "website", card: homeCard(), alt: `${site.name}: the graphic at the top of the landing page.` }),

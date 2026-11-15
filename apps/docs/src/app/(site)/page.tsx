@@ -5,6 +5,7 @@ import { ComponentCard } from "@/components/catalog/component-card";
 import { PosterThumb } from "@/components/catalog/poster-thumb";
 import { Render } from "@/components/catalog/render";
 import { AgentLevels, type AgentLevel } from "@/components/landing/agent-levels";
+import { marked } from "marked";
 import { HeroStory } from "@/components/landing/hero-story";
 import { Section } from "@/components/landing/section";
 import { BareDemo, Demo } from "@/components/mdx/demo";
@@ -79,6 +80,15 @@ function Links({ label, items }: { label: string; items: CatalogEntry[] }) {
 
 const button = "inline-flex h-9 items-center gap-1.5 rounded-md px-3.5 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none";
 
+/**
+ * A prompt as HTML for the preview pane. The text is this site's own generated Markdown, so
+ * it is rendered as written; tables get a wrapper so a wide one scrolls inside the pane.
+ */
+function renderPrompt(markdown: string): string {
+  const html = marked.parse(markdown, { gfm: true, async: false }) as string;
+  return html.replace(/<table>/g, '<div class="md-table"><table>').replace(/<\/table>/g, "</table></div>").replace(/<a href="http/g, '<a target="_blank" rel="noreferrer" href="http');
+}
+
 export default function Home() {
   const counts = LEVELS.map((l) => byLevel(l.level).length);
   const picks = Object.fromEntries(LEVELS.map((l) => [l.level, featured(l.level, l.level === "template" ? 2 : 3)])) as Record<CatalogEntry["level"], CatalogEntry[]>;
@@ -92,7 +102,10 @@ export default function Home() {
     { key: "strategic", label: "Strategic", page: "Home page", pageHref: "/", path: "/", summary: "What the library is, how to choose between an atom, a molecule, a template and a poster, how to install it and the order to work in." },
     { key: "operational", label: "Operational", page: "Quickstart guide", pageHref: "/docs/quickstart", path: "/docs/quickstart", summary: "The steps and commands for one task, the props and functions it uses, a working example and how to check the result." },
     { key: "tactical", label: "Tactical", page: tactical.title, pageHref: hrefOf(tactical), path: hrefOf(tactical), summary: "One component: the install command, the import, every prop, the data shape, the example as JSX and as JSON, the rules for the form and a checklist." },
-  ].map(({ path, ...level }) => ({ ...level, ...agentPrompt(path), text: agentPromptText(path) ?? "" }));
+  ].map(({ path, ...level }) => {
+    const text = agentPromptText(path) ?? "";
+    return { ...level, ...agentPrompt(path), text, html: renderPrompt(text) };
+  });
   const agentLinks = [
     { icon: Braces, title: "JSON spec", body: "Every component can be written as { type, ...props } and rendered by the Insight component. A JSON Schema validates the spec.", href: "/docs/json-spec" },
     { icon: FileText, title: "llms.txt", body: "An index, a full-text file and a Markdown page per component. They are generated from the same metadata as this site.", href: "/llms.txt", external: true },
@@ -124,9 +137,6 @@ export default function Home() {
                 Browse {components.length} components
               </Link>
             </div>
-            <p className="mt-3 max-w-[52ch] text-[13px] leading-5 text-muted-foreground">
-              The button copies a prompt that tells Claude Code, Cursor, Codex or another coding agent how to choose a component, install the library and build a chart. <Link href="/docs/agents" className="font-medium text-foreground underline decoration-border underline-offset-4 hover:decoration-foreground">Getting started for agents</Link>.
-            </p>
           </div>
         </div>
         <div className="mt-9 sm:mt-11">
@@ -142,9 +152,6 @@ export default function Home() {
           <>
             <p>
               Every page has a <strong className="font-medium text-foreground">Copy agent instructions</strong> button. It copies a prompt written to a coding agent for that page. Paste it into Claude Code, Cursor, Codex or another agent.
-            </p>
-            <p>
-              The prompt for the home page covers how to choose a form and the order to work in. A guide&apos;s prompt has the steps and the API for one task. A component&apos;s prompt has the props, a working example and a checklist. Each example on a component page has a button for that exact example. <Link href="/docs/agents/setup">Set up your agent</Link>, or open the <Link href="/docs/agents/prompts">prompt library</Link>.
             </p>
           </>
         }

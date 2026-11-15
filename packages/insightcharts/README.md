@@ -108,4 +108,4 @@ The component manifest ships in the package. The documentation site publishes `l
 
 ## License
 
-Apache-2.0
+Apache-2.0. Copyright © 2026 [Kyle Ledbetter](https://x.com/kyleledbetter).
