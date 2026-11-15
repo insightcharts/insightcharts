@@ -73,6 +73,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `size` | `number` |  | Glyph height in px; shrinks to fit narrow containers. |
 | `tone` | `"accent" \| "positive" \| "negative" \| "neutral"` | `"accent"` | Fill colour by meaning. |
 | `align` | `"left" \| "center"` | `"left"` | Alignment. |
+| `frame` | `boolean` |  | Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off. |
 
 ## Composition
 
@@ -86,7 +87,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 ```tsx
 import { IconStat } from "insightcharts";
 
-<IconStat count={3} total={10} text="new cars sold in Europe in 2024 had a plug." />
+<IconStat theme="forest" count={3} total={10} text="new cars sold in Europe in 2024 had a plug." />
 ```
 
 ### Grid of 100
@@ -95,6 +96,7 @@ import { IconStat } from "insightcharts";
 import { IconStat } from "insightcharts";
 
 <IconStat
+  theme="poster"
   count={37}
   total={100}
   icon="square"
@@ -110,6 +112,7 @@ import { IconStat } from "insightcharts";
 import { IconStat } from "insightcharts";
 
 <IconStat
+  theme="paper"
   icon="person"
   count={7}
   total={10}

@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { useInsightStyles } from "../core/figure";
 import { withMeta } from "../core/meta";
 import { useColorMode, type ModeInput } from "../core/mode";
-import { useInsightConfig, useTheme } from "../core/provider";
+import { frameStyle, useInsightConfig, useTheme } from "../core/provider";
 import { chromeVars, type ThemeInput } from "../core/theme";
 
 export interface ProseProps {
@@ -23,7 +23,10 @@ export interface ProseProps {
   /** `"muted"` for secondary narration such as method asides. */
   tone?: "default" | "muted";
   align?: "left" | "center";
+  /** A built-in theme name or a theme object. A named theme paints its own background behind the block. */
   theme?: ThemeInput;
+  /** Paint the named theme's background behind the block. Default: on for a named theme with its own surface. */
+  frame?: boolean;
   mode?: ModeInput;
   className?: string;
   style?: CSSProperties;
@@ -89,6 +92,7 @@ function ProseImpl({ text, children, size = "md", measure = 65, lead = false, to
         minWidth: 0,
         textWrap: "pretty",
         overflowWrap: "break-word",
+        ...frameStyle(rest.theme, mode, rest.frame),
         ...style,
       }}
     >
@@ -119,6 +123,7 @@ export const Prose = withMeta(ProseImpl, {
     { name: "lead", type: "boolean", default: "false", description: "Set the first paragraph a step larger." },
     { name: "tone", type: '"default" | "muted"', default: '"default"', description: "`muted` for secondary narration." },
     { name: "align", type: '"left" | "center"', default: '"left"', description: "Centres the block (text stays left-aligned)." },
+    { name: "frame", type: "boolean", description: "Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off." },
   ],
   example: {
     type: "prose",
@@ -128,11 +133,13 @@ export const Prose = withMeta(ProseImpl, {
 
 export const examples = {
   "Lead paragraph, large": {
+    theme: "editorial",
     size: "lg",
     lead: true,
     text: ["The typical household energy bill almost doubled between the winter of 2020 and the winter of 2022.", "Wholesale prices have fallen since then. Standing charges and network costs have not fallen. The average bill is still about a third higher than it was in 2020."],
   },
   "Muted aside, narrow measure": {
+    theme: "sunrise",
     size: "sm",
     tone: "muted",
     measure: 48,

@@ -126,7 +126,6 @@ const emitters = [
   { country: "Japan", total: 1.0, perCapita: 8.0, change: -0.19 },
   { country: "Germany", total: 0.6, perCapita: 7.1, change: -0.28 },
 ];
-
 export const ChartTabs = withMeta(ChartTabsImpl, {
   name: "chart-tabs",
   component: "ChartTabs",
@@ -150,11 +149,13 @@ export const ChartTabs = withMeta(ChartTabsImpl, {
     { name: "source", type: "string", description: 'Shown under the chart as "Source: ...".' },
     { name: "note", type: "string", description: "Method note or caveat." },
     { name: "children", type: "ReactNode", description: "Extra content under the chart." },
-    { name: "theme", type: "ThemeInput", description: "Theme override, passed on to the chart." },
+    { name: "theme", type: "ThemeInput", description: "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the chart. A named theme with its own surface paints that surface behind the component." },
+    { name: "frame", type: "boolean", description: "Paint the theme's surface behind the component. Default: on for a named theme with its own surface." },
     { name: "mode", type: '"auto" | "system" | "light" | "dark"', default: '"auto"', description: "Colour mode." },
   ],
   example: {
     type: "chart-tabs",
+    theme: "mono",
     title: "CO2 emissions of six large emitters, 2023",
     tabsPosition: "below",
     chart: { type: "bar-chart", data: emitters, x: "country", y: "total", sort: "desc", orientation: "horizontal", height: 280, highlight: "China", format: "{value} Gt", subtitle: "CO2 emissions from fossil fuels, billion tonnes, 2023" },

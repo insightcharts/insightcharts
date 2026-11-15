@@ -14,6 +14,7 @@ const data = [
 export function FanFlowDemo() {
   return (
     <FanFlow
+      theme="forest"
       data={data}
       name="use"
       value="litres"

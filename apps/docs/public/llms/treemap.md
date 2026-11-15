@@ -52,6 +52,7 @@ const data = [
 ];
 
 <Treemap
+  theme="paper"
   data={data}
   group="sector"
   name="source"
@@ -70,6 +71,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 
 ```json
 {
+  "theme": "paper",
   "type": "treemap",
   "data": [
     { "sector": "Energy", "source": "Electricity and heat", "gt": 15.8 },
@@ -127,7 +129,8 @@ Every chart also accepts these (shared by all charts; also at https://insightcha
 | `select` | `boolean \| string` | Make marks clickable to filter. Inside `<InsightData>` the selection filters every other chart. Pass a field name, or `true` to use the chart's category field. |
 | `onSelect` | `(values: string[], field: string) => void` | Called with the selected values whenever the selection changes. |
 | `option` | `EChartsOption \| ((option: EChartsOption, ctx: BuildContext) => EChartsOption)` | Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers. |
-| `theme` | `ThemeInput` | A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme. |
+| `theme` | `ThemeInput` | A built-in theme name (`"editorial"`, `"ledger"`, `"noir"`...), or a theme object. A named theme paints its own background behind the chart. |
+| `frame` | `boolean` | Paint the theme's background behind the chart. Default: on for a named theme with its own surface. |
 | `mode` | `ModeInput` | `"auto"` (default) follows the page, `"system"` follows the OS, or force `"light"` / `"dark"`. |
 | `renderer` | `RendererInput` | `"auto"` (default) uses SVG for light charts and canvas for heavy ones. |
 | `animate` | `boolean` | Set false to disable animation for this chart. Reduced-motion preferences are always respected. |
@@ -145,7 +148,7 @@ Every chart also accepts these (shared by all charts; also at https://insightcha
 ## Composition
 
 - Composes: nothing (it is a primitive)
-- Used by: [poster](https://insightcharts.dev/llms/poster.md), [atlas-poster](https://insightcharts.dev/llms/atlas-poster.md), [flow-poster](https://insightcharts.dev/llms/flow-poster.md), [ranking-poster](https://insightcharts.dev/llms/ranking-poster.md)
+- Used by: [poster](https://insightcharts.dev/llms/poster.md), [atlas-poster](https://insightcharts.dev/llms/atlas-poster.md), [explainer](https://insightcharts.dev/llms/explainer.md), [flow-poster](https://insightcharts.dev/llms/flow-poster.md), [ranking-poster](https://insightcharts.dev/llms/ranking-poster.md)
 
 ## More examples
 
@@ -197,6 +200,7 @@ const data = [
 ];
 
 <Treemap
+  theme="forest"
   data={data}
   group="area"
   name="programme"
@@ -207,6 +211,37 @@ const data = [
   subtitle="Public spending by area and programme, £ billion, 2023-24"
   source="HM Treasury Public Expenditure Statistical Analyses"
   note="Programme split is illustrative"
+/>
+```
+
+### Two levels, four groups
+
+```tsx
+import { Treemap } from "insightcharts";
+
+const data = [
+  { item: "Rent", area: "Housing", gbp: 1150 },
+  { item: "Energy", area: "Housing", gbp: 160 },
+  { item: "Water", area: "Housing", gbp: 45 },
+  { item: "Groceries", area: "Food", gbp: 420 },
+  { item: "Eating out", area: "Food", gbp: 140 },
+  { item: "Car", area: "Transport", gbp: 260 },
+  { item: "Bus and rail", area: "Transport", gbp: 70 },
+  { item: "Leisure", area: "Other", gbp: 190 },
+  // ... 1 more rows
+];
+
+<Treemap
+  theme="poster"
+  data={data}
+  name="item"
+  value="gbp"
+  group="area"
+  format="£{value}"
+  height={340}
+  title="Rent was £1,150 of a £2,500 monthly household budget"
+  subtitle="Monthly spending of one household by item, pounds"
+  note="Illustrative figures for an invented household."
 />
 ```
 

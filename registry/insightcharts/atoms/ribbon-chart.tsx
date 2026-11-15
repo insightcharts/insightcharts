@@ -51,6 +51,7 @@ export const RibbonChart = defineChart<RibbonChartProps>({
     { name: "colorBy", type: '"auto" | "series" | "none"', default: '"auto"', description: "`auto`: the largest entities take the theme's colours and any past the palette size (at most 8) are grey. `series`: every band gets its own colour, the extra ones derived from the theme's own. `none`: every band in the accent." },
   ],
   example: {
+    theme: "sunrise",
     type: "ribbon-chart",
     data: [
       { year: "2019", Potatoes: 7.4, Carrots: 5.1, Onions: 4.2, Beans: 2.6, Squash: 1.2 },

@@ -38,6 +38,7 @@ The file lands at `components/insightcharts/molecules/section.tsx`. `@insightcha
 import { BarChart, LineChart, Section } from "insightcharts";
 
 <Section
+  theme="ocean"
   step={2}
   total={4}
   title="First-quarter churn was 2.0% for customers who joined after March"
@@ -90,6 +91,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 ```json
 {
   "type": "section",
+  "theme": "ocean",
   "step": 2,
   "total": 4,
   "title": "First-quarter churn was 2.0% for customers who joined after March",
@@ -155,22 +157,24 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `id` | `string` |  | Anchor id for deep links. |
 | `spacing` | `"compact" \| "comfortable"` | `"comfortable"` | Vertical rhythm between heading, intro and body. |
 | `children` | `ReactNode` |  | JSX alternative to `body`; each child becomes a grid item. |
-| `theme` | `ThemeInput` |  | Theme override, passed on to everything inside. |
+| `theme` | `ThemeInput` |  | A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the component. |
+| `frame` | `boolean` |  | Paint the theme's surface behind the component. Default: on for a named theme with its own surface. |
 | `mode` | `"auto" \| "system" \| "light" \| "dark"` | `"auto"` | Colour mode. |
 
 ## Composition
 
-- Composes: [step-marker](https://insightcharts.dev/llms/step-marker.md), [headline](https://insightcharts.dev/llms/headline.md), [prose](https://insightcharts.dev/llms/prose.md), [line-chart](https://insightcharts.dev/llms/line-chart.md), [bar-chart](https://insightcharts.dev/llms/bar-chart.md), [stat-tile](https://insightcharts.dev/llms/stat-tile.md)
+- Composes: [step-marker](https://insightcharts.dev/llms/step-marker.md), [headline](https://insightcharts.dev/llms/headline.md), [prose](https://insightcharts.dev/llms/prose.md), [line-chart](https://insightcharts.dev/llms/line-chart.md), [bar-chart](https://insightcharts.dev/llms/bar-chart.md), [area-chart](https://insightcharts.dev/llms/area-chart.md), [stat-tile](https://insightcharts.dev/llms/stat-tile.md)
 - Used by: no molecule or template yet
 
 ## More examples
 
-### Unnumbered, one exhibit, with a rule
+### Unnumbered, one exhibit, with a rule and one accent overridden
 
 ```tsx
 import { LineChart, Section } from "insightcharts";
 
 <Section
+  theme={{ accent: "#0f766e" }}
   rule
   kicker="Retention"
   title="Monthly churn was between 2.1% and 2.4% from August to December 2024"
@@ -199,12 +203,13 @@ import { LineChart, Section } from "insightcharts";
 />
 ```
 
-### Three columns of figures
+### Three columns of figures, mono theme
 
 ```tsx
 import { Section, StatTile } from "insightcharts";
 
 <Section
+  theme="mono"
   title="Product metrics, December 2024"
   columns={3}
   spacing="compact"
@@ -230,6 +235,60 @@ import { Section, StatTile } from "insightcharts";
       context="Top quartile is 110%"
     />,
   ]}
+/>
+```
+
+### First step with two chart forms, sunrise theme
+
+```tsx
+import { AreaChart, BarChart, Section } from "insightcharts";
+
+<Section
+  theme="sunrise"
+  step={1}
+  total={3}
+  kicker="Cycling in Seville"
+  title="Bicycle trips rose from 0.5% to 6.0% of all trips between 2006 and 2011"
+  intro="Seville had 12 km of protected cycle lanes in 2006. It had 152 km in 2011. The city built **65 km** of them in 2007."
+  columns={2}
+  body={[
+    <AreaChart
+      data={[
+        { year: "2006", share: 0.5 },
+        { year: "2007", share: 1.9 },
+        { year: "2008", share: 3.2 },
+        { year: "2009", share: 4.6 },
+        { year: "2010", share: 5.6 },
+        { year: "2011", share: 6 },
+      ]}
+      x="year"
+      y="share"
+      format="{value}%"
+      height={240}
+      title="The bicycle share of trips was 6.0% in 2011"
+      subtitle="Share of all trips made by bicycle, Seville, 2006 to 2011"
+    />,
+    <BarChart
+      data={[
+        { year: "2006", km: 12 },
+        { year: "2007", km: 77 },
+        { year: "2008", km: 98 },
+        { year: "2009", km: 120 },
+        { year: "2010", km: 140 },
+        { year: "2011", km: 152 },
+      ]}
+      x="year"
+      y="km"
+      sort="none"
+      orientation="vertical"
+      format="{value} km"
+      highlight="2007"
+      height={240}
+      title="The network grew from 12 km to 77 km in 2007"
+      subtitle="Protected cycle lanes in Seville, km at year end, 2006 to 2011"
+    />,
+  ]}
+  outro="Figures are approximate, for illustration."
 />
 ```
 

@@ -71,6 +71,7 @@ export const ArrowChart = defineChart<ArrowChartProps>({
   ],
   example: {
     type: "arrow-chart",
+    theme: "editorial",
     data: [
       { group: "Under 30", y2019: 62, y2024: 71 },
       { group: "30 to 44", y2019: 58, y2024: 63 },
@@ -262,6 +263,7 @@ export const examples = {
     note: "Figures are approximate, for illustration",
   },
   "Long format": {
+    theme: "forest",
     data: [
       { party: "Greens", election: "2019", value: 20.5 },
       { party: "Greens", election: "2024", value: 11.9 },
@@ -288,6 +290,7 @@ export const examples = {
     note: "Figures are approximate, for illustration",
   },
   "Stress: 24 rows on a value axis": {
+    theme: "mono",
     data: [
       ["Northumberland and Durham coalfield towns", 31, 48], ["Greater Manchester", 44, 52], ["West Midlands conurbation", 41, 47], ["Merseyside", 47, 50], ["South Yorkshire", 36, 49], ["West Yorkshire", 42, 48],
       ["Tyne and Wear", 45, 51], ["Inner London", 58, 49], ["Outer London", 49, 46], ["Kent and Medway", 28, 39], ["Essex", 25, 41], ["Surrey and Sussex", 22, 27],

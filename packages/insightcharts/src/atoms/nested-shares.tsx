@@ -1,5 +1,5 @@
 import { CustomChart } from "echarts/charts";
-import { alpha, inkOn } from "../core/color";
+import { alpha, inkOn, luminance } from "../core/color";
 import { defineChart } from "../core/define";
 import { makeFormatter, type Formatter } from "../core/format";
 import { dodge, measureText, truncateText } from "../core/layout";
@@ -125,6 +125,7 @@ export const NestedShares = defineChart<NestedSharesProps>({
   ],
   example: {
     type: "nested-shares",
+    theme: "ocean",
     data: [
       { year: "2005", share: 4 },
       { year: "2010", share: 7 },
@@ -144,6 +145,8 @@ export const NestedShares = defineChart<NestedSharesProps>({
   },
   build(p, ctx) {
     const t = ctx.tokens;
+    // Judged by the surface, not the page mode: a poster theme paints a dark ground on a light page.
+    const onDark = /^(#|rgb)/.test(t.surface) ? luminance(t.surface) < 0.2 : ctx.mode === "dark";
     const { items, total, last } = prepare(p, ctx.rows, ctx.fmt);
     const fonts: Seen = { font: t.fontFamily, display: t.displayFamily };
     const L = layoutShares(p, items, ctx.width, fonts);
@@ -164,7 +167,7 @@ export const NestedShares = defineChart<NestedSharesProps>({
       scaleX: k,
       scaleY: k,
       children: [
-        { type: "rect", shape: { x: 0, y: 0, width: S, height: S, r: R }, style: { fill: alpha(t.ink, ctx.mode === "dark" ? 0.12 : 0.07) } },
+        { type: "rect", shape: { x: 0, y: 0, width: S, height: S, r: R }, style: { fill: alpha(t.ink, onDark ? 0.12 : 0.07) } },
         ...(p.wholeLabel ? [{ type: "text", x: 1, y: S + 10, style: { text: truncateText(`${p.wholeLabel} = ${pct(1)}`, S, 12, t.fontFamily), fill: t.muted, fontSize: 12, fontFamily: t.fontFamily, verticalAlign: "top" } }] : []),
       ],
     });
@@ -254,6 +257,7 @@ export const examples = {
     note: "Invented figures for a fictional county",
   },
   "By category, one highlighted": {
+    theme: "magenta",
     data: [
       { group: "Aged 16 to 24", share: 71 },
       { group: "Aged 25 to 44", share: 58 },
@@ -271,6 +275,7 @@ export const examples = {
     note: "Invented survey figures",
   },
   "Stress: eight close shares, long names": {
+    theme: "paper",
     data: [
       { item: "First quarter of 2024", share: 2.1 },
       { item: "Second quarter of 2024", share: 2.4 },

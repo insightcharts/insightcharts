@@ -14,6 +14,7 @@ const data = [
 export function ChoroplethMapDemo() {
   return (
     <ChoroplethMap
+      theme="earth"
       geo={{
         type: "FeatureCollection",
         features: [

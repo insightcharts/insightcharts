@@ -10,6 +10,7 @@ const data = [
 export function ArrowChartDemo() {
   return (
     <ArrowChart
+      theme="editorial"
       data={data}
       category="group"
       from="y2019"

@@ -38,6 +38,7 @@ The file lands at `components/insightcharts/atoms/data-table.tsx`. `@insightchar
 import { DataTable } from "insightcharts";
 
 <DataTable
+  theme="editorial"
   caption="Wind and solar supplied 67% of Denmark's electricity in 2024"
   subtitle="Electricity generation by country, 2024"
   source="Ember (illustrative figures)"
@@ -72,6 +73,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 ```json
 {
   "type": "data-table",
+  "theme": "editorial",
   "caption": "Wind and solar supplied 67% of Denmark's electricity in 2024",
   "subtitle": "Electricity generation by country, 2024",
   "source": "Ember (illustrative figures)",
@@ -120,6 +122,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `sortable` | `boolean` | `true` | Click or press Enter on a header to sort; a third press restores the original order. |
 | `maxHeight` | `number \| string` |  | Height before the body scrolls under the sticky header. |
 | `density` | `"comfortable" \| "compact"` | `"comfortable"` | Row padding. |
+| `frame` | `boolean` |  | Paint a named theme's background behind the table, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off. |
 
 ## Composition
 
@@ -169,6 +172,7 @@ import { DataTable } from "insightcharts";
 import { DataTable } from "insightcharts";
 
 <DataTable
+  theme="ledger"
   sortable={false}
   rows={[
     { Plan: "Starter", Seats: 5, "Price per seat": "$8", "Annual discount": "None" },
@@ -184,6 +188,7 @@ import { DataTable } from "insightcharts";
 import { DataTable } from "insightcharts";
 
 <DataTable
+  theme="forest"
   caption="Revenue grew in 2 of 5 regions in the fourth quarter"
   highlight={["North", "Islands"]}
   columns={[

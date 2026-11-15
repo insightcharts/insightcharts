@@ -49,6 +49,7 @@ export const RadialBarChart = defineChart<RadialBarChartProps>({
     { name: "names", type: "Record<string, string>", description: "Display names for series keys." },
   ],
   example: {
+    theme: "dusk",
     type: "radial-bar-chart",
     data: [2.1, 1.2, 0.8, 0.6, 0.7, 1.4, 3.6, 6.9, 8.8, 6.4, 5.1, 5.3, 5.9, 5.6, 5.4, 6.0, 7.4, 9.2, 8.1, 6.0, 4.6, 3.9, 3.3, 2.7].map((trips, h) => ({ hour: `${String(h).padStart(2, "0")}:00`, trips })),
     x: "hour",

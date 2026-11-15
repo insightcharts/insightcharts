@@ -57,8 +57,11 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `upIsGood` | `boolean` | `true` | Whether an increase is good news; decides the colour only. |
 | `direction` | `"up" \| "down" \| "flat"` |  | Override the direction inferred from the sign. |
 | `format` | `FormatSpec` | `signed percent` | Number format, e.g. `"signed"` for absolute changes or `"{value} pts"`. |
-| `size` | `"sm" \| "md" \| "lg"` |  | 12, 14 or 16px. Inherits the surrounding size when omitted. |
-| `variant` | `"text" \| "pill"` | `"text"` | `pill` adds a tinted capsule behind the value. |
+| `size` | `"sm" \| "md" \| "lg" \| "xl"` |  | 12, 14, 16 or 20px. Inherits the surrounding size when omitted. |
+| `variant` | `"text" \| "pill" \| "solid"` | `"text"` | `pill` adds a tinted capsule behind the value; `solid` fills the capsule and sets the value in the surface colour. |
+| `tone` | `"auto" \| "neutral" \| "accent" \| "positive" \| "negative" \| "inherit"` | `"auto"` | Colour of the value. `auto` follows the direction and `upIsGood`; `inherit` takes the surrounding text colour, for a coloured ground. |
+| `theme` | `ThemeInput` |  | A theme name such as `"ledger"`, or token overrides. A named theme paints its own ground. |
+| `frame` | `boolean` |  | Set false to stop a named theme painting its ground. |
 
 ## Composition
 
@@ -97,6 +100,82 @@ import { Delta } from "insightcharts";
 import { Delta } from "insightcharts";
 
 <Delta value="3 places" direction="up" label="in the regional ranking" variant="pill" size="lg" />
+```
+
+### Solid capsule, extra large
+
+```tsx
+import { Delta } from "insightcharts";
+
+<Delta value={0.33} label="solar capacity added vs 2023" variant="solid" size="xl" />
+```
+
+### Solid, down is good, editorial
+
+```tsx
+import { Delta } from "insightcharts";
+
+<Delta
+  theme="editorial"
+  value="−2.1 pts"
+  label="monthly churn vs January"
+  upIsGood={false}
+  variant="solid"
+  size="lg"
+/>
+```
+
+### Accent tone, ledger
+
+```tsx
+import { Delta } from "insightcharts";
+
+<Delta
+  theme="ledger"
+  value={0.43}
+  label="recurring revenue vs January"
+  tone="accent"
+  variant="pill"
+  size="lg"
+/>
+```
+
+### Neutral tone
+
+```tsx
+import { Delta } from "insightcharts";
+
+<Delta value={-0.124} label="average energy bill vs 2023" tone="neutral" size="md" />
+```
+
+### Pill on a poster ground, noir
+
+```tsx
+import { Delta } from "insightcharts";
+
+<Delta
+  theme="noir"
+  value="2 places"
+  direction="up"
+  label="since matchday 20"
+  variant="pill"
+  size="lg"
+/>
+```
+
+### Solid, magenta
+
+```tsx
+import { Delta } from "insightcharts";
+
+<Delta
+  theme="magenta"
+  value={0.152}
+  label="tickets sold vs the 2023 final"
+  variant="solid"
+  tone="inherit"
+  size="xl"
+/>
 ```
 
 ## Links

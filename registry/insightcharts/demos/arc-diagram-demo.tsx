@@ -21,6 +21,7 @@ const data = [
 export function ArcDiagramDemo() {
   return (
     <ArcDiagram
+      theme="dusk"
       data={data}
       from="a"
       to="b"

@@ -13,6 +13,7 @@ const data = [
 export function BubbleNetworkDemo() {
   return (
     <BubbleNetwork
+      theme="ocean"
       data={data}
       name="airport"
       value="m"

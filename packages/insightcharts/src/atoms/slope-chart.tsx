@@ -243,6 +243,7 @@ export const SlopeChart = defineChart<SlopeChartProps>({
 
 export const examples = {
   "Coloured by direction": {
+    theme: "editorial",
     data: [
       { region: "North East", before: 71.2, after: 68.4 },
       { region: "London", before: 68.9, after: 75.1 },
@@ -261,6 +262,7 @@ export const examples = {
     note: "Illustrative figures.",
   },
   "Long format, three periods": {
+    theme: "forest",
     data: [
       ["Streaming", 9, 34, 67], ["Physical", 52, 31, 11], ["Downloads", 31, 24, 4], ["Sync and other", 8, 11, 18],
     ].flatMap(([format, a, b, c]) => [
@@ -279,6 +281,7 @@ export const examples = {
     note: "Illustrative figures.",
   },
   "Stress: 20 entities with close values and long names": {
+    theme: "mono",
     data: [
       ["Democratic Republic of the Congo", 41, 62], ["United Republic of Tanzania", 44, 58], ["Central African Republic", 40, 43], ["Papua New Guinea", 47, 49], ["Bosnia and Herzegovina", 71, 70],
       ["Saint Vincent and the Grenadines", 69, 71], ["Trinidad and Tobago", 68, 66], ["Lao People's Democratic Republic", 52, 66], ["Bangladesh", 49, 73], ["Ethiopia", 39, 65],

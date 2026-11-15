@@ -11,6 +11,7 @@ const data = [
 export function ProportionalAreaDemo() {
   return (
     <ProportionalArea
+      theme="blueprint"
       data={data}
       name="lake"
       value="area"

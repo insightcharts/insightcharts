@@ -11,6 +11,7 @@ const data = [
 export function SegmentedBarDemo() {
   return (
     <SegmentedBar
+      theme="ledger"
       data={data}
       name="party"
       value="seats"

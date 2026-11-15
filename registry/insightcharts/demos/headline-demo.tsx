@@ -3,6 +3,7 @@ import { Headline } from "@/components/insightcharts/atoms/headline";
 export function HeadlineDemo() {
   return (
     <Headline
+      theme="ledger"
       size="page"
       kicker="Energy transition"
       title="Solar generated more electricity than coal in Europe in 2024"

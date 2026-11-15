@@ -410,7 +410,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -640,7 +644,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -882,7 +890,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -1142,7 +1154,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -1387,7 +1403,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -1562,15 +1582,70 @@
             "description": "Text alignment.",
             "$comment": "default: \"left\""
           },
+          "variant": {
+            "enum": [
+              "plain",
+              "filled",
+              "tinted",
+              "with-icon",
+              "with-ring",
+              "with-trend"
+            ],
+            "description": "The display: `filled` (a solid ground in the tone with contrasting ink), `tinted` (a 10% wash), `with-icon` (needs `icon`: a tinted badge above the label), `with-ring` (needs `target` or `max`, or a share from 0 to 1: a progress ring beside the figure), `with-trend` (needs `series`: a line under the figure). A variant whose data is missing renders as `plain`.",
+            "$comment": "default: \"plain\""
+          },
+          "tone": {
+            "anyOf": [
+              {
+                "const": "neutral"
+              },
+              {
+                "const": "accent"
+              },
+              {
+                "const": "positive"
+              },
+              {
+                "const": "negative"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "description": "Colour of the ground or graphic. A number picks from the theme's categorical palette, 0-based.",
+            "$comment": "default: \"accent\""
+          },
+          "icon": {
+            "description": "A built-in icon name or `path://...`, for `with-icon`."
+          },
+          "series": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "description": "Past values in time order, oldest first, ending with the current value, for `with-trend`."
+          },
+          "target": {
+            "type": "number",
+            "description": "The goal for `value`, for `with-ring`."
+          },
+          "max": {
+            "type": "number",
+            "description": "End of the ring's scale. Default: the target, or 1 for a share."
+          },
+          "theme": {
+            "type": "object",
+            "description": "A theme name such as `\"editorial\"`, or token overrides. A named theme paints its own ground."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Set false to stop a named theme painting its ground."
+          },
           "className": {
             "type": "string"
           },
           "style": {
             "type": "object"
-          },
-          "theme": {
-            "type": "object",
-            "description": "Theme override: partial tokens, or { light, dark }."
           },
           "mode": {
             "enum": [
@@ -1692,7 +1767,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -1921,7 +2000,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -2136,7 +2219,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -2361,7 +2448,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -2600,7 +2691,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -2849,7 +2944,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -3078,7 +3177,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -3230,6 +3333,10 @@
             "description": "Tinted box, bordered box, or no box.",
             "$comment": "default: \"soft\""
           },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint a named theme's background behind the callout, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off."
+          },
           "className": {
             "type": "string"
           },
@@ -3358,7 +3465,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -3607,7 +3718,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -3855,7 +3970,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -4114,6 +4233,10 @@
             "description": "Row padding.",
             "$comment": "default: \"comfortable\""
           },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint a named theme's background behind the table, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off."
+          },
           "className": {
             "type": "string"
           },
@@ -4185,27 +4308,45 @@
             "enum": [
               "sm",
               "md",
-              "lg"
+              "lg",
+              "xl"
             ],
-            "description": "12, 14 or 16px. Inherits the surrounding size when omitted."
+            "description": "12, 14, 16 or 20px. Inherits the surrounding size when omitted."
           },
           "variant": {
             "enum": [
               "text",
-              "pill"
+              "pill",
+              "solid"
             ],
-            "description": "`pill` adds a tinted capsule behind the value.",
+            "description": "`pill` adds a tinted capsule behind the value; `solid` fills the capsule and sets the value in the surface colour.",
             "$comment": "default: \"text\""
+          },
+          "tone": {
+            "enum": [
+              "auto",
+              "neutral",
+              "accent",
+              "positive",
+              "negative",
+              "inherit"
+            ],
+            "description": "Colour of the value. `auto` follows the direction and `upIsGood`; `inherit` takes the surrounding text colour, for a coloured ground.",
+            "$comment": "default: \"auto\""
+          },
+          "theme": {
+            "type": "object",
+            "description": "A theme name such as `\"ledger\"`, or token overrides. A named theme paints its own ground."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Set false to stop a named theme painting its ground."
           },
           "className": {
             "type": "string"
           },
           "style": {
             "type": "object"
-          },
-          "theme": {
-            "type": "object",
-            "description": "Theme override: partial tokens, or { light, dark }."
           },
           "mode": {
             "enum": [
@@ -4326,7 +4467,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -4583,7 +4728,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -4806,7 +4955,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -5065,7 +5218,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -5309,7 +5466,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -5492,6 +5653,10 @@
             },
             "description": "Controlled selection: the entity names currently selected. When given, the table shows exactly this list and a click only calls `onSelect`. Omit it and the table keeps its own selection."
           },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off."
+          },
           "className": {
             "type": "string"
           },
@@ -5578,6 +5743,10 @@
           "children": {
             "$ref": "#/definitions/slot",
             "description": "Extra content under the byline."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off."
           },
           "className": {
             "type": "string"
@@ -5708,7 +5877,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -5931,7 +6104,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -6144,7 +6321,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -6351,6 +6532,10 @@
             "description": "Alignment.",
             "$comment": "default: \"left\""
           },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off."
+          },
           "className": {
             "type": "string"
           },
@@ -6459,6 +6644,10 @@
             ],
             "description": "Alignment within the container.",
             "$comment": "default: \"left\""
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off."
           },
           "className": {
             "type": "string"
@@ -6588,7 +6777,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -6844,7 +7037,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -7082,7 +7279,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -7289,7 +7490,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -7533,7 +7738,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -7767,7 +7976,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -7927,32 +8140,52 @@
             "description": "Number format. Defaults to `\"percent\"` when the track ends at 1 or less, otherwise `\"auto\"`."
           },
           "tone": {
-            "enum": [
-              "accent",
-              "positive",
-              "negative",
-              "neutral"
+            "anyOf": [
+              {
+                "const": "accent"
+              },
+              {
+                "const": "positive"
+              },
+              {
+                "const": "negative"
+              },
+              {
+                "const": "neutral"
+              },
+              {
+                "type": "number"
+              }
             ],
-            "description": "Fill colour by meaning.",
+            "description": "Fill colour by meaning. A number picks from the theme's categorical palette, 0-based, for a stack of meters that name different entities.",
             "$comment": "default: \"accent\""
           },
           "size": {
             "enum": [
               "sm",
-              "md"
+              "md",
+              "lg"
             ],
-            "description": "`sm` for dense stacks.",
+            "description": "Track of 6, 8 or 12px. `sm` for dense stacks, `lg` for a single featured meter.",
             "$comment": "default: \"md\""
+          },
+          "detail": {
+            "type": "string",
+            "description": "A short muted note after the value, e.g. a share of the total (\"26%\")."
+          },
+          "theme": {
+            "type": "object",
+            "description": "A theme name such as `\"science\"`, or token overrides. A named theme paints its own ground."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Set false to stop a named theme painting its ground."
           },
           "className": {
             "type": "string"
           },
           "style": {
             "type": "object"
-          },
-          "theme": {
-            "type": "object",
-            "description": "Theme override: partial tokens, or { light, dark }."
           },
           "mode": {
             "enum": [
@@ -8074,7 +8307,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -8260,6 +8497,10 @@
             "description": "Centres the block (text stays left-aligned).",
             "$comment": "default: \"left\""
           },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off."
+          },
           "className": {
             "type": "string"
           },
@@ -8328,6 +8569,10 @@
             ],
             "description": "Left-aligned quotes carry a side rule; centred ones do not.",
             "$comment": "default: \"left\""
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off."
           },
           "className": {
             "type": "string"
@@ -8457,7 +8702,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -8686,7 +8935,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -8920,7 +9173,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -9153,7 +9410,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -9370,7 +9631,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -9621,7 +9886,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -9883,7 +10152,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -10097,7 +10370,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -10325,7 +10602,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -10561,7 +10842,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -10770,6 +11055,10 @@
             "$ref": "#/definitions/slot",
             "description": "Extra content after the rows."
           },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off."
+          },
           "className": {
             "type": "string"
           },
@@ -10898,7 +11187,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -11119,7 +11412,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -11245,7 +11542,7 @@
       },
       "stat-tile": {
         "title": "Stat tile",
-        "description": "A compact, bordered KPI tile: label, value, change against a baseline and an optional trend graphic. Use: Dashboard grids and KPI rows of three to six figures, each needing its own change indicator or sparkline. Give every tile a delta or a context line. Avoid: The single number a story leads with (use `big-number` with `size: \"hero\"`). Do not put a full chart with axes in the trend slot.",
+        "description": "A compact KPI tile: label, value, change against a baseline and an optional graphic. Twenty variants display the same data as a card, a trend, progress toward a target, a comparison, a breakdown, a rank or a count of icons. Use: Dashboard grids and KPI rows of three to six figures. Pass the data once (`value`, `delta`, `series`, `target`, `parts`, `icon`) and choose the display with `variant`; change `surface`, `tone` and `size` to set emphasis. Give every tile a delta or a context line. Avoid: The single number a story leads with (use `big-number` with `size: \"hero\"`). Do not put a full chart with axes in the trend slot. Use `unit` only for counts up to 60 icons.",
         "type": "object",
         "properties": {
           "type": {
@@ -11264,7 +11561,7 @@
                 "type": "string"
               }
             ],
-            "description": "The figure. Numbers are formatted with `format`."
+            "description": "The figure. Numbers are formatted with `format`. `progress`, `ring` and `unit` need a number."
           },
           "delta": {
             "anyOf": [
@@ -11275,7 +11572,7 @@
                 "type": "string"
               }
             ],
-            "description": "Change against a baseline. Numbers render as signed percentages (0.12 is +12%)."
+            "description": "Change against a baseline. Numbers render as signed percentages (0.12 is +12%). `comparison` computes it from `value` and `comparison` when omitted."
           },
           "deltaLabel": {
             "type": "string",
@@ -11283,12 +11580,166 @@
           },
           "upIsGood": {
             "type": "boolean",
-            "description": "Whether an increase is an improvement. Sets the delta colour.",
+            "description": "Whether an increase is an improvement. Sets the delta colour; the arrow and sign always show the direction.",
             "$comment": "default: true"
           },
           "context": {
             "type": "string",
             "description": "A line that states a comparison or reference for the number."
+          },
+          "variant": {
+            "enum": [
+              "plain",
+              "borderless",
+              "filled",
+              "tinted",
+              "outline-accent",
+              "sparkline",
+              "area",
+              "bars",
+              "dots",
+              "progress",
+              "ring",
+              "comparison",
+              "delta-first",
+              "icon",
+              "unit",
+              "breakdown",
+              "rank",
+              "split",
+              "compact",
+              "hero"
+            ],
+            "description": "The display. Grounds: `plain` (bordered card), `borderless`, `filled` (solid tone with contrasting ink), `tinted` (10% wash), `outline-accent` (a 2px rule on one edge). Trends, from `series`: `sparkline` (line), `area` (filled, edge to edge along the bottom, zero-based), `bars` (columns, zero-based), `dots`, `split` (figure left, line in a tinted panel right), `compact` (one line: label, small line, value, change). Goals, from `target` or `max`: `progress` (bar with the target marked), `ring`. Others: `comparison` (needs `comparison`: two labelled bars), `delta-first` (the change is the large figure), `icon` (needs `icon`: a tinted badge), `unit` (the count as repeated icons, up to 60), `breakdown` (needs `parts`: a segmented bar with a key), `rank` (needs `rank`: \"3rd of 12\" with a position strip), `hero` (a numeral of 40 to 96px). A variant whose data is missing renders as `plain`.",
+            "$comment": "default: \"plain\""
+          },
+          "surface": {
+            "enum": [
+              "plain",
+              "borderless",
+              "filled",
+              "tinted",
+              "outline-accent"
+            ],
+            "description": "The ground, independent of the display, so any variant can sit on any ground: `variant: \"sparkline\", surface: \"filled\"`. Default: the variant's own, otherwise `plain`."
+          },
+          "tone": {
+            "anyOf": [
+              {
+                "const": "neutral"
+              },
+              {
+                "const": "accent"
+              },
+              {
+                "const": "positive"
+              },
+              {
+                "const": "negative"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "description": "Colour of the graphic and of a filled or tinted ground. A number picks from the theme's categorical palette, 0-based. `neutral` is ink.",
+            "$comment": "default: \"accent\""
+          },
+          "size": {
+            "enum": [
+              "sm",
+              "md",
+              "lg"
+            ],
+            "description": "Type and padding scale: 22, 28 or 36px numerals with 12, 16 or 20px padding. The numeral shrinks to fit a narrow tile.",
+            "$comment": "default: \"md\""
+          },
+          "align": {
+            "enum": [
+              "left",
+              "center",
+              "right"
+            ],
+            "description": "Text alignment.",
+            "$comment": "default: \"left\""
+          },
+          "orientation": {
+            "enum": [
+              "vertical",
+              "horizontal"
+            ],
+            "description": "Graphic under the figure or beside it, for `sparkline`, `bars`, `dots`, `ring` and `icon`. Default `vertical`, `horizontal` for `ring`. Falls back to vertical under about 250px (180px for `ring` and `icon`)."
+          },
+          "series": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "description": "Past values in time order, oldest first, ending with the current value, in the units of `value`. A numeric `trend` array is used when `series` is omitted."
+          },
+          "target": {
+            "type": "number",
+            "description": "The goal for `value`, marked on `progress` and `ring`."
+          },
+          "targetLabel": {
+            "type": "string",
+            "description": "Name for the target.",
+            "$comment": "default: \"Target\""
+          },
+          "max": {
+            "type": "number",
+            "description": "End of the scale for `progress` and `ring`, and the total count drawn by `unit`. Default: the target, or 1 for a share."
+          },
+          "comparison": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "description": "The value compared with, for `comparison`: a previous period or a peer."
+          },
+          "comparisonLabel": {
+            "type": "string",
+            "description": "Names the comparison value, e.g. \"September\".",
+            "$comment": "default: \"Before\""
+          },
+          "valueLabel": {
+            "type": "string",
+            "description": "Names the current value in `comparison`, e.g. \"December\".",
+            "$comment": "default: \"Now\""
+          },
+          "parts": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "description": "What the value is made of, for `breakdown`. Should sum to `value`. Past six parts the smallest fold into Other."
+          },
+          "icon": {
+            "description": "A built-in icon name or `path://...`, for `icon` and `unit`. `unit` defaults to `circle`."
+          },
+          "unitValue": {
+            "type": "number",
+            "description": "What one icon stands for in `unit`. A caption states it when it is not 1.",
+            "$comment": "default: 1"
+          },
+          "rank": {
+            "type": "number",
+            "description": "Position in a ranking, 1 is first, for `rank`."
+          },
+          "rankOf": {
+            "type": "number",
+            "description": "Number of entries ranked. Up to 32 are drawn as one segment each."
+          },
+          "edge": {
+            "enum": [
+              "left",
+              "top"
+            ],
+            "description": "Which edge carries the rule on an `outline-accent` surface.",
+            "$comment": "default: \"left\""
           },
           "trend": {
             "anyOf": [
@@ -11302,20 +11753,28 @@
                 }
               }
             ],
-            "description": "A chart spec, a React element, or an array of numbers drawn as a sparkline."
+            "description": "A chart spec, a React element, or an array of numbers drawn as a sparkline. Works in every variant that does not draw `series` itself."
           },
           "trendPosition": {
             "enum": [
               "bottom",
               "right"
             ],
-            "description": "Where the trend sits; `right` falls back to `bottom` under 280px.",
+            "description": "Where the trend slot sits; `right` falls back to `bottom` in narrow tiles.",
             "$comment": "default: \"bottom\""
           },
           "format": {
             "$ref": "#/definitions/format",
-            "description": "Number format for `value`.",
+            "description": "Number format for `value`, `target`, `max`, `comparison` and `series`.",
             "$comment": "default: \"auto\""
+          },
+          "theme": {
+            "type": "object",
+            "description": "A theme name such as `\"ledger\"`, or token overrides. A named theme paints its own ground behind the tile."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Set false to stop a named theme painting its ground."
           },
           "children": {
             "$ref": "#/definitions/slot",
@@ -11326,10 +11785,6 @@
           },
           "style": {
             "type": "object"
-          },
-          "theme": {
-            "type": "object",
-            "description": "Theme override: partial tokens, or { light, dark }."
           },
           "mode": {
             "enum": [
@@ -11415,6 +11870,10 @@
             "type": "boolean",
             "description": "Hairline above the marker.",
             "$comment": "default: false"
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off."
           },
           "className": {
             "type": "string"
@@ -11546,7 +12005,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -11764,7 +12227,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -11971,7 +12438,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -12178,7 +12649,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -12416,7 +12891,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...), or a theme object. A named theme paints its own background behind the chart."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's background behind the chart. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -12588,7 +13067,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "Theme override, passed on to every event."
+            "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to every event. A named theme with its own surface paints that surface behind the component."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's surface behind the component. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -12615,7 +13098,7 @@
       },
       "before-after": {
         "title": "Before and after",
-        "description": "Two states of one measure side by side, as figures or small charts, with the change between them stated in the middle. Use: A single measure at two moments or under two conditions: before and after a policy, control and treatment, last year and this. The change is computed from the two values unless you state it. Avoid: More than two states (use `line-chart` or `slope-chart`); many entities each with a before and after (use `dumbbell-chart` or `arrow-chart`); two unrelated figures (use `stat-row`).",
+        "description": "Two states of one measure side by side, as figures, stat tiles of any variant or small charts, with the change between them stated in the middle. Use: A single measure at two moments or under two conditions: before and after a policy, control and treatment, last year and this. The change is computed from the two values unless you state it. Avoid: More than two states (use `line-chart` or `slope-chart`); many entities each with a before and after (use `dumbbell-chart` or `arrow-chart`); two unrelated figures (use `stat-row`).",
         "type": "object",
         "properties": {
           "type": {
@@ -12623,11 +13106,78 @@
           },
           "before": {
             "type": "object",
-            "description": "The first state: a figure, a chart slot, or both."
+            "description": "The first state: a figure, a chart slot, or both. The fields after `chart` apply when the states are tiles and are passed to `stat-tile`."
           },
           "after": {
             "type": "object",
             "description": "The second state."
+          },
+          "variant": {
+            "anyOf": [
+              {
+                "const": "plain"
+              },
+              {
+                "const": "tiles"
+              },
+              {}
+            ],
+            "description": "`plain`: open `big-number` figures under a ruled heading. `tiles`: bordered `stat-tile` cards. Any `stat-tile` variant (`progress`, `ring`, `sparkline`, `area`, `bars`, `unit`, `breakdown`, `rank`, `icon`, `filled`, `tinted`, `hero`...) draws both states as that tile; a state's own `variant` overrides it.",
+            "$comment": "default: \"plain\""
+          },
+          "surface": {
+            "enum": [
+              "plain",
+              "borderless",
+              "filled",
+              "tinted",
+              "outline-accent"
+            ],
+            "description": "Tiles only: the ground of both tiles."
+          },
+          "emphasis": {
+            "enum": [
+              "after",
+              "none"
+            ],
+            "description": "Tiles only: `after` draws the first state in neutral ink and the second in the accent; `none` draws both in the accent. A state's own `tone` overrides it.",
+            "$comment": "default: \"after\""
+          },
+          "layout": {
+            "enum": [
+              "auto",
+              "side",
+              "stacked"
+            ],
+            "description": "Side by side from 520px, or force one arrangement.",
+            "$comment": "default: \"auto\""
+          },
+          "deltaVariant": {
+            "enum": [
+              "text",
+              "pill",
+              "solid"
+            ],
+            "description": "How the change between the states is set: passed to `delta`.",
+            "$comment": "default: \"pill\""
+          },
+          "arrow": {
+            "type": "boolean",
+            "description": "The arrow between the states.",
+            "$comment": "default: true"
+          },
+          "density": {
+            "enum": [
+              "dense",
+              "default",
+              "roomy"
+            ],
+            "description": "Spacing and tile scale (`sm`, `md`, `lg`).",
+            "$comment": "default: \"default\""
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Set false to stop a named theme painting its ground."
           },
           "delta": {
             "anyOf": [
@@ -12677,7 +13227,7 @@
           },
           "theme": {
             "type": "object",
-            "description": "Theme override, passed on to both states."
+            "description": "A theme name such as `\"editorial\"`, or token overrides, passed on to both states. A named theme paints its own ground."
           },
           "mode": {
             "enum": [
@@ -12769,7 +13319,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "Theme override, passed on to the chart and callout."
+            "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the chart and callout. A named theme with its own surface paints that surface behind the component."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's surface behind the component. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -12870,7 +13424,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "Theme override, passed on to the chart."
+            "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the chart. A named theme with its own surface paints that surface behind the component."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's surface behind the component. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -12992,7 +13550,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "Theme override, passed on to the sparklines and deltas."
+            "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the sparklines and deltas. A named theme with its own surface paints that surface behind the component."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's surface behind the component. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -13060,7 +13622,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "Theme override."
+            "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object. A named theme with its own surface paints that surface behind the component."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's surface behind the component. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -13174,7 +13740,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "Theme override, passed on to the headline, chart and source note."
+            "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the headline, chart and source note. A named theme with its own surface paints that surface behind the component."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's surface behind the component. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -13202,7 +13772,7 @@
       },
       "kpi-grid": {
         "title": "KPI grid",
-        "description": "A responsive grid of trend cards drawn from one dataset: each metric shows its latest value, its change and a sparkline. Use: The top of a dashboard or a monthly report: three to eight metrics tracked over the same periods. Pass one table with a column per metric. Avoid: Figures without a series behind them (use `stat-row`); comparing the metrics with each other on one scale (use `line-chart` or `small-multiples`); more than eight cards.",
+        "description": "A responsive grid of trend cards drawn from one dataset: each metric shows its latest value, its change and a graphic, in one `stat-tile` variant or a deliberate mix of them. Use: The top of a dashboard or a monthly report: three to eight metrics tracked over the same periods. Pass one table with a column per metric. Avoid: Figures without a series behind them (use `stat-row`); comparing the metrics with each other on one scale (use `line-chart` or `small-multiples`); more than eight cards.",
         "type": "object",
         "properties": {
           "type": {
@@ -13235,7 +13805,74 @@
             "items": {
               "type": "object"
             },
-            "description": "One card per metric; each takes the props of `trend-card`."
+            "description": "One card per metric; each takes the props of `trend-card`, including its own `variant`, `surface`, `tone` and `size`."
+          },
+          "variant": {
+            "description": "The display of every card: any `stat-tile` variant (`sparkline`, `area`, `bars`, `dots`, `split`, `compact`, `progress`, `ring`, `comparison`, `delta-first`, `icon`, `breakdown`, `rank`, `hero`, `filled`, `tinted`, `borderless`, `outline-accent`). Omit for the original cards with an interactive sparkline."
+          },
+          "variants": {
+            "type": "array",
+            "items": {},
+            "description": "A display per card, by position, so one grid mixes them on purpose: `[\"split\", \"area\", \"bars\", \"progress\"]`. A metric's own `variant` wins; cards past the end use `variant`."
+          },
+          "surface": {
+            "enum": [
+              "plain",
+              "borderless",
+              "filled",
+              "tinted",
+              "outline-accent"
+            ],
+            "description": "The ground of every card."
+          },
+          "tone": {
+            "anyOf": [
+              {
+                "const": "neutral"
+              },
+              {
+                "const": "accent"
+              },
+              {
+                "const": "positive"
+              },
+              {
+                "const": "negative"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "const": "series"
+              }
+            ],
+            "description": "Tone of every card. `series` gives each card the next categorical colour."
+          },
+          "layout": {
+            "enum": [
+              "cards",
+              "dividers"
+            ],
+            "description": "Separate cards, or open tiles with hairlines between them.",
+            "$comment": "default: \"cards\""
+          },
+          "featured": {
+            "type": "boolean",
+            "description": "The first card spans two columns and is set one size larger.",
+            "$comment": "default: false"
+          },
+          "density": {
+            "enum": [
+              "dense",
+              "default",
+              "roomy"
+            ],
+            "description": "Spacing and type scale: cards are `sm`, `md` or `lg`, with 8, 12 or 16px between them.",
+            "$comment": "default: \"default\""
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Set false to stop a named theme painting its ground."
           },
           "compare": {
             "anyOf": [
@@ -13286,7 +13923,7 @@
           },
           "theme": {
             "type": "object",
-            "description": "Theme override, passed on to every card."
+            "description": "A theme name such as `\"ledger\"`, or token overrides, passed on to every card. A named theme paints its own ground."
           },
           "mode": {
             "enum": [
@@ -13440,7 +14077,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "Theme override, passed on to every chart."
+            "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to every chart. A named theme with its own surface paints that surface behind the component."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's surface behind the component. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -13583,9 +14224,103 @@
             "type": "string",
             "description": "Method note or caveat."
           },
+          "variant": {
+            "enum": [
+              "plain",
+              "filled",
+              "tinted",
+              "with-icon",
+              "with-ring",
+              "with-trend"
+            ],
+            "description": "How the headline number is dressed: passed to `big-number`.",
+            "$comment": "default: \"plain\""
+          },
+          "icon": {
+            "description": "Icon for the headline when `variant` is `with-icon`."
+          },
+          "tone": {
+            "anyOf": [
+              {
+                "const": "neutral"
+              },
+              {
+                "const": "accent"
+              },
+              {
+                "const": "positive"
+              },
+              {
+                "const": "negative"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "description": "Tone of a filled or tinted headline."
+          },
+          "display": {
+            "enum": [
+              "key",
+              "inline",
+              "meters",
+              "tiles"
+            ],
+            "description": "How the parts are shown: a list with values and shares, one wrapped line, a `progress-meter` per part scaled to the total, or a `stat-tile` per part.",
+            "$comment": "default: \"key\""
+          },
+          "tileVariant": {
+            "description": "The tile display when `display` is `tiles`: `progress`, `ring`, `filled`, `tinted`, `plain`... Each tile gets the part's value, the total as `max` and the part's categorical colour.",
+            "$comment": "default: \"progress\""
+          },
+          "tileSurface": {
+            "enum": [
+              "plain",
+              "borderless",
+              "filled",
+              "tinted",
+              "outline-accent"
+            ],
+            "description": "The ground of each tile when `display` is `tiles`."
+          },
+          "layout": {
+            "enum": [
+              "stacked",
+              "side"
+            ],
+            "description": "`side` puts the headline left and the parts right from 600px.",
+            "$comment": "default: \"stacked\""
+          },
+          "columns": {
+            "type": "number",
+            "description": "Columns for the key, meters or tiles. Default: by width."
+          },
+          "bar": {
+            "type": "boolean",
+            "description": "Set false to leave out the segmented bar, e.g. with `meters` or `tiles`.",
+            "$comment": "default: true"
+          },
+          "dividers": {
+            "type": "boolean",
+            "description": "Hairlines between key rows.",
+            "$comment": "default: true"
+          },
+          "density": {
+            "enum": [
+              "dense",
+              "default",
+              "roomy"
+            ],
+            "description": "Spacing between the bar, the key rows and the tiles.",
+            "$comment": "default: \"default\""
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Set false to stop a named theme painting its ground."
+          },
           "theme": {
             "type": "object",
-            "description": "Theme override, passed on to the number and the bar."
+            "description": "A theme name such as `\"earth\"`, or token overrides, passed on to the number and the bar. A named theme paints its own ground."
           },
           "mode": {
             "enum": [
@@ -13853,7 +14588,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "Theme override, passed on to the visual."
+            "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the visual. A named theme with its own surface paints that surface behind the component."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's surface behind the component. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -13929,7 +14668,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "Theme override, passed on to the quote and the figure."
+            "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the quote and the figure. A named theme with its own surface paints that surface behind the component."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's surface behind the component. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -14065,7 +14808,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "Theme override."
+            "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object. A named theme with its own surface paints that surface behind the component."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's surface behind the component. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -14168,7 +14915,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "Theme override, passed on to the chart and the step cards."
+            "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the chart and the step cards. A named theme with its own surface paints that surface behind the component."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's surface behind the component. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -14315,7 +15066,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "Theme override, passed on to everything inside."
+            "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the component."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's surface behind the component. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -14486,7 +15241,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "Theme override, passed on to every panel."
+            "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to every panel. A named theme with its own surface paints that surface behind the component."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's surface behind the component. Default: on for a named theme with its own surface."
           },
           "mode": {
             "enum": [
@@ -14514,7 +15273,7 @@
       },
       "stat-row": {
         "title": "Stat row",
-        "description": "Two to five key figures in one row separated by hairlines, collapsing to two columns and then one as the container narrows. Use: The opening summary of a report or dashboard: the two to five most important numbers. Give every figure a delta or a context line, and order them by importance. Avoid: More than five figures (use `kpi-grid`), a single lead number (use `big-number` with `size: \"hero\"`), or figures that need their history shown (use `kpi-grid`, or `variant: \"tiles\"` with a `trend`).",
+        "description": "Two to five key figures in one row, as open numbers separated by hairlines or as stat tiles of any variant, collapsing to two columns and then one as the container narrows. Use: The opening summary of a report or dashboard: the two to five most important numbers. Give every figure a delta or a context line, and order them by importance. Avoid: More than five figures (use `kpi-grid`), a single lead number (use `big-number` with `size: \"hero\"`), or figures that need their history shown (use `kpi-grid`, or `variant: \"tiles\"` with a `trend`).",
         "type": "object",
         "properties": {
           "type": {
@@ -14525,15 +15284,91 @@
             "items": {
               "type": "object"
             },
-            "description": "Two to five figures, most important first. Each takes the props of `big-number` (or `stat-tile` when `variant` is `tiles`)."
+            "description": "Two to five figures, most important first. In `plain` each takes the props of `big-number`; otherwise each takes the props of `stat-tile`, and an item's own `variant`, `surface`, `tone` and `size` override the row's."
           },
           "variant": {
+            "anyOf": [
+              {
+                "const": "plain"
+              },
+              {
+                "const": "tiles"
+              },
+              {}
+            ],
+            "description": "`plain`: open `big-number` figures divided by hairlines. `tiles`: bordered `stat-tile` cards. Any `stat-tile` variant (`sparkline`, `area`, `bars`, `dots`, `progress`, `ring`, `comparison`, `delta-first`, `icon`, `unit`, `breakdown`, `rank`, `split`, `compact`, `hero`, `filled`, `tinted`, `borderless`, `outline-accent`) draws every item as that tile. Setting `variant` on any item also switches the row to tiles.",
+            "$comment": "default: \"plain\""
+          },
+          "surface": {
             "enum": [
               "plain",
-              "tiles"
+              "borderless",
+              "filled",
+              "tinted",
+              "outline-accent"
             ],
-            "description": "Open figures divided by hairlines, or bordered tiles that can carry a `trend`.",
-            "$comment": "default: \"plain\""
+            "description": "Tiles only: the ground of every tile."
+          },
+          "tone": {
+            "anyOf": [
+              {
+                "const": "neutral"
+              },
+              {
+                "const": "accent"
+              },
+              {
+                "const": "positive"
+              },
+              {
+                "const": "negative"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "const": "series"
+              }
+            ],
+            "description": "Tone of every tile. `series` gives each tile the next categorical colour, for figures that name different entities."
+          },
+          "layout": {
+            "enum": [
+              "cards",
+              "dividers"
+            ],
+            "description": "Tiles only: separate cards, or open tiles with hairlines between them.",
+            "$comment": "default: \"cards\""
+          },
+          "columns": {
+            "type": "number",
+            "description": "Preferred number of columns. Default: one row when every figure has room."
+          },
+          "featured": {
+            "type": "boolean",
+            "description": "The first figure spans two columns and is set one size larger.",
+            "$comment": "default: false"
+          },
+          "density": {
+            "enum": [
+              "dense",
+              "default",
+              "roomy"
+            ],
+            "description": "Spacing and type scale: tiles are `sm`, `md` or `lg`.",
+            "$comment": "default: \"default\""
+          },
+          "align": {
+            "enum": [
+              "left",
+              "center"
+            ],
+            "description": "Text alignment of every figure.",
+            "$comment": "default: \"left\""
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Set false to stop a named theme painting its ground."
           },
           "format": {
             "$ref": "#/definitions/format",
@@ -14558,7 +15393,7 @@
           },
           "theme": {
             "type": "object",
-            "description": "Theme override, passed on to every figure."
+            "description": "A theme name such as `\"ledger\"`, or token overrides, passed on to every figure. A named theme paints its own ground."
           },
           "mode": {
             "enum": [
@@ -14585,7 +15420,7 @@
       },
       "trend-card": {
         "title": "Trend card",
-        "description": "A KPI card computed from a series: the latest value, its change against a baseline in the same data, and a sparkline of the series. Use: A metric whose recent history matters as much as its level: users, revenue, response time. Pass the series and field names; the figure, the change and the sparkline all come from the same rows, so they cannot disagree. Avoid: A number with no history (use `big-number` or `stat-tile`); several metrics from one dataset (use `kpi-grid`); a series the reader must read values from (use `line-chart`).",
+        "description": "A KPI card computed from a series: the latest value, its change against a baseline in the same data, and a trend graphic, in any `stat-tile` variant. Use: A metric whose recent history matters as much as its level: users, revenue, response time. Pass the series and field names; the figure, the change and the sparkline all come from the same rows, so they cannot disagree. Avoid: A number with no history (use `big-number` or `stat-tile`); several metrics from one dataset (use `kpi-grid`); a series the reader must read values from (use `line-chart`).",
         "type": "object",
         "properties": {
           "type": {
@@ -14709,9 +15544,117 @@
             "description": "Where the sparkline sits; `right` falls back to `bottom` in narrow cards.",
             "$comment": "default: \"bottom\""
           },
+          "variant": {
+            "description": "The tile display: any `stat-tile` variant (`sparkline`, `area`, `bars`, `dots`, `split`, `compact`, `progress`, `ring`, `comparison`, `delta-first`, `icon`, `breakdown`, `rank`, `unit`, `hero`, `filled`, `tinted`, `borderless`, `outline-accent`, `plain`). The series is passed as the tile's `series`; `comparison` takes the baseline value and both period names from the rows. Omit for the original card with an interactive `sparkline` atom (tooltip on hover)."
+          },
+          "showTrend": {
+            "type": "boolean",
+            "description": "With a `variant` that does not draw the series itself (`filled`, `icon`, `hero`, `delta-first`...), a line is drawn at the bottom; set false to leave it off.",
+            "$comment": "default: true"
+          },
+          "surface": {
+            "enum": [
+              "plain",
+              "borderless",
+              "filled",
+              "tinted",
+              "outline-accent"
+            ],
+            "description": "The tile's ground, with any `variant`."
+          },
+          "tone": {
+            "anyOf": [
+              {
+                "const": "neutral"
+              },
+              {
+                "const": "accent"
+              },
+              {
+                "const": "positive"
+              },
+              {
+                "const": "negative"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "description": "Colour of the tile's graphic or ground; a number picks a categorical colour, 0-based."
+          },
+          "size": {
+            "enum": [
+              "sm",
+              "md",
+              "lg"
+            ],
+            "description": "Tile scale.",
+            "$comment": "default: \"md\""
+          },
+          "align": {
+            "enum": [
+              "left",
+              "center",
+              "right"
+            ],
+            "description": "Text alignment."
+          },
+          "orientation": {
+            "enum": [
+              "vertical",
+              "horizontal"
+            ],
+            "description": "Graphic under or beside the figure, as in `stat-tile`."
+          },
+          "icon": {
+            "description": "Icon for the `icon` and `unit` variants."
+          },
+          "target": {
+            "type": "number",
+            "description": "Goal for the `progress` and `ring` variants."
+          },
+          "targetLabel": {
+            "type": "string",
+            "description": "Name for the target.",
+            "$comment": "default: \"Target\""
+          },
+          "max": {
+            "type": "number",
+            "description": "End of the scale for `progress` and `ring`; total count for `unit`."
+          },
+          "parts": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "description": "Composition of the latest value, for `breakdown`."
+          },
+          "rank": {
+            "type": "number",
+            "description": "Position for the `rank` variant."
+          },
+          "rankOf": {
+            "type": "number",
+            "description": "Entries ranked."
+          },
+          "unitValue": {
+            "type": "number",
+            "description": "What one icon stands for in `unit`."
+          },
+          "edge": {
+            "enum": [
+              "left",
+              "top"
+            ],
+            "description": "Edge of the rule on an `outline-accent` surface."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Set false to stop a named theme painting its ground."
+          },
           "theme": {
             "type": "object",
-            "description": "Theme override, passed on to the tile and sparkline."
+            "description": "A theme name such as `\"ledger\"`, or token overrides, passed on to the tile. A named theme paints its own ground."
           },
           "mode": {
             "enum": [
@@ -15112,7 +16055,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "Theme override, passed on to everything inside."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's surface behind the piece, with page padding. Default: on when `theme` is a named theme with its own surface. Set false when the host already paints it."
           },
           "mode": {
             "enum": [
@@ -15408,6 +16355,10 @@
             },
             "description": "Figures recomputed from the filtered rows: `op` over `field` (default sum; count without a field), optionally restricted by `where` and divided by the sum of `per` for a rate or share. While a filter is active each shows the all-rows value as context."
           },
+          "figuresVariant": {
+            "description": "How the figures are displayed: any `variant` of `stat-row`, e.g. `tiles`, `tinted` or `outline-accent`. Extra fields on a figure (`tone`, `surface`, `icon`...) are passed to its `stat-row` item.",
+            "$comment": "default: \"plain\""
+          },
           "table": {
             "type": "object",
             "description": "A detail table of the filtered rows: the props of `data-table` without `rows`, plus a `transform` applied first."
@@ -15508,7 +16459,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "Theme override, passed on to everything inside."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's surface behind the piece, with page padding. Default: on when `theme` is a named theme with its own surface. Set false when the host already paints it."
           },
           "mode": {
             "enum": [
@@ -15564,11 +16519,14 @@
             "description": "Publication date. ISO dates are formatted for the locale."
           },
           "figures": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            },
-            "description": "Three or four key figures, most important first. Rendered with `stat-row`."
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {}
+            ],
+            "description": "Three or four key figures, most important first. A list of `{ value, label, context?, delta?, deltaLabel?, upIsGood?, format? }`, or the props of `stat-row` (`{ items, variant, ... }`) to choose how they are drawn."
           },
           "hero": {
             "$ref": "#/definitions/slot",
@@ -15669,7 +16627,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "Theme override, passed on to everything inside."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's surface behind the piece, with page padding. Default: on when `theme` is a named theme with its own surface. Set false when the host already paints it."
           },
           "mode": {
             "enum": [
@@ -15732,7 +16694,7 @@
                 "$ref": "#/definitions/slot"
               }
             ],
-            "description": "The opening number. With `text` it renders a `proportion-statement` (\"19 in every 100 ...\"); with `label` a hero `big-number`. A spec or element is rendered as given."
+            "description": "The opening number. With `text` it renders a `proportion-statement` (\"19 in every 100 ...\"); with `label` a hero `big-number`, which also takes that atom's `variant` (`filled`, `tinted`, `with-icon`, `with-ring`, `with-trend`), `tone`, `icon`, `series`, `target` and `max`. A spec or element is rendered as given."
           },
           "hero": {
             "$ref": "#/definitions/slot",
@@ -15823,7 +16785,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "Theme override, passed on to everything inside."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's surface behind the piece, with page padding. Default: on when `theme` is a named theme with its own surface. Set false when the host already paints it."
           },
           "mode": {
             "enum": [
@@ -16874,6 +17840,16 @@
             "description": "Heading of the summary.",
             "$comment": "default: \"Summary\""
           },
+          "figures": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {}
+            ],
+            "description": "Two to four key figures shown under the summary. A list of `{ value, label, context?, delta?, ... }`, or the props of `stat-row` (`{ items, variant, ... }`) to choose how they are drawn."
+          },
           "findings": {
             "type": "array",
             "items": {
@@ -16973,7 +17949,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "Theme override, passed on to everything inside."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's surface behind the piece, with page padding. Default: on when `theme` is a named theme with its own surface. Set false when the host already paints it."
           },
           "mode": {
             "enum": [
@@ -17296,7 +18276,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "Theme override, passed on to everything inside."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's surface behind the piece, with page padding. Default: on when `theme` is a named theme with its own surface. Set false when the host already paints it."
           },
           "mode": {
             "enum": [
@@ -17412,7 +18396,7 @@
           },
           "theme": {
             "type": "object",
-            "description": "Theme override, passed on to the exhibit."
+            "description": "A built-in theme name (`\"magenta\"`, `\"noir\"`, `\"editorial\"`...) or a theme object, passed on to the exhibit. A named theme with its own surface paints the card in that surface; the download button stays in the page's theme."
           },
           "mode": {
             "enum": [
@@ -17448,7 +18432,7 @@
           "cards": {
             "type": "array",
             "items": {},
-            "description": "The cards in order. Each has a `kind`: `title` `{ title, deck?, byline? }`; `stat` `{ value, label, context?, delta?, deltaLabel?, upIsGood?, format?, text? }`; `chart` `{ title, chart, text? }`; `quote` `{ quote, attribution?, role? }`; `closing` `{ title, text?, points?, action?: { label, href } }`. Any card takes `kicker`, `tone: \"surface\" | \"inverse\" | \"accent\"` and `id`."
+            "description": "The cards in order. Each has a `kind`: `title` `{ title, deck?, byline? }`; `stat` `{ value, label, context?, delta?, deltaLabel?, upIsGood?, format?, text?, variant?, icon?, series?, target?, max? }`, where `variant` is any `big-number` display (`with-icon`, `with-ring`, `with-trend`, `filled`, `tinted`); `chart` `{ title, chart, text? }`; `quote` `{ quote, attribution?, role? }`; `closing` `{ title, text?, points?, action?: { label, href } }`. Any card takes `kicker`, `tone: \"surface\" | \"inverse\" | \"accent\"` and `id`."
           },
           "label": {
             "type": "string",
@@ -17546,7 +18530,7 @@
           },
           "theme": {
             "type": "object",
-            "description": "Theme override, passed on to everything inside."
+            "description": "A built-in theme name (`\"dusk\"`, `\"magenta\"`, `\"paper\"`...) or a theme object, passed on to everything in the cards. A named theme with its own surface paints each card in that surface; the pager and the source note stay in the page's theme."
           },
           "mode": {
             "enum": [
@@ -17871,7 +18855,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "Theme override, passed on to everything inside."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's surface behind the piece, with page padding. Default: on when `theme` is a named theme with its own surface. Set false when the host already paints it."
           },
           "mode": {
             "enum": [
@@ -17935,7 +18923,7 @@
                 }
               ]
             },
-            "description": "The story in reading order. Each block has a `kind`: `prose` `{ text, lead? }`; `figure` `{ chart, caption? }`; `callout` `{ chart, lead, body, label?, tone?, side? }`; `scrolly` `{ chart, steps, cumulative?, scrollMode?, side?, stepHeight? }` (the props of `scrolly-chart`); `quote` `{ quote, attribution?, role? }`; `stats` `{ items, title? }`; `multiples` `{ facet, ... }` (props of `small-multiples`, or of `small-multiple-grid` when it has a `chart`); `break` `{ title, step?, total?, text? }`. Any block takes `width: \"text\" | \"wide\" | \"full\"` and an `id`. A bare chart spec is treated as a wide figure."
+            "description": "The story in reading order. Each block has a `kind`: `prose` `{ text, lead? }`; `figure` `{ chart, caption? }`; `callout` `{ chart, lead, body, label?, tone?, side? }`; `scrolly` `{ chart, steps, cumulative?, scrollMode?, side?, stepHeight? }` (the props of `scrolly-chart`); `quote` `{ quote, attribution?, role? }`; `stats` `{ items, variant?, title? }` (the props of `stat-row`); `multiples` `{ facet, ... }` (props of `small-multiples`, or of `small-multiple-grid` when it has a `chart`); `break` `{ title, step?, total?, text? }`. Any block takes `width: \"text\" | \"wide\" | \"full\"` and an `id`. A bare chart spec is treated as a wide figure."
           },
           "measure": {
             "type": "number",
@@ -18014,7 +19002,11 @@
           },
           "theme": {
             "type": "object",
-            "description": "Theme override, passed on to everything inside."
+            "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece."
+          },
+          "frame": {
+            "type": "boolean",
+            "description": "Paint the theme's surface behind the piece, with page padding. Default: on when `theme` is a named theme with its own surface. Set false when the host already paints it."
           },
           "mode": {
             "enum": [

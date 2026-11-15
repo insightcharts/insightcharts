@@ -12,6 +12,7 @@ const data = [
 export function BumpChartDemo() {
   return (
     <BumpChart
+      theme="poster"
       data={data}
       x="year"
       y={["Tesla", "BYD", "SAIC", "Volkswagen", "Hyundai", "Geely"]}

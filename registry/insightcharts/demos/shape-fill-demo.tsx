@@ -9,6 +9,7 @@ const data = [
 export function ShapeFillDemo() {
   return (
     <ShapeFill
+      theme="blueprint"
       data={data}
       name="reservoir"
       value="level"

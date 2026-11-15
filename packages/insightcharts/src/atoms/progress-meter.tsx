@@ -4,7 +4,7 @@ import { useInsightStyles } from "../core/figure";
 import { makeFormatter, type FormatSpec } from "../core/format";
 import { withMeta } from "../core/meta";
 import { useColorMode, type ModeInput } from "../core/mode";
-import { useInsightConfig, useTheme } from "../core/provider";
+import { frameStyle, useInsightConfig, useTheme } from "../core/provider";
 import { chromeVars, type ThemeInput } from "../core/theme";
 
 export interface ProgressMeterProps {
@@ -25,10 +25,14 @@ export interface ProgressMeterProps {
   /** A line under the meter: what the number means, or by when. */
   context?: string;
   format?: FormatSpec;
-  /** Fill colour by meaning. Default `"accent"`. */
-  tone?: "accent" | "positive" | "negative" | "neutral";
-  /** `"md"` has an 8px track, `"sm"` a 6px track with smaller text for dense lists. */
-  size?: "sm" | "md";
+  /** Fill colour by meaning, or a 0-based index into the theme's categorical palette. Default `"accent"`. */
+  tone?: "accent" | "positive" | "negative" | "neutral" | number;
+  /** `"md"` has an 8px track, `"sm"` a 6px track with smaller text for dense lists, `"lg"` a 12px track. */
+  size?: "sm" | "md" | "lg";
+  /** A short muted note after the value, e.g. the share of a total ("26%"). */
+  detail?: string;
+  /** Paint a named theme's own background behind the meter. Default true when `theme` is a theme name. */
+  frame?: boolean;
   theme?: ThemeInput;
   mode?: ModeInput;
   className?: string;
@@ -41,7 +45,7 @@ const FILL = { accent: "var(--_ic-accent)", positive: "var(--_ic-positive)", neg
  * A labelled horizontal meter: one value against a maximum or a target. The value is always
  * printed, so the bar is never the only way to read it.
  */
-function ProgressMeterImpl({ value, label, max, min = 0, target, targetLabel = "Target", showMax, context, format, tone = "accent", size = "md", className, style, ...rest }: ProgressMeterProps) {
+function ProgressMeterImpl({ value, label, max, min = 0, target, targetLabel = "Target", showMax, context, format, tone = "accent", size = "md", detail, frame, className, style, ...rest }: ProgressMeterProps) {
   useInsightStyles();
   const config = useInsightConfig();
   const ref = useRef<HTMLDivElement>(null);
@@ -56,21 +60,23 @@ function ProgressMeterImpl({ value, label, max, min = 0, target, targetLabel = "
   const fmt = makeFormatter(format ?? (end <= 1 && min >= 0 ? "percent" : "auto"), config.locale);
   const valuePct = pct(value);
   const targetPct = target != null ? pct(target) : null;
-  const fill = FILL[tone];
-  const track = size === "sm" ? 6 : 8;
+  const palette = theme[mode].categorical;
+  const fill = typeof tone === "number" ? palette[((Math.round(tone) % palette.length) + palette.length) % palette.length] : (FILL[tone] ?? FILL.accent);
+  const track = size === "sm" ? 6 : size === "lg" ? 12 : 8;
   const small = size === "sm" ? "0.75rem" : "0.8125rem";
   const targetText = target != null ? `${targetLabel} ${fmt(target)}` : "";
   const withMax = showMax ?? max != null;
 
   return (
-    <div ref={ref} data-slot="ic-progress-meter" data-ic-mode={mode} className={className} style={{ ...(chromeVars(theme[mode]) as CSSProperties), fontFamily: "var(--_ic-font)", color: "var(--_ic-ink)", minWidth: 0, ...style }}>
-      <div data-slot="ic-progress-meter-header" style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 12, fontSize: size === "sm" ? "0.8125rem" : "0.875rem", lineHeight: 1.4 }}>
+    <div ref={ref} data-slot="ic-progress-meter" data-ic-mode={mode} className={className} style={{ ...(chromeVars(theme[mode]) as CSSProperties), fontFamily: "var(--_ic-font)", color: "var(--_ic-ink)", minWidth: 0, boxSizing: "border-box", ...frameStyle(rest.theme, mode, frame), ...style }}>
+      <div data-slot="ic-progress-meter-header" style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 12, fontSize: size === "sm" ? "0.8125rem" : size === "lg" ? "1rem" : "0.875rem", lineHeight: 1.4 }}>
         <span id={id} data-slot="ic-progress-meter-label" style={{ minWidth: 0, fontWeight: 500, color: "var(--_ic-ink)" }}>
           {label}
         </span>
         <span data-slot="ic-progress-meter-value" style={{ flex: "none", fontVariantNumeric: "tabular-nums", fontWeight: 650, color: "var(--_ic-ink)" }}>
           {fmt(value)}
           {withMax ? <span style={{ fontWeight: 400, color: "var(--_ic-muted)" }}> of {fmt(end)}</span> : null}
+          {detail ? <span data-slot="ic-progress-meter-detail" style={{ display: "inline-block", minWidth: "4.5ch", textAlign: "right", fontWeight: 400, color: "var(--_ic-muted)" }}>{detail}</span> : null}
         </span>
       </div>
       <div
@@ -123,8 +129,11 @@ export const ProgressMeter = withMeta(ProgressMeterImpl, {
     { name: "showMax", type: "boolean", description: 'Print "of {max}" after the value. Default: only when `max` is given.' },
     { name: "context", type: "string", description: "A line under the meter that gives the number meaning." },
     { name: "format", type: "FormatSpec", description: 'Number format. Defaults to `"percent"` when the track ends at 1 or less, otherwise `"auto"`.' },
-    { name: "tone", type: '"accent" | "positive" | "negative" | "neutral"', default: '"accent"', description: "Fill colour by meaning." },
-    { name: "size", type: '"sm" | "md"', default: '"md"', description: "`sm` for dense stacks." },
+    { name: "tone", type: '"accent" | "positive" | "negative" | "neutral" | number', default: '"accent"', description: "Fill colour by meaning. A number picks from the theme's categorical palette, 0-based, for a stack of meters that name different entities." },
+    { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Track of 6, 8 or 12px. `sm` for dense stacks, `lg` for a single featured meter." },
+    { name: "detail", type: "string", description: 'A short muted note after the value, e.g. a share of the total ("26%").' },
+    { name: "theme", type: "ThemeInput", description: 'A theme name such as `"science"`, or token overrides. A named theme paints its own ground.' },
+    { name: "frame", type: "boolean", description: "Set false to stop a named theme painting its ground." },
   ],
   example: { type: "progress-meter", label: "Homes with a heat pump or district heating", value: 0.46, max: 1, showMax: false, target: 0.7, targetLabel: "2030 target", context: "Up from 31% in 2020. At the current rate the target is reached in 2033." },
 });
@@ -133,4 +142,9 @@ export const examples = {
   "Against a maximum": { label: "Annual carbon budget used", value: 318, max: 400, format: "{value} Mt", tone: "negative", context: "With ten weeks of the year left." },
   "Target passed": { label: "Fundraising round", value: 2_340_000, target: 2_000_000, format: "currency:USD", tone: "positive", context: "Closed 17% above the goal." },
   "Small, low value": { size: "sm", label: "Rural fibre coverage", value: 0.08, target: 0.95, targetLabel: "Goal" },
+  "Large, science": { theme: "science", size: "lg", label: "Children vaccinated against measles", value: 0.91, max: 1, showMax: false, target: 0.95, targetLabel: "WHO target", context: "Coverage was 86% in 2021." },
+  "Categorical tone with a detail, ledger": { theme: "ledger", label: "Enterprise plan revenue", value: 318000, max: 589000, showMax: false, format: "currency:USD", tone: 1, detail: "54%", context: "Share of $589,000 monthly recurring revenue." },
+  "Capacity, magenta": { theme: "magenta", size: "lg", label: "Tickets sold for the final", value: 68400, max: 72000, format: "integer", context: "3,600 seats were unsold on 1 June." },
+  "Neutral tone, mono": { theme: "mono", label: "Sprint scope completed", value: 34, max: 40, format: "{value} points", tone: "neutral", context: "With two days of the sprint left." },
+  "Forest": { theme: "forest", label: "Native woodland replanted", value: 1240, target: 2000, format: "{value} ha", targetLabel: "2026 goal", context: "620 hectares were planted in 2024." },
 };

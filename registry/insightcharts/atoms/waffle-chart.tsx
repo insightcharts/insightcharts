@@ -70,6 +70,7 @@ export const WaffleChart = defineChart<WaffleChartProps>({
     { name: "names", type: "Record<string, string>", description: "Display names for category keys." },
   ],
   example: {
+    theme: "poster",
     type: "waffle-chart",
     data: [{ group: "Have never been online", share: 33 }],
     name: "group",
@@ -95,11 +96,16 @@ export const WaffleChart = defineChart<WaffleChartProps>({
       if (!Number.isNaN(v) && v > 0) byKey.set(key, (byKey.get(key) ?? 0) + v);
     }
     let cats = [...byKey].map(([key, value]) => ({ key, name: p.names?.[key] ?? key, value, other: false }));
-    if (cats.length > MAX_CATEGORIES) {
+    // Never more identity colours than the theme has (poster themes have four or five): the smallest categories fold into a neutral "Other".
+    // With a highlight only the named entities take a colour, so the palette is not the limit.
+    const palette = ctx.highlight.length ? MAX_CATEGORIES : t.categorical.length;
+    if (cats.length > Math.min(MAX_CATEGORIES, palette)) {
       const ranked = [...cats].sort((a, b) => b.value - a.value);
-      const keep = new Set(ranked.slice(0, MAX_CATEGORIES - 1).map((c) => c.key));
+      const keep = new Set(ranked.slice(0, Math.min(MAX_CATEGORIES - 1, palette)).map((c) => c.key));
       const folded = cats.filter((c) => !keep.has(c.key));
-      cats = [...cats.filter((c) => keep.has(c.key)), { key: "Other", name: `Other (${folded.length})`, value: folded.reduce((s, c) => s + c.value, 0), other: true }];
+      // A single folded category keeps its own name; it only loses its colour.
+      const rest = folded.length === 1 ? { ...folded[0], other: true } : { key: "Other", name: `Other (${folded.length})`, value: folded.reduce((s, c) => s + c.value, 0), other: true };
+      cats = [...cats.filter((c) => keep.has(c.key)), rest];
     }
     const sum = cats.reduce((s, c) => s + c.value, 0);
     const total = p.total != null && p.total > sum ? p.total : sum;

@@ -67,6 +67,7 @@ const AUSTRALIA_BLOCKS: GeoJsonLike = {
 };
 const EXAMPLE = {
   type: "choropleth-map",
+  theme: "earth",
   geo: AUSTRALIA_BLOCKS,
   data: [
     { state: "Queensland", share: 45 },

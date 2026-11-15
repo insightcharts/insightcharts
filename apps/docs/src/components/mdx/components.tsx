@@ -255,7 +255,7 @@ export const mdxComponents: MDXComponents = {
   ),
   // No overflow clipping here: a sticky graphic needs the page as its scroll container.
   StickyDemo: ({ name, props }: { name: string; props?: Record<string, unknown> }) => (
-    <div className="not-prose my-6 rounded-xl border px-5 sm:px-8">
+    <div className="not-prose my-6">
       <BareDemo name={name} props={props} />
     </div>
   ),

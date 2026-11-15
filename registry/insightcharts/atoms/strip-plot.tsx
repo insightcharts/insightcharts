@@ -1,7 +1,7 @@
 "use client";
 
 import { CustomChart } from "echarts/charts";
-import { alpha, defineChart, categoryAxis, morph, tooltipHtml, valueAxis } from "insightcharts/core";
+import { alpha, luminance, mix, defineChart, categoryAxis, morph, tooltipHtml, valueAxis } from "insightcharts/core";
 import { toNumber } from "insightcharts/data";
 
 export interface StripPlotProps {
@@ -98,7 +98,13 @@ export const StripPlot = defineChart<StripPlotProps>({
     const lift = ctx.mode === "dark" ? 1.35 : 1;
     const opacity = Math.min(1, (biggest <= 15 ? 0.85 : biggest <= 60 ? 0.6 : biggest <= 250 ? 0.4 : 0.25) * lift);
     const anyHighlight = ctx.dimmed("\u0000");
-    const colorOf = (g: string) => (anyHighlight ? ctx.color(g) : ctx.color());
+    // Context marks are small: on a ground the theme's context colour barely separates from
+    // (under 1.5:1, e.g. a pale painted sheet) they are pulled towards the muted ink.
+    const ls = luminance(t.surface);
+    const lc = luminance(t.context);
+    const faint = (Math.max(ls, lc) + 0.05) / (Math.min(ls, lc) + 0.05) < 1.5;
+    const contextMark = faint ? mix(t.context, t.muted, 0.45) : t.context;
+    const colorOf = (g: string) => (anyHighlight ? (ctx.dimmed(g) ? contextMark : ctx.color(g)) : ctx.color());
     const rowH = Math.max(12, (ctx.height - 40) / Math.max(1, names.length));
     const markH = Math.max(8, Math.min(26, rowH * 0.5));
     const showMedianValue = !!p.median && rowH >= 30;

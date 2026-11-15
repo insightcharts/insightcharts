@@ -1,7 +1,7 @@
 "use client";
 
 import { type CSSProperties, useRef } from "react";
-import { useInsightStyles, withMeta, useColorMode, type ModeInput, useInsightConfig, useTheme, chromeVars, type ThemeInput } from "insightcharts/core";
+import { useInsightStyles, withMeta, useColorMode, type ModeInput, frameStyle, useInsightConfig, useTheme, chromeVars, type ThemeInput } from "insightcharts/core";
 
 export interface LegendKeyItem {
   label: string;
@@ -35,7 +35,10 @@ export interface LegendKeyProps {
   /** Ramp width in px. It never exceeds the container. Default 240. */
   width?: number;
   align?: "left" | "center";
+  /** A built-in theme name or a theme object. A named theme paints its own background behind the block. */
   theme?: ThemeInput;
+  /** Paint the named theme's background behind the block. Default: on for a named theme with its own surface. */
+  frame?: boolean;
   mode?: ModeInput;
   className?: string;
   style?: CSSProperties;
@@ -112,7 +115,7 @@ function LegendKeyImpl({ scale, items, labels, colors, stepped = false, title, s
   }
 
   return (
-    <div ref={ref} data-slot="ic-legend-key" data-scale={kind} data-ic-mode={mode} role={title ? "group" : undefined} aria-label={title} className={className} style={{ ...(chromeVars(theme[mode]) as CSSProperties), fontFamily: "var(--_ic-font)", fontSize: "0.8125rem", lineHeight: 1.4, color: "var(--_ic-ink-2)", textAlign: align, minWidth: 0, ...style }}>
+    <div ref={ref} data-slot="ic-legend-key" data-scale={kind} data-ic-mode={mode} role={title ? "group" : undefined} aria-label={title} className={className} style={{ ...(chromeVars(theme[mode]) as CSSProperties), fontFamily: "var(--_ic-font)", fontSize: "0.8125rem", lineHeight: 1.4, color: "var(--_ic-ink-2)", textAlign: align, minWidth: 0, ...frameStyle(rest.theme, mode, rest.frame), ...style }}>
       {title ? (
         <div data-slot="ic-legend-key-title" style={{ fontSize: "0.75rem", fontWeight: 600, color: "var(--_ic-ink)", marginBottom: kind === "categorical" ? 6 : 7 }}>
           {title}
@@ -143,6 +146,7 @@ export const LegendKey = withMeta(LegendKeyImpl, {
     { name: "orientation", type: '"horizontal" | "vertical"', default: '"horizontal"', description: "Categorical layout." },
     { name: "width", type: "number", default: "240", description: "Ramp width in px, capped at the container." },
     { name: "align", type: '"left" | "center"', default: '"left"', description: "Alignment within the container." },
+    { name: "frame", type: "boolean", description: "Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off." },
   ],
-  example: { type: "legend-key", title: "Source of electricity", items: ["Solar", "Wind", "Hydro", "Gas", { label: "Other", muted: true }] },
+  example: { type: "legend-key", theme: "poster", title: "Source of electricity", items: ["Solar", "Wind", "Hydro", "Gas", { label: "Other", muted: true }] },
 });

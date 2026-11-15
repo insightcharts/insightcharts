@@ -1,7 +1,7 @@
 "use client";
 
 import { type CSSProperties, type ReactNode, type RefObject, useEffect, useRef, useState } from "react";
-import { useInsightStyles, withMeta, useColorMode, type ModeInput, useInsightConfig, useTheme, chromeVars, type ThemeInput } from "insightcharts/core";
+import { useInsightStyles, withMeta, useColorMode, type ModeInput, frameStyle, useInsightConfig, useTheme, chromeVars, type ThemeInput } from "insightcharts/core";
 
 export interface PullQuoteProps {
   /** The words quoted, without quotation marks (they are added). */
@@ -17,7 +17,10 @@ export interface PullQuoteProps {
   /** `lg` for a quote that anchors a section, `md` inside a column. */
   size?: "md" | "lg";
   align?: "left" | "center";
+  /** A built-in theme name or a theme object. A named theme paints its own background behind the block. */
   theme?: ThemeInput;
+  /** Paint the named theme's background behind the block. Default: on for a named theme with its own surface. */
+  frame?: boolean;
   mode?: ModeInput;
   className?: string;
   style?: CSSProperties;
@@ -49,24 +52,11 @@ function PullQuoteImpl({ quote, children, attribution, role, cite, size = "lg", 
   const px = size === "lg" ? (narrow ? 22 : 28) : narrow ? 18 : 20;
   const center = align === "center";
   const href = cite && SAFE_HREF.test(cite) ? cite : undefined;
-  return (
-    <figure
-      ref={ref}
-      data-slot="ic-pull-quote"
-      data-ic-mode={mode}
-      className={className}
-      style={{
-        ...(chromeVars(theme[mode]) as CSSProperties),
-        fontFamily: "var(--_ic-font)",
-        color: "var(--_ic-ink)",
-        margin: 0,
-        minWidth: 0,
-        textAlign: align,
-        // A rule down the side marks a left-aligned quote; a centred one stands on its marks and size.
-        ...(center ? null : { borderLeft: "2px solid var(--_ic-accent)", paddingLeft: narrow ? 16 : 24 }),
-        ...style,
-      }}
-    >
+  const ground = frameStyle(rest.theme, mode, rest.frame);
+  // A rule down the side marks a left-aligned quote; a centred one stands on its marks and size.
+  const rule: CSSProperties | null = center ? null : { borderLeft: "2px solid var(--_ic-accent)", paddingLeft: narrow ? 16 : 24 };
+  const body = (
+    <>
       <blockquote
         data-slot="ic-pull-quote-text"
         cite={href}
@@ -103,6 +93,28 @@ function PullQuoteImpl({ quote, children, attribution, role, cite, size = "lg", 
           ) : null}
         </figcaption>
       ) : null}
+    </>
+  );
+  return (
+    <figure
+      ref={ref}
+      data-slot="ic-pull-quote"
+      data-ic-mode={mode}
+      className={className}
+      style={{
+        ...(chromeVars(theme[mode]) as CSSProperties),
+        fontFamily: "var(--_ic-font)",
+        color: "var(--_ic-ink)",
+        margin: 0,
+        minWidth: 0,
+        textAlign: align,
+        // On a painted ground the rule moves to an inner block, so it sits inside the padding.
+        ...(ground ? null : rule),
+        ...ground,
+        ...style,
+      }}
+    >
+      {ground && rule ? <div data-slot="ic-pull-quote-body" style={rule}>{body}</div> : body}
     </figure>
   );
 }
@@ -124,9 +136,11 @@ export const PullQuote = withMeta(PullQuoteImpl, {
     { name: "cite", type: "string", description: "Source URL: set as the blockquote `cite` and linked from the attribution." },
     { name: "size", type: '"md" | "lg"', default: '"lg"', description: "`lg` anchors a section; `md` sits inside a column." },
     { name: "align", type: '"left" | "center"', default: '"left"', description: "Left-aligned quotes carry a side rule; centred ones do not." },
+    { name: "frame", type: "boolean", description: "Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off." },
   ],
   example: {
     type: "pull-quote",
+    theme: "editorial",
     quote: "Solar set the midday wholesale price on most days in 2023. Our plans had assumed that would happen in the 2030s.",
     attribution: "Marit de Vries",
     role: "Head of system operations, Dutch grid operator",

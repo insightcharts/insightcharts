@@ -9,10 +9,11 @@ import { aggregateValues, toNumber, transformRows, type AggregateOp, type DataIn
 import { FilterChips } from "@/components/insightcharts/molecules/filter-chips";
 import { LinkedCharts } from "@/components/insightcharts/molecules/linked-charts";
 import { Provide } from "@/components/insightcharts/molecules/_shared";
-import { StatRow } from "@/components/insightcharts/molecules/stat-row";
+import { StatRow, type StatRowItem, type StatRowProps } from "@/components/insightcharts/molecules/stat-row";
 import { button, frame, FRAME_DOCS, RULE, Sourcing, SOURCING_DOCS, useTemplate, type TemplateProps, type TemplateSourcing } from "@/components/insightcharts/templates/_shared";
 
-export interface DataExplorerFigure {
+/** A computed figure. Any other field of a `stat-row` item (`delta`, `trend`, display options) is passed through to it. */
+export interface DataExplorerFigure extends Partial<Omit<StatRowItem, "value" | "label" | "context" | "format">> {
   /** What the figure measures. */
   label: string;
   /** Field to aggregate. Not needed for `op: "count"`. */
@@ -54,6 +55,8 @@ export interface DataExplorerProps extends TemplateProps, TemplateSourcing {
   initialSelections?: Record<string, Selection>;
   /** Figures recomputed from the filtered rows. */
   figures?: DataExplorerFigure[];
+  /** How the figures are displayed: any `variant` of `stat-row`. Default `"plain"`. */
+  figuresVariant?: StatRowProps["variant"];
   /** A detail table of the filtered rows. */
   table?: DataExplorerTable;
   /** Display names for fields, used in the filter chips. */
@@ -80,17 +83,18 @@ function compute(figure: DataExplorerFigure, rows: Row[]): number {
   return bottom ? top / bottom : NaN;
 }
 
-function Figures({ figures, unit, locale }: { figures: DataExplorerFigure[]; unit: string; locale?: string }) {
+function Figures({ figures, unit, locale, variant }: { figures: DataExplorerFigure[]; unit: string; locale?: string; variant?: StatRowProps["variant"] }) {
   const store = useInsightData();
   const rows = store?.rowsFor() ?? [];
   const all = store?.all ?? [];
   const filtered = !!store && Object.keys(store.selections).length > 0;
   const items = figures.slice(0, 5).map((f) => {
-    const fmt = makeFormatter(f.format, locale);
+    const { label, field: _field, op: _op, where: _where, per: _per, format, context, ...display } = f;
+    const fmt = makeFormatter(format, locale);
     const value = compute(f, rows);
-    return { label: f.label, value: Number.isFinite(value) ? fmt(value) : "–", context: filtered ? `${fmt(compute(f, all))} across all ${unit}` : f.context };
+    return { ...display, label, value: Number.isFinite(value) ? fmt(value) : "–", context: filtered ? `${fmt(compute(f, all))} across all ${unit}` : context };
   });
-  return <StatRow items={items} />;
+  return <StatRow items={items} variant={variant} />;
 }
 
 function Detail({ table }: { table: DataExplorerTable }) {
@@ -107,7 +111,7 @@ function Detail({ table }: { table: DataExplorerTable }) {
  * A guided crossfilter. It opens on the author's selection, so the first thing the reader
  * sees is the finding; every click after that is their own question.
  */
-function DataExplorerImpl({ title, kicker, deck, byline, date, instructions, finding, data, transform, charts, initialSelections, figures, table, labels, unit = "rows", count = false, rowUnit = "rows", columns, restoreLabel = "Back to the starting view", sources, period, method, note, credit, level = 1, maxWidth = 1080, className, style, ...rest }: DataExplorerProps) {
+function DataExplorerImpl({ title, kicker, deck, byline, date, instructions, finding, data, transform, charts, initialSelections, figures, figuresVariant, table, labels, unit = "rows", count = false, rowUnit = "rows", columns, restoreLabel = "Back to the starting view", sources, period, method, note, credit, level = 1, maxWidth = 1080, className, style, ...rest }: DataExplorerProps) {
   const { ref, mode, root, phone, gap, locale } = useTemplate(rest);
   const [selections, setSelections] = useState<Record<string, Selection>>(initialSelections ?? {});
   const atStart = stableKey(selections) === stableKey(initialSelections ?? {});
@@ -138,8 +142,8 @@ function DataExplorerImpl({ title, kicker, deck, byline, date, instructions, fin
               </div>
               {instructions && Object.keys(selections).length ? <p data-slot="ic-data-explorer-instructions" style={{ margin: "-12px 0 0", fontSize: "0.8125rem", lineHeight: 1.5, color: "var(--_ic-muted)" }}>{instructions}</p> : null}
               {figures?.length ? (
-                <section data-slot="ic-data-explorer-figures" aria-label="Figures for the current selection" aria-live="polite" style={{ minWidth: 0, borderTop: RULE, borderBottom: RULE, padding: phone ? "20px 0" : "24px 0" }}>
-                  <Figures figures={figures} unit={unit} locale={locale} />
+                <section data-slot="ic-data-explorer-figures" aria-label="Figures for the current selection" aria-live="polite" style={{ minWidth: 0, ...(figuresVariant && figuresVariant !== "plain" ? null : { borderTop: RULE, borderBottom: RULE, padding: phone ? "20px 0" : "24px 0" }) }}>
+                  <Figures figures={figures} unit={unit} locale={locale} variant={figuresVariant} />
                 </section>
               ) : null}
             </div>
@@ -187,7 +191,7 @@ export const DataExplorer = withMeta(DataExplorerImpl, {
   description: "A set of linked charts over one shared dataset that filter each other. It has a headline, a sentence of instructions with filter chips, a row of figures that recompute from the filtered rows, two to four charts and an optional detail table. It opens on selections the author chooses.",
   whenToUse: "Use it when readers will want to filter the data themselves after seeing the main finding. State the finding with its number in the headline. Set `initialSelections` so the piece opens on the view the headline describes. Use the figures and the `finding` callout to give the numbers for that view. Keep to one dataset and two to four small, plain charts. Readers click the charts to filter, so keep them all the same size.",
   avoid: "A fixed message that needs no exploration (use `executive-brief` or `visual-essay`). Charts over unrelated datasets, which cannot filter each other. More than four charts or five figures.",
-  composes: ["headline", "callout", "filter-chips", "stat-row", "linked-charts", "data-table", "source-note", "bar-chart"],
+  composes: ["headline", "callout", "filter-chips", "stat-row", "linked-charts", "data-table", "source-note", "bar-chart", "donut-chart", "lollipop-chart", "segmented-bar"],
   props: [
     { name: "title", type: "string", required: true, description: "What the starting view shows, as one plain sentence with the number in it." },
     { name: "kicker", type: "string", description: "Small label above the title." },
@@ -201,6 +205,7 @@ export const DataExplorer = withMeta(DataExplorerImpl, {
     { name: "charts", type: "Slot[]", required: true, description: "Two to four chart specs. Give each a stable `id`, `select: true` (or a field name) and its own aggregating `transform`; leave out `data`." },
     { name: "initialSelections", type: "Record<string, { field, values?, range? }>", description: "Selections the piece opens with, keyed by chart `id`. A button restores them after the reader changes the filter." },
     { name: "figures", type: "{ label, field?, op?, where?: { field, value }, per?, format?, context? }[]", description: "Figures recomputed from the filtered rows: `op` over `field` (default sum; count without a field), optionally restricted by `where` and divided by the sum of `per` for a rate or share. While a filter is active each shows the all-rows value as context." },
+    { name: "figuresVariant", type: 'StatRowProps["variant"]', default: '"plain"', description: "How the figures are displayed: any `variant` of `stat-row`, e.g. `tiles`, `tinted` or `outline-accent`. Extra fields on a figure (`tone`, `surface`, `icon`...) are passed to its `stat-row` item." },
     { name: "table", type: "{ transform?, columns?, caption?, sort?, highlight?, ... }", description: "A detail table of the filtered rows: the props of `data-table` without `rows`, plus a `transform` applied first." },
     { name: "labels", type: "Record<string, string>", description: "Display names for fields in the filter chips." },
     { name: "unit", type: "string", default: '"rows"', description: 'Noun for what the figures total, used in figure context ("3,650 across all trips").' },
@@ -213,6 +218,7 @@ export const DataExplorer = withMeta(DataExplorerImpl, {
   ],
   example: {
     type: "data-explorer",
+    theme: "science",
     kicker: "City bike share · June",
     title: "Casual riders' trips averaged 24.6 minutes in June, against 12.0 for members",
     deck: "70% of casual trips were at weekends. 40% started in Riverside. The view below is filtered to casual riders.",
@@ -220,6 +226,7 @@ export const DataExplorer = withMeta(DataExplorerImpl, {
     finding: { lead: "Casual riders made 1.43 million of the 3.65 million trips in June", body: "520,000 of them were at weekend middays. Members made 34% of their trips at weekends." },
     data: trips,
     unit: "trips",
+    figuresVariant: "outline-accent",
     labels: { rider: "Rider", daypart: "Time of day", district: "District", day: "Day" },
     initialSelections: { "by-rider": { field: "rider", values: ["Casual"] } },
     figures: [
@@ -229,10 +236,10 @@ export const DataExplorer = withMeta(DataExplorerImpl, {
       { label: "Share starting in Riverside", field: "trips", where: { field: "district", value: "Riverside" }, per: "trips", format: "percent" },
     ],
     charts: [
-      { type: "bar-chart", id: "by-rider", x: "rider", y: "trips", select: true, sort: "none", orientation: "horizontal", format: "integer", title: "Rider", subtitle: "Trips, thousands", transform: sumTrips("rider") },
+      { type: "donut-chart", id: "by-rider", name: "rider", value: "trips", select: true, format: "integer", height: 220, title: "Rider", subtitle: "Trips, thousands", transform: sumTrips("rider") },
       { type: "bar-chart", id: "by-day", x: "day", y: "trips", select: true, sort: "none", orientation: "horizontal", format: "integer", title: "Day", subtitle: "Trips, thousands", transform: sumTrips("day") },
       { type: "bar-chart", id: "by-daypart", x: "daypart", y: "trips", select: true, sort: "none", orientation: "vertical", format: "integer", height: 220, title: "Time of day", subtitle: "Trips, thousands", transform: sumTrips("daypart") },
-      { type: "bar-chart", id: "by-district", x: "district", y: "trips", select: true, sort: "desc", orientation: "horizontal", format: "integer", title: "Start district", subtitle: "Trips, thousands", transform: sumTrips("district") },
+      { type: "lollipop-chart", id: "by-district", x: "district", y: "trips", select: true, sort: "desc", format: "integer", title: "Start district", subtitle: "Trips, thousands", transform: sumTrips("district") },
     ],
     table: {
       caption: "Selected trips by start district and time of day",

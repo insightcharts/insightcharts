@@ -47,6 +47,7 @@ export const Treemap = defineChart<TreemapProps>({
     { name: "names", type: "Record<string, string>", description: "Display names for group keys." },
   ],
   example: {
+    theme: "paper",
     type: "treemap",
     data: [
       { sector: "Energy", source: "Electricity and heat", gt: 15.8 },
@@ -86,11 +87,14 @@ export const Treemap = defineChart<TreemapProps>({
     const groupName = (g: string) => p.names?.[g] ?? g;
     const groupTotal = (g: string) => leaves.filter((l) => l.group === g).reduce((s, l) => s + l.value, 0);
     // Identity colour belongs to the group; ungrouped tiles share the accent so area alone carries the comparison.
+    // Groups past the palette (poster themes have four or five colours) turn neutral instead of repeating a colour.
+    const maxColours = Math.min(MAX_COLOURS, t.categorical.length);
     const baseOf = (l: Leaf) => {
       if (!grouped) return ctx.color(l.key);
       const gi = groups.indexOf(l.group);
+      if (ctx.highlight.length === 0) return gi < maxColours ? ctx.color(l.group, gi) : t.context;
       if (!ctx.dimmed(l.key)) return ctx.color(l.key, gi);
-      return gi < MAX_COLOURS || ctx.dimmed(l.group) ? ctx.color(l.group, gi) : t.context;
+      return gi < maxColours || ctx.dimmed(l.group) ? ctx.color(l.group, gi) : t.context;
     };
     const showValues = p.labels !== false;
     const showHeads = grouped && (p.groupLabels ?? !ctx.compact);
@@ -197,7 +201,7 @@ export const Treemap = defineChart<TreemapProps>({
 
     const top = [...leaves].sort(desc)[0];
     const legend: LegendItem[] =
-      grouped && !showHeads ? groups.slice(0, MAX_COLOURS).map((g, gi) => ({ name: groupName(g), color: ctx.color(g, gi), muted: ctx.dimmed(g) && leaves.filter((l) => l.group === g).every((l) => ctx.dimmed(l.key)) })) : [];
+      grouped && !showHeads ? groups.slice(0, maxColours).map((g, gi) => ({ name: groupName(g), color: ctx.color(g, gi), muted: ctx.dimmed(g) && leaves.filter((l) => l.group === g).every((l) => ctx.dimmed(l.key)) })) : [];
 
     return {
       legend,

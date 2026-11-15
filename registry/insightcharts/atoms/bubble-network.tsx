@@ -64,6 +64,7 @@ export const BubbleNetwork = defineChart<BubbleNetworkProps>({
   ],
   example: {
     type: "bubble-network",
+    theme: "ocean",
     data: [
       { airport: "Lisbon", m: 34 },
       { airport: "Madrid", m: 60 },

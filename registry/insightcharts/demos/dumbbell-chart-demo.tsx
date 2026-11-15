@@ -12,6 +12,7 @@ const data = [
 export function DumbbellChartDemo() {
   return (
     <DumbbellChart
+      theme="science"
       data={data}
       category="country"
       from="y2000"

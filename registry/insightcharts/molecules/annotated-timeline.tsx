@@ -96,11 +96,13 @@ export const AnnotatedTimeline = withMeta(AnnotatedTimelineImpl, {
     { name: "subtitle", type: "string", description: "Scope and period." },
     { name: "source", type: "string", description: 'Shown under the timeline as "Source: ...".' },
     { name: "note", type: "string", description: "Method note or caveat." },
-    { name: "theme", type: "ThemeInput", description: "Theme override, passed on to every event." },
+    { name: "theme", type: "ThemeInput", description: "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to every event. A named theme with its own surface paints that surface behind the component." },
+    { name: "frame", type: "boolean", description: "Paint the theme's surface behind the component. Default: on for a named theme with its own surface." },
     { name: "mode", type: '"auto" | "system" | "light" | "dark"', default: '"auto"', description: "Colour mode." },
   ],
   example: {
     type: "annotated-timeline",
+    theme: "paper",
     title: "The ECB raised its deposit rate from −0.5% to 4% between July 2022 and September 2023",
     subtitle: "Euro area deposit facility rate and annual inflation, 2021 to 2024",
     events: [

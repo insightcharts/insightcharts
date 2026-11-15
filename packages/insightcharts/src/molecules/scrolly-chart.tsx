@@ -127,6 +127,14 @@ const story = {
   ],
 };
 
+const QUARTERS = [2022, 2023, 2024].flatMap((year) => [1, 2, 3, 4].map((q) => `Q${q} ${year}`));
+const rates = QUARTERS.map((quarter, i) => ({
+  quarter,
+  "Bank rate": [0.5, 1.0, 1.75, 3.0, 4.0, 4.75, 5.25, 5.25, 5.25, 5.25, 5.0, 4.75][i],
+  "Two-year fixed": [2.2, 3.0, 4.2, 6.0, 5.4, 5.8, 6.6, 6.0, 5.8, 5.9, 5.5, 5.4][i],
+  "Five-year fixed": [2.4, 3.1, 4.1, 5.7, 5.0, 5.3, 6.1, 5.6, 5.3, 5.5, 5.2, 5.1][i],
+}));
+
 export const ScrollyChart = withMeta(ScrollyChartImpl, {
   name: "scrolly-chart",
   component: "ScrollyChart",
@@ -136,7 +144,7 @@ export const ScrollyChart = withMeta(ScrollyChartImpl, {
   description: "A scroll-driven story from JSON: one base chart spec and a list of steps, each with narration and a patch of chart props applied while that step is active.",
   whenToUse: "Walking a reader through one chart in stages: show everything, highlight the subject, change the measure, add the annotation. Make ONE change per step (the highlight, the data or the encoding) so the reader can see what changed.",
   avoid: "Steps that change several things at once, or that swap to an unrelated chart (start a new `section` instead). More than about seven steps. A fact that one view can show (use `chart-callout`). In documents that will be printed or embedded in a short frame, set `scrollMode: \"steps\"`.",
-  composes: ["prose", "bar-chart"],
+  composes: ["prose", "bar-chart", "line-chart"],
   props: [
     { name: "chart", type: "InsightSpec", required: true, description: "The base chart spec: `{ type, data, x, y, ... }`. Give it a `title`; steps may replace it." },
     { name: "steps", type: "{ content, id?, label?, ...chart props }[]", required: true, description: "The steps in order. `content` is a short paragraph that says plainly what the chart now shows (`**bold**` works). Every other key is a chart prop merged over `chart` for that step: `highlight`, `transform`, `annotations`, `x`, `y`, `title`… Use `null` to remove a base prop. Change one thing per step." },
@@ -150,14 +158,16 @@ export const ScrollyChart = withMeta(ScrollyChartImpl, {
     { name: "subtitle", type: "string", description: "Line under the heading." },
     { name: "source", type: "string", description: 'Shown after the last step as "Source: ...". Prefer the chart\'s own `source`, which stays visible.' },
     { name: "note", type: "string", description: "Method note or caveat." },
-    { name: "theme", type: "ThemeInput", description: "Theme override, passed on to the chart and the step cards." },
+    { name: "theme", type: "ThemeInput", description: "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the chart and the step cards. A named theme with its own surface paints that surface behind the component." },
+    { name: "frame", type: "boolean", description: "Paint the theme's surface behind the component. Default: on for a named theme with its own surface." },
     { name: "mode", type: '"auto" | "system" | "light" | "dark"', default: '"auto"', description: "Colour mode." },
   ],
-  example: { type: "scrolly-chart", ...story, stepHeight: "70vh", stickyTop: 16 },
+  example: { type: "scrolly-chart", theme: "earth", ...story, stepHeight: "70vh", stickyTop: 16 },
 });
 
 export const examples = {
-  "Steps mode (buttons), cumulative patches": {
+  "Steps mode (buttons), cumulative patches, noir theme": {
+    theme: "noir",
     scrollMode: "steps",
     cumulative: true,
     chart: story.chart,
@@ -169,4 +179,16 @@ export const examples = {
     ],
   },
   "Swipe mode": { scrollMode: "swipe", ...story },
+  "Three lines, one highlighted per step, ledger theme": {
+    theme: "ledger",
+    scrollMode: "steps",
+    title: "The average two-year fixed mortgage rate was 5.4% in the last quarter of 2024",
+    chart: { type: "line-chart", data: rates, x: "quarter", y: ["Bank rate", "Two-year fixed", "Five-year fixed"], format: "{value}%", zero: true, height: 300, subtitle: "Bank rate and average fixed mortgage rates, quarterly, 2022 to 2024", note: "Illustrative data" },
+    steps: [
+      { label: "All three rates", content: "The chart shows the central bank rate and the average rates of two-year and five-year fixed mortgages." },
+      { label: "Bank rate", content: "The **bank rate** rose from 0.5% in the first quarter of 2022 to 5.25% in the third quarter of 2023.", highlight: "Bank rate", contextLabels: true },
+      { label: "Two-year fixed", content: "The average **two-year fixed rate** was 6.6% in the third quarter of 2023. It was 5.4% in the last quarter of 2024.", highlight: "Two-year fixed", contextLabels: true },
+      { label: "Five-year fixed", content: "The average **five-year fixed rate** was 5.1% in the last quarter of 2024. The two-year rate was 0.3 points higher.", highlight: "Five-year fixed", contextLabels: true },
+    ],
+  },
 };

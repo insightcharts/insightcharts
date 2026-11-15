@@ -14,6 +14,7 @@ const data = [
 export function RadialSpokesDemo() {
   return (
     <RadialSpokes
+      theme="forest"
       data={data}
       name="use"
       value="share"

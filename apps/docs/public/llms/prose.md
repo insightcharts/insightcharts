@@ -64,6 +64,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `lead` | `boolean` | `false` | Set the first paragraph a step larger. |
 | `tone` | `"default" \| "muted"` | `"default"` | `muted` for secondary narration. |
 | `align` | `"left" \| "center"` | `"left"` | Centres the block (text stays left-aligned). |
+| `frame` | `boolean` |  | Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off. |
 
 ## Composition
 
@@ -78,6 +79,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 import { Prose } from "insightcharts";
 
 <Prose
+  theme="editorial"
   size="lg"
   lead
   text={[
@@ -93,6 +95,7 @@ import { Prose } from "insightcharts";
 import { Prose } from "insightcharts";
 
 <Prose
+  theme="sunrise"
   size="sm"
   tone="muted"
   measure={48}

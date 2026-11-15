@@ -90,6 +90,7 @@ export const ScaleLadder = defineChart<ScaleLadderProps>({
     { name: "bandWidth", type: "number", description: "Width of the band in px, at most 40% of the plot width. Default 60, or 46 on narrow screens." },
   ],
   example: {
+    theme: "magenta",
     type: "scale-ladder",
     data: [
       { thing: "Fridge", c: 4 },
@@ -388,6 +389,7 @@ export const examples = {
     note: "Illustrative figures for an invented city.",
   },
   "Stress: 14 items, crowded values, long names": {
+    theme: "blueprint",
     data: [
       ["Cathedral spire", 96], ["Old telecommunications tower", 142], ["Harbour crane", 68], ["Riverside residential tower, phase two", 131], ["City hall clock tower", 74],
       ["Northgate office block", 88], ["Stadium floodlight mast", 62], ["University library", 41], ["Grain silo", 58], ["Central Station roof", 33],
@@ -402,5 +404,28 @@ export const examples = {
     title: "The port wind turbine reached 198 metres at its blade tip",
     subtitle: "Height of 14 structures in one city, metres above ground",
     note: "Illustrative figures for an invented city.",
+  },
+  "Height, one icon for all, one highlighted": {
+    theme: "forest",
+    data: [
+      { tree: "Apple tree", m: 5 },
+      { tree: "Silver birch", m: 20 },
+      { tree: "English oak", m: 30 },
+      { tree: "Norway spruce", m: 45 },
+      { tree: "Douglas fir", m: 75 },
+      { tree: "Coast redwood", m: 115 },
+    ],
+    name: "tree",
+    value: "m",
+    icon: "tree",
+    scaleLabel: "Height, metres",
+    format: "{value} m",
+    min: 0,
+    max: 120,
+    ticks: [0, 30, 60, 90, 120],
+    highlight: "Coast redwood",
+    title: "The coast redwood reaches 115 metres, 23 times the apple tree",
+    subtitle: "Height of six trees at maturity, metres",
+    note: "Approximate, rounded figures for illustration.",
   },
 };

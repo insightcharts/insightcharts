@@ -10,7 +10,7 @@ import { ChartCallout } from "../molecules/chart-callout";
 import { Provide } from "../molecules/_shared";
 import { ScrollyChart, type ScrollyChartStep } from "../molecules/scrolly-chart";
 import { SmallMultipleGrid } from "../molecules/small-multiple-grid";
-import { StatRow, type StatRowItem } from "../molecules/stat-row";
+import { StatRow, type StatRowItem, type StatRowProps } from "../molecules/stat-row";
 import { below, frame, FRAME_DOCS, Sourcing, SOURCING_DOCS, useTemplate, withHeight, type HeadingLevel, type TemplateProps, type TemplateSourcing } from "./_shared";
 
 /** How far a block may break out of the reading column. */
@@ -33,7 +33,7 @@ export type VisualEssayBlock =
   /** A pinned chart that changes one thing per scroll step. */
   | (BlockBase & { kind: "scrolly"; chart: InsightSpec; steps: ScrollyChartStep[]; cumulative?: boolean; scrollMode?: "auto" | "scroll" | "swipe" | "steps"; side?: "left" | "right"; stepHeight?: string; stickyTop?: number | string; source?: string; note?: string })
   | (BlockBase & { kind: "quote"; quote: string; attribution?: string; role?: string; cite?: string })
-  | (BlockBase & { kind: "stats"; items: StatRowItem[]; title?: string; subtitle?: string; source?: string; note?: string })
+  | (BlockBase & { kind: "stats" } & Omit<StatRowProps, "theme" | "mode" | "frame" | "className" | "style">)
   /** Small multiples. With `chart` it repeats that spec per facet (`small-multiple-grid`); without, it is the `small-multiples` atom. */
   | (BlockBase & { kind: "multiples"; facet: string; chart?: InsightSpec; [prop: string]: unknown })
   /** A chapter break: numbered when `step` is given. */
@@ -90,8 +90,10 @@ function VisualEssayImpl({ title, kicker, deck, byline, date, blocks, measure = 
       }
       case "quote":
         return <PullQuote quote={block.quote} attribution={block.attribution} role={block.role} cite={block.cite} size={phone ? "md" : "lg"} />;
-      case "stats":
-        return <StatRow items={block.items} title={block.title} subtitle={block.subtitle} source={block.source} note={block.note} />;
+      case "stats": {
+        const { kind: _k, width: _w, id: _i, ...props } = block;
+        return <StatRow {...props} />;
+      }
       case "multiples": {
         const { kind: _k, width: _w, id: _i, ...props } = block;
         return props.chart ? <SmallMultipleGrid {...(props as unknown as Parameters<typeof SmallMultipleGrid>[0])} /> : <SmallMultiples {...(props as unknown as Parameters<typeof SmallMultiples>[0])} />;
@@ -189,6 +191,26 @@ const parisModes = [
   { mode: "Other", share: 1.0 },
 ];
 
+const sleepBands = [
+  { band: "Under 5 hours", share: 9 },
+  { band: "5 to 6 hours", share: 22 },
+  { band: "6 to 7 hours", share: 34 },
+  { band: "7 to 8 hours", share: 24 },
+  { band: "8 to 9 hours", share: 8 },
+  { band: "9 hours or more", share: 3 },
+];
+const sleepByAge = [
+  { age: "18 to 29", weeknight: 6.5, weekend: 8.3 },
+  { age: "30 to 44", weeknight: 6.6, weekend: 7.9 },
+  { age: "45 to 59", weeknight: 6.8, weekend: 7.7 },
+  { age: "60 and over", weeknight: 7.3, weekend: 7.6 },
+];
+const HOURS = ["9pm", "10pm", "11pm", "12am", "1am", "2am", "3am", "4am", "5am", "6am", "7am", "8am"];
+const asleep = [
+  { night: "Weeknights", share: [6, 24, 52, 78, 91, 95, 96, 94, 85, 58, 23, 8] },
+  { night: "Weekends", share: [3, 13, 34, 61, 82, 92, 95, 95, 93, 84, 63, 37] },
+].flatMap(({ night, share }) => share.map((value, i) => ({ night, hour: HOURS[i], share: value })));
+
 export const VisualEssay = withMeta(VisualEssayImpl, {
   name: "visual-essay",
   component: "VisualEssay",
@@ -198,7 +220,7 @@ export const VisualEssay = withMeta(VisualEssayImpl, {
   description: "A long article read by scrolling. It has a headline, then an ordered list of blocks in a reading column, then a source note. The blocks are prose, figures, charts with a callout, scrolly sequences, pull quotes, stat rows, small multiples and chapter breaks. Exhibits can be wider than the column.",
   whenToUse: "Use it for a finding that takes several charts and some text to explain. State the main finding with its number in the headline. Put the main figure within the first screen. Alternate text and charts, with two or three short paragraphs before each exhibit. In a scrolly block change one thing per step, such as the highlight, the year or an annotation. Use one accent colour for the subject in every chart.",
   avoid: "A summary for someone who will not scroll (use `executive-brief`). Reference material read out of order (use `report-page`). More than one or two scrolly blocks. Use one only where the chart changes between steps.",
-  composes: ["headline", "prose", "pull-quote", "step-marker", "small-multiples", "chart-callout", "scrolly-chart", "small-multiple-grid", "stat-row", "source-note", "line-chart", "bar-chart"],
+  composes: ["headline", "prose", "pull-quote", "step-marker", "small-multiples", "chart-callout", "scrolly-chart", "small-multiple-grid", "stat-row", "source-note", "line-chart", "bar-chart", "waffle-chart", "dumbbell-chart", "heatmap"],
   props: [
     { name: "title", type: "string", required: true, description: "The essay's main finding, as one plain sentence with the number and the period in it." },
     { name: "kicker", type: "string", description: "Small label above the title." },
@@ -210,7 +232,7 @@ export const VisualEssay = withMeta(VisualEssayImpl, {
       type: "(Block | Slot)[]",
       required: true,
       description:
-        'The story in reading order. Each block has a `kind`: `prose` `{ text, lead? }`; `figure` `{ chart, caption? }`; `callout` `{ chart, lead, body, label?, tone?, side? }`; `scrolly` `{ chart, steps, cumulative?, scrollMode?, side?, stepHeight? }` (the props of `scrolly-chart`); `quote` `{ quote, attribution?, role? }`; `stats` `{ items, title? }`; `multiples` `{ facet, ... }` (props of `small-multiples`, or of `small-multiple-grid` when it has a `chart`); `break` `{ title, step?, total?, text? }`. Any block takes `width: "text" | "wide" | "full"` and an `id`. A bare chart spec is treated as a wide figure.',
+        'The story in reading order. Each block has a `kind`: `prose` `{ text, lead? }`; `figure` `{ chart, caption? }`; `callout` `{ chart, lead, body, label?, tone?, side? }`; `scrolly` `{ chart, steps, cumulative?, scrollMode?, side?, stepHeight? }` (the props of `scrolly-chart`); `quote` `{ quote, attribution?, role? }`; `stats` `{ items, variant?, title? }` (the props of `stat-row`); `multiples` `{ facet, ... }` (props of `small-multiples`, or of `small-multiple-grid` when it has a `chart`); `break` `{ title, step?, total?, text? }`. Any block takes `width: "text" | "wide" | "full"` and an `id`. A bare chart spec is treated as a wide figure.',
     },
     { name: "measure", type: "number", default: "680", description: "Width of the reading column in px." },
     { name: "textSize", type: '"md" | "lg"', description: "Body text size. Default 18px, 16px in narrow containers." },
@@ -219,6 +241,7 @@ export const VisualEssay = withMeta(VisualEssayImpl, {
   ],
   example: {
     type: "visual-essay",
+    theme: "editorial",
     kicker: "Energy transition",
     title: "Solar supplied 11.1% of EU electricity in 2024, more than coal's 9.8%",
     deck: "Solar's share was 2.9% in 2015. Coal's share was 24.6% in 2015.",
@@ -237,14 +260,12 @@ export const VisualEssay = withMeta(VisualEssayImpl, {
           data: mix,
           x: "year",
           y: ["Solar", "Coal"],
-          highlight: "Solar",
           format: "{value}%",
           zero: true,
           title: "Solar's share rose from 2.9% to 11.1% between 2015 and 2024",
           subtitle: "Share of EU electricity generation, 2015 to 2024",
           annotations: [
             { type: "band", axis: "x", from: "2021", to: "2022", label: "Gas price crisis" },
-            { type: "point", x: "2016", y: 22, label: "Coal", position: "top", dot: false },
           ],
           source: "Ember, European Electricity Review 2025",
         },
@@ -260,10 +281,12 @@ export const VisualEssay = withMeta(VisualEssayImpl, {
       },
       {
         kind: "stats",
+        variant: "tiles",
+        subtitle: "Bars show 2020 to 2024",
         items: [
-          { value: "338 GW", label: "Solar capacity installed in the EU, end of 2024", delta: "+66 GW", deltaLabel: "in 2024" },
-          { value: "304 TWh", label: "Solar generation, 2024", delta: 0.22, deltaLabel: "vs 2023" },
-          { value: "269 TWh", label: "Coal generation, 2024", delta: -0.16, deltaLabel: "vs 2023", upIsGood: false },
+          { variant: "bars", series: [137, 165, 205, 272, 338], value: 338, format: "{value} GW", label: "Solar capacity installed in the EU, end of 2024", delta: "+66 GW", deltaLabel: "in 2024" },
+          { variant: "bars", series: [145, 165, 210, 249, 304], value: 304, format: "{value} TWh", label: "Solar generation, 2024", delta: 0.22, deltaLabel: "vs 2023" },
+          { variant: "bars", tone: 1, series: [350, 400, 430, 320, 269], value: 269, format: "{value} TWh", label: "Coal generation, 2024", delta: -0.16, deltaLabel: "vs 2023", upIsGood: false },
         ],
       },
       { kind: "break", step: 2, total: 3, title: "EU electricity generation by source, 2015 and 2024", text: "Scroll to see the shares in 2015 and then in 2024." },
@@ -310,6 +333,7 @@ export const VisualEssay = withMeta(VisualEssayImpl, {
 
 export const examples = {
   "Transport: a shorter essay without a scrolly": {
+    theme: "earth",
     kicker: "Cities",
     title: "Cycling accounts for 11.2% of trips in Paris and cars for 4.3%",
     deck: "Bicycle counts in 2024 were 3.2 times the 2015 level. The city made 50 km of temporary pandemic cycle lanes permanent.",
@@ -339,7 +363,7 @@ export const examples = {
       { kind: "quote", quote: "Counts went up on the streets where we built protected lanes. They stayed up after the lockdowns ended.", attribution: "A city transport planner" },
       {
         kind: "callout",
-        chart: { type: "bar-chart", data: parisModes, x: "mode", y: "share", sort: "none", orientation: "horizontal", format: "{value}%", highlight: "Cycling", title: "Cycling's share of trips within Paris is 2.6 times the car's", subtitle: "Share of trips within Paris by main mode, 2023", source: "Institut Paris Region mobility survey" },
+        chart: { type: "waffle-chart", data: parisModes, name: "mode", value: "share", total: 100, format: "{value}%", title: "Cycling's share of trips within Paris is 2.6 times the car's", subtitle: "Share of trips within Paris by main mode, 2023", source: "Institut Paris Region mobility survey" },
         lead: "Walking accounts for 53.5% of trips within Paris",
         body: "Public transport accounts for 30.0%. Cycling accounts for 11.2% and cars for 4.3%.",
         tone: "neutral",
@@ -349,5 +373,49 @@ export const examples = {
     sources: ["City of Paris open data", "Institut Paris Region"],
     period: "2015 to 2024",
     note: "Counter index is illustrative. Mode shares are approximate, for illustration.",
+  },
+  "Health: sleep survey on a poster ground": {
+    theme: "dusk",
+    kicker: "Sleep survey 2024",
+    title: "Adults slept 6 hours 48 minutes on weeknights in 2024",
+    deck: "They slept 7 hours 52 minutes at weekends. 31% slept less than 6 hours on weeknights.",
+    byline: "By the health desk",
+    date: "2025-02-18",
+    textSize: "md",
+    blocks: [
+      { kind: "prose", lead: true, text: "The survey asked 12,400 adults when they fell asleep and woke up on each of 14 nights. The average weeknight was **6 hours 48 minutes**. Health guidance recommends at least 7 hours." },
+      {
+        kind: "figure",
+        chart: { type: "bar-chart", data: sleepBands, x: "band", y: "share", sort: "none", orientation: "vertical", format: "{value}%", highlight: ["Under 5 hours", "5 to 6 hours"], title: "31% of adults slept less than 6 hours on weeknights", subtitle: "Share of adults by average weeknight sleep, 2024", source: "National sleep survey 2024" },
+      },
+      { kind: "prose", text: "9% of adults slept less than 5 hours on weeknights. 35% slept 7 hours or more." },
+      {
+        kind: "callout",
+        chart: { type: "dumbbell-chart", data: sleepByAge, category: "age", from: "weeknight", to: "weekend", names: { weeknight: "Weeknights", weekend: "Weekends" }, format: "{value} h", sort: "none", highlight: "18 to 29", title: "Adults aged 18 to 29 slept 1.8 hours longer at weekends", subtitle: "Average hours of sleep by age group, weeknights and weekends, 2024", source: "National sleep survey 2024" },
+        label: "By age",
+        lead: "Adults aged 60 and over slept 0.3 hours longer at weekends",
+        body: "They slept 7.3 hours on weeknights. That is the longest of the four age groups.",
+        tone: "neutral",
+      },
+      {
+        kind: "stats",
+        items: [
+          { value: "6h 48m", label: "Average sleep on weeknights", delta: "−9 min", deltaLabel: "vs 2019" },
+          { value: "7h 52m", label: "Average sleep at weekends" },
+          { value: "31%", label: "Adults sleeping less than 6 hours on weeknights", delta: "+4 pts", deltaLabel: "vs 2019", upIsGood: false },
+        ],
+      },
+      {
+        kind: "figure",
+        chart: { type: "heatmap", data: asleep, x: "hour", y: "night", value: "share", format: "{value}%", labels: true, title: "52% of adults were asleep at 11pm on weeknights", subtitle: "Share of adults asleep at each clock hour, weeknights and weekends, 2024", source: "National sleep survey 2024" },
+        caption: "At 7am, 23% of adults were asleep on weeknights and 63% at weekends.",
+      },
+      { kind: "quote", quote: "I go to bed at the same time on Saturday as on Tuesday. I get up two hours later.", attribution: "Survey respondent, aged 27" },
+      { kind: "prose", text: "Average weeknight sleep was 6 hours 57 minutes in the 2019 survey. The share sleeping less than 6 hours was 27% in 2019." },
+    ],
+    sources: "National sleep survey 2024",
+    period: "14 nights per respondent, March to May 2024",
+    method: "Sleep is the time between self-reported falling asleep and waking. Weeknights are Sunday to Thursday nights.",
+    note: "Illustrative data. The quotation is illustrative.",
   },
 };

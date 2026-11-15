@@ -11,10 +11,11 @@ import type { AggregateOp, DataInput, Row, Transform } from "../data/types";
 import { FilterChips } from "../molecules/filter-chips";
 import { LinkedCharts } from "../molecules/linked-charts";
 import { Provide } from "../molecules/_shared";
-import { StatRow } from "../molecules/stat-row";
+import { StatRow, type StatRowItem, type StatRowProps } from "../molecules/stat-row";
 import { button, frame, FRAME_DOCS, RULE, Sourcing, SOURCING_DOCS, useTemplate, type TemplateProps, type TemplateSourcing } from "./_shared";
 
-export interface DataExplorerFigure {
+/** A computed figure. Any other field of a `stat-row` item (`delta`, `trend`, display options) is passed through to it. */
+export interface DataExplorerFigure extends Partial<Omit<StatRowItem, "value" | "label" | "context" | "format">> {
   /** What the figure measures. */
   label: string;
   /** Field to aggregate. Not needed for `op: "count"`. */
@@ -56,6 +57,8 @@ export interface DataExplorerProps extends TemplateProps, TemplateSourcing {
   initialSelections?: Record<string, Selection>;
   /** Figures recomputed from the filtered rows. */
   figures?: DataExplorerFigure[];
+  /** How the figures are displayed: any `variant` of `stat-row`. Default `"plain"`. */
+  figuresVariant?: StatRowProps["variant"];
   /** A detail table of the filtered rows. */
   table?: DataExplorerTable;
   /** Display names for fields, used in the filter chips. */
@@ -82,17 +85,18 @@ function compute(figure: DataExplorerFigure, rows: Row[]): number {
   return bottom ? top / bottom : NaN;
 }
 
-function Figures({ figures, unit, locale }: { figures: DataExplorerFigure[]; unit: string; locale?: string }) {
+function Figures({ figures, unit, locale, variant }: { figures: DataExplorerFigure[]; unit: string; locale?: string; variant?: StatRowProps["variant"] }) {
   const store = useInsightData();
   const rows = store?.rowsFor() ?? [];
   const all = store?.all ?? [];
   const filtered = !!store && Object.keys(store.selections).length > 0;
   const items = figures.slice(0, 5).map((f) => {
-    const fmt = makeFormatter(f.format, locale);
+    const { label, field: _field, op: _op, where: _where, per: _per, format, context, ...display } = f;
+    const fmt = makeFormatter(format, locale);
     const value = compute(f, rows);
-    return { label: f.label, value: Number.isFinite(value) ? fmt(value) : "–", context: filtered ? `${fmt(compute(f, all))} across all ${unit}` : f.context };
+    return { ...display, label, value: Number.isFinite(value) ? fmt(value) : "–", context: filtered ? `${fmt(compute(f, all))} across all ${unit}` : context };
   });
-  return <StatRow items={items} />;
+  return <StatRow items={items} variant={variant} />;
 }
 
 function Detail({ table }: { table: DataExplorerTable }) {
@@ -109,7 +113,7 @@ function Detail({ table }: { table: DataExplorerTable }) {
  * A guided crossfilter. It opens on the author's selection, so the first thing the reader
  * sees is the finding; every click after that is their own question.
  */
-function DataExplorerImpl({ title, kicker, deck, byline, date, instructions, finding, data, transform, charts, initialSelections, figures, table, labels, unit = "rows", count = false, rowUnit = "rows", columns, restoreLabel = "Back to the starting view", sources, period, method, note, credit, level = 1, maxWidth = 1080, className, style, ...rest }: DataExplorerProps) {
+function DataExplorerImpl({ title, kicker, deck, byline, date, instructions, finding, data, transform, charts, initialSelections, figures, figuresVariant, table, labels, unit = "rows", count = false, rowUnit = "rows", columns, restoreLabel = "Back to the starting view", sources, period, method, note, credit, level = 1, maxWidth = 1080, className, style, ...rest }: DataExplorerProps) {
   const { ref, mode, root, phone, gap, locale } = useTemplate(rest);
   const [selections, setSelections] = useState<Record<string, Selection>>(initialSelections ?? {});
   const atStart = stableKey(selections) === stableKey(initialSelections ?? {});
@@ -140,8 +144,8 @@ function DataExplorerImpl({ title, kicker, deck, byline, date, instructions, fin
               </div>
               {instructions && Object.keys(selections).length ? <p data-slot="ic-data-explorer-instructions" style={{ margin: "-12px 0 0", fontSize: "0.8125rem", lineHeight: 1.5, color: "var(--_ic-muted)" }}>{instructions}</p> : null}
               {figures?.length ? (
-                <section data-slot="ic-data-explorer-figures" aria-label="Figures for the current selection" aria-live="polite" style={{ minWidth: 0, borderTop: RULE, borderBottom: RULE, padding: phone ? "20px 0" : "24px 0" }}>
-                  <Figures figures={figures} unit={unit} locale={locale} />
+                <section data-slot="ic-data-explorer-figures" aria-label="Figures for the current selection" aria-live="polite" style={{ minWidth: 0, ...(figuresVariant && figuresVariant !== "plain" ? null : { borderTop: RULE, borderBottom: RULE, padding: phone ? "20px 0" : "24px 0" }) }}>
+                  <Figures figures={figures} unit={unit} locale={locale} variant={figuresVariant} />
                 </section>
               ) : null}
             </div>
@@ -196,6 +200,16 @@ const rateBy = (groupBy: string) => [
   { type: "derive", as: "rate", op: "divide", fields: ["missed", "sessions"] },
 ];
 
+// Support tickets for one quarter, by product area, channel and plan, with the hours taken to resolve them.
+const AREAS = ["Billing", "Login", "Sync", "Reports"];
+const TICKETS: Record<string, number[]> = { "Email|Free": [310, 420, 150, 60], "Email|Paid": [260, 140, 330, 170], "Chat|Free": [120, 380, 90, 30], "Chat|Paid": [240, 160, 410, 120], "Phone|Paid": [90, 40, 130, 40] };
+const HOURS_EACH: Record<string, number> = { Email: 14, Chat: 3, Phone: 6 };
+const tickets = Object.entries(TICKETS).flatMap(([key, counts]) => {
+  const [channel, plan] = key.split("|");
+  return counts.map((n, i) => ({ channel, plan, area: AREAS[i], tickets: n, hours: Math.round(n * HOURS_EACH[channel] * (AREAS[i] === "Sync" ? 1.5 : 1)) }));
+});
+const sumTickets = (groupBy: string) => ({ type: "aggregate", groupBy, measures: { tickets: { op: "sum", field: "tickets" } } });
+
 export const DataExplorer = withMeta(DataExplorerImpl, {
   name: "data-explorer",
   component: "DataExplorer",
@@ -205,7 +219,7 @@ export const DataExplorer = withMeta(DataExplorerImpl, {
   description: "A set of linked charts over one shared dataset that filter each other. It has a headline, a sentence of instructions with filter chips, a row of figures that recompute from the filtered rows, two to four charts and an optional detail table. It opens on selections the author chooses.",
   whenToUse: "Use it when readers will want to filter the data themselves after seeing the main finding. State the finding with its number in the headline. Set `initialSelections` so the piece opens on the view the headline describes. Use the figures and the `finding` callout to give the numbers for that view. Keep to one dataset and two to four small, plain charts. Readers click the charts to filter, so keep them all the same size.",
   avoid: "A fixed message that needs no exploration (use `executive-brief` or `visual-essay`). Charts over unrelated datasets, which cannot filter each other. More than four charts or five figures.",
-  composes: ["headline", "callout", "filter-chips", "stat-row", "linked-charts", "data-table", "source-note", "bar-chart"],
+  composes: ["headline", "callout", "filter-chips", "stat-row", "linked-charts", "data-table", "source-note", "bar-chart", "donut-chart", "lollipop-chart", "segmented-bar"],
   props: [
     { name: "title", type: "string", required: true, description: "What the starting view shows, as one plain sentence with the number in it." },
     { name: "kicker", type: "string", description: "Small label above the title." },
@@ -219,6 +233,7 @@ export const DataExplorer = withMeta(DataExplorerImpl, {
     { name: "charts", type: "Slot[]", required: true, description: "Two to four chart specs. Give each a stable `id`, `select: true` (or a field name) and its own aggregating `transform`; leave out `data`." },
     { name: "initialSelections", type: "Record<string, { field, values?, range? }>", description: "Selections the piece opens with, keyed by chart `id`. A button restores them after the reader changes the filter." },
     { name: "figures", type: "{ label, field?, op?, where?: { field, value }, per?, format?, context? }[]", description: "Figures recomputed from the filtered rows: `op` over `field` (default sum; count without a field), optionally restricted by `where` and divided by the sum of `per` for a rate or share. While a filter is active each shows the all-rows value as context." },
+    { name: "figuresVariant", type: 'StatRowProps["variant"]', default: '"plain"', description: "How the figures are displayed: any `variant` of `stat-row`, e.g. `tiles`, `tinted` or `outline-accent`. Extra fields on a figure (`tone`, `surface`, `icon`...) are passed to its `stat-row` item." },
     { name: "table", type: "{ transform?, columns?, caption?, sort?, highlight?, ... }", description: "A detail table of the filtered rows: the props of `data-table` without `rows`, plus a `transform` applied first." },
     { name: "labels", type: "Record<string, string>", description: "Display names for fields in the filter chips." },
     { name: "unit", type: "string", default: '"rows"', description: 'Noun for what the figures total, used in figure context ("3,650 across all trips").' },
@@ -231,6 +246,7 @@ export const DataExplorer = withMeta(DataExplorerImpl, {
   ],
   example: {
     type: "data-explorer",
+    theme: "science",
     kicker: "City bike share · June",
     title: "Casual riders' trips averaged 24.6 minutes in June, against 12.0 for members",
     deck: "70% of casual trips were at weekends. 40% started in Riverside. The view below is filtered to casual riders.",
@@ -238,6 +254,7 @@ export const DataExplorer = withMeta(DataExplorerImpl, {
     finding: { lead: "Casual riders made 1.43 million of the 3.65 million trips in June", body: "520,000 of them were at weekend middays. Members made 34% of their trips at weekends." },
     data: trips,
     unit: "trips",
+    figuresVariant: "outline-accent",
     labels: { rider: "Rider", daypart: "Time of day", district: "District", day: "Day" },
     initialSelections: { "by-rider": { field: "rider", values: ["Casual"] } },
     figures: [
@@ -247,10 +264,10 @@ export const DataExplorer = withMeta(DataExplorerImpl, {
       { label: "Share starting in Riverside", field: "trips", where: { field: "district", value: "Riverside" }, per: "trips", format: "percent" },
     ],
     charts: [
-      { type: "bar-chart", id: "by-rider", x: "rider", y: "trips", select: true, sort: "none", orientation: "horizontal", format: "integer", title: "Rider", subtitle: "Trips, thousands", transform: sumTrips("rider") },
+      { type: "donut-chart", id: "by-rider", name: "rider", value: "trips", select: true, format: "integer", height: 220, title: "Rider", subtitle: "Trips, thousands", transform: sumTrips("rider") },
       { type: "bar-chart", id: "by-day", x: "day", y: "trips", select: true, sort: "none", orientation: "horizontal", format: "integer", title: "Day", subtitle: "Trips, thousands", transform: sumTrips("day") },
       { type: "bar-chart", id: "by-daypart", x: "daypart", y: "trips", select: true, sort: "none", orientation: "vertical", format: "integer", height: 220, title: "Time of day", subtitle: "Trips, thousands", transform: sumTrips("daypart") },
-      { type: "bar-chart", id: "by-district", x: "district", y: "trips", select: true, sort: "desc", orientation: "horizontal", format: "integer", title: "Start district", subtitle: "Trips, thousands", transform: sumTrips("district") },
+      { type: "lollipop-chart", id: "by-district", x: "district", y: "trips", select: true, sort: "desc", format: "integer", title: "Start district", subtitle: "Trips, thousands", transform: sumTrips("district") },
     ],
     table: {
       caption: "Selected trips by start district and time of day",
@@ -271,12 +288,14 @@ export const DataExplorer = withMeta(DataExplorerImpl, {
 
 export const examples = {
   "Education: rates rather than totals, two starting filters": {
+    theme: "ocean",
     kicker: "School attendance · 2023/24",
     title: "Secondary pupils on free school meals missed 14.5% of sessions in 2023/24",
     deck: "The rate for all pupils was 7.2%. For secondary pupils on free school meals it was 13.1% in the autumn term and 15.8% in the summer term.",
     instructions: "Click a bar to filter the other charts and the figures. The bars show absence rates, not totals.",
     data: absence,
     unit: "pupil groups",
+    figuresVariant: "tiles",
     labels: { phase: "School type", meals: "Free school meals", term: "Term" },
     initialSelections: { "by-phase": { field: "phase", values: ["Secondary"] }, "by-meals": { field: "meals", values: ["Eligible"] } },
     figures: [
@@ -287,11 +306,48 @@ export const examples = {
     charts: [
       { type: "bar-chart", id: "by-phase", x: "phase", y: "rate", select: true, sort: "none", orientation: "horizontal", format: { style: "percent", maximumFractionDigits: 1 }, title: "School type", subtitle: "Absence rate", transform: rateBy("phase") },
       { type: "bar-chart", id: "by-meals", x: "meals", y: "rate", select: true, sort: "none", orientation: "horizontal", format: { style: "percent", maximumFractionDigits: 1 }, title: "Free school meals", subtitle: "Absence rate", transform: rateBy("meals") },
-      { type: "bar-chart", id: "by-term", x: "term", y: "rate", select: true, sort: "none", orientation: "vertical", format: { style: "percent", maximumFractionDigits: 1 }, height: 200, title: "Term", subtitle: "Absence rate", transform: rateBy("term") },
+      { type: "lollipop-chart", id: "by-term", x: "term", y: "rate", select: true, sort: "none", format: { style: "percent", maximumFractionDigits: 1 }, title: "Term", subtitle: "Absence rate", transform: rateBy("term") },
     ],
     sources: "Local authority attendance returns",
     period: "School year 2023/24",
     method: "A session is half a school day. The absence rate is sessions missed, authorised or not, as a share of sessions possible.",
+    note: "Illustrative data",
+  },
+  "Customer support: default theme, three chart forms and a table": {
+    kicker: "Support desk · Q3 2024",
+    title: "Sync tickets took 12.2 hours to resolve on average in Q3, against 9.9 for all tickets",
+    deck: "78% of sync tickets came from paid plans. Sync tickets sent by email took 21.0 hours. The view below is filtered to sync tickets.",
+    instructions: "Click a mark to filter the other charts, the figures and the table. Click it again to clear.",
+    finding: { lead: "Sync was 1,110 of the 3,690 tickets in Q3", body: "480 of them arrived by email and took 21.0 hours on average. The 500 that arrived by chat took 4.5 hours." },
+    data: tickets,
+    unit: "tickets",
+    figuresVariant: "tinted",
+    labels: { area: "Product area", channel: "Channel", plan: "Plan" },
+    initialSelections: { "by-area": { field: "area", values: ["Sync"] } },
+    figures: [
+      { label: "Tickets", field: "tickets", format: "integer" },
+      { label: "Average hours to resolve", field: "hours", per: "tickets", format: "decimal:1" },
+      { label: "Share from paid plans", field: "tickets", where: { field: "plan", value: "Paid" }, per: "tickets", format: "percent" },
+      { label: "Share sent by email", field: "tickets", where: { field: "channel", value: "Email" }, per: "tickets", format: "percent" },
+    ],
+    charts: [
+      { type: "bar-chart", id: "by-area", x: "area", y: "tickets", select: true, sort: "desc", orientation: "horizontal", format: "integer", title: "Product area", subtitle: "Tickets", transform: sumTickets("area") },
+      { type: "donut-chart", id: "by-channel", name: "channel", value: "tickets", select: true, format: "integer", height: 220, title: "Channel", subtitle: "Tickets", transform: sumTickets("channel") },
+      { type: "segmented-bar", id: "by-plan", name: "plan", value: "tickets", select: true, format: "integer", title: "Plan", subtitle: "Tickets", transform: sumTickets("plan") },
+    ],
+    table: {
+      caption: "Selected tickets by channel and plan",
+      transform: [{ type: "aggregate", groupBy: ["channel", "plan"], measures: { tickets: { op: "sum", field: "tickets" }, hours: { op: "sum", field: "hours" } } }, { type: "derive", as: "each", op: "divide", fields: ["hours", "tickets"] }, { type: "sort", by: "tickets", order: "desc" }],
+      columns: [
+        { key: "channel", label: "Channel" },
+        { key: "plan", label: "Plan" },
+        { key: "tickets", label: "Tickets", format: "integer", bar: true, width: "34%" },
+        { key: "each", label: "Average hours", format: "decimal:1" },
+      ],
+    },
+    sources: "Support desk ticket export",
+    period: "July to September 2024",
+    method: "Hours to resolve run from the first message to the ticket being closed, including nights and weekends.",
     note: "Illustrative data",
   },
 };

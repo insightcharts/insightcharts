@@ -100,6 +100,7 @@ export const ArcDiagram = defineChart<ArcDiagramProps>({
   ],
   example: {
     type: "arc-diagram",
+    theme: "dusk",
     data: [
       ["Harbour", "Market", 4200], ["Harbour", "Quay", 900], ["Quay", "Market", 1300], ["Market", "Town Hall", 2600], ["Market", "University", 3100],
       ["Town Hall", "University", 1500], ["Town Hall", "Hospital", 1100], ["University", "Park", 800], ["University", "Airport", 1900], ["Park", "Hospital", 600],
@@ -397,6 +398,7 @@ export const examples = {
     note: "Illustrative figures for an invented line.",
   },
   "Coloured by entity, counting rows": {
+    theme: "editorial",
     data: [
       ["Ana", "Ben"], ["Ana", "Ben"], ["Ana", "Ben"], ["Ana", "Cleo"], ["Ben", "Cleo"], ["Ben", "Cleo"], ["Cleo", "Dev"], ["Cleo", "Dev"], ["Cleo", "Dev"], ["Cleo", "Dev"],
       ["Dev", "Eli"], ["Ana", "Eli"], ["Ana", "Eli"], ["Ben", "Dev"], ["Eli", "Fay"], ["Eli", "Fay"], ["Dev", "Fay"],
@@ -408,6 +410,7 @@ export const examples = {
     note: "Illustrative figures for an invented play.",
   },
   "Ten entities, one colour each": {
+    theme: "science",
     data: [
       ["Pier", "Docks", 1800], ["Pier", "Forum", 2400], ["Docks", "Canal", 900], ["Canal", "Forum", 1500], ["Forum", "Abbey", 3300],
       ["Forum", "Castle", 1300], ["Abbey", "Castle", 1100], ["Abbey", "Mills", 700], ["Castle", "Garden", 1600], ["Garden", "Mills", 800],
@@ -424,6 +427,7 @@ export const examples = {
     note: "Illustrative figures for an invented line.",
   },
   "Stress: 18 entities with long names": {
+    theme: "blueprint",
     data: messages,
     from: "a",
     to: "b",

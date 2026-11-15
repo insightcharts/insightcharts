@@ -38,6 +38,7 @@ The file lands at `components/insightcharts/molecules/proportion-statement.tsx`.
 import { ProportionStatement } from "insightcharts";
 
 <ProportionStatement
+  theme="sunrise"
   value={33}
   total={100}
   text="people in the world have never used the internet."
@@ -54,6 +55,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 ```json
 {
   "type": "proportion-statement",
+  "theme": "sunrise",
   "value": 33,
   "total": 100,
   "text": "people in the world have never used the internet.",
@@ -78,7 +80,8 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `detail` | `string` |  | A second, quieter sentence under the statement. |
 | `source` | `string` |  | Shown under the statement as "Source: ...". |
 | `note` | `string` |  | Method note or caveat. |
-| `theme` | `ThemeInput` |  | Theme override, passed on to the visual. |
+| `theme` | `ThemeInput` |  | A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the visual. A named theme with its own surface paints that surface behind the component. |
+| `frame` | `boolean` |  | Paint the theme's surface behind the component. Default: on for a named theme with its own surface. |
 | `mode` | `"auto" \| "system" \| "light" \| "dark"` | `"auto"` | Colour mode. |
 
 ## Composition
@@ -102,12 +105,13 @@ import { ProportionStatement } from "insightcharts";
 />
 ```
 
-### Icons on the right, custom figure
+### Icons on the right, custom figure, ocean theme
 
 ```tsx
 import { ProportionStatement } from "insightcharts";
 
 <ProportionStatement
+  theme="ocean"
   value={9}
   total={10}
   figure="Nine in ten"
@@ -120,12 +124,13 @@ import { ProportionStatement } from "insightcharts";
 />
 ```
 
-### Waffle with circles
+### Waffle with circles, poster theme
 
 ```tsx
 import { ProportionStatement } from "insightcharts";
 
 <ProportionStatement
+  theme="poster"
   value={12}
   total={100}
   shape="circle"

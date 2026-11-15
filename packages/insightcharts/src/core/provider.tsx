@@ -1,6 +1,7 @@
 import { createContext, useContext, useMemo, type ReactNode } from "react";
 import type { ModeInput } from "./mode";
-import { createTheme, defaultTheme, type InsightTheme, type ThemeInput } from "./theme";
+import { resolveTheme, themeGround } from "./named-themes";
+import { defaultTheme, type InsightTheme, type ThemeInput } from "./theme";
 
 export type RendererInput = "auto" | "svg" | "canvas";
 export type ExportFormat = "png" | "jpeg" | "svg" | "pdf" | "csv" | "json";
@@ -40,7 +41,7 @@ export function InsightProvider({ children, theme, ...rest }: InsightProviderPro
   const themeKey = useStableKey(theme);
   const value = useMemo<InsightConfig>(
     () => {
-      const merged: InsightConfig = { ...parent, theme: theme ? createTheme(theme, parent.theme) : parent.theme };
+      const merged: InsightConfig = { ...parent, theme: resolveTheme(theme, parent.theme) };
       for (const [k, val] of Object.entries(rest)) if (val !== undefined) (merged as unknown as Record<string, unknown>)[k] = val;
       return merged;
     },
@@ -59,9 +60,21 @@ export function useTheme(override?: ThemeInput): InsightTheme {
   const { theme } = useContext(Ctx);
   const key = useStableKey(override);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  return useMemo(() => (override ? createTheme(override, theme) : theme), [theme, key]);
+  return useMemo(() => resolveTheme(override, theme), [theme, key]);
 }
 
 function useStableKey(value: unknown): string {
   return value === undefined ? "" : JSON.stringify(value);
+}
+
+/**
+ * Style that paints a named theme's own background behind a component, so
+ * `theme="ledger"` looks right on any page. Returns undefined when there is nothing to
+ * paint: no theme prop, a theme object, or a theme that follows the host page.
+ * `frame` forces it on or off.
+ */
+export function frameStyle(theme: ThemeInput | undefined, mode: "light" | "dark", frame?: boolean): { background: string; padding: string; borderRadius: number } | undefined {
+  if (frame === false) return undefined;
+  const ground = themeGround(theme, mode);
+  return ground ? { background: ground, padding: "1.25rem", borderRadius: 12 } : undefined;
 }

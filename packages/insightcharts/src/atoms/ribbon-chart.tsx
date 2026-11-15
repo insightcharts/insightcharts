@@ -53,6 +53,7 @@ export const RibbonChart = defineChart<RibbonChartProps>({
     { name: "colorBy", type: '"auto" | "series" | "none"', default: '"auto"', description: "`auto`: the largest entities take the theme's colours and any past the palette size (at most 8) are grey. `series`: every band gets its own colour, the extra ones derived from the theme's own. `none`: every band in the accent." },
   ],
   example: {
+    theme: "sunrise",
     type: "ribbon-chart",
     data: [
       { year: "2019", Potatoes: 7.4, Carrots: 5.1, Onions: 4.2, Beans: 2.6, Squash: 1.2 },
@@ -308,6 +309,7 @@ const medals: [string, number[]][] = [
 
 export const examples = {
   "Long data, one highlighted": {
+    theme: "ocean",
     data: [
       ["Cash", 46, 38, 27, 19, 12],
       ["Debit card", 31, 34, 37, 36, 33],
@@ -347,6 +349,7 @@ export const examples = {
     note: "Illustrative figures.",
   },
   "Stress: 7 entities, 8 periods, thin bands": {
+    theme: "dusk",
     data: medals.flatMap(([club, counts]) => counts.map((medals, j) => ({ club, season: String(2017 + j), medals }))),
     series: "club",
     x: "season",

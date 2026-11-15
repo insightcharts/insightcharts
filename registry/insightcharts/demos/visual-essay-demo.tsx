@@ -5,6 +5,7 @@ import { BarChart } from "@/components/insightcharts/atoms/bar-chart";
 export function VisualEssayDemo() {
   return (
     <VisualEssay
+      theme="editorial"
       kicker="Energy transition"
       title="Solar supplied 11.1% of EU electricity in 2024, more than coal's 9.8%"
       deck="Solar's share was 2.9% in 2015. Coal's share was 24.6% in 2015."
@@ -33,15 +34,11 @@ export function VisualEssayDemo() {
             ]}
             x="year"
             y={["Solar", "Coal"]}
-            highlight="Solar"
             format="{value}%"
             zero
             title="Solar's share rose from 2.9% to 11.1% between 2015 and 2024"
             subtitle="Share of EU electricity generation, 2015 to 2024"
-            annotations={[
-              { type: "band", axis: "x", from: "2021", to: "2022", label: "Gas price crisis" },
-              { type: "point", x: "2016", y: 22, label: "Coal", position: "top", dot: false },
-            ]}
+            annotations={[{ type: "band", axis: "x", from: "2021", to: "2022", label: "Gas price crisis" }]}
             source="Ember, European Electricity Review 2025"
           />,
         },
@@ -84,21 +81,33 @@ export function VisualEssayDemo() {
         },
         {
           kind: "stats",
+          variant: "tiles",
+          subtitle: "Bars show 2020 to 2024",
           items: [
             {
-              value: "338 GW",
+              variant: "bars",
+              series: [137, 165, 205, 272, 338],
+              value: 338,
+              format: "{value} GW",
               label: "Solar capacity installed in the EU, end of 2024",
               delta: "+66 GW",
               deltaLabel: "in 2024",
             },
             {
-              value: "304 TWh",
+              variant: "bars",
+              series: [145, 165, 210, 249, 304],
+              value: 304,
+              format: "{value} TWh",
               label: "Solar generation, 2024",
               delta: 0.22,
               deltaLabel: "vs 2023",
             },
             {
-              value: "269 TWh",
+              variant: "bars",
+              tone: 1,
+              series: [350, 400, 430, 320, 269],
+              value: 269,
+              format: "{value} TWh",
               label: "Coal generation, 2024",
               delta: -0.16,
               deltaLabel: "vs 2023",

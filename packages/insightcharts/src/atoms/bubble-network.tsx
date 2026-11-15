@@ -66,6 +66,7 @@ export const BubbleNetwork = defineChart<BubbleNetworkProps>({
   ],
   example: {
     type: "bubble-network",
+    theme: "ocean",
     data: [
       { airport: "Lisbon", m: 34 },
       { airport: "Madrid", m: 60 },
@@ -450,6 +451,7 @@ export const examples = {
     note: "Illustrative figures for an invented courier",
   },
   "Ring layout, no hub": {
+    theme: "noir",
     data: [
       ["Algebra", 48], ["Geometry", 31], ["Statistics", 64], ["Calculus", 22], ["Logic", 12], ["Number theory", 9], ["Probability", 37], ["Topology", 5],
     ].map(([course, students]) => ({ course, students })),
@@ -465,6 +467,7 @@ export const examples = {
     note: "Illustrative figures",
   },
   "Stress: 12 circles, long names, values from 1 to 480": {
+    theme: "sunrise",
     data: [
       ["Central Co-operative Wholesale Society", 480], ["Dairy", 210], ["Northern Grain and Seed Merchants", 96], ["Bakery", 150], ["Orchards", 33], ["Fishery", 61],
       ["Upland Sheep Farmers' Association", 18], ["Brewery", 74], ["Market garden", 8], ["Apiary", 1], ["Mill", 120], ["Smokehouse", 4],

@@ -38,6 +38,7 @@ The file lands at `components/insightcharts/atoms/glyph-table.tsx`. `@insightcha
 import { GlyphTable } from "insightcharts";
 
 <GlyphTable
+  theme="noir"
   caption="Filter coffee sold 310 cups a day at £2.40 a cup"
   subtitle="Six drinks at one café: price, cups sold per day, share ordered with oat milk, seconds to prepare and caffeine"
   note="Illustrative figures."
@@ -74,6 +75,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 ```json
 {
   "type": "glyph-table",
+  "theme": "noir",
   "caption": "Filter coffee sold 310 cups a day at £2.40 a cup",
   "subtitle": "Six drinks at one café: price, cups sold per day, share ordered with oat milk, seconds to prepare and caffeine",
   "note": "Illustrative figures.",
@@ -128,6 +130,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `select` | `boolean` |  | Let readers click a row (or press Enter on it) to select it; the other rows fade. |
 | `onSelect` | `(values: string[]) => void` |  | Called with the selected entity names whenever the selection changes. |
 | `selected` | `string[]` |  | Controlled selection: the entity names currently selected. When given, the table shows exactly this list and a click only calls `onSelect`. Omit it and the table keeps its own selection. |
+| `frame` | `boolean` |  | Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off. |
 
 ## Composition
 
@@ -175,6 +178,7 @@ import { GlyphTable } from "insightcharts";
 import { GlyphTable } from "insightcharts";
 
 <GlyphTable
+  theme="sunrise"
   caption="Ten districts by rent, commute, green space and population"
   subtitle="Median monthly rent, minutes to the centre, share of land that is park and residents, ten districts of one city"
   note="Illustrative figures for an invented city."
@@ -213,6 +217,7 @@ import { GlyphTable } from "insightcharts";
 import { GlyphTable } from "insightcharts";
 
 <GlyphTable
+  theme="ocean"
   caption="Ten library branches by loans, visits and opening hours"
   subtitle="Loans per year, visits per day, hours open per week and share of loans that were e-books, 2024"
   note="Illustrative figures."

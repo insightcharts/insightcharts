@@ -1,5 +1,7 @@
 import { DataExplorer } from "@/components/insightcharts/templates/data-explorer";
+import { DonutChart } from "@/components/insightcharts/atoms/donut-chart";
 import { BarChart } from "@/components/insightcharts/atoms/bar-chart";
+import { LollipopChart } from "@/components/insightcharts/atoms/lollipop-chart";
 
 const data = [
   {
@@ -491,6 +493,7 @@ const data = [
 export function DataExplorerDemo() {
   return (
     <DataExplorer
+      theme="science"
       kicker="City bike share · June"
       title="Casual riders' trips averaged 24.6 minutes in June, against 12.0 for members"
       deck="70% of casual trips were at weekends. 40% started in Riverside. The view below is filtered to casual riders."
@@ -501,6 +504,7 @@ export function DataExplorerDemo() {
       }}
       data={data}
       unit="trips"
+      figuresVariant="outline-accent"
       labels={{ rider: "Rider", daypart: "Time of day", district: "District", day: "Day" }}
       initialSelections={{ "by-rider": { field: "rider", values: ["Casual"] } }}
       figures={[
@@ -527,14 +531,13 @@ export function DataExplorerDemo() {
         },
       ]}
       charts={[
-        <BarChart
+        <DonutChart
           id="by-rider"
-          x="rider"
-          y="trips"
+          name="rider"
+          value="trips"
           select
-          sort="none"
-          orientation="horizontal"
           format="integer"
+          height={220}
           title="Rider"
           subtitle="Trips, thousands"
           transform={{
@@ -572,13 +575,12 @@ export function DataExplorerDemo() {
             measures: { trips: { op: "sum", field: "trips" } },
           }}
         />,
-        <BarChart
+        <LollipopChart
           id="by-district"
           x="district"
           y="trips"
           select
           sort="desc"
-          orientation="horizontal"
           format="integer"
           title="Start district"
           subtitle="Trips, thousands"

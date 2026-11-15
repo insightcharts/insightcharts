@@ -10,6 +10,7 @@ const data = [
 export function BulletChartDemo() {
   return (
     <BulletChart
+      theme="mono"
       data={data}
       category="region"
       value="sales"

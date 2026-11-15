@@ -18,6 +18,7 @@ const data = [
 export function OrbitChartDemo() {
   return (
     <OrbitChart
+      theme="noir"
       data={data}
       name="supplier"
       ring="tier"

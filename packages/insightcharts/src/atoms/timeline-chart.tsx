@@ -139,6 +139,7 @@ export const TimelineChart = defineChart<TimelineChartProps>({
     { name: "precision", type: '"year" | "month" | "day"', description: "Date precision in tooltips. Default: chosen from the span of the data." },
   ],
   example: {
+    theme: "editorial",
     type: "timeline-chart",
     data: [
       { mission: "Mercury", programme: "Crewed programmes", from: "1958-10", to: "1963-05" },
@@ -283,6 +284,7 @@ export const examples = {
     note: "Figures are approximate, for illustration",
   },
   "Project plan with lanes": {
+    theme: "ocean",
     data: [
       { task: "Discovery", team: "Design", start: "2025-01-06", end: "2025-02-14" },
       { task: "Prototype", team: "Design", start: "2025-02-10", end: "2025-04-04" },
@@ -304,6 +306,7 @@ export const examples = {
     note: "Illustrative plan",
   },
   "Stress: long names, crowded lanes, centuries": {
+    theme: "earth",
     data: [
       { who: "Elizabeth I", house: "Tudor", from: 1558, to: 1603 },
       { who: "James VI and I", house: "Stuart", from: 1603, to: 1625 },

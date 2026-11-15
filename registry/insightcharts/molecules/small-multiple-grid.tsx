@@ -96,7 +96,6 @@ const remote: Record<string, number[][]> = {
   Italy: [[3, 6], [9, 8], [9, 8], [7, 6], [3, 3]],
 };
 const work = Object.entries(remote).flatMap(([country, rows]) => rows.map(([usually, sometimes], i) => ({ country, age: AGES[i], Usually: usually, Sometimes: sometimes })));
-
 export const SmallMultipleGrid = withMeta(SmallMultipleGridImpl, {
   name: "small-multiple-grid",
   component: "SmallMultipleGrid",
@@ -106,7 +105,7 @@ export const SmallMultipleGrid = withMeta(SmallMultipleGridImpl, {
   description: "Repeats any chart spec once per value of a facet field, each panel with its own filtered rows and a title, in a grid that follows the container width.",
   whenToUse: "Faceting a chart form the `small-multiples` atom does not draw: stacked bars, scatter plots, donuts, waffles, dumbbells, histograms. Also when each panel should be a full chart with its own tooltip and axis.",
   avoid: "Line, area or bar facets that must share one value scale: use the `small-multiples` atom, which draws every panel in one chart on a common axis. Here each panel scales to its own rows unless the spec fixes the axis (for example `option: { xAxis: { max: 70 } }`), so say so in the subtitle or fix it. More than about twelve panels.",
-  composes: ["legend-key", "bar-chart", "waffle-chart"],
+  composes: ["legend-key", "bar-chart", "waffle-chart", "dumbbell-chart"],
   props: [
     { name: "data", type: "DataInput", description: "Rows for every panel together. Omit inside `<InsightData>`." },
     { name: "transform", type: "Transform | Transform[]", description: "Applied before the rows are split by `facet`." },
@@ -125,11 +124,13 @@ export const SmallMultipleGrid = withMeta(SmallMultipleGridImpl, {
     { name: "subtitle", type: "string", description: "Measure, population, period, and whether the panels share a scale." },
     { name: "source", type: "string", description: 'Shown under the grid as "Source: ...".' },
     { name: "note", type: "string", description: "Method note or caveat." },
-    { name: "theme", type: "ThemeInput", description: "Theme override, passed on to every panel." },
+    { name: "theme", type: "ThemeInput", description: "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to every panel. A named theme with its own surface paints that surface behind the component." },
+    { name: "frame", type: "boolean", description: "Paint the theme's surface behind the component. Default: on for a named theme with its own surface." },
     { name: "mode", type: '"auto" | "system" | "light" | "dark"', default: '"auto"', description: "Colour mode." },
   ],
   example: {
     type: "small-multiple-grid",
+    theme: "poster",
     title: "65% of Dutch workers aged 25 to 34 worked from home usually or sometimes in 2023",
     subtitle: "Share of employed people working from home usually or sometimes, by age group, six EU countries, 2023. All panels run from 0 to 70%",
     data: work,

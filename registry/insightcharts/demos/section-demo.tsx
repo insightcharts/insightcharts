@@ -5,6 +5,7 @@ import { BarChart } from "@/components/insightcharts/atoms/bar-chart";
 export function SectionDemo() {
   return (
     <Section
+      theme="ocean"
       step={2}
       total={4}
       title="First-quarter churn was 2.0% for customers who joined after March"

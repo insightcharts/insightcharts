@@ -253,6 +253,7 @@ export const UnitBlocks = defineChart<UnitBlocksProps>({
     { name: "sort", type: '"none" | "asc" | "desc"', default: '"none"', description: "Order of the blocks." },
   ],
   example: {
+    theme: "noir",
     type: "unit-blocks",
     data: [
       { age: "Under 30", finishers: 4180 },
@@ -283,7 +284,8 @@ export const UnitBlocks = defineChart<UnitBlocksProps>({
     const L = natural.height > ctx.height + 1 && !pinned ? layoutBlocks(p, groups, ctx.width, fonts, icon.aspect, ctx.height) : natural;
 
     const seriesKeys = p.series ? [...new Set(groups.map((g) => g.series ?? ""))] : [];
-    const byGroup = !p.series && groups.length <= Math.max(MAX_COLOURS, 0);
+    // One colour per group only while the theme has enough colours (poster themes have four or five); past that every group takes the accent.
+    const byGroup = !p.series && groups.length <= Math.min(MAX_COLOURS, t.categorical.length);
     const colours = groups.map((g, i) => {
       const base = p.series ? ctx.color(g.series, seriesKeys.indexOf(g.series ?? "")) : byGroup || ctx.highlight.length ? ctx.color(g.key, i) : ctx.color();
       return ctx.selected(g.key) ? base : alpha(base, 0.25);
@@ -404,6 +406,7 @@ export const examples = {
     note: "Invented figures for a fictional race",
   },
   "Stress: 20,350 icons, one per finisher": {
+    theme: "sunrise",
     data: finishers.map((r) => ({ ...r })),
     name: "age",
     value: "finishers",
@@ -416,6 +419,7 @@ export const examples = {
     note: "Invented figures for a fictional race",
   },
   "Columns of squares, coloured by a series field": {
+    theme: "magenta",
     data: [
       { depot: "Northgate", buses: 412, fuel: "Electric" },
       { depot: "Harbour Road", buses: 268, fuel: "Electric" },
@@ -436,6 +440,7 @@ export const examples = {
     note: "Invented figures for a fictional operator",
   },
   "Stress: twelve uneven groups, long names": {
+    theme: "blueprint",
     data: [
       { species: "Common starling", birds: 9840 },
       { species: "House sparrow", birds: 7120 },

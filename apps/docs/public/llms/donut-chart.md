@@ -45,6 +45,7 @@ const data = [
 ];
 
 <DonutChart
+  theme="paper"
   data={data}
   name="tenure"
   value="households"
@@ -65,6 +66,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 ```json
 {
   "type": "donut-chart",
+  "theme": "paper",
   "data": [
     { "tenure": "Own outright", "households": 8.8 },
     { "tenure": "Own with a mortgage", "households": 7.4 },
@@ -116,7 +118,8 @@ Every chart also accepts these (shared by all charts; also at https://insightcha
 | `select` | `boolean \| string` | Make marks clickable to filter. Inside `<InsightData>` the selection filters every other chart. Pass a field name, or `true` to use the chart's category field. |
 | `onSelect` | `(values: string[], field: string) => void` | Called with the selected values whenever the selection changes. |
 | `option` | `EChartsOption \| ((option: EChartsOption, ctx: BuildContext) => EChartsOption)` | Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers. |
-| `theme` | `ThemeInput` | A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme. |
+| `theme` | `ThemeInput` | A built-in theme name (`"editorial"`, `"ledger"`, `"noir"`...), or a theme object. A named theme paints its own background behind the chart. |
+| `frame` | `boolean` | Paint the theme's background behind the chart. Default: on for a named theme with its own surface. |
 | `mode` | `ModeInput` | `"auto"` (default) follows the page, `"system"` follows the OS, or force `"light"` / `"dark"`. |
 | `renderer` | `RendererInput` | `"auto"` (default) uses SVG for light charts and canvas for heavy ones. |
 | `animate` | `boolean` | Set false to disable animation for this chart. Reduced-motion preferences are always respected. |
@@ -134,7 +137,7 @@ Every chart also accepts these (shared by all charts; also at https://insightcha
 ## Composition
 
 - Composes: nothing (it is a primitive)
-- Used by: [poster](https://insightcharts.dev/llms/poster.md)
+- Used by: [poster](https://insightcharts.dev/llms/poster.md), [data-explorer](https://insightcharts.dev/llms/data-explorer.md), [explainer](https://insightcharts.dev/llms/explainer.md)
 
 ## More examples
 
@@ -146,6 +149,7 @@ import { DonutChart } from "insightcharts";
 const data = [{ answer: "Remote or hybrid", share: 41 }, { answer: "On site every day", share: 59 }];
 
 <DonutChart
+  theme="magenta"
   data={data}
   name="answer"
   value="share"
@@ -201,6 +205,7 @@ const data = [
 ];
 
 <DonutChart
+  theme="poster"
   data={data}
   name="item"
   value="cost"

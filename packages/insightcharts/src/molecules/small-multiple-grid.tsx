@@ -97,6 +97,13 @@ const remote: Record<string, number[][]> = {
 };
 const work = Object.entries(remote).flatMap(([country, rows]) => rows.map(([usually, sometimes], i) => ({ country, age: AGES[i], Usually: usually, Sometimes: sometimes })));
 
+const pairs = Object.entries({
+  "Alder Marsh": [[4, 11], [18, 22], [41, 27]],
+  "Birch Fen": [[2, 5], [12, 15], [36, 19]],
+  "Cedar Lake": [[6, 9], [25, 24], [22, 18]],
+  "Dune Point": [[1, 3], [7, 11], [58, 44]],
+} as Record<string, number[][]>).flatMap(([reserve, rows]) => rows.map(([y2014, y2024], i) => ({ reserve, species: ["Osprey", "Kingfisher", "Lapwing"][i], y2014, y2024 })));
+
 export const SmallMultipleGrid = withMeta(SmallMultipleGridImpl, {
   name: "small-multiple-grid",
   component: "SmallMultipleGrid",
@@ -106,7 +113,7 @@ export const SmallMultipleGrid = withMeta(SmallMultipleGridImpl, {
   description: "Repeats any chart spec once per value of a facet field, each panel with its own filtered rows and a title, in a grid that follows the container width.",
   whenToUse: "Faceting a chart form the `small-multiples` atom does not draw: stacked bars, scatter plots, donuts, waffles, dumbbells, histograms. Also when each panel should be a full chart with its own tooltip and axis.",
   avoid: "Line, area or bar facets that must share one value scale: use the `small-multiples` atom, which draws every panel in one chart on a common axis. Here each panel scales to its own rows unless the spec fixes the axis (for example `option: { xAxis: { max: 70 } }`), so say so in the subtitle or fix it. More than about twelve panels.",
-  composes: ["legend-key", "bar-chart", "waffle-chart"],
+  composes: ["legend-key", "bar-chart", "waffle-chart", "dumbbell-chart"],
   props: [
     { name: "data", type: "DataInput", description: "Rows for every panel together. Omit inside `<InsightData>`." },
     { name: "transform", type: "Transform | Transform[]", description: "Applied before the rows are split by `facet`." },
@@ -125,11 +132,13 @@ export const SmallMultipleGrid = withMeta(SmallMultipleGridImpl, {
     { name: "subtitle", type: "string", description: "Measure, population, period, and whether the panels share a scale." },
     { name: "source", type: "string", description: 'Shown under the grid as "Source: ...".' },
     { name: "note", type: "string", description: "Method note or caveat." },
-    { name: "theme", type: "ThemeInput", description: "Theme override, passed on to every panel." },
+    { name: "theme", type: "ThemeInput", description: "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to every panel. A named theme with its own surface paints that surface behind the component." },
+    { name: "frame", type: "boolean", description: "Paint the theme's surface behind the component. Default: on for a named theme with its own surface." },
     { name: "mode", type: '"auto" | "system" | "light" | "dark"', default: '"auto"', description: "Colour mode." },
   ],
   example: {
     type: "small-multiple-grid",
+    theme: "poster",
     title: "65% of Dutch workers aged 25 to 34 worked from home usually or sometimes in 2023",
     subtitle: "Share of employed people working from home usually or sometimes, by age group, six EU countries, 2023. All panels run from 0 to 70%",
     data: work,
@@ -155,7 +164,8 @@ export const examples = {
     chart: { type: "bar-chart", x: "age", y: "Usually", sort: "none", orientation: "vertical", format: "{value}%" },
     note: "Illustrative data",
   },
-  "A waffle chart in each panel": {
+  "A waffle chart in each panel, science theme": {
+    theme: "science",
     data: [
       { region: "Europe", group: "Online", share: 91 },
       { region: "Americas", group: "Online", share: 87 },
@@ -169,5 +179,18 @@ export const examples = {
     subtitle: "Share of the population using the internet, by region, 2023",
     source: "ITU Facts and Figures 2023",
     note: "Figures are approximate, for illustration",
+  },
+  "A dumbbell chart in each panel, forest theme": {
+    theme: "forest",
+    title: "Osprey pairs at Alder Marsh rose from 4 to 11 between 2014 and 2024",
+    subtitle: "Breeding pairs counted in four wetland reserves. The paler dot is 2014. The brighter dot is 2024. Panels are on their own scales",
+    data: pairs,
+    facet: "reserve",
+    columns: 2,
+    highlight: "Osprey",
+    emphasis: "Alder Marsh",
+    chart: { type: "dumbbell-chart", category: "species", from: "y2014", to: "y2024", names: { y2014: "2014", y2024: "2024" }, sort: "none", format: "integer", legend: false },
+    source: "Reserve breeding surveys",
+    note: "Illustrative data for fictional reserves",
   },
 };

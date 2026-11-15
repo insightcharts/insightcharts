@@ -2,7 +2,7 @@ import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
 import type { Row } from "../data/types";
 import { makeFormatter } from "./format";
 import { useColorMode, type ModeInput } from "./mode";
-import { useInsightConfig, useTheme, type ExportFormat } from "./provider";
+import { frameStyle, useInsightConfig, useTheme, type ExportFormat } from "./provider";
 import { chromeVars, type ThemeInput } from "./theme";
 
 const STYLE_ID = "insightcharts-styles";
@@ -74,6 +74,8 @@ export interface FigureProps {
   height?: number | string;
   theme?: ThemeInput;
   mode?: ModeInput;
+  /** Paint the theme's background behind the figure. Default: on when `theme` is a named theme with its own surface. */
+  frame?: boolean;
   className?: string;
   style?: CSSProperties;
   children?: ReactNode;
@@ -143,7 +145,7 @@ export function Figure(props: FigureProps) {
   const menu = useRef<HTMLDetailsElement>(null);
 
   return (
-    <figure ref={ref} data-slot="ic-figure" data-ic-mode={mode} className={className} style={{ ...(chromeVars(theme[mode]) as CSSProperties), ...style }}>
+    <figure ref={ref} data-slot="ic-figure" data-ic-mode={mode} className={className} style={{ ...(chromeVars(theme[mode]) as CSSProperties), ...frameStyle(props.theme, mode, props.frame), ...style }}>
       {title || subtitle ? (
         <header data-slot="ic-header" style={formats.length ? { paddingRight: "4.5rem" } : undefined}>
           {title ? <h3 data-slot="ic-title">{title}</h3> : null}

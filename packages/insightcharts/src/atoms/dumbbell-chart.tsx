@@ -71,6 +71,7 @@ export const DumbbellChart = defineChart<DumbbellChartProps>({
   ],
   example: {
     type: "dumbbell-chart",
+    theme: "science",
     data: [
       { country: "South Korea", y2000: 76.0, y2023: 83.6 },
       { country: "Turkey", y2000: 71.1, y2023: 77.3 },
@@ -284,6 +285,7 @@ export const examples = {
     note: "Figures are approximate, for illustration",
   },
   "Long format": {
+    theme: "ledger",
     data: [
       { city: "Lisbon", period: "2015", value: 860 },
       { city: "Lisbon", period: "2024", value: 1720 },
@@ -308,6 +310,7 @@ export const examples = {
     note: "Illustrative figures.",
   },
   "Stress: 22 rows, long names, axis instead of labels": {
+    theme: "ocean",
     data: [
       ["Professional, scientific and technical services", 41, 63], ["Information and communication", 48, 66], ["Financial and insurance activities", 39, 58], ["Public administration and defence", 22, 44], ["Education", 18, 33],
       ["Real estate activities", 21, 35], ["Administrative and support services", 14, 26], ["Arts, entertainment and recreation", 11, 21], ["Wholesale and retail trade", 8, 15], ["Manufacturing", 9, 15],

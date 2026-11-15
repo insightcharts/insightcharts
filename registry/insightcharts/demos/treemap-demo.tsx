@@ -17,6 +17,7 @@ const data = [
 export function TreemapDemo() {
   return (
     <Treemap
+      theme="paper"
       data={data}
       group="sector"
       name="source"

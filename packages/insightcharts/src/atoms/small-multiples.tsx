@@ -312,6 +312,7 @@ export const SmallMultiples = defineChart<SmallMultiplesProps>({
 
 export const examples = {
   "Every other line as context": {
+    theme: "earth",
     data: [
       ["Phoenix", 12.4, 14.1, 17.6, 22.8, 27.9, 31.2, 33.0, 31.8, 28.1, 21.7, 15.6, 12.1], ["Seattle", 5.6, 6.8, 8.6, 10.9, 14.2, 16.9, 19.6, 19.8, 17.1, 12.3, 8.1, 5.6], ["Chicago", -3.2, -1.2, 4.4, 10.5, 16.1, 21.7, 24.3, 23.4, 19.1, 12.1, 5.4, -1.0],
       ["Miami", 20.1, 21.2, 22.6, 24.4, 26.6, 28.1, 28.8, 28.9, 28.2, 26.3, 23.5, 21.3], ["Denver", -0.6, 0.8, 4.9, 8.7, 13.8, 19.8, 23.4, 22.2, 17.4, 10.2, 3.8, -0.9], ["Boston", -1.5, -0.2, 3.6, 9.4, 14.9, 20.2, 23.4, 22.6, 18.6, 12.4, 6.9, 1.6],
@@ -329,6 +330,7 @@ export const examples = {
     note: "Figures are approximate, for illustration",
   },
   "Bars, two series per panel (wide data)": {
+    theme: "ledger",
     data: [
       ["North", 42, 31, 48, 36, 55, 39, 61, 44], ["South", 28, 30, 31, 34, 33, 39, 36, 45], ["East", 51, 22, 49, 27, 46, 33, 44, 41], ["West", 19, 12, 24, 16, 31, 22, 40, 29],
     ].flatMap(([region, ...v]) => ["Q1", "Q2", "Q3", "Q4"].map((quarter, i) => ({ region, quarter, store: v[i * 2], online: v[i * 2 + 1] }))),
@@ -344,6 +346,7 @@ export const examples = {
     note: "Illustrative figures.",
   },
   "Stress: 20 panels with long titles": {
+    theme: "blueprint",
     data: [
       "United States of America", "China", "Japan", "Germany", "India", "United Kingdom of Great Britain", "France", "Italy", "Brazil", "Canada",
       "Russian Federation", "Republic of Korea", "Australia", "Mexico", "Spain", "Indonesia", "Kingdom of the Netherlands", "Saudi Arabia", "Türkiye", "Switzerland",

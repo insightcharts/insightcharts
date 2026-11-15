@@ -124,7 +124,8 @@ export const FilterChips = withMeta(FilterChipsImpl, {
     { name: "resetLabel", type: "string", default: '"Reset"', description: "Text of the clear-all control." },
     { name: "count", type: "boolean", default: "false", description: 'Show "1,204 of 5,000 rows" at the end of the line.' },
     { name: "unit", type: "string", default: '"rows"', description: 'Noun for the count, e.g. "orders".' },
-    { name: "theme", type: "ThemeInput", description: "Theme override." },
+    { name: "theme", type: "ThemeInput", description: "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object. A named theme with its own surface paints that surface behind the component." },
+    { name: "frame", type: "boolean", description: "Paint the theme's surface behind the component. Default: on for a named theme with its own surface." },
     { name: "mode", type: '"auto" | "system" | "light" | "dark"', default: '"auto"', description: "Colour mode." },
   ],
   example: {
@@ -139,5 +140,15 @@ export const FilterChips = withMeta(FilterChipsImpl, {
 });
 
 export const examples = {
-  "Nothing selected, with a hint": { selections: {}, hint: "Click a bar to filter" },
+  "Nothing selected, with a hint, earth theme": { theme: "earth", selections: {}, hint: "Click a bar to filter" },
+  "A date range and two values, blueprint theme": {
+    theme: "blueprint",
+    labels: { month: "Month", line: "Line" },
+    resetLabel: "Clear all",
+    selections: {
+      "by-month": { field: "month", range: ["2024-03-01", "2024-09-01"] },
+      "by-line": { field: "line", values: ["Northern", "Circle"] },
+    },
+  },
+  "One value, ledger theme": { theme: "ledger", labels: { plan: "Plan" }, selections: { "by-plan": { field: "plan", values: ["Enterprise"] } } },
 };

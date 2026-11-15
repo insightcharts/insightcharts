@@ -169,6 +169,7 @@ export const ShapeFill = defineChart<ShapeFillProps>({
     { name: "iconSize", type: "number", description: "Silhouette height in px. Default: sized to the width, or grown to fill the box when the `height` prop or `aspect` is given, so one silhouette can be the main figure of a poster." },
   ],
   example: {
+    theme: "blueprint",
     type: "shape-fill",
     data: [
       { reservoir: "Carrow", level: 63 },
@@ -194,7 +195,7 @@ export const ShapeFill = defineChart<ShapeFillProps>({
     // Width was the limit, not height: the drawing sits in the middle of the box.
     const dy = (p.height != null || p.aspect != null) && L.height < ctx.height ? (ctx.height - L.height) / 2 : 0;
     const pct = ctx.formatter({ style: "percent", maximumFractionDigits: 1 });
-    const colours = items.map((it, i) => (ctx.highlight.length ? ctx.color(it.key) : p.colorBy === "item" ? ctx.color(it.key, i) : ctx.color()));
+    const colours = items.map((it, i) => (ctx.highlight.length ? ctx.color(it.key) : p.colorBy === "item" ? (i < t.categorical.length ? ctx.color(it.key, i) : t.context) : ctx.color()));
     const dotted = { stroke: t.inkSecondary, lineWidth: 1.25, lineDash: [0.1, 4], lineCap: "round" as const, fill: "none" };
 
     const renderItem = (params: any) => {

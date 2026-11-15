@@ -121,7 +121,8 @@ const STORE = [
   [22.2, 2.97, 60.8, 10.5],
   [24.9, 3.1, 61.0, 11.4],
 ];
-const store = STORE.map(([orders, conversion, aov, returns], i) => ({ month: new Date(Date.UTC(2023, 10 + i, 1)).toISOString().slice(0, 10), orders: orders * 1000, conversion, aov, returns }));
+const OUTERWEAR_RETURNS = [13.0, 13.2, 13.6, 13.1, 12.9, 13.3, 13.0, 13.4, 13.2, 13.5, 16.1, 17.8, 19.2];
+const store = STORE.map(([orders, conversion, aov, returns], i) => ({ month: new Date(Date.UTC(2023, 10 + i, 1)).toISOString().slice(0, 10), orders: orders * 1000, conversion, aov, returns, outerwear: OUTERWEAR_RETURNS[i] }));
 const categories = [
   { category: "Outerwear", revenue: 412, change: 0.31, returns: 19.2 },
   { category: "Footwear", revenue: 371, change: 0.08, returns: 14.1 },
@@ -139,7 +140,7 @@ export const Scorecard = withMeta(ScorecardImpl, {
   description: "A recurring report. It has a masthead with the report name and period, a headline that states the main change, a KPI grid with changes and sparklines, a ranked list beside one or two trend charts, an optional comparison table, short notes and a source note.",
   whenToUse: "Use it for weekly or monthly numbers. Keep the layout the same in every edition so readers know where each number is. Change the headline each edition to state the main change with its number. The headline and the KPI row should be enough for a reader who stops there. The ranking, trends and notes add detail. Highlight the one row or series the headline is about and leave the rest grey.",
   avoid: "A one-off finding (use `executive-brief`). Readers who need to filter the data themselves (use `data-explorer`). More than six KPIs.",
-  composes: ["headline", "kpi-grid", "ranked-list", "comparison-table", "prose", "source-note", "line-chart", "bar-chart"],
+  composes: ["headline", "kpi-grid", "ranked-list", "comparison-table", "prose", "source-note", "line-chart", "bar-chart", "bullet-chart"],
   props: [
     { name: "title", type: "string", required: true, description: "The main change this period, as one plain sentence with the number in it." },
     { name: "kicker", type: "string", description: 'The name of the report, e.g. "Store scorecard". Shown in the masthead.' },
@@ -158,6 +159,7 @@ export const Scorecard = withMeta(ScorecardImpl, {
   ],
   example: {
     type: "scorecard",
+    theme: "noir",
     kicker: "Online store scorecard",
     reportPeriod: "October 2024",
     title: "Orders rose 12% in October to 24,900",
@@ -167,15 +169,15 @@ export const Scorecard = withMeta(ScorecardImpl, {
       x: "month",
       compare: "previous",
       metrics: [
-        { y: "orders", label: "Orders", format: "compact", deltaLabel: "vs September" },
-        { y: "conversion", label: "Conversion rate", format: "{value}%", delta: "+0.13 pts", deltaLabel: "vs September" },
-        { y: "aov", label: "Average order value", format: "currency:EUR", deltaLabel: "vs September" },
-        { y: "returns", label: "Return rate", format: "{value}%", delta: "+0.9 pts", upIsGood: false, deltaLabel: "vs September" },
+        { variant: "area", y: "orders", label: "Orders", format: "compact", deltaLabel: "vs September" },
+        { variant: "area", y: "conversion", label: "Conversion rate", format: "{value}%", delta: "+0.13 pts", deltaLabel: "vs September" },
+        { variant: "area", y: "aov", label: "Average order value", format: "currency:EUR", deltaLabel: "vs September" },
+        { variant: "area", y: "returns", label: "Return rate", format: "{value}%", delta: "+0.9 pts", upIsGood: false, deltaLabel: "vs September" },
       ],
     },
     ranking: { data: categories, name: "category", value: "revenue", change: "change", format: "€{value}k", highlight: "Outerwear", title: "Outerwear revenue rose 31% to €412k in October", subtitle: "Revenue by category, October, with change on September" },
     trends: [
-      { type: "line-chart", data: store, x: "month", y: "returns", format: "{value}%", zero: true, title: "The return rate rose from 8.4% in July to 11.4% in October", subtitle: "Share of orders returned, by month of order", annotations: [{ type: "line", axis: "x", value: "2024-08-01", label: "Free returns" }] },
+      { type: "line-chart", data: store, x: "month", y: ["outerwear", "returns"], names: { outerwear: "Outerwear", returns: "All orders" }, format: "{value}%", zero: true, title: "The return rate rose from 8.4% in July to 11.4% in October", subtitle: "Share of orders returned by month of order, all orders and outerwear", annotations: [{ type: "line", axis: "x", value: "2024-08-01", label: "Free returns" }] },
       { type: "bar-chart", data: categories, x: "category", y: "returns", sort: "desc", orientation: "horizontal", format: "{value}%", highlight: "Outerwear", title: "19.2% of outerwear orders were returned in October", subtitle: "Return rate by category, October" },
     ],
     notes: [

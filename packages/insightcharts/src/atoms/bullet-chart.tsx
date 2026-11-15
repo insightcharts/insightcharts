@@ -70,6 +70,7 @@ export const BulletChart = defineChart<BulletChartProps>({
   ],
   example: {
     type: "bullet-chart",
+    theme: "mono",
     data: [
       { region: "North America", sales: 94, target: 80 },
       { region: "Europe", sales: 71, target: 85 },
@@ -227,6 +228,7 @@ export const BulletChart = defineChart<BulletChartProps>({
 
 export const examples = {
   "Scorecard with a separate scale per row": {
+    theme: "ledger",
     data: [
       { kpi: "Revenue", actual: 4.6, goal: 5.0, low: 3.5, mid: 4.5, high: 6.0, unit: "${value}m" },
       { kpi: "Gross margin", actual: 41, goal: 38, low: 25, mid: 35, high: 50, unit: "{value}%" },
@@ -267,6 +269,7 @@ export const examples = {
     note: "Illustrative figures.",
   },
   "Stress: 10 rows with long labels": {
+    theme: "dusk",
     data: [
       ["Percentage of emergency patients seen within four hours", 71, 95], ["Ambulance response to life-threatening calls within target", 64, 90], ["Cancer patients starting treatment within 62 days of referral", 62, 85], ["Planned operations within 18 weeks", 58, 92], ["Diagnostic tests within six weeks", 76, 99],
       ["GP appointments within two weeks", 83, 85], ["Mental health referrals seen within four weeks", 69, 75], ["Beds occupied by patients fit for discharge (inverted)", 88, 95], ["Staff vacancies filled", 91, 95], ["Childhood immunisation coverage", 92, 95],

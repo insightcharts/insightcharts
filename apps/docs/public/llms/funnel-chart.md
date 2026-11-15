@@ -111,7 +111,8 @@ Every chart also accepts these (shared by all charts; also at https://insightcha
 | `select` | `boolean \| string` | Make marks clickable to filter. Inside `<InsightData>` the selection filters every other chart. Pass a field name, or `true` to use the chart's category field. |
 | `onSelect` | `(values: string[], field: string) => void` | Called with the selected values whenever the selection changes. |
 | `option` | `EChartsOption \| ((option: EChartsOption, ctx: BuildContext) => EChartsOption)` | Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers. |
-| `theme` | `ThemeInput` | A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme. |
+| `theme` | `ThemeInput` | A built-in theme name (`"editorial"`, `"ledger"`, `"noir"`...), or a theme object. A named theme paints its own background behind the chart. |
+| `frame` | `boolean` | Paint the theme's background behind the chart. Default: on for a named theme with its own surface. |
 | `mode` | `ModeInput` | `"auto"` (default) follows the page, `"system"` follows the OS, or force `"light"` / `"dark"`. |
 | `renderer` | `RendererInput` | `"auto"` (default) uses SVG for light charts and canvas for heavy ones. |
 | `animate` | `boolean` | Set false to disable animation for this chart. Reduced-motion preferences are always respected. |
@@ -145,6 +146,7 @@ const data = [
 ];
 
 <FunnelChart
+  theme="blueprint"
   data={data}
   stage="stage"
   value="people"
@@ -154,6 +156,32 @@ const data = [
   title="930 of 12,400 applicants were offered a place"
   subtitle="Applications to the graduate scheme, 2024 intake"
   source="HR recruitment data"
+  note="Illustrative data"
+/>
+```
+
+### Four stages, custom drop-off word
+
+```tsx
+import { FunnelChart } from "insightcharts";
+
+const data = [
+  { stage: "Started an application", loans: 8400 },
+  { stage: "Submitted documents", loans: 5880 },
+  { stage: "Approved", loans: 3360 },
+  { stage: "Drew down the loan", loans: 2940 },
+];
+
+<FunnelChart
+  theme="editorial"
+  data={data}
+  stage="stage"
+  value="loans"
+  format="integer"
+  dropoffLabel="lost"
+  height={300}
+  title="2,940 of 8,400 loan applications ended in a loan"
+  subtitle="Small-business loan applications at each stage, 2024"
   note="Illustrative data"
 />
 ```
@@ -174,6 +202,7 @@ const data = [
 ];
 
 <FunnelChart
+  theme="earth"
   data={data}
   stage="stage"
   value="n"

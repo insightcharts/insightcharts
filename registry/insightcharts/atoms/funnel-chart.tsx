@@ -1,7 +1,7 @@
 "use client";
 
 import { CustomChart } from "echarts/charts";
-import { alpha, defineChart, measureText, morph, tooltipHtml } from "insightcharts/core";
+import { alpha, luminance, defineChart, measureText, morph, tooltipHtml } from "insightcharts/core";
 import { toNumber } from "insightcharts/data";
 
 export interface FunnelChartProps {
@@ -58,6 +58,8 @@ export const FunnelChart = defineChart<FunnelChartProps>({
   },
   build(p, ctx) {
     const t = ctx.tokens;
+    // Judged by the surface, not the page mode: a poster theme paints a dark ground on a light page.
+    const onDark = /^(#|rgb)/.test(t.surface) ? luminance(t.surface) < 0.2 : ctx.mode === "dark";
     const stages = ctx.rows.map((r) => ({ key: String(r[p.stage] ?? ""), value: Math.max(0, toNumber(r[p.value]) || 0) }));
     const n = stages.length;
     const first = stages[0]?.value ?? 0;
@@ -107,7 +109,7 @@ export const FunnelChart = defineChart<FunnelChartProps>({
         // The wash between bars is the funnel's silhouette. It carries no value of its own.
         const nb = span(i + 1);
         const ny = top(i + 1);
-        children.push({ type: "polygon", silent: true, shape: { points: [[b.x, y + barH], [b.x + b.w, y + barH], [nb.x + nb.w, ny], [nb.x, ny]] }, style: { fill: alpha(ctx.color(), ctx.mode === "dark" ? 0.16 : 0.1) } });
+        children.push({ type: "polygon", silent: true, shape: { points: [[b.x, y + barH], [b.x + b.w, y + barH], [nb.x + nb.w, ny], [nb.x, ny]] }, style: { fill: alpha(ctx.color(), onDark ? 0.16 : 0.1) } });
         if (showLoss) {
           const lost = s.value - stages[i + 1].value;
           const rate = s.value ? lost / s.value : 0;

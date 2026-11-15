@@ -400,6 +400,7 @@ const quadrant = [
 
 export const examples = {
   "Bubbles, colour groups, log axis": {
+    theme: "science",
     data: countries,
     x: "gdp",
     y: "life",
@@ -415,6 +416,7 @@ export const examples = {
     note: "Illustrative data",
   },
   "Quadrants via annotations": {
+    theme: "poster",
     data: quadrant,
     x: "usage",
     y: "satisfaction",
@@ -433,6 +435,7 @@ export const examples = {
     note: "Illustrative data",
   },
   "Stress: 2,400 points with a trend": {
+    theme: "noir",
     data: dense,
     x: "sqm",
     y: "price",

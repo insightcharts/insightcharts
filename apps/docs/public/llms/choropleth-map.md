@@ -49,6 +49,7 @@ const data = [
 ];
 
 <ChoroplethMap
+  theme="earth"
   geo={{
     type: "FeatureCollection",
     features: [
@@ -146,6 +147,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 ```json
 {
   "type": "choropleth-map",
+  "theme": "earth",
   "geo": {
     "type": "FeatureCollection",
     "features": [
@@ -285,7 +287,8 @@ Every chart also accepts these (shared by all charts; also at https://insightcha
 | `select` | `boolean \| string` | Make marks clickable to filter. Inside `<InsightData>` the selection filters every other chart. Pass a field name, or `true` to use the chart's category field. |
 | `onSelect` | `(values: string[], field: string) => void` | Called with the selected values whenever the selection changes. |
 | `option` | `EChartsOption \| ((option: EChartsOption, ctx: BuildContext) => EChartsOption)` | Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers. |
-| `theme` | `ThemeInput` | A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme. |
+| `theme` | `ThemeInput` | A built-in theme name (`"editorial"`, `"ledger"`, `"noir"`...), or a theme object. A named theme paints its own background behind the chart. |
+| `frame` | `boolean` | Paint the theme's background behind the chart. Default: on for a named theme with its own surface. |
 | `mode` | `ModeInput` | `"auto"` (default) follows the page, `"system"` follows the OS, or force `"light"` / `"dark"`. |
 | `renderer` | `RendererInput` | `"auto"` (default) uses SVG for light charts and canvas for heavy ones. |
 | `animate` | `boolean` | Set false to disable animation for this chart. Reduced-motion preferences are always respected. |
@@ -431,6 +434,7 @@ const data = [
 ];
 
 <ChoroplethMap
+  theme="ocean"
   geo="data:application/json,%7B%22type%22%3A%22FeatureCollection%22%2C%22features%22%3A%5B%7B%22type%22%3A%22Feature%22%2C%22properties%22%3A%7B%22name%22%3A%22North%20East%22%2C%22code%22%3A%22NE%22%7D%2C%22geometry%22%3A%7B%22type%22%3A%22Polygon%22%2C%22coordinates%22%3A%5B%5B%5B2.03%2C-0.97%5D%2C%5B2.9699999999999998%2C-0.97%5D%2C%5B2.9699999999999998%2C-0.03%5D%2C%5B2.03%2C-0.03%5D%2C%5B2.03%2C-0.97%5D%5D%5D%7D%7D%2C%7B%22type%22%3A%22Feature%22%2C%22properties%22%3A%7B%22name%22%3A%22North%20West%22%2C%22code%22%3A%22NW%22%7D%2C%22geometry%22%3A%7B%22type%22%3A%22Polygon%22%2C%22coordinates%22%3A%5B%5B%5B1.03%2C-1.97%5D%2C%5B1.97%2C-1.97%5D%2C%5B1.97%2C-1.03%5D%2C%5B1.03%2C-1.03%5D%2C%5B1.03%2C-1.97%5D%5D%5D%7D%7D%2C%7B%22type%22%3A%22Feature%22%2C%22properties%22%3A%7B%22name%22%3A%22Yorkshire%22%2C%22code%22%3A%22Yorks%22%7D%2C%22geometry%22%3A%7B%22type%22%3A%22Polygon%22%2C%22coordinates%22%3A%5B%5B%5B2.03%2C-1.97%5D%2C%5B2.9699999999999998%2C-1.97%5D%2C%5B2.9699999999999998%2C-1.03%5D%2C%5B2.03%2C-1.03%5D%2C%5B2.03%2C-1.97%5D%5D%5D%7D%7D%2C%7B%22type%22%3A%22Feature%22%2C%22properties%22%3A%7B%22name%22%3A%22West%20Midlands%22%2C%22code%22%3A%22W%20Mids%22%7D%2C%22geometry%22%3A%7B%22type%22%3A%22Polygon%22%2C%22coordinates%22%3A%5B%5B%5B1.03%2C-2.9699999999999998%5D%2C%5B1.97%2C-2.9699999999999998%5D%2C%5B1.97%2C-2.03%5D%2C%5B1.03%2C-2.03%5D%2C%5B1.03%2C-2.9699999999999998%5D%5D%5D%7D%7D%2C%7B%22type%22%3A%22Feature%22%2C%22properties%22%3A%7B%22name%22%3A%22East%20Midlands%22%2C%22code%22%3A%22E%20Mids%22%7D%2C%22geometry%22%3A%7B%22type%22%3A%22Polygon%22%2C%22coordinates%22%3A%5B%5B%5B2.03%2C-2.9699999999999998%5D%2C%5B2.9699999999999998%2C-2.9699999999999998%5D%2C%5B2.9699999999999998%2C-2.03%5D%2C%5B2.03%2C-2.03%5D%2C%5B2.03%2C-2.9699999999999998%5D%5D%5D%7D%7D%2C%7B%22type%22%3A%22Feature%22%2C%22properties%22%3A%7B%22name%22%3A%22East%22%2C%22code%22%3A%22East%22%7D%2C%22geometry%22%3A%7B%22type%22%3A%22Polygon%22%2C%22coordinates%22%3A%5B%5B%5B3.03%2C-2.9699999999999998%5D%2C%5B3.9699999999999998%2C-2.9699999999999998%5D%2C%5B3.9699999999999998%2C-2.03%5D%2C%5B3.03%2C-2.03%5D%2C%5B3.03%2C-2.9699999999999998%5D%5D%5D%7D%7D%2C%7B%22type%22%3A%22Feature%22%2C%22properties%22%3A%7B%22name%22%3A%22South%20West%22%2C%22code%22%3A%22SW%22%7D%2C%22geometry%22%3A%7B%22type%22%3A%22Polygon%22%2C%22coordinates%22%3A%5B%5B%5B1.03%2C-3.9699999999999998%5D%2C%5B1.97%2C-3.9699999999999998%5D%2C%5B1.97%2C-3.03%5D%2C%5B1.03%2C-3.03%5D%2C%5B1.03%2C-3.9699999999999998%5D%5D%5D%7D%7D%2C%7B%22type%22%3A%22Feature%22%2C%22properties%22%3A%7B%22name%22%3A%22South%20East%22%2C%22code%22%3A%22SE%22%7D%2C%22geometry%22%3A%7B%22type%22%3A%22Polygon%22%2C%22coordinates%22%3A%5B%5B%5B2.03%2C-3.9699999999999998%5D%2C%5B2.9699999999999998%2C-3.9699999999999998%5D%2C%5B2.9699999999999998%2C-3.03%5D%2C%5B2.03%2C-3.03%5D%2C%5B2.03%2C-3.9699999999999998%5D%5D%5D%7D%7D%2C%7B%22type%22%3A%22Feature%22%2C%22properties%22%3A%7B%22name%22%3A%22London%22%2C%22code%22%3A%22Lon%22%7D%2C%22geometry%22%3A%7B%22type%22%3A%22Polygon%22%2C%22coordinates%22%3A%5B%5B%5B3.03%2C-3.9699999999999998%5D%2C%5B3.9699999999999998%2C-3.9699999999999998%5D%2C%5B3.9699999999999998%2C-3.03%5D%2C%5B3.03%2C-3.03%5D%2C%5B3.03%2C-3.9699999999999998%5D%5D%5D%7D%7D%5D%7D"
   data={data}
   region="region"
@@ -444,6 +448,181 @@ const data = [
   subtitle="Median full-time annual earnings by English region, £ thousand, 2023"
   source="ONS Annual Survey of Hours and Earnings"
   note="Rounded. Each region is drawn as one equal tile"
+/>
+```
+
+### Diverging on a tile grid
+
+```tsx
+import { ChoroplethMap } from "insightcharts";
+
+const data = [
+  { region: "North East", change: 3.9 },
+  { region: "North West", change: 3.4 },
+  { region: "Yorkshire", change: 2.8 },
+  { region: "West Midlands", change: 1.7 },
+  { region: "East Midlands", change: 1.2 },
+  { region: "East", change: -0.6 },
+  { region: "South West", change: -0.3 },
+  { region: "South East", change: -1.2 },
+  // ... 1 more rows
+];
+
+<ChoroplethMap
+  theme="ledger"
+  geo={{
+    type: "FeatureCollection",
+    features: [
+      {
+        type: "Feature",
+        properties: { name: "North East", code: "NE" },
+        geometry: {
+          type: "Polygon",
+          coordinates: [
+            [
+              [2.03, -0.97],
+              [2.9699999999999998, -0.97],
+              [2.9699999999999998, -0.03],
+              [2.03, -0.03],
+              [2.03, -0.97],
+            ],
+          ],
+        },
+      },
+      {
+        type: "Feature",
+        properties: { name: "North West", code: "NW" },
+        geometry: {
+          type: "Polygon",
+          coordinates: [[[1.03, -1.97], [1.97, -1.97], [1.97, -1.03], [1.03, -1.03], [1.03, -1.97]]],
+        },
+      },
+      {
+        type: "Feature",
+        properties: { name: "Yorkshire", code: "Yorks" },
+        geometry: {
+          type: "Polygon",
+          coordinates: [
+            [
+              [2.03, -1.97],
+              [2.9699999999999998, -1.97],
+              [2.9699999999999998, -1.03],
+              [2.03, -1.03],
+              [2.03, -1.97],
+            ],
+          ],
+        },
+      },
+      {
+        type: "Feature",
+        properties: { name: "West Midlands", code: "W Mids" },
+        geometry: {
+          type: "Polygon",
+          coordinates: [
+            [
+              [1.03, -2.9699999999999998],
+              [1.97, -2.9699999999999998],
+              [1.97, -2.03],
+              [1.03, -2.03],
+              [1.03, -2.9699999999999998],
+            ],
+          ],
+        },
+      },
+      {
+        type: "Feature",
+        properties: { name: "East Midlands", code: "E Mids" },
+        geometry: {
+          type: "Polygon",
+          coordinates: [
+            [
+              [2.03, -2.9699999999999998],
+              [2.9699999999999998, -2.9699999999999998],
+              [2.9699999999999998, -2.03],
+              [2.03, -2.03],
+              [2.03, -2.9699999999999998],
+            ],
+          ],
+        },
+      },
+      {
+        type: "Feature",
+        properties: { name: "East", code: "East" },
+        geometry: {
+          type: "Polygon",
+          coordinates: [
+            [
+              [3.03, -2.9699999999999998],
+              [3.9699999999999998, -2.9699999999999998],
+              [3.9699999999999998, -2.03],
+              [3.03, -2.03],
+              [3.03, -2.9699999999999998],
+            ],
+          ],
+        },
+      },
+      {
+        type: "Feature",
+        properties: { name: "South West", code: "SW" },
+        geometry: {
+          type: "Polygon",
+          coordinates: [
+            [
+              [1.03, -3.9699999999999998],
+              [1.97, -3.9699999999999998],
+              [1.97, -3.03],
+              [1.03, -3.03],
+              [1.03, -3.9699999999999998],
+            ],
+          ],
+        },
+      },
+      {
+        type: "Feature",
+        properties: { name: "South East", code: "SE" },
+        geometry: {
+          type: "Polygon",
+          coordinates: [
+            [
+              [2.03, -3.9699999999999998],
+              [2.9699999999999998, -3.9699999999999998],
+              [2.9699999999999998, -3.03],
+              [2.03, -3.03],
+              [2.03, -3.9699999999999998],
+            ],
+          ],
+        },
+      },
+      {
+        type: "Feature",
+        properties: { name: "London", code: "Lon" },
+        geometry: {
+          type: "Polygon",
+          coordinates: [
+            [
+              [3.03, -3.9699999999999998],
+              [3.9699999999999998, -3.9699999999999998],
+              [3.9699999999999998, -3.03],
+              [3.03, -3.03],
+              [3.03, -3.9699999999999998],
+            ],
+          ],
+        },
+      },
+    ],
+  }}
+  data={data}
+  region="region"
+  value="change"
+  scale="diverging"
+  labels="value"
+  labelProperty="code"
+  format="signed"
+  aspectScale={1}
+  height={340}
+  title="Average house prices in London fell 2.1% in one year"
+  subtitle="Change in average house price over 12 months by English region, %"
+  note="Illustrative figures. Each region is drawn as one equal tile"
 />
 ```
 

@@ -77,6 +77,7 @@ export const StatCircles = defineChart<StatCirclesProps>({
     { name: "icon", type: "string | Record<string, string>", description: "Icon above the number in large circles: one for all, or a map from label to icon. Built-in name or `path://`." },
   ],
   example: {
+    theme: "dusk",
     type: "stat-circles",
     data: [
       { who: "per person in the United States", kg: 124 },

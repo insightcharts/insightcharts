@@ -1,64 +1,79 @@
 import { ExecutiveBrief } from "@/components/insightcharts/templates/executive-brief";
 import { LineChart } from "@/components/insightcharts/atoms/line-chart";
 import { DumbbellChart } from "@/components/insightcharts/atoms/dumbbell-chart";
-import { BarChart } from "@/components/insightcharts/atoms/bar-chart";
+import { SlopeChart } from "@/components/insightcharts/atoms/slope-chart";
 
 export function ExecutiveBriefDemo() {
   return (
     <ExecutiveBrief
+      theme="ledger"
       kicker="Retention review · Q4 2024"
       title="Monthly churn fell from 4.2% to 2.1% in 2024"
       deck="The new onboarding shipped in March. Accounts that joined before March still churn at 3.8% a month."
       byline="Growth analytics"
       date="2025-01-14"
-      figures={[
-        {
-          value: "2.1%",
-          label: "Monthly churn, December",
-          delta: "−2.1 pts",
-          deltaLabel: "vs January",
-          upIsGood: false,
-        },
-        {
-          value: 0.61,
-          format: "percent",
-          label: "New accounts finishing setup in week one",
-          delta: "+19 pts",
-          deltaLabel: "vs January",
-        },
-        {
-          value: 1.12,
-          format: "percent",
-          label: "Net revenue retention",
-          context: "Top quartile for the sector is 110%",
-        },
-        {
-          value: "$1.9m",
-          label: "Annual revenue retained",
-          context: "Compared with churn staying at the January rate of 4.2%",
-        },
-      ]}
+      figures={{
+        variant: "tiles",
+        items: [
+          {
+            surface: "outline-accent",
+            edge: "top",
+            value: "2.1%",
+            label: "Monthly churn, December",
+            delta: "−2.1 pts",
+            deltaLabel: "vs January",
+            upIsGood: false,
+          },
+          {
+            surface: "outline-accent",
+            edge: "top",
+            value: 0.61,
+            format: "percent",
+            label: "New accounts finishing setup in week one",
+            delta: "+19 pts",
+            deltaLabel: "vs January",
+          },
+          {
+            surface: "outline-accent",
+            edge: "top",
+            value: 1.12,
+            format: "percent",
+            label: "Net revenue retention",
+            context: "Top quartile for the sector is 110%",
+          },
+          {
+            surface: "outline-accent",
+            edge: "top",
+            value: "$1.9m",
+            label: "Annual revenue retained",
+            context: "Compared with churn staying at the January rate of 4.2%",
+          },
+        ],
+      }}
       hero={<LineChart
         data={[
-          { month: "2024-01-01", churn: 4.2 },
-          { month: "2024-02-01", churn: 4.3 },
-          { month: "2024-03-01", churn: 4.1 },
-          { month: "2024-04-01", churn: 3.6 },
-          { month: "2024-05-01", churn: 3.1 },
-          { month: "2024-06-01", churn: 2.9 },
-          { month: "2024-07-01", churn: 2.6 },
-          { month: "2024-08-01", churn: 2.4 },
-          { month: "2024-09-01", churn: 2.3 },
-          { month: "2024-10-01", churn: 2.2 },
-          { month: "2024-11-01", churn: 2.1 },
-          { month: "2024-12-01", churn: 2.1 },
+          { month: "2024-01-01", churn: 4.2, prior: 4.4 },
+          { month: "2024-02-01", churn: 4.3, prior: 4.3 },
+          { month: "2024-03-01", churn: 4.1, prior: 4.4 },
+          { month: "2024-04-01", churn: 3.6, prior: 4.2 },
+          { month: "2024-05-01", churn: 3.1, prior: 4.3 },
+          { month: "2024-06-01", churn: 2.9, prior: 4.1 },
+          { month: "2024-07-01", churn: 2.6, prior: 4.2 },
+          { month: "2024-08-01", churn: 2.4, prior: 4.3 },
+          { month: "2024-09-01", churn: 2.3, prior: 4.1 },
+          { month: "2024-10-01", churn: 2.2, prior: 4.2 },
+          { month: "2024-11-01", churn: 2.1, prior: 4.3 },
+          { month: "2024-12-01", churn: 2.1, prior: 4.2 },
         ]}
         x="month"
-        y="churn"
+        y={["churn", "prior"]}
+        names={{ churn: "2024", prior: "2023" }}
+        highlight="churn"
+        contextLabels
         format="{value}%"
         zero
         title="Monthly churn fell from 4.1% in March to 2.1% in December"
-        subtitle="Share of paying accounts cancelling each month, 2024"
+        subtitle="Share of paying accounts cancelling each month, 2024 and the same months of 2023"
         annotations={[
           { type: "line", axis: "x", value: "2024-03-01", label: "New onboarding ships" },
           { type: "band", axis: "y", from: 2, to: 2.5, label: "Target range" },
@@ -67,7 +82,7 @@ export function ExecutiveBriefDemo() {
       />}
       takeaway={{
         lead: "Churn was between 2.1% and 2.4% from August to December",
-        body: "The new onboarding shipped in March. Churn did not fall in the same months of 2023.",
+        body: "The new onboarding shipped in March. Churn was between 4.1% and 4.4% in every month of 2023.",
       }}
       supporting={[
         <DumbbellChart
@@ -87,7 +102,7 @@ export function ExecutiveBriefDemo() {
           title="Starter plan churn fell from 6.1% to 2.9%"
           subtitle="Monthly churn by plan, January and December 2024"
         />,
-        <BarChart
+        <SlopeChart
           data={[
             { reason: "Setup not finished", before: 38, after: 14 },
             { reason: "Too expensive", before: 22, after: 27 },
@@ -95,14 +110,14 @@ export function ExecutiveBriefDemo() {
             { reason: "Went to a rival", before: 13, after: 19 },
             { reason: "Company closed", before: 10, after: 16 },
           ]}
-          x="reason"
-          y="after"
-          sort="none"
-          orientation="horizontal"
+          series="reason"
+          y={["before", "after"]}
+          names={{ before: "Q1", after: "Q4" }}
           format="{value}%"
           highlight="Setup not finished"
-          title="“Setup not finished” was the reason for 14% of cancellations in Q4"
-          subtitle="Share of cancellations by stated reason, Q4 2024. “Setup not finished” was 38% in Q1"
+          height={260}
+          title="“Setup not finished” fell from 38% to 14% of cancellations"
+          subtitle="Share of cancellations by stated reason, Q1 and Q4 2024"
         />,
       ]}
       actions={[

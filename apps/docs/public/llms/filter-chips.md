@@ -74,7 +74,8 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `resetLabel` | `string` | `"Reset"` | Text of the clear-all control. |
 | `count` | `boolean` | `false` | Show "1,204 of 5,000 rows" at the end of the line. |
 | `unit` | `string` | `"rows"` | Noun for the count, e.g. "orders". |
-| `theme` | `ThemeInput` |  | Theme override. |
+| `theme` | `ThemeInput` |  | A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object. A named theme with its own surface paints that surface behind the component. |
+| `frame` | `boolean` |  | Paint the theme's surface behind the component. Default: on for a named theme with its own surface. |
 | `mode` | `"auto" \| "system" \| "light" \| "dark"` | `"auto"` | Colour mode. |
 
 ## Composition
@@ -84,12 +85,40 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 
 ## More examples
 
-### Nothing selected, with a hint
+### Nothing selected, with a hint, earth theme
 
 ```tsx
 import { FilterChips } from "insightcharts";
 
-<FilterChips selections={{}} hint="Click a bar to filter" />
+<FilterChips theme="earth" selections={{}} hint="Click a bar to filter" />
+```
+
+### A date range and two values, blueprint theme
+
+```tsx
+import { FilterChips } from "insightcharts";
+
+<FilterChips
+  theme="blueprint"
+  labels={{ month: "Month", line: "Line" }}
+  resetLabel="Clear all"
+  selections={{
+    "by-month": { field: "month", range: ["2024-03-01", "2024-09-01"] },
+    "by-line": { field: "line", values: ["Northern", "Circle"] },
+  }}
+/>
+```
+
+### One value, ledger theme
+
+```tsx
+import { FilterChips } from "insightcharts";
+
+<FilterChips
+  theme="ledger"
+  labels={{ plan: "Plan" }}
+  selections={{ "by-plan": { field: "plan", values: ["Enterprise"] } }}
+/>
 ```
 
 ## Links

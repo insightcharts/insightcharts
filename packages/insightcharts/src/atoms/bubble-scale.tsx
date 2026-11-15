@@ -307,6 +307,7 @@ export const BubbleScale = defineChart<BubbleScaleProps>({
   ],
   example: {
     type: "bubble-scale",
+    theme: "sunrise",
     data: [
       { material: "Lithium", imported: 100, kt: 38 },
       { material: "Cobalt", imported: 86, kt: 21 },
@@ -510,6 +511,7 @@ export const examples = {
     note: "Illustrative figures for an invented city",
   },
   "Highlight one circle, click to select": {
+    theme: "blueprint",
     data: districts,
     name: "district",
     value: "carFree",
@@ -524,6 +526,7 @@ export const examples = {
     note: "Illustrative figures for an invented city",
   },
   "Stress: 40 circles crowded at one end, sizes from 1 to 900": {
+    theme: "forest",
     data: Array.from({ length: 40 }, (_, i) => ({
       fund: `Fund ${String.fromCharCode(65 + (i % 26))}${i >= 26 ? "2" : ""}`,
       fee: Math.round((0.05 + ((i * 37) % 23) * 0.012 + (i % 9 === 0 ? 1.1 : 0) + (i % 13 === 5 ? 0.6 : 0)) * 100) / 100,

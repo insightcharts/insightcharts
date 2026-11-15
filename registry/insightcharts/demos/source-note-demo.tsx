@@ -3,6 +3,7 @@ import { SourceNote } from "@/components/insightcharts/atoms/source-note";
 export function SourceNoteDemo() {
   return (
     <SourceNote
+      theme="earth"
       sources={[
         { name: "Ember, European Electricity Review 2025", url: "https://ember-energy.org" },
         { name: "ENTSO-E Transparency Platform", url: "https://transparency.entsoe.eu" },

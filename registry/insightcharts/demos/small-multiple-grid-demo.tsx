@@ -37,6 +37,7 @@ const data = [
 export function SmallMultipleGridDemo() {
   return (
     <SmallMultipleGrid
+      theme="poster"
       title="65% of Dutch workers aged 25 to 34 worked from home usually or sometimes in 2023"
       subtitle="Share of employed people working from home usually or sometimes, by age group, six EU countries, 2023. All panels run from 0 to 70%"
       data={data}

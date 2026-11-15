@@ -35,9 +35,10 @@ The file lands at `components/insightcharts/templates/timeline-story.tsx`. `@ins
 ## Usage
 
 ```tsx
-import { BarChart, BigNumber, LineChart, TimelineStory } from "insightcharts";
+import { BarChart, LineChart, StatTile, TimelineStory } from "insightcharts";
 
 <TimelineStory
+  theme="forest"
   kicker="Energy"
   title="Coal generated 39% of Britain's electricity in 2012 and 0.6% in 2024"
   deck="The first public coal power station opened in 1882. The last coal plant closed on 30 September 2024."
@@ -45,33 +46,33 @@ import { BarChart, BigNumber, LineChart, TimelineStory } from "insightcharts";
   date="2024-10-01"
   timeline={<LineChart
     data={[
-      { year: "1990-01-01", share: 65 },
-      { year: "1994-01-01", share: 50 },
-      { year: "1998-01-01", share: 35 },
-      { year: "2002-01-01", share: 32 },
-      { year: "2006-01-01", share: 38 },
-      { year: "2010-01-01", share: 28 },
-      { year: "2012-01-01", share: 39 },
-      { year: "2013-01-01", share: 36 },
-      { year: "2014-01-01", share: 30 },
-      { year: "2015-01-01", share: 22 },
-      { year: "2016-01-01", share: 9 },
-      { year: "2017-01-01", share: 7 },
-      { year: "2018-01-01", share: 5 },
-      { year: "2019-01-01", share: 2 },
-      { year: "2020-01-01", share: 2 },
-      { year: "2021-01-01", share: 2 },
-      { year: "2022-01-01", share: 1.5 },
-      { year: "2023-01-01", share: 1 },
-      { year: "2024-01-01", share: 0.6 },
+      { year: "1990-01-01", share: 65, wind: 0 },
+      { year: "1994-01-01", share: 50, wind: 0 },
+      { year: "1998-01-01", share: 35, wind: 0.2 },
+      { year: "2002-01-01", share: 32, wind: 0.4 },
+      { year: "2006-01-01", share: 38, wind: 1 },
+      { year: "2010-01-01", share: 28, wind: 3 },
+      { year: "2012-01-01", share: 39, wind: 6 },
+      { year: "2013-01-01", share: 36, wind: 8 },
+      { year: "2014-01-01", share: 30, wind: 9 },
+      { year: "2015-01-01", share: 22, wind: 12 },
+      { year: "2016-01-01", share: 9, wind: 11 },
+      { year: "2017-01-01", share: 7, wind: 15 },
+      { year: "2018-01-01", share: 5, wind: 17 },
+      { year: "2019-01-01", share: 2, wind: 20 },
+      { year: "2020-01-01", share: 2, wind: 24 },
+      { year: "2021-01-01", share: 2, wind: 21 },
+      { year: "2022-01-01", share: 1.5, wind: 27 },
+      { year: "2023-01-01", share: 1, wind: 29 },
+      { year: "2024-01-01", share: 0.6, wind: 30 },
     ]}
     x="year"
-    y="share"
+    y={["share", "wind"]}
+    names={{ share: "Coal", wind: "Wind" }}
     format="{value}%"
     zero
-    area
     title="Coal's share of generation fell from 65% in 1990 to 0.6% in 2024"
-    subtitle="Share of Great Britain's electricity generated from coal, 1990 to 2024"
+    subtitle="Share of Great Britain's electricity generated from coal and from wind, 1990 to 2024"
     annotations={[
       { type: "band", axis: "x", from: "1990-01-01", to: "1998-01-01", label: "Gas plants built" },
       { type: "line", axis: "x", value: "2013-01-01", label: "Carbon price floor" },
@@ -140,9 +141,16 @@ import { BarChart, BigNumber, LineChart, TimelineStory } from "insightcharts";
       title: "Ratcliffe-on-Soar, the last coal plant, shuts down",
       emphasis: true,
       text: "The plant had run since 1968. In 2024 wind generated 30% of the country's electricity and gas generated 26%.",
-      exhibit: <BigNumber
-        value="0%"
-        label="Coal share of generation since October 2024"
+      exhibit: <StatTile
+        variant="comparison"
+        surface="borderless"
+        upIsGood={false}
+        value={0.6}
+        comparison={39}
+        valueLabel="2024"
+        comparisonLabel="2012"
+        format="{value}%"
+        label="Coal share of generation"
         context="Britain was the first G7 country to end coal power"
       />,
     },
@@ -161,6 +169,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 ```json
 {
   "type": "timeline-story",
+  "theme": "forest",
   "kicker": "Energy",
   "title": "Coal generated 39% of Britain's electricity in 2012 and 0.6% in 2024",
   "deck": "The first public coal power station opened in 1882. The last coal plant closed on 30 September 2024.",
@@ -169,33 +178,33 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
   "timeline": {
     "type": "line-chart",
     "data": [
-      { "year": "1990-01-01", "share": 65 },
-      { "year": "1994-01-01", "share": 50 },
-      { "year": "1998-01-01", "share": 35 },
-      { "year": "2002-01-01", "share": 32 },
-      { "year": "2006-01-01", "share": 38 },
-      { "year": "2010-01-01", "share": 28 },
-      { "year": "2012-01-01", "share": 39 },
-      { "year": "2013-01-01", "share": 36 },
-      { "year": "2014-01-01", "share": 30 },
-      { "year": "2015-01-01", "share": 22 },
-      { "year": "2016-01-01", "share": 9 },
-      { "year": "2017-01-01", "share": 7 },
-      { "year": "2018-01-01", "share": 5 },
-      { "year": "2019-01-01", "share": 2 },
-      { "year": "2020-01-01", "share": 2 },
-      { "year": "2021-01-01", "share": 2 },
-      { "year": "2022-01-01", "share": 1.5 },
-      { "year": "2023-01-01", "share": 1 },
-      { "year": "2024-01-01", "share": 0.6 }
+      { "year": "1990-01-01", "share": 65, "wind": 0 },
+      { "year": "1994-01-01", "share": 50, "wind": 0 },
+      { "year": "1998-01-01", "share": 35, "wind": 0.2 },
+      { "year": "2002-01-01", "share": 32, "wind": 0.4 },
+      { "year": "2006-01-01", "share": 38, "wind": 1 },
+      { "year": "2010-01-01", "share": 28, "wind": 3 },
+      { "year": "2012-01-01", "share": 39, "wind": 6 },
+      { "year": "2013-01-01", "share": 36, "wind": 8 },
+      { "year": "2014-01-01", "share": 30, "wind": 9 },
+      { "year": "2015-01-01", "share": 22, "wind": 12 },
+      { "year": "2016-01-01", "share": 9, "wind": 11 },
+      { "year": "2017-01-01", "share": 7, "wind": 15 },
+      { "year": "2018-01-01", "share": 5, "wind": 17 },
+      { "year": "2019-01-01", "share": 2, "wind": 20 },
+      { "year": "2020-01-01", "share": 2, "wind": 24 },
+      { "year": "2021-01-01", "share": 2, "wind": 21 },
+      { "year": "2022-01-01", "share": 1.5, "wind": 27 },
+      { "year": "2023-01-01", "share": 1, "wind": 29 },
+      { "year": "2024-01-01", "share": 0.6, "wind": 30 }
     ],
     "x": "year",
-    "y": "share",
+    "y": ["share", "wind"],
+    "names": { "share": "Coal", "wind": "Wind" },
     "format": "{value}%",
     "zero": true,
-    "area": true,
     "title": "Coal's share of generation fell from 65% in 1990 to 0.6% in 2024",
-    "subtitle": "Share of Great Britain's electricity generated from coal, 1990 to 2024",
+    "subtitle": "Share of Great Britain's electricity generated from coal and from wind, 1990 to 2024",
     "annotations": [
       {
         "type": "band",
@@ -273,9 +282,16 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
       "emphasis": true,
       "text": "The plant had run since 1968. In 2024 wind generated 30% of the country's electricity and gas generated 26%.",
       "exhibit": {
-        "type": "big-number",
-        "value": "0%",
-        "label": "Coal share of generation since October 2024",
+        "type": "stat-tile",
+        "variant": "comparison",
+        "surface": "borderless",
+        "upIsGood": false,
+        "value": 0.6,
+        "comparison": 39,
+        "valueLabel": "2024",
+        "comparisonLabel": "2012",
+        "format": "{value}%",
+        "label": "Coal share of generation",
         "context": "Britain was the first G7 country to end coal power"
       }
     }
@@ -309,12 +325,13 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `credit` | `string` |  | Who made the piece. |
 | `level` | `1 \| 2 \| 3 \| 4 \| 5 \| 6` | `1` | Heading level of the title; section headings follow one level down. |
 | `maxWidth` | `number \| string` |  | Widest the piece may get. It is centred in wider containers. |
-| `theme` | `ThemeInput` |  | Theme override, passed on to everything inside. |
+| `theme` | `ThemeInput` |  | A built-in theme name (`"editorial"`, `"ledger"`, `"noir"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece. |
+| `frame` | `boolean` |  | Paint the theme's surface behind the piece, with page padding. Default: on when `theme` is a named theme with its own surface. Set false when the host already paints it. |
 | `mode` | `"auto" \| "system" \| "light" \| "dark"` | `"auto"` | Colour mode, passed on to everything inside. |
 
 ## Composition
 
-- Composes: [headline](https://insightcharts.dev/llms/headline.md), [prose](https://insightcharts.dev/llms/prose.md), [annotated-timeline](https://insightcharts.dev/llms/annotated-timeline.md), [source-note](https://insightcharts.dev/llms/source-note.md), [line-chart](https://insightcharts.dev/llms/line-chart.md), [timeline-chart](https://insightcharts.dev/llms/timeline-chart.md), [bar-chart](https://insightcharts.dev/llms/bar-chart.md), [big-number](https://insightcharts.dev/llms/big-number.md)
+- Composes: [headline](https://insightcharts.dev/llms/headline.md), [prose](https://insightcharts.dev/llms/prose.md), [annotated-timeline](https://insightcharts.dev/llms/annotated-timeline.md), [source-note](https://insightcharts.dev/llms/source-note.md), [line-chart](https://insightcharts.dev/llms/line-chart.md), [timeline-chart](https://insightcharts.dev/llms/timeline-chart.md), [bar-chart](https://insightcharts.dev/llms/bar-chart.md), [big-number](https://insightcharts.dev/llms/big-number.md), [stat-tile](https://insightcharts.dev/llms/stat-tile.md), [waffle-chart](https://insightcharts.dev/llms/waffle-chart.md)
 - Used by: no molecule or template yet
 
 ## More examples
@@ -325,6 +342,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 import { BigNumber, TimelineChart, TimelineStory } from "insightcharts";
 
 <TimelineStory
+  theme="ocean"
   kicker="Athletics"
   title="The men's marathon record fell from 2:04:55 to 2:00:35 between 2003 and 2023"
   deck="Seven men held the record in that time. Carbon-plated shoes went on sale in 2017. The last two record-holders ran in them."
@@ -394,6 +412,96 @@ import { BigNumber, TimelineChart, TimelineStory } from "insightcharts";
   sources="World Athletics record progression"
   note="Figures are approximate, for illustration"
   period="2003 to 2025"
+/>
+```
+
+### Cities: a stacked overview and a waffle in a chapter
+
+```tsx
+import { BarChart, StatTile, TimelineStory, WaffleChart } from "insightcharts";
+
+<TimelineStory
+  kicker="Transport"
+  title="Riverton's bike-share scheme grew from 400 bikes in 2015 to 6,200 in 2024"
+  deck="Riders made 9.4 million trips in 2024. E-bikes joined the fleet in 2021."
+  date="2025-01-28"
+  timeline={<BarChart
+    data={[
+      { year: "2015", classic: 0.3, ebike: 0 },
+      { year: "2016", classic: 0.7, ebike: 0 },
+      { year: "2017", classic: 1.2, ebike: 0 },
+      { year: "2018", classic: 1.8, ebike: 0 },
+      { year: "2019", classic: 2.4, ebike: 0 },
+      { year: "2020", classic: 1.9, ebike: 0 },
+      { year: "2021", classic: 2.6, ebike: 1.1 },
+      { year: "2022", classic: 2.9, ebike: 2.7 },
+      { year: "2023", classic: 3.1, ebike: 4.6 },
+      { year: "2024", classic: 3.2, ebike: 6.2 },
+    ]}
+    x="year"
+    y={["classic", "ebike"]}
+    names={{ classic: "Classic bikes", ebike: "E-bikes" }}
+    stack
+    sort="none"
+    orientation="vertical"
+    format="{value}m"
+    height={320}
+    title="E-bikes carried 6.2 million of the 9.4 million trips in 2024"
+    subtitle="Bike-share trips per year by type of bike, millions, 2015 to 2024"
+    source="Riverton transport authority"
+  />}
+  intro="Trips rose every year except 2020. They rose from 1.9 million in 2020 to 9.4 million in 2024."
+  chapters={[
+    {
+      date: "June 2015",
+      title: "The scheme opens with 400 bikes at 40 docks",
+      text: "All 40 docks were in the city centre. Riders made 0.3 million trips in the first year.",
+    },
+    {
+      date: "2018",
+      title: "The network reaches 150 docks",
+      text: "The city added docks in 11 residential districts. Trips rose from 0.3 million in 2015 to 1.8 million in 2018.",
+    },
+    {
+      date: "March 2020",
+      title: "Trips fall 21% in the first pandemic year",
+      text: "Riders made 1.9 million trips in 2020. They made 2.4 million in 2019.",
+    },
+    {
+      date: "May 2021",
+      title: "1,500 e-bikes join the fleet",
+      emphasis: true,
+      text: "E-bikes made 1.1 million trips in 2021. They made 6.2 million in 2024.",
+      exhibit: <WaffleChart
+        data={[{ kind: "E-bike trips", share: 66 }]}
+        name="kind"
+        value="share"
+        total={100}
+        rows={5}
+        columns={20}
+        restLabel="Classic bike trips"
+        format="{value}%"
+        subtitle="Share of trips by type of bike, 2024"
+      />,
+    },
+    {
+      date: "December 2024",
+      title: "The fleet reaches 6,200 bikes",
+      emphasis: true,
+      text: "The scheme has 410 docks in 23 districts.",
+      exhibit: <StatTile
+        variant="breakdown"
+        value={6200}
+        format="integer"
+        label="Bikes in the fleet, December 2024"
+        parts={[{ label: "E-bikes", value: 3400 }, { label: "Classic bikes", value: 2800 }]}
+      />,
+    },
+  ]}
+  closing="Riders made 9.4 million trips in 2024. The scheme had 6,200 bikes at 410 docks."
+  sources="Riverton transport authority annual reports"
+  period="2015 to 2024"
+  note="Illustrative data. The city is fictional."
 />
 ```
 

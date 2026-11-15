@@ -12,6 +12,7 @@ const data = [
 export function RibbonChartDemo() {
   return (
     <RibbonChart
+      theme="sunrise"
       data={data}
       x="year"
       y={["Potatoes", "Carrots", "Onions", "Beans", "Squash"]}

@@ -1,5 +1,6 @@
 import { LinkedCharts } from "@/components/insightcharts/molecules/linked-charts";
 import { BarChart } from "@/components/insightcharts/atoms/bar-chart";
+import { DonutChart } from "@/components/insightcharts/atoms/donut-chart";
 
 const data = [
   { region: "Asia", year: "2020", source: "Hydro", twh: 1810 },
@@ -67,11 +68,12 @@ const data = [
 export function LinkedChartsDemo() {
   return (
     <LinkedCharts
+      theme="science"
       title="Asia generated 46% of the renewable electricity in these four regions from 2020 to 2024"
       subtitle="Electricity generation from hydro, wind and solar, TWh, four regions, 2020 to 2024"
       data={data}
       labels={{ region: "Region", source: "Source", year: "Year" }}
-      hint="Click a bar to filter the other charts"
+      hint="Click a bar or a slice to filter the other charts"
       count
       charts={[
         <BarChart
@@ -84,12 +86,13 @@ export function LinkedChartsDemo() {
           title="By region"
           transform={{ type: "aggregate", groupBy: "region", measures: { twh: { op: "sum", field: "twh" } } }}
         />,
-        <BarChart
+        <DonutChart
           id="by-source"
-          x="source"
-          y="twh"
+          name="source"
+          value="twh"
           select
           format="compact"
+          centerLabel="TWh"
           height={200}
           title="By source"
           transform={{ type: "aggregate", groupBy: "source", measures: { twh: { op: "sum", field: "twh" } } }}

@@ -78,13 +78,16 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `showMax` | `boolean` |  | Print "of {max}" after the value. Default: only when `max` is given. |
 | `context` | `string` |  | A line under the meter that gives the number meaning. |
 | `format` | `FormatSpec` |  | Number format. Defaults to `"percent"` when the track ends at 1 or less, otherwise `"auto"`. |
-| `tone` | `"accent" \| "positive" \| "negative" \| "neutral"` | `"accent"` | Fill colour by meaning. |
-| `size` | `"sm" \| "md"` | `"md"` | `sm` for dense stacks. |
+| `tone` | `"accent" \| "positive" \| "negative" \| "neutral" \| number` | `"accent"` | Fill colour by meaning. A number picks from the theme's categorical palette, 0-based, for a stack of meters that name different entities. |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Track of 6, 8 or 12px. `sm` for dense stacks, `lg` for a single featured meter. |
+| `detail` | `string` |  | A short muted note after the value, e.g. a share of the total ("26%"). |
+| `theme` | `ThemeInput` |  | A theme name such as `"science"`, or token overrides. A named theme paints its own ground. |
+| `frame` | `boolean` |  | Set false to stop a named theme painting its ground. |
 
 ## Composition
 
 - Composes: nothing (it is a primitive)
-- Used by: [report-page](https://insightcharts.dev/llms/report-page.md)
+- Used by: [metric-breakdown](https://insightcharts.dev/llms/metric-breakdown.md), [quote-figure](https://insightcharts.dev/llms/quote-figure.md), [report-page](https://insightcharts.dev/llms/report-page.md)
 
 ## More examples
 
@@ -129,6 +132,90 @@ import { ProgressMeter } from "insightcharts";
   value={0.08}
   target={0.95}
   targetLabel="Goal"
+/>
+```
+
+### Large, science
+
+```tsx
+import { ProgressMeter } from "insightcharts";
+
+<ProgressMeter
+  theme="science"
+  size="lg"
+  label="Children vaccinated against measles"
+  value={0.91}
+  max={1}
+  showMax={false}
+  target={0.95}
+  targetLabel="WHO target"
+  context="Coverage was 86% in 2021."
+/>
+```
+
+### Categorical tone with a detail, ledger
+
+```tsx
+import { ProgressMeter } from "insightcharts";
+
+<ProgressMeter
+  theme="ledger"
+  label="Enterprise plan revenue"
+  value={318000}
+  max={589000}
+  showMax={false}
+  format="currency:USD"
+  tone={1}
+  detail="54%"
+  context="Share of $589,000 monthly recurring revenue."
+/>
+```
+
+### Capacity, magenta
+
+```tsx
+import { ProgressMeter } from "insightcharts";
+
+<ProgressMeter
+  theme="magenta"
+  size="lg"
+  label="Tickets sold for the final"
+  value={68400}
+  max={72000}
+  format="integer"
+  context="3,600 seats were unsold on 1 June."
+/>
+```
+
+### Neutral tone, mono
+
+```tsx
+import { ProgressMeter } from "insightcharts";
+
+<ProgressMeter
+  theme="mono"
+  label="Sprint scope completed"
+  value={34}
+  max={40}
+  format="{value} points"
+  tone="neutral"
+  context="With two days of the sprint left."
+/>
+```
+
+### Forest
+
+```tsx
+import { ProgressMeter } from "insightcharts";
+
+<ProgressMeter
+  theme="forest"
+  label="Native woodland replanted"
+  value={1240}
+  target={2000}
+  format="{value} ha"
+  targetLabel="2026 goal"
+  context="620 hectares were planted in 2024."
 />
 ```
 

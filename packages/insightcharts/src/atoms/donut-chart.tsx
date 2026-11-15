@@ -50,6 +50,7 @@ export const DonutChart = defineChart<DonutChartProps>({
   ],
   example: {
     type: "donut-chart",
+    theme: "paper",
     data: [
       { tenure: "Own outright", households: 8.8 },
       { tenure: "Own with a mortgage", households: 7.4 },
@@ -166,6 +167,7 @@ export const DonutChart = defineChart<DonutChartProps>({
 
 export const examples = {
   "Two slices, no centre": {
+    theme: "magenta",
     data: [
       { answer: "Remote or hybrid", share: 41 },
       { answer: "On site every day", share: 59 },
@@ -201,6 +203,7 @@ export const examples = {
     note: "Figures are approximate, for illustration",
   },
   "Stress: long names and a sliver": {
+    theme: "poster",
     data: [
       { item: "Salaries, pensions and other staff-related expenditure", cost: 612 },
       { item: "Buildings and facilities management", cost: 188 },

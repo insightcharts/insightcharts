@@ -197,6 +197,7 @@ export const BlockBar = defineChart<BlockBarProps>({
   ],
   example: {
     type: "block-bar",
+    theme: "noir",
     data: [
       { year: "2020", tickets: 18400, seats: "41% of seats" },
       { year: "2021", tickets: 22900, seats: "49% of seats" },

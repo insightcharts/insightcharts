@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ComponentPreview } from "@/components/catalog/component-preview";
+import { ExampleGallery, hasGallery } from "@/components/catalog/example-gallery";
+import { ExampleList } from "@/components/catalog/example-list";
 import { InstallTabs } from "@/components/catalog/install";
 import { PageActions } from "@/components/catalog/page-actions";
 import { InlineMd, PropsTable } from "@/components/catalog/props-table";
@@ -87,12 +89,18 @@ export default async function ComponentPage({ params }: { params: Params }) {
   const { previous, next } = neighbours(c);
   const importLine = `import { ${c.component} } from "insightcharts";`;
 
+  // Small examples, or more than six: all of them together in a grid near the top of the page.
+  const gallery = hasGallery(c);
+  // More than six: the full previews below open one row at a time instead of all mounting at once.
+  const many = c.examples.length > 6;
+
   const toc: TocItem[] = [
     { id: "preview", title: "Preview", depth: 2 },
+    ...(gallery ? [{ id: "all-examples", title: `All ${c.examples.length} examples`, depth: 2 }] : []),
     { id: "composition", title: "Composition", depth: 2 },
     ...compositionToc(c),
     { id: "installation", title: "Installation", depth: 2 },
-    ...(c.examples.length ? [{ id: "examples", title: "Examples", depth: 2 }, ...c.examples.map((e) => ({ id: `example-${slug(e.title)}`, title: e.title, depth: 3 }))] : []),
+    ...(c.examples.length ? [{ id: "examples", title: "Examples", depth: 2 }, ...(many ? [] : c.examples.map((e) => ({ id: `example-${slug(e.title)}`, title: e.title, depth: 3 })))] : []),
     { id: "props", title: "Props", depth: 2 },
   ];
 
@@ -183,6 +191,16 @@ export default async function ComponentPage({ params }: { params: Params }) {
         {c.example ? <ComponentPreview spec={c.example} {...(tall ? { maxHeight: frameHeight } : null)} {...(c.level === "template" ? { fullHref: `${hrefOf(c)}/preview` } : null)} /> : <p className="text-sm text-muted-foreground">This component has no example in its metadata yet.</p>}
       </section>
 
+      {gallery ? (
+        <section aria-labelledby="all-examples">
+          <Heading id="all-examples">
+            All {c.examples.length} examples
+          </Heading>
+          <p className="-mt-1 mb-4 max-w-[66ch] text-sm leading-6 text-muted-foreground">Each card is a live example in the theme it was written in. Select a card to open its full preview and code.</p>
+          <ExampleGallery entry={c} />
+        </section>
+      ) : null}
+
       <section aria-labelledby="composition">
         <Heading id="composition">Composition</Heading>
         <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
@@ -207,7 +225,8 @@ export default async function ComponentPage({ params }: { params: Params }) {
       {c.examples.length ? (
         <section aria-labelledby="examples">
           <Heading id="examples">Examples</Heading>
-          {c.examples.map((ex) => (
+          {many ? <ExampleList items={c.examples.map((ex) => ({ id: `example-${slug(ex.title)}`, title: ex.title, preview: <ComponentPreview spec={{ type: c.name, ...ex.props }} example={ex.title} lazy={poster} {...(tall ? { maxHeight: frameHeight } : null)} /> }))} /> : null}
+          {(many ? [] : c.examples).map((ex) => (
             <div key={ex.title} className="mt-10 first:mt-0">
               <Heading as="h3" id={`example-${slug(ex.title)}`} className="first:mt-0">
                 {ex.title}

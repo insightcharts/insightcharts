@@ -218,6 +218,7 @@ export const RadialSpokes = defineChart<RadialSpokesProps>({
     { name: "colorBy", type: '"single" | "value"', default: '"single"', description: "The accent for every spoke, or a shade by value along the sequential ramp." },
   ],
   example: {
+    theme: "forest",
     type: "radial-spokes",
     data: [
       { use: "Space heating", share: 42 },

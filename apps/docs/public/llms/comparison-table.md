@@ -264,7 +264,8 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `subtitle` | `string` |  | Units and period. |
 | `source` | `string` |  | Shown under the table as "Source: ...". |
 | `note` | `string` |  | Method note or caveat. |
-| `theme` | `ThemeInput` |  | Theme override, passed on to the sparklines and deltas. |
+| `theme` | `ThemeInput` |  | A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the sparklines and deltas. A named theme with its own surface paints that surface behind the component. |
+| `frame` | `boolean` |  | Paint the theme's surface behind the component. Default: on for a named theme with its own surface. |
 | `mode` | `"auto" \| "system" \| "light" \| "dark"` | `"auto"` | Colour mode. |
 
 ## Composition
@@ -274,7 +275,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 
 ## More examples
 
-### Long data with groupBy, relative change, compact
+### Long data with groupBy, relative change, compact, ledger theme
 
 ```tsx
 import { ComparisonTable } from "insightcharts";
@@ -292,6 +293,9 @@ const data = [
 ];
 
 <ComparisonTable
+  theme="ledger"
+  title="Germany's renewable share of electricity was 58.9% in 2024"
+  highlight="Germany"
   data={data}
   groupBy="country"
   density="compact"
@@ -306,7 +310,7 @@ const data = [
 />
 ```
 
-### Deltas given in the data, down is good
+### Deltas given in the data, down is good, noir theme
 
 ```tsx
 import { ComparisonTable } from "insightcharts";
@@ -328,6 +332,8 @@ const data = [
 ];
 
 <ComparisonTable
+  theme="noir"
+  highlight="Billing"
   title="Billing's first response time rose 19% over six weeks"
   data={data}
   columns={[
@@ -336,6 +342,112 @@ const data = [
     { key: "weekly", label: "Last six weeks" },
     { key: "change", label: "Change", kind: "delta", upIsGood: false },
   ]}
+  note="Illustrative data"
+/>
+```
+
+### Bars, sparklines and absolute change, science theme
+
+```tsx
+import { ComparisonTable } from "insightcharts";
+
+const data = [
+  {
+    "2019": 0.62,
+    "2020": 0.71,
+    "2021": 0.68,
+    "2022": 0.74,
+    "2023": 1.12,
+    "2024": 1.21,
+    basin: "North Atlantic",
+    anomaly: 1.21,
+    area: 41,
+  },
+  {
+    "2019": 0.58,
+    "2020": 0.66,
+    "2021": 0.63,
+    "2022": 0.72,
+    "2023": 0.89,
+    "2024": 0.94,
+    basin: "North Pacific",
+    anomaly: 0.94,
+    area: 77,
+  },
+  {
+    "2019": 0.49,
+    "2020": 0.52,
+    "2021": 0.47,
+    "2022": 0.5,
+    "2023": 0.71,
+    "2024": 0.83,
+    basin: "Indian",
+    anomaly: 0.83,
+    area: 71,
+  },
+  {
+    "2019": 0.31,
+    "2020": 0.36,
+    "2021": 0.34,
+    "2022": 0.38,
+    "2023": 0.55,
+    "2024": 0.61,
+    basin: "South Atlantic",
+    anomaly: 0.61,
+    area: 40,
+  },
+  {
+    "2019": 0.28,
+    "2020": 0.3,
+    "2021": 0.25,
+    "2022": 0.27,
+    "2023": 0.52,
+    "2024": 0.56,
+    basin: "South Pacific",
+    anomaly: 0.56,
+    area: 85,
+  },
+  {
+    "2019": 0.05,
+    "2020": 0.08,
+    "2021": 0.02,
+    "2022": 0.06,
+    "2023": 0.14,
+    "2024": 0.11,
+    basin: "Southern",
+    anomaly: 0.11,
+    area: 22,
+  },
+];
+
+<ComparisonTable
+  theme="science"
+  title="The North Atlantic surface was 1.21°C above its 1991 to 2020 average in 2024"
+  subtitle="Annual mean sea surface temperature anomaly by ocean basin, °C, 2019 to 2024"
+  data={data}
+  columns={[
+    { key: "basin", label: "Basin" },
+    { key: "area", label: "Area, million km²", kind: "bar", format: "integer", hideBelow: 560 },
+    { key: "anomaly", label: "Anomaly, 2024", format: "{value}°C" },
+    {
+      key: "trend",
+      label: "2019 to 2024",
+      kind: "sparkline",
+      fields: ["2019", "2020", "2021", "2022", "2023", "2024"],
+      format: "{value}°C",
+    },
+    {
+      key: "change",
+      label: "Change",
+      kind: "delta",
+      fields: ["2019", "2020", "2021", "2022", "2023", "2024"],
+      change: "absolute",
+      format: "{value}°C",
+      upIsGood: false,
+    },
+  ]}
+  sort={{ key: "anomaly" }}
+  highlight="North Atlantic"
   note="Illustrative data"
 />
 ```

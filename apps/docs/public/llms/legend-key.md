@@ -38,6 +38,7 @@ The file lands at `components/insightcharts/atoms/legend-key.tsx`. `@insightchar
 import { LegendKey } from "insightcharts";
 
 <LegendKey
+  theme="poster"
   title="Source of electricity"
   items={["Solar", "Wind", "Hydro", "Gas", { label: "Other", muted: true }]}
 />
@@ -50,6 +51,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 ```json
 {
   "type": "legend-key",
+  "theme": "poster",
   "title": "Source of electricity",
   "items": ["Solar", "Wind", "Hydro", "Gas", { "label": "Other", "muted": true }]
 }
@@ -69,6 +71,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Categorical layout. |
 | `width` | `number` | `240` | Ramp width in px, capped at the container. |
 | `align` | `"left" \| "center"` | `"left"` | Alignment within the container. |
+| `frame` | `boolean` |  | Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off. |
 
 ## Composition
 
@@ -95,6 +98,7 @@ import { LegendKey } from "insightcharts";
 import { LegendKey } from "insightcharts";
 
 <LegendKey
+  theme="editorial"
   scale="diverging"
   stepped
   title="Change in house prices, 2019 to 2024"
@@ -109,6 +113,7 @@ import { LegendKey } from "insightcharts";
 import { LegendKey } from "insightcharts";
 
 <LegendKey
+  theme="ocean"
   orientation="vertical"
   shape="line"
   items={[

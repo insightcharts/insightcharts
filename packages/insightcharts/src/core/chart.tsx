@@ -1,5 +1,6 @@
 import { forwardRef, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import type { Row } from "../data/types";
+import { luminance } from "./color";
 import { echarts, mergeOption, type EChartsInstance, type EChartsOption } from "./echarts";
 import { exportChart, type ExportOptions } from "./export";
 import { useColorMode, usePrefersReducedMotion, type ColorMode, type ModeInput } from "./mode";
@@ -21,6 +22,11 @@ export interface ChartContext {
   locale?: string;
   /** False when animation is disabled or the reader prefers reduced motion. */
   animate: boolean;
+  /**
+   * True when the surface the chart draws on is dark. Use this, not `mode`, to choose
+   * overlay strengths and fades: a poster theme can paint a dark ground in light mode.
+   */
+  onDark: boolean;
 }
 
 export interface ChartHandle {
@@ -205,7 +211,7 @@ export const Chart = forwardRef<ChartHandle, ChartProps>(function Chart(props, r
 
   const width = size?.width ?? 0;
   const pxHeight = size?.height ?? 0;
-  const ctx = useMemo<ChartContext | null>(() => (tokens && width > 0 && pxHeight > 0 ? { tokens, mode, width, height: pxHeight, compact: width < 480, locale: config.locale, animate } : null), [tokens, mode, width, pxHeight, config.locale, animate]);
+  const ctx = useMemo<ChartContext | null>(() => (tokens && width > 0 && pxHeight > 0 ? { tokens, mode, width, height: pxHeight, compact: width < 480, locale: config.locale, animate, onDark: luminance(tokens.surface) < 0.22 } : null), [tokens, mode, width, pxHeight, config.locale, animate]);
 
   // Option: built from the context and pushed whole. `notMerge` keeps the chart a pure
   // function of its props; stable series ids plus universalTransition make changes morph.

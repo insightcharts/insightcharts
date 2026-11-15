@@ -69,6 +69,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `tone` | `"neutral" \| "positive" \| "negative" \| "accent"` | `"neutral"` | Sets the icon shape and the tint together. |
 | `label` | `string` |  | Small label above the lead, e.g. "Summary". |
 | `variant` | `"soft" \| "outline" \| "plain"` | `"soft"` | Tinted box, bordered box, or no box. |
+| `frame` | `boolean` |  | Paint a named theme's background behind the callout, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off. |
 
 ## Composition
 
@@ -83,6 +84,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 import { Callout } from "insightcharts";
 
 <Callout
+  theme="editorial"
   tone="positive"
   lead="Monthly churn fell from 4.2% to 2.1% between January and June"
   text="It has stayed at 2.1% for two quarters since."
@@ -95,6 +97,7 @@ import { Callout } from "insightcharts";
 import { Callout } from "insightcharts";
 
 <Callout
+  theme="ledger"
   tone="negative"
   variant="outline"
   label="Caveat"
@@ -109,9 +112,38 @@ import { Callout } from "insightcharts";
 import { Callout } from "insightcharts";
 
 <Callout
+  theme="blueprint"
   tone="neutral"
   variant="plain"
   text="Figures are provisional until the statistical office publishes its annual revision in September."
+/>
+```
+
+### One token overridden
+
+```tsx
+import { Callout } from "insightcharts";
+
+<Callout
+  theme={{ accent: "#b4237a" }}
+  tone="accent"
+  label="Key point"
+  lead="Night buses carried 18% of all weekend journeys in 2024"
+  text="The share was 11% in 2019. Illustrative figures."
+/>
+```
+
+### Accent on a painted ground
+
+```tsx
+import { Callout } from "insightcharts";
+
+<Callout
+  theme="forest"
+  tone="accent"
+  variant="outline"
+  lead="Tree cover in the city rose from 14% to 19% between 2010 and 2024"
+  text="The target for 2030 is 25%. Illustrative figures."
 />
 ```
 

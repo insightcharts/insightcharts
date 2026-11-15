@@ -5,6 +5,7 @@ import { Sparkline } from "@/components/insightcharts/atoms/sparkline";
 export function AnnotatedTimelineDemo() {
   return (
     <AnnotatedTimeline
+      theme="paper"
       title="The ECB raised its deposit rate from −0.5% to 4% between July 2022 and September 2023"
       subtitle="Euro area deposit facility rate and annual inflation, 2021 to 2024"
       events={[

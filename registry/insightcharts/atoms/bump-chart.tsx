@@ -46,6 +46,7 @@ export const BumpChart = defineChart<BumpChartProps>({
   ],
   example: {
     type: "bump-chart",
+    theme: "poster",
     data: [
       { year: "2019", Tesla: 0.37, BYD: 0.23, SAIC: 0.16, Volkswagen: 0.14, Hyundai: 0.13, Geely: 0.12 },
       { year: "2020", Tesla: 0.5, BYD: 0.18, SAIC: 0.27, Volkswagen: 0.42, Hyundai: 0.2, Geely: 0.1 },

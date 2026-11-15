@@ -1,7 +1,7 @@
 "use client";
 
 import { type CSSProperties, type ReactNode, useRef } from "react";
-import { useInsightStyles, withMeta, useColorMode, type ModeInput, useInsightConfig, useTheme, chromeVars, type ThemeInput } from "insightcharts/core";
+import { useInsightStyles, withMeta, useColorMode, type ModeInput, frameStyle, useInsightConfig, useTheme, chromeVars, type ThemeInput } from "insightcharts/core";
 
 export interface ProseProps {
   /**
@@ -20,7 +20,10 @@ export interface ProseProps {
   /** `"muted"` for secondary narration such as method asides. */
   tone?: "default" | "muted";
   align?: "left" | "center";
+  /** A built-in theme name or a theme object. A named theme paints its own background behind the block. */
   theme?: ThemeInput;
+  /** Paint the named theme's background behind the block. Default: on for a named theme with its own surface. */
+  frame?: boolean;
   mode?: ModeInput;
   className?: string;
   style?: CSSProperties;
@@ -86,6 +89,7 @@ function ProseImpl({ text, children, size = "md", measure = 65, lead = false, to
         minWidth: 0,
         textWrap: "pretty",
         overflowWrap: "break-word",
+        ...frameStyle(rest.theme, mode, rest.frame),
         ...style,
       }}
     >
@@ -116,6 +120,7 @@ export const Prose = withMeta(ProseImpl, {
     { name: "lead", type: "boolean", default: "false", description: "Set the first paragraph a step larger." },
     { name: "tone", type: '"default" | "muted"', default: '"default"', description: "`muted` for secondary narration." },
     { name: "align", type: '"left" | "center"', default: '"left"', description: "Centres the block (text stays left-aligned)." },
+    { name: "frame", type: "boolean", description: "Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off." },
   ],
   example: {
     type: "prose",

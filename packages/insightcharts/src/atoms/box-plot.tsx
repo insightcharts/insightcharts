@@ -249,6 +249,7 @@ const temps = (() => {
 
 export const examples = {
   "Sorted, long labels, many outliers": {
+    theme: "science",
     data: delivery,
     value: "days",
     group: "carrier",
@@ -260,6 +261,7 @@ export const examples = {
     note: "Illustrative data",
   },
   "Vertical, ordered categories": {
+    theme: "paper",
     data: temps,
     value: "temp",
     group: "month",
@@ -271,6 +273,7 @@ export const examples = {
     note: "Illustrative data",
   },
   "Single box, min-max whiskers": {
+    theme: "ledger",
     data: delivery.filter((d) => d.carrier === "Swift"),
     value: "days",
     whiskers: "minmax",

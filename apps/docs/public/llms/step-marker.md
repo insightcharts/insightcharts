@@ -38,6 +38,7 @@ The file lands at `components/insightcharts/atoms/step-marker.tsx`. `@insightcha
 import { StepMarker } from "insightcharts";
 
 <StepMarker
+  theme="mono"
   step={1}
   title="Electricity sources in 2015"
   text="Europe's electricity generation by source in 2015."
@@ -52,6 +53,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 ```json
 {
   "type": "step-marker",
+  "theme": "mono",
   "step": 1,
   "title": "Electricity sources in 2015",
   "text": "Europe's electricity generation by source in 2015.",
@@ -72,6 +74,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `size` | `"md" \| "lg"` | `"md"` | `lg` for chapter openers. |
 | `layout` | `"inline" \| "stacked"` | `"inline"` | Number beside or above the title. Narrow containers always stack. |
 | `rule` | `boolean` | `false` | Hairline above the marker. |
+| `frame` | `boolean` |  | Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off. |
 
 ## Composition
 
@@ -100,10 +103,26 @@ import { StepMarker } from "insightcharts";
 import { StepMarker } from "insightcharts";
 
 <StepMarker
+  theme="poster"
   step={3}
   title="Hours in which midday solar generation exceeded demand on the grid, by month and country"
   layout="stacked"
   size="lg"
+/>
+```
+
+### Rule on a painted ground
+
+```tsx
+import { StepMarker } from "insightcharts";
+
+<StepMarker
+  theme="sunrise"
+  step={4}
+  total={5}
+  title="Wind supplied 17% of Europe's electricity in 2024"
+  text="Share of electricity generation by source, 2024."
+  rule
 />
 ```
 
@@ -112,7 +131,7 @@ import { StepMarker } from "insightcharts";
 ```tsx
 import { StepMarker } from "insightcharts";
 
-<StepMarker step="B" title="Factors excluded from the forecast" level={3} />
+<StepMarker theme="forest" step="B" title="Factors excluded from the forecast" level={3} />
 ```
 
 ## Links

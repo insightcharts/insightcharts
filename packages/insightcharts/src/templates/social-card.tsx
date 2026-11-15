@@ -1,6 +1,7 @@
 import { createElement, useEffect, useRef, useState, type CSSProperties, type RefObject } from "react";
 import { downloadBlob } from "../core/export";
 import { withMeta } from "../core/meta";
+import { themeGround } from "../core/named-themes";
 import { useTheme } from "../core/provider";
 import { renderSlot, type Slot } from "../core/spec";
 import { chromeVars } from "../core/theme";
@@ -58,9 +59,13 @@ const slug = (s: string) =>
  * at any size and in the downloaded image.
  */
 function SocialCardImpl({ title, kicker, deck, exhibit, source, credit, note, aspect = "1:1", tone = "surface", downloadable = true, exportWidth, filename, downloadLabel = "Download PNG", maxWidth, level = 2, onExport, className, style, ...rest }: SocialCardProps) {
-  const { ref, width, mode, root } = useTemplate(rest);
+  // A named theme with its own ground paints the card, not the frame around it: the frame and
+  // the download control stay in the host page's theme, so they stay legible on the host page.
+  const ownGround = typeof rest.theme === "string" && themeGround(rest.theme, "light") !== null;
+  const { ref, width, mode, root } = useTemplate(ownGround ? { mode: rest.mode, frame: false } : { ...rest, frame: false });
   const theme = useTheme(rest.theme);
   const cardMode = tone === "inverse" ? (mode === "dark" ? "light" : "dark") : mode;
+  const ground = (ownGround ? themeGround(rest.theme, cardMode) : null) ?? "var(--_ic-surface)";
   const card = useRef<HTMLDivElement>(null);
   const plot = useRef<HTMLDivElement>(null);
   const inner = useRef<HTMLDivElement>(null);
@@ -140,7 +145,7 @@ function SocialCardImpl({ title, kicker, deck, exhibit, source, credit, note, as
             padding: pad,
             display: "flex",
             flexDirection: "column",
-            background: "var(--_ic-surface)",
+            background: ground,
             color: "var(--_ic-ink)",
             fontFamily: "var(--_ic-font)",
             border: "1px solid var(--_ic-grid)",
@@ -223,6 +228,19 @@ const measles = [
   { year: "2024", cases: 127 },
 ];
 
+const windSolar = [
+  [2015, 3.5, 1.1],
+  [2016, 3.8, 1.4],
+  [2017, 4.4, 1.8],
+  [2018, 4.8, 2.2],
+  [2019, 5.3, 2.7],
+  [2020, 5.9, 3.2],
+  [2021, 6.5, 3.7],
+  [2022, 7.3, 4.6],
+  [2023, 7.8, 5.5],
+  [2024, 8.1, 6.9],
+].map(([year, Wind, Solar]) => ({ year: String(year), Wind, Solar }));
+
 export const SocialCard = withMeta(SocialCardImpl, {
   name: "social-card",
   component: "SocialCard",
@@ -232,7 +250,7 @@ export const SocialCard = withMeta(SocialCardImpl, {
   description: "A graphic that states one fact, at a fixed aspect ratio (1:1, 4:5, 16:9 or 9:16). It has a kicker, a headline, one exhibit, a source and a credit, painted on the theme surface. A button downloads the whole card as a PNG.",
   whenToUse: "Use it for one finding that will be shared in a feed, a slide or a chat thread with no text around it. State the fact with its number in the headline. Use one simple exhibit, such as one highlighted bar, one line or one number. Put the source and your name on the card, because it will be shared without the page. Use 1:1 or 4:5 for feeds, 16:9 for slides and link previews, 9:16 for stories.",
   avoid: "More than one fact or more than one exhibit (use `story-deck` for a sequence, `executive-brief` for a page). Charts that need a legend, small labels or hovering to read, because a shared image is not interactive. An exhibit with its own `title`, because the card's headline is the title.",
-  composes: ["bar-chart", "big-number", "waffle-chart", "source-note"],
+  composes: ["bar-chart", "big-number", "waffle-chart", "area-chart", "source-note"],
   props: [
     { name: "title", type: "string", required: true, description: "The card's one fact, as a plain sentence with the number in it." },
     { name: "kicker", type: "string", description: "Small label above the title." },
@@ -250,11 +268,12 @@ export const SocialCard = withMeta(SocialCardImpl, {
     { name: "maxWidth", type: "number", description: "Widest the card is drawn on screen, in px. Default 540 (520 for 4:5, 720 for 16:9, 400 for 9:16). In narrower containers the whole card is scaled down, like an image, so its composition never changes." },
     { name: "onExport", type: "(blob: Blob) => void", description: "Called with the PNG after a download." },
     { name: "level", type: "1 | 2 | 3 | 4 | 5 | 6", default: "2", description: "Heading level of the title." },
-    { name: "theme", type: "ThemeInput", description: "Theme override, passed on to the exhibit." },
+    { name: "theme", type: "ThemeInput", description: 'A built-in theme name (`"magenta"`, `"noir"`, `"editorial"`...) or a theme object, passed on to the exhibit. A named theme with its own surface paints the card in that surface; the download button stays in the page\'s theme.' },
     { name: "mode", type: '"auto" | "system" | "light" | "dark"', default: '"auto"', description: "Colour mode." },
   ],
   example: {
     type: "social-card",
+    theme: "magenta",
     aspect: "1:1",
     kicker: "Climate",
     title: "The world was 1.6°C warmer in 2024 than in 1850 to 1900",
@@ -278,9 +297,9 @@ export const SocialCard = withMeta(SocialCardImpl, {
 });
 
 export const examples = {
-  "16:9, public health, inverse tone": {
+  "16:9, public health, noir theme": {
+    theme: "noir",
     aspect: "16:9",
-    tone: "inverse",
     kicker: "Public health",
     title: "Reported measles cases in Europe rose from 61,000 in 2023 to 127,000 in 2024",
     exhibit: { type: "bar-chart", data: measles, x: "year", y: "cases", orientation: "vertical", sort: "none", highlight: "2024", format: "{value}k", subtitle: "Reported measles cases, WHO European Region, thousands" },
@@ -289,6 +308,7 @@ export const examples = {
     credit: "Data desk",
   },
   "9:16, transport, a proportion instead of a chart": {
+    theme: "ocean",
     aspect: "9:16",
     kicker: "Transport",
     title: "58% of car journeys in England are under five miles",
@@ -298,11 +318,22 @@ export const examples = {
     note: "Rounded, approximate figures for illustration",
     credit: "@datadesk",
   },
-  "4:5, personal finance, a single number": {
+  "1:1, energy, two stacked series": {
+    theme: "forest",
+    aspect: "1:1",
+    kicker: "Energy",
+    title: "Wind and solar generated 15% of the world's electricity in 2024",
+    exhibit: { type: "area-chart", data: windSolar, x: "year", y: ["Wind", "Solar"], stack: true, format: "{value}%", subtitle: "Share of global electricity generation, %" },
+    source: "Ember, Global Electricity Review (rounded)",
+    note: "Figures are approximate, for illustration",
+    credit: "InsightCharts",
+  },
+  "4:5, personal finance, a single number, inverse tone": {
     aspect: "4:5",
+    tone: "inverse",
     kicker: "Money",
     title: "Starting to save at 35 instead of 25 leaves $296,000 less at 65",
-    exhibit: { type: "big-number", size: "hero", value: "$296,000", label: "Less at 65 if you start at 35 instead of 25", context: "Saving $300 a month at a 6% real return" },
+    exhibit: { type: "big-number", size: "hero", variant: "tinted", value: "$296,000", label: "Less at 65 if you start at 35 instead of 25", context: "Saving $300 a month at a 6% real return" },
     source: "Author's calculation",
     note: "Illustrative",
     credit: "InsightCharts",

@@ -17,7 +17,7 @@ Switch this site between light and dark with the control in the header: the firs
 
 <DemoSource name="color-modes" />
 
-## How auto detection works
+## Auto detection
 
 `mode="auto"` inspects the DOM around the chart, from most to least explicit:
 
@@ -57,7 +57,7 @@ import { themes, themeSurfaces } from "insightcharts/themes";
 
 Charts draw in the browser, after hydration, so the plot never renders in the wrong mode. The HTML chrome is server-rendered with the light token set unless `mode="dark"` is forced, and switches on mount. Tokens that follow host variables (`surface`, `ink`, `muted`) are correct from the first paint either way.
 
-## Reading the mode yourself
+## Read the mode in code
 
 `useColorMode(ref, mode)` returns the resolved mode for an element and keeps it current; `detectMode(element)` and `systemMode()` are the one-off versions. Use them when you build your own component with `withMeta`.
 

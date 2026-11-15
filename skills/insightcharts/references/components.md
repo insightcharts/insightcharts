@@ -14,7 +14,7 @@
 | State one number or one fact | `icon-stat` | atom | A single proportion that is easier to read as people or units than as a percentage: 1 in 4, 3 in 10, 37 of 100. Round to a small denominator first. | Comparing several proportions (use `bar-chart`), precise percentages (use `big-number`), or fractions that need more than 100 units. |
 | State one number or one fact | `legend-key` | atom | When several charts (small multiples, a map and a bar chart, a dashboard row) share one colour encoding, show the key once above them and turn their own legends off. | A single chart: its built-in legend or, better, direct labels already do this. Do not list more than eight categories. |
 | State one number or one fact | `progress-meter` | atom | Progress toward a goal, a quota or a capacity: funds raised, budget spent, share of a target reached. Stack several with `size: "sm"` to compare progress across a few items. | Comparing more than a handful of items (use `bar-chart`), anything without a meaningful end point (use `big-number`), or a gauge dial. |
-| State one number or one fact | `stat-tile` | atom | Dashboard grids and KPI rows of three to six figures, each needing its own change indicator or sparkline. Give every tile a delta or a context line. | The single number a story leads with (use `big-number` with `size: "hero"`). Do not put a full chart with axes in the trend slot. |
+| State one number or one fact | `stat-tile` | atom | Dashboard grids and KPI rows of three to six figures. Pass the data once (`value`, `delta`, `series`, `target`, `parts`, `icon`) and choose the display with `variant`; change `surface`, `tone` and `size` to set emphasis. Give every tile a delta or a context line. | The single number a story leads with (use `big-number` with `size: "hero"`). Do not put a full chart with axes in the trend slot. Use `unit` only for counts up to 60 icons. |
 | Compare values across categories | `arrow-chart` | atom | Shifts between two moments across up to about 25 categories when some rise and some fall: swings between elections, before / after a policy. | When both levels matter more than the direction (use dumbbell-chart); more than two points in time (use slope-chart or line-chart); a single value per category (use bar-chart). |
 | Compare values across categories | `bar-chart` | atom | Ranking or comparing up to about 20 categories; grouped for a few series, stacked when the total and its composition both matter. | Change over many time points (use line-chart); two values per category (use dumbbell-chart); more than about 5 stacked segments. |
 | Compare values across categories | `bullet-chart` | atom | Progress against a target or budget for one to about 10 measures, including measures in different units (`scale: "independent"`); a compact scorecard instead of a row of gauges. | No target or thresholds to compare with (use bar-chart); a single share of a whole (use progress-meter); change over time (use line-chart). |
@@ -127,7 +127,7 @@ Props:
 - `names`: `Record<string, string>`. Display names for entity keys.
 
 ```json
-{"type":"arc-diagram","data":[{"a":"Harbour","b":"Market","trips":4200},{"a":"Harbour","b":"Quay","trips":900},{"a":"Quay","b":"Market","trips":1300},{"a":"Market","b":"Town Hall","trips":2600},{"a":"Market","b":"University","trips":3100},{"a":"Town Hall","b":"University","trips":1500},{"a":"Town Hall","b":"Hospital","trips":1100},{"a":"University","b":"Park","trips":800}],"from":"a","to":"b","value":"trips","order":["Harbour","Quay","Market","Town Hall","University","Park","Hospital","Stadium","Airport"],"colorBy":"none","format":"integer","title":"Harbour and Market stations exchanged 4,200 trips a day","subtitle":"Daily trips between pairs of stations on one tram line, both directions; dots show each station's total","note":"Illustrative figures for an invented line."}
+{"type":"arc-diagram","theme":"dusk","data":[{"a":"Harbour","b":"Market","trips":4200},{"a":"Harbour","b":"Quay","trips":900},{"a":"Quay","b":"Market","trips":1300},{"a":"Market","b":"Town Hall","trips":2600},{"a":"Market","b":"University","trips":3100},{"a":"Town Hall","b":"University","trips":1500},{"a":"Town Hall","b":"Hospital","trips":1100},{"a":"University","b":"Park","trips":800}],"from":"a","to":"b","value":"trips","order":["Harbour","Quay","Market","Town Hall","University","Park","Hospital","Stadium","Airport"],"colorBy":"none","format":"integer","title":"Harbour and Market stations exchanged 4,200 trips a day","subtitle":"Daily trips between pairs of stations on one tram line, both directions; dots show each station's total","note":"Illustrative figures for an invented line."}
 ```
 
 (`data` cut to 8 rows.)
@@ -173,7 +173,7 @@ Props:
 - `names`: `Record<string, string>`. Display names for the `from` and `to` keys.
 
 ```json
-{"type":"arrow-chart","data":[{"group":"Under 30","y2019":62,"y2024":71},{"group":"30 to 44","y2019":58,"y2024":63},{"group":"45 to 64","y2019":49,"y2024":47},{"group":"65 and over","y2019":41,"y2024":34}],"category":"group","from":"y2019","to":"y2024","names":{"y2019":"2019","y2024":"2024"},"format":"{value}%","changeLabel":"Change","height":220,"title":"Support among under-30s rose from 62% in 2019 to 71% in 2024","subtitle":"Share in favour of the congestion charge, by age group, 2019 to 2024","source":"City residents survey","note":"Illustrative figures."}
+{"type":"arrow-chart","theme":"editorial","data":[{"group":"Under 30","y2019":62,"y2024":71},{"group":"30 to 44","y2019":58,"y2024":63},{"group":"45 to 64","y2019":49,"y2024":47},{"group":"65 and over","y2019":41,"y2024":34}],"category":"group","from":"y2019","to":"y2024","names":{"y2019":"2019","y2024":"2024"},"format":"{value}%","changeLabel":"Change","height":220,"title":"Support among under-30s rose from 62% in 2019 to 71% in 2024","subtitle":"Share in favour of the congestion charge, by age group, 2019 to 2024","source":"City residents survey","note":"Illustrative figures."}
 ```
 
 ### bar-chart
@@ -192,7 +192,7 @@ Props:
 - `names`: `Record<string, string>`. Display names for series keys.
 
 ```json
-{"type":"bar-chart","data":[{"country":"Norway","share":98},{"country":"Brazil","share":89},{"country":"Canada","share":68}],"x":"country","y":"share","format":"{value}%","title":"Renewables supplied 98% of Norway's electricity in 2023"}
+{"type":"bar-chart","data":[{"country":"Norway","share":98},{"country":"Brazil","share":89},{"country":"Canada","share":68}],"x":"country","y":"share","format":"{value}%","title":"Renewables supplied 98% of Norway's electricity in 2023","theme":"ledger"}
 ```
 
 ### beeswarm-chart
@@ -210,7 +210,7 @@ Props:
 - `names`: `Record<string, string>`. Display names for series keys.
 
 ```json
-{"type":"beeswarm-chart","data":[{"country":"Qatar","rate":0.4},{"country":"Kuwait","rate":0.6},{"country":"UAE","rate":0.9},{"country":"Saudi Arabia","rate":1.2},{"country":"Japan","rate":2.5},{"country":"Italy","rate":2.9},{"country":"Germany","rate":3},{"country":"United States","rate":3.6}],"value":"rate","label":"country","highlight":["Nigeria","India","United States"],"title":"Nigeria had 107.2 under-five deaths per 1,000 live births in 2022","subtitle":"Deaths before age five per 1,000 live births, 84 countries, 2022","source":"UN IGME (rounded)","note":"Figures are approximate, for illustration"}
+{"type":"beeswarm-chart","theme":"science","data":[{"country":"Qatar","rate":0.4},{"country":"Kuwait","rate":0.6},{"country":"UAE","rate":0.9},{"country":"Saudi Arabia","rate":1.2},{"country":"Japan","rate":2.5},{"country":"Italy","rate":2.9},{"country":"Germany","rate":3},{"country":"United States","rate":3.6}],"value":"rate","label":"country","highlight":["Nigeria","India","United States"],"title":"Nigeria had 107.2 under-five deaths per 1,000 live births in 2022","subtitle":"Deaths before age five per 1,000 live births, 84 countries, 2022","source":"UN IGME (rounded)","note":"Figures are approximate, for illustration"}
 ```
 
 (`data` cut to 8 rows.)
@@ -230,6 +230,14 @@ Props:
 - `format`: `FormatSpec`, default `"auto"`. Number format.
 - `size`: `"hero" | "stat"`, default `"stat"`. `hero` for the one number a piece leads with.
 - `align`: `"left" | "center"`, default `"left"`. Text alignment.
+- `variant`: `"plain" | "filled" | "tinted" | "with-icon" | "with-ring" | "with-trend"`, default `"plain"`. The display: `filled` (a solid ground in the tone with contrasting ink), `tinted` (a 10% wash), `with-icon` (needs `icon`: a tinted badge above the label), `with-ring` (needs `target` or `max`, or a share from 0 to 1: a progress ring beside the figure), `with-trend` (needs `series`: a line under the figure). A variant whose data is missing renders as `plain`.
+- `tone`: `"neutral" | "accent" | "positive" | "negative" | number`, default `"accent"`. Colour of the ground or graphic. A number picks from the theme's categorical palette, 0-based.
+- `icon`: `IconInput`. A built-in icon name or `path://...`, for `with-icon`.
+- `series`: `number[]`. Past values in time order, oldest first, ending with the current value, for `with-trend`.
+- `target`: `number`. The goal for `value`, for `with-ring`.
+- `max`: `number`. End of the ring's scale. Default: the target, or 1 for a share.
+- `theme`: `ThemeInput`. A theme name such as `"editorial"`, or token overrides. A named theme paints its own ground.
+- `frame`: `boolean`. Set false to stop a named theme painting its ground.
 
 ```json
 {"type":"big-number","value":0.317,"format":"percent","label":"Share of global electricity from renewables","delta":0.021,"deltaLabel":"vs 2023","context":"Up from 19% in 2010"}
@@ -250,7 +258,7 @@ Props:
 - `names`: `Record<string, string>`. Display names for series keys.
 
 ```json
-{"type":"block-bar","data":[{"year":"2020","tickets":18400,"seats":"41% of seats"},{"year":"2021","tickets":22900,"seats":"49% of seats"},{"year":"2022","tickets":31200,"seats":"58% of seats"},{"year":"2023","tickets":36800,"seats":"64% of seats"},{"year":"2024","tickets":41500,"seats":"69% of seats"},{"year":"2025","tickets":48200,"seats":"74% of seats"}],"name":"year","value":"tickets","detail":"seats","format":"integer","marker":{"after":"2021","label":"Second screen opened"},"title":"The Portholm Film Festival sold 48,200 tickets in 2025","subtitle":"Tickets sold per year and share of available seats filled, 2020 to 2025","source":"Illustrative data","note":"Invented figures for a fictional festival"}
+{"type":"block-bar","theme":"noir","data":[{"year":"2020","tickets":18400,"seats":"41% of seats"},{"year":"2021","tickets":22900,"seats":"49% of seats"},{"year":"2022","tickets":31200,"seats":"58% of seats"},{"year":"2023","tickets":36800,"seats":"64% of seats"},{"year":"2024","tickets":41500,"seats":"69% of seats"},{"year":"2025","tickets":48200,"seats":"74% of seats"}],"name":"year","value":"tickets","detail":"seats","format":"integer","marker":{"after":"2021","label":"Second screen opened"},"title":"The Portholm Film Festival sold 48,200 tickets in 2025","subtitle":"Tickets sold per year and share of available seats filled, 2020 to 2025","source":"Illustrative data","note":"Invented figures for a fictional festival"}
 ```
 
 ### box-plot
@@ -289,7 +297,7 @@ Props:
 - `layout`: `"ring" | "hub"`. Without `x` and `y`: "ring" spaces the circles round an ellipse in data order, "hub" also moves the most-connected circle to the middle. Default: "hub" when one circle links to most of the others.
 
 ```json
-{"type":"bubble-network","data":[{"airport":"Lisbon","m":34},{"airport":"Madrid","m":60},{"airport":"Paris","m":67},{"airport":"Frankfurt","m":59},{"airport":"Rome","m":41},{"airport":"Athens","m":28},{"airport":"Istanbul","m":76}],"name":"airport","value":"m","links":[{"from":"Istanbul","to":"Frankfurt"},{"from":"Istanbul","to":"Paris"},{"from":"Istanbul","to":"Rome"},{"from":"Istanbul","to":"Athens"},{"from":"Istanbul","to":"Madrid"},{"from":"Istanbul","to":"Lisbon"},{"from":"Madrid","to":"Lisbon"},{"from":"Paris","to":"Frankfurt"},{"from":"Rome","to":"Athens"}],"highlight":"Istanbul","tag":"Busiest","format":"{value}m","title":"Istanbul handled 76 million passengers in 2023","subtitle":"Passengers at seven airports, millions, 2023. Lines show the routes in this example.","note":"Rounded passenger figures; the routes drawn are illustrative"}
+{"type":"bubble-network","theme":"ocean","data":[{"airport":"Lisbon","m":34},{"airport":"Madrid","m":60},{"airport":"Paris","m":67},{"airport":"Frankfurt","m":59},{"airport":"Rome","m":41},{"airport":"Athens","m":28},{"airport":"Istanbul","m":76}],"name":"airport","value":"m","links":[{"from":"Istanbul","to":"Frankfurt"},{"from":"Istanbul","to":"Paris"},{"from":"Istanbul","to":"Rome"},{"from":"Istanbul","to":"Athens"},{"from":"Istanbul","to":"Madrid"},{"from":"Istanbul","to":"Lisbon"},{"from":"Madrid","to":"Lisbon"},{"from":"Paris","to":"Frankfurt"},{"from":"Rome","to":"Athens"}],"highlight":"Istanbul","tag":"Busiest","format":"{value}m","title":"Istanbul handled 76 million passengers in 2023","subtitle":"Passengers at seven airports, millions, 2023. Lines show the routes in this example.","note":"Rounded passenger figures; the routes drawn are illustrative"}
 ```
 
 ### bubble-scale
@@ -311,7 +319,7 @@ Props:
 - `names`: `Record<string, string>`. Display names for series keys.
 
 ```json
-{"type":"bubble-scale","data":[{"material":"Lithium","imported":100,"kt":38},{"material":"Cobalt","imported":86,"kt":21},{"material":"Graphite","imported":98,"kt":96},{"material":"Nickel","imported":71,"kt":164},{"material":"Manganese","imported":96,"kt":52},{"material":"Copper","imported":48,"kt":410},{"material":"Aluminium","imported":59,"kt":290},{"material":"Rare earths","imported":100,"kt":9}],"name":"material","value":"imported","size":"kt","format":"{value}%","sizeFormat":"{value} kt","domain":[0,100],"ticks":[0,20,40,60,80,100],"scaleLabel":"Imported","title":"Imports supply between 4% and 100% of the region's demand for 12 materials","subtitle":"Share of each material imported (position) and annual demand in thousand tonnes (area), 12 battery and grid materials","note":"Illustrative figures for an invented region"}
+{"type":"bubble-scale","theme":"sunrise","data":[{"material":"Lithium","imported":100,"kt":38},{"material":"Cobalt","imported":86,"kt":21},{"material":"Graphite","imported":98,"kt":96},{"material":"Nickel","imported":71,"kt":164},{"material":"Manganese","imported":96,"kt":52},{"material":"Copper","imported":48,"kt":410},{"material":"Aluminium","imported":59,"kt":290},{"material":"Rare earths","imported":100,"kt":9}],"name":"material","value":"imported","size":"kt","format":"{value}%","sizeFormat":"{value} kt","domain":[0,100],"ticks":[0,20,40,60,80,100],"scaleLabel":"Imported","title":"Imports supply between 4% and 100% of the region's demand for 12 materials","subtitle":"Share of each material imported (position) and annual demand in thousand tonnes (area), 12 battery and grid materials","note":"Illustrative figures for an invented region"}
 ```
 
 (`data` cut to 8 rows.)
@@ -333,7 +341,7 @@ Props:
 - `names`: `Record<string, string>`. Display names for the value and target fields.
 
 ```json
-{"type":"bullet-chart","data":[{"region":"North America","sales":94,"target":80},{"region":"Europe","sales":71,"target":85},{"region":"Asia Pacific","sales":63,"target":60},{"region":"Latin America","sales":38,"target":55}],"category":"region","value":"sales","target":"target","bands":[50,75,110],"bandNames":["Below plan","On plan","Stretch"],"names":{"sales":"Sales","target":"Target"},"format":"currency:USD","height":240,"title":"Europe sold $71 million against a target of $85 million in 2024","subtitle":"Sales against target by region, $ millions, 2024","source":"Company accounts","note":"Illustrative figures."}
+{"type":"bullet-chart","theme":"mono","data":[{"region":"North America","sales":94,"target":80},{"region":"Europe","sales":71,"target":85},{"region":"Asia Pacific","sales":63,"target":60},{"region":"Latin America","sales":38,"target":55}],"category":"region","value":"sales","target":"target","bands":[50,75,110],"bandNames":["Below plan","On plan","Stretch"],"names":{"sales":"Sales","target":"Target"},"format":"currency:USD","height":240,"title":"Europe sold $71 million against a target of $85 million in 2024","subtitle":"Sales against target by region, $ millions, 2024","source":"Company accounts","note":"Illustrative figures."}
 ```
 
 ### bump-chart
@@ -351,7 +359,7 @@ Props:
 - `names`: `Record<string, string>`. Display names for series keys.
 
 ```json
-{"type":"bump-chart","data":[{"year":"2019","Tesla":0.37,"BYD":0.23,"SAIC":0.16,"Volkswagen":0.14,"Hyundai":0.13,"Geely":0.12},{"year":"2020","Tesla":0.5,"BYD":0.18,"SAIC":0.27,"Volkswagen":0.42,"Hyundai":0.2,"Geely":0.1},{"year":"2021","Tesla":0.94,"BYD":0.6,"SAIC":0.68,"Volkswagen":0.76,"Hyundai":0.35,"Geely":0.2},{"year":"2022","Tesla":1.31,"BYD":1.86,"SAIC":0.72,"Volkswagen":0.83,"Hyundai":0.51,"Geely":0.65},{"year":"2023","Tesla":1.81,"BYD":3.02,"SAIC":0.79,"Volkswagen":1,"Hyundai":0.57,"Geely":0.93},{"year":"2024","Tesla":1.79,"BYD":4.27,"SAIC":0.9,"Volkswagen":1.04,"Hyundai":0.56,"Geely":1.39}],"x":"year","y":["Tesla","BYD","SAIC","Volkswagen","Hyundai","Geely"],"highlight":"BYD","format":"{value}m","height":300,"title":"BYD rose from fifth in 2020 to first in 2022","subtitle":"Rank among six carmakers by plug-in vehicles sold worldwide, 2019 to 2024","source":"Company reports","note":"Approximate figures."}
+{"type":"bump-chart","theme":"poster","data":[{"year":"2019","Tesla":0.37,"BYD":0.23,"SAIC":0.16,"Volkswagen":0.14,"Hyundai":0.13,"Geely":0.12},{"year":"2020","Tesla":0.5,"BYD":0.18,"SAIC":0.27,"Volkswagen":0.42,"Hyundai":0.2,"Geely":0.1},{"year":"2021","Tesla":0.94,"BYD":0.6,"SAIC":0.68,"Volkswagen":0.76,"Hyundai":0.35,"Geely":0.2},{"year":"2022","Tesla":1.31,"BYD":1.86,"SAIC":0.72,"Volkswagen":0.83,"Hyundai":0.51,"Geely":0.65},{"year":"2023","Tesla":1.81,"BYD":3.02,"SAIC":0.79,"Volkswagen":1,"Hyundai":0.57,"Geely":0.93},{"year":"2024","Tesla":1.79,"BYD":4.27,"SAIC":0.9,"Volkswagen":1.04,"Hyundai":0.56,"Geely":1.39}],"x":"year","y":["Tesla","BYD","SAIC","Volkswagen","Hyundai","Geely"],"highlight":"BYD","format":"{value}m","height":300,"title":"BYD rose from fifth in 2020 to first in 2022","subtitle":"Rank among six carmakers by plug-in vehicles sold worldwide, 2019 to 2024","source":"Company reports","note":"Approximate figures."}
 ```
 
 ### calendar-heatmap
@@ -368,7 +376,7 @@ Props:
 - `height`: `number | string`. Common prop, but note the default: when omitted the height follows the cell size, which follows the width, so cells stay square.
 
 ```json
-{"type":"calendar-heatmap","data":[{"date":"2024-01-01","commits":16},{"date":"2024-01-02","commits":9},{"date":"2024-01-03","commits":8},{"date":"2024-01-04","commits":6},{"date":"2024-01-05","commits":8},{"date":"2024-01-06","commits":1},{"date":"2024-01-07","commits":1},{"date":"2024-01-08","commits":17}],"date":"date","value":"commits","title":"Commits per day to the main repository, 2024","subtitle":"Number of commits each day","note":"Illustrative data. Pale cells are days with no commits."}
+{"type":"calendar-heatmap","theme":"forest","data":[{"date":"2024-01-01","commits":16},{"date":"2024-01-02","commits":9},{"date":"2024-01-03","commits":8},{"date":"2024-01-04","commits":6},{"date":"2024-01-05","commits":8},{"date":"2024-01-06","commits":1},{"date":"2024-01-07","commits":1},{"date":"2024-01-08","commits":17}],"date":"date","value":"commits","title":"Commits per day to the main repository, 2024","subtitle":"Number of commits each day","note":"Illustrative data. Faint cells are days with no commits."}
 ```
 
 (`data` cut to 8 rows.)
@@ -385,6 +393,7 @@ Props:
 - `tone`: `"neutral" | "positive" | "negative" | "accent"`, default `"neutral"`. Sets the icon shape and the tint together.
 - `label`: `string`. Small label above the lead, e.g. "Summary".
 - `variant`: `"soft" | "outline" | "plain"`, default `"soft"`. Tinted box, bordered box, or no box.
+- `frame`: `boolean`. Paint a named theme's background behind the callout, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off.
 
 ```json
 {"type":"callout","tone":"accent","label":"Summary","lead":"Solar supplied more than half of demand on 4 in 10 summer afternoons in 2024","text":"Wholesale prices were below zero on those afternoons."}
@@ -409,7 +418,7 @@ Props:
 - `aspectScale`: `number`, default `0.75`. Horizontal stretch for longitude; 1 for tile maps and projected coordinates.
 
 ```json
-{"type":"choropleth-map","geo":{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"name":"Western Australia","code":"WA"},"geometry":{"type":"Polygon","coordinates":[[[0,1],[4,1],[4,6],[0,6],[0,1]]]}},{"type":"Feature","properties":{"name":"Northern Territory","code":"NT"},"geometry":{"type":"Polygon","coordinates":[[[4,3.5],[6.5,3.5],[6.5,6.5],[4,6.5],[4,3.5]]]}},{"type":"Feature","properties":{"name":"South Australia","code":"SA"},"geometry":{"type":"Polygon","coordinates":[[[4,1],[6.5,1],[6.5,3.5],[4,3.5],[4,1]]]}},{"type":"Feature","properties":{"name":"Queensland","code":"Qld"},"geometry":{"type":"Polygon","coordinates":[[[6.5,3],[10,3],[10,5.2],[8.6,5.2],[8.6,7.2],[7.6,7.2],[7.6,6.2],[6.5,6.2],[6.5,3]]]}},{"type":"Feature","properties":{"name":"New South Wales","code":"NSW"},"geometry":{"type":"Polygon","coordinates":[[[6.5,1.4],[10,1.4],[10,3],[6.5,3],[6.5,1.4]],[[8.7,1.8],[8.7,2.4],[9.4,2.4],[9.4,1.8],[8.7,1.8]]]}},{"type":"Feature","properties":{"name":"Australian Capital Territory","code":"ACT"},"geometry":{"type":"Polygon","coordinates":[[[8.7,1.8],[9.4,1.8],[9.4,2.4],[8.7,2.4],[8.7,1.8]]]}},{"type":"Feature","properties":{"name":"Victoria","code":"Vic"},"geometry":{"type":"Polygon","coordinates":[[[6.5,0.3],[9.2,0.3],[9.2,1.4],[6.5,1.4],[6.5,0.3]]]}},{"type":"Feature","properties":{"name":"Tasmania","code":"Tas"},"geometry":{"type":"Polygon","coordinates":[[[7.6,-1.1],[8.7,-1.1],[8.7,-0.3],[7.6,-0.3],[7.6,-1.1]]]}}]},"data":[{"state":"Queensland","share":45},{"state":"South Australia","share":47},{"state":"Western Australia","share":39},{"state":"New South Wales","share":31},{"state":"Australian Capital Territory","share":29},{"state":"Victoria","share":26},{"state":"Northern Territory","share":22},{"state":"Tasmania","share":19}],"region":"state","value":"share","format":"{value}%","aspectScale":1,"labels":true,"labelProperty":"code","height":380,"title":"47% of homes in South Australia had rooftop solar in 2023","subtitle":"Share of dwellings with a solar installation, by state and territory, 2023","source":"Australian PV Institute","note":"Approximate figures on a simplified block map"}
+{"type":"choropleth-map","theme":"earth","geo":{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"name":"Western Australia","code":"WA"},"geometry":{"type":"Polygon","coordinates":[[[0,1],[4,1],[4,6],[0,6],[0,1]]]}},{"type":"Feature","properties":{"name":"Northern Territory","code":"NT"},"geometry":{"type":"Polygon","coordinates":[[[4,3.5],[6.5,3.5],[6.5,6.5],[4,6.5],[4,3.5]]]}},{"type":"Feature","properties":{"name":"South Australia","code":"SA"},"geometry":{"type":"Polygon","coordinates":[[[4,1],[6.5,1],[6.5,3.5],[4,3.5],[4,1]]]}},{"type":"Feature","properties":{"name":"Queensland","code":"Qld"},"geometry":{"type":"Polygon","coordinates":[[[6.5,3],[10,3],[10,5.2],[8.6,5.2],[8.6,7.2],[7.6,7.2],[7.6,6.2],[6.5,6.2],[6.5,3]]]}},{"type":"Feature","properties":{"name":"New South Wales","code":"NSW"},"geometry":{"type":"Polygon","coordinates":[[[6.5,1.4],[10,1.4],[10,3],[6.5,3],[6.5,1.4]],[[8.7,1.8],[8.7,2.4],[9.4,2.4],[9.4,1.8],[8.7,1.8]]]}},{"type":"Feature","properties":{"name":"Australian Capital Territory","code":"ACT"},"geometry":{"type":"Polygon","coordinates":[[[8.7,1.8],[9.4,1.8],[9.4,2.4],[8.7,2.4],[8.7,1.8]]]}},{"type":"Feature","properties":{"name":"Victoria","code":"Vic"},"geometry":{"type":"Polygon","coordinates":[[[6.5,0.3],[9.2,0.3],[9.2,1.4],[6.5,1.4],[6.5,0.3]]]}},{"type":"Feature","properties":{"name":"Tasmania","code":"Tas"},"geometry":{"type":"Polygon","coordinates":[[[7.6,-1.1],[8.7,-1.1],[8.7,-0.3],[7.6,-0.3],[7.6,-1.1]]]}}]},"data":[{"state":"Queensland","share":45},{"state":"South Australia","share":47},{"state":"Western Australia","share":39},{"state":"New South Wales","share":31},{"state":"Australian Capital Territory","share":29},{"state":"Victoria","share":26},{"state":"Northern Territory","share":22},{"state":"Tasmania","share":19}],"region":"state","value":"share","format":"{value}%","aspectScale":1,"labels":true,"labelProperty":"code","height":380,"title":"47% of homes in South Australia had rooftop solar in 2023","subtitle":"Share of dwellings with a solar installation, by state and territory, 2023","source":"Australian PV Institute","note":"Approximate figures on a simplified block map"}
 ```
 
 ### circle-pack
@@ -429,7 +438,7 @@ Props:
 - `names`: `Record<string, string>`. Display names for group keys.
 
 ```json
-{"type":"circle-pack","data":[{"crop":"Maize","group":"Cereals","mt":1160},{"crop":"Wheat","group":"Cereals","mt":780},{"crop":"Rice","group":"Cereals","mt":790},{"crop":"Barley","group":"Cereals","mt":150},{"crop":"Sorghum","group":"Cereals","mt":60},{"crop":"Potatoes","group":"Roots","mt":375},{"crop":"Cassava","group":"Roots","mt":330},{"crop":"Sweet potatoes","group":"Roots","mt":90}],"name":"crop","value":"mt","group":"group","format":"{value} Mt","title":"The world harvested 1,160 million tonnes of maize in 2022","subtitle":"Harvest of 13 major crops by group, million tonnes, 2022","source":"FAOSTAT","note":"Rounded, approximate figures for illustration"}
+{"type":"circle-pack","theme":"magenta","data":[{"crop":"Maize","group":"Cereals","mt":1160},{"crop":"Wheat","group":"Cereals","mt":780},{"crop":"Rice","group":"Cereals","mt":790},{"crop":"Barley","group":"Cereals","mt":150},{"crop":"Sorghum","group":"Cereals","mt":60},{"crop":"Potatoes","group":"Roots","mt":375},{"crop":"Cassava","group":"Roots","mt":330},{"crop":"Sweet potatoes","group":"Roots","mt":90}],"name":"crop","value":"mt","group":"group","format":"{value} Mt","title":"The world harvested 1,160 million tonnes of maize in 2022","subtitle":"Harvest of 13 major crops by group, million tonnes, 2022","source":"FAOSTAT","note":"Rounded, approximate figures for illustration"}
 ```
 
 (`data` cut to 8 rows.)
@@ -456,7 +465,7 @@ Props:
 - `names`: `Record<string, string>`. Display names for entity keys.
 
 ```json
-{"type":"curve-rank","data":[{"drink":"Filter coffee","price":2.4,"cups":310},{"drink":"Espresso","price":2.6,"cups":145},{"drink":"Flat white","price":3.6,"cups":260},{"drink":"Iced latte","price":4.2,"cups":180},{"drink":"Matcha latte","price":4.8,"cups":75},{"drink":"Hot chocolate","price":3.9,"cups":40}],"name":"drink","left":"price","right":"cups","leftLabel":"Price per cup","rightLabel":"Cups sold a day","leftFormat":{"style":"currency","currency":"GBP"},"leftTop":"low","title":"Filter coffee sold 310 cups a day at £2.40 a cup","subtitle":"Price per cup and cups sold per day for six drinks at one café, cheapest at the top","note":"Illustrative figures."}
+{"type":"curve-rank","theme":"blueprint","data":[{"drink":"Filter coffee","price":2.4,"cups":310},{"drink":"Espresso","price":2.6,"cups":145},{"drink":"Flat white","price":3.6,"cups":260},{"drink":"Iced latte","price":4.2,"cups":180},{"drink":"Matcha latte","price":4.8,"cups":75},{"drink":"Hot chocolate","price":3.9,"cups":40}],"name":"drink","left":"price","right":"cups","leftLabel":"Price per cup","rightLabel":"Cups sold a day","leftFormat":{"style":"currency","currency":"GBP"},"leftTop":"low","title":"Filter coffee sold 310 cups a day at £2.40 a cup","subtitle":"Price per cup and cups sold per day for six drinks at one café, cheapest at the top","note":"Illustrative figures."}
 ```
 
 ### data-table
@@ -476,9 +485,10 @@ Props:
 - `sortable`: `boolean`, default `true`. Click or press Enter on a header to sort; a third press restores the original order.
 - `maxHeight`: `number | string`. Height before the body scrolls under the sticky header.
 - `density`: `"comfortable" | "compact"`, default `"comfortable"`. Row padding.
+- `frame`: `boolean`. Paint a named theme's background behind the table, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off.
 
 ```json
-{"type":"data-table","caption":"Wind and solar supplied 67% of Denmark's electricity in 2024","subtitle":"Electricity generation by country, 2024","source":"Ember (illustrative figures)","highlight":"Denmark","sort":{"key":"share","direction":"desc"},"columns":[{"key":"country","label":"Country"},{"key":"share","label":"Wind and solar share","format":"percent","bar":true,"width":"38%"},{"key":"twh","label":"Generation, TWh","format":"decimal:1"},{"key":"change","label":"Change vs 2023","format":{"style":"percent","signDisplay":"exceptZero","maximumFractionDigits":1}}],"rows":[{"country":"Germany","share":0.43,"twh":209.4,"change":0.031},{"country":"Spain","share":0.42,"twh":112.8,"change":0.044},{"country":"Denmark","share":0.67,"twh":23.1,"change":0.012},{"country":"Netherlands","share":0.41,"twh":49.6,"change":0.058},{"country":"Portugal","share":0.46,"twh":22.9,"change":0.027},{"country":"France","share":0.14,"twh":73.5,"change":0.009},{"country":"Poland","share":0.24,"twh":40.2,"change":-0.004}]}
+{"type":"data-table","theme":"editorial","caption":"Wind and solar supplied 67% of Denmark's electricity in 2024","subtitle":"Electricity generation by country, 2024","source":"Ember (illustrative figures)","highlight":"Denmark","sort":{"key":"share","direction":"desc"},"columns":[{"key":"country","label":"Country"},{"key":"share","label":"Wind and solar share","format":"percent","bar":true,"width":"38%"},{"key":"twh","label":"Generation, TWh","format":"decimal:1"},{"key":"change","label":"Change vs 2023","format":{"style":"percent","signDisplay":"exceptZero","maximumFractionDigits":1}}],"rows":[{"country":"Germany","share":0.43,"twh":209.4,"change":0.031},{"country":"Spain","share":0.42,"twh":112.8,"change":0.044},{"country":"Denmark","share":0.67,"twh":23.1,"change":0.012},{"country":"Netherlands","share":0.41,"twh":49.6,"change":0.058},{"country":"Portugal","share":0.46,"twh":22.9,"change":0.027},{"country":"France","share":0.14,"twh":73.5,"change":0.009},{"country":"Poland","share":0.24,"twh":40.2,"change":-0.004}]}
 ```
 
 ### delta
@@ -492,8 +502,11 @@ Props:
 - `upIsGood`: `boolean`, default `true`. Whether an increase is good news; decides the colour only.
 - `direction`: `"up" | "down" | "flat"`. Override the direction inferred from the sign.
 - `format`: `FormatSpec`, default `signed percent`. Number format, e.g. `"signed"` for absolute changes or `"{value} pts"`.
-- `size`: `"sm" | "md" | "lg"`. 12, 14 or 16px. Inherits the surrounding size when omitted.
-- `variant`: `"text" | "pill"`, default `"text"`. `pill` adds a tinted capsule behind the value.
+- `size`: `"sm" | "md" | "lg" | "xl"`. 12, 14, 16 or 20px. Inherits the surrounding size when omitted.
+- `variant`: `"text" | "pill" | "solid"`, default `"text"`. `pill` adds a tinted capsule behind the value; `solid` fills the capsule and sets the value in the surface colour.
+- `tone`: `"auto" | "neutral" | "accent" | "positive" | "negative" | "inherit"`, default `"auto"`. Colour of the value. `auto` follows the direction and `upIsGood`; `inherit` takes the surrounding text colour, for a coloured ground.
+- `theme`: `ThemeInput`. A theme name such as `"ledger"`, or token overrides. A named theme paints its own ground.
+- `frame`: `boolean`. Set false to stop a named theme painting its ground.
 
 ```json
 {"type":"delta","value":0.124,"label":"vs last quarter","size":"md"}
@@ -535,7 +548,7 @@ Props:
 - `names`: `Record<string, string>`. Display names for category keys.
 
 ```json
-{"type":"donut-chart","data":[{"tenure":"Own outright","households":8.8},{"tenure":"Own with a mortgage","households":7.4},{"tenure":"Rent privately","households":4.9},{"tenure":"Rent social housing","households":4.1}],"name":"tenure","value":"households","format":"{value}m","centerLabel":"households","highlight":"Rent privately","title":"4.9 million households in England rented privately in 2022-23","subtitle":"Households by tenure, England, 2022-23","source":"English Housing Survey","note":"Figures are approximate, for illustration"}
+{"type":"donut-chart","theme":"paper","data":[{"tenure":"Own outright","households":8.8},{"tenure":"Own with a mortgage","households":7.4},{"tenure":"Rent privately","households":4.9},{"tenure":"Rent social housing","households":4.1}],"name":"tenure","value":"households","format":"{value}m","centerLabel":"households","highlight":"Rent privately","title":"4.9 million households in England rented privately in 2022-23","subtitle":"Households by tenure, England, 2022-23","source":"English Housing Survey","note":"Figures are approximate, for illustration"}
 ```
 
 ### dumbbell-chart
@@ -558,7 +571,7 @@ Props:
 - `names`: `Record<string, string>`. Display names for the `from` and `to` keys.
 
 ```json
-{"type":"dumbbell-chart","data":[{"country":"South Korea","y2000":76,"y2023":83.6},{"country":"Turkey","y2000":71.1,"y2023":77.3},{"country":"Poland","y2000":73.8,"y2023":78.6},{"country":"Japan","y2000":81.2,"y2023":84.1},{"country":"Germany","y2000":78.2,"y2023":81.2},{"country":"United States","y2000":76.7,"y2023":78.4}],"category":"country","from":"y2000","to":"y2023","names":{"y2000":"2000","y2023":"2023"},"gapLabel":"Gain","format":"decimal:1","height":280,"title":"Life expectancy in South Korea rose from 76.0 years in 2000 to 83.6 in 2023","subtitle":"Life expectancy at birth, years, 2000 and 2023","source":"OECD Health Statistics (rounded)","note":"Figures are approximate, for illustration"}
+{"type":"dumbbell-chart","theme":"science","data":[{"country":"South Korea","y2000":76,"y2023":83.6},{"country":"Turkey","y2000":71.1,"y2023":77.3},{"country":"Poland","y2000":73.8,"y2023":78.6},{"country":"Japan","y2000":81.2,"y2023":84.1},{"country":"Germany","y2000":78.2,"y2023":81.2},{"country":"United States","y2000":76.7,"y2023":78.4}],"category":"country","from":"y2000","to":"y2023","names":{"y2000":"2000","y2023":"2023"},"gapLabel":"Gain","format":"decimal:1","height":280,"title":"Life expectancy in South Korea rose from 76.0 years in 2000 to 83.6 in 2023","subtitle":"Life expectancy at birth, years, 2000 and 2023","source":"OECD Health Statistics (rounded)","note":"Figures are approximate, for illustration"}
 ```
 
 ### fan-flow
@@ -580,7 +593,7 @@ Props:
 - `sort`: `"value" | "none"`, default `"value"`. Largest first, or the data order.
 
 ```json
-{"type":"fan-flow","data":[{"use":"Shower","litres":128},{"use":"Toilet","litres":97},{"use":"Washing machine","litres":62},{"use":"Kitchen tap","litres":45},{"use":"Dishwasher","litres":24},{"use":"Garden","litres":21},{"use":"Bathroom tap","litres":19},{"use":"Leaks","litres":16}],"name":"use","value":"litres","trunk":"Litres a day","tagged":["Shower","Washing machine","Dishwasher"],"tagLabel":"Uses heated water","title":"Showers used 128 of a household's 412 litres of water a day","subtitle":"Daily water use of one four-person household by use, litres","note":"Illustrative figures."}
+{"type":"fan-flow","theme":"forest","data":[{"use":"Shower","litres":128},{"use":"Toilet","litres":97},{"use":"Washing machine","litres":62},{"use":"Kitchen tap","litres":45},{"use":"Dishwasher","litres":24},{"use":"Garden","litres":21},{"use":"Bathroom tap","litres":19},{"use":"Leaks","litres":16}],"name":"use","value":"litres","trunk":"Litres a day","tagged":["Shower","Washing machine","Dishwasher"],"tagLabel":"Uses heated water","title":"Showers used 128 of a household's 412 litres of water a day","subtitle":"Daily water use of one four-person household by use, litres","note":"Illustrative figures."}
 ```
 
 ### funnel-chart
@@ -618,9 +631,10 @@ Props:
 - `select`: `boolean`. Let readers click a row (or press Enter on it) to select it; the other rows fade.
 - `onSelect`: `(values: string[]) => void`. Called with the selected entity names whenever the selection changes.
 - `selected`: `string[]`. Controlled selection: the entity names currently selected. When given, the table shows exactly this list and a click only calls `onSelect`. Omit it and the table keeps its own selection.
+- `frame`: `boolean`. Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off.
 
 ```json
-{"type":"glyph-table","caption":"Filter coffee sold 310 cups a day at £2.40 a cup","subtitle":"Six drinks at one café: price, cups sold per day, share ordered with oat milk, seconds to prepare and caffeine","note":"Illustrative figures.","name":"drink","nameLabel":"Drink","columns":[{"field":"price","label":"Price per cup","glyph":"bar","format":{"style":"currency","currency":"GBP"},"max":5},{"field":"cups","label":"Cups sold a day","glyph":"dots","unit":10},{"field":"oat","label":"With oat milk","glyph":"ring","format":"{value}%"},{"field":"seconds","label":"Seconds to prepare","glyph":"blocks","unit":10},{"field":"caffeine","label":"Caffeine, mg","glyph":"circle"}],"rows":[{"drink":"Filter coffee","price":2.4,"cups":310,"oat":8,"seconds":15,"caffeine":140},{"drink":"Espresso","price":2.6,"cups":145,"oat":null,"seconds":30,"caffeine":65},{"drink":"Flat white","price":3.6,"cups":260,"oat":34,"seconds":95,"caffeine":130},{"drink":"Iced latte","price":4.2,"cups":180,"oat":41,"seconds":70,"caffeine":130},{"drink":"Matcha latte","price":4.8,"cups":75,"oat":57,"seconds":110,"caffeine":70},{"drink":"Hot chocolate","price":3.9,"cups":40,"oat":22,"seconds":85,"caffeine":10}]}
+{"type":"glyph-table","theme":"noir","caption":"Filter coffee sold 310 cups a day at £2.40 a cup","subtitle":"Six drinks at one café: price, cups sold per day, share ordered with oat milk, seconds to prepare and caffeine","note":"Illustrative figures.","name":"drink","nameLabel":"Drink","columns":[{"field":"price","label":"Price per cup","glyph":"bar","format":{"style":"currency","currency":"GBP"},"max":5},{"field":"cups","label":"Cups sold a day","glyph":"dots","unit":10},{"field":"oat","label":"With oat milk","glyph":"ring","format":"{value}%"},{"field":"seconds","label":"Seconds to prepare","glyph":"blocks","unit":10},{"field":"caffeine","label":"Caffeine, mg","glyph":"circle"}],"rows":[{"drink":"Filter coffee","price":2.4,"cups":310,"oat":8,"seconds":15,"caffeine":140},{"drink":"Espresso","price":2.6,"cups":145,"oat":null,"seconds":30,"caffeine":65},{"drink":"Flat white","price":3.6,"cups":260,"oat":34,"seconds":95,"caffeine":130},{"drink":"Iced latte","price":4.2,"cups":180,"oat":41,"seconds":70,"caffeine":130},{"drink":"Matcha latte","price":4.8,"cups":75,"oat":57,"seconds":110,"caffeine":70},{"drink":"Hot chocolate","price":3.9,"cups":40,"oat":22,"seconds":85,"caffeine":10}]}
 ```
 
 ### headline
@@ -638,9 +652,10 @@ Props:
 - `level`: `1 | 2 | 3 | 4 | 5 | 6`. Heading level. Defaults to 1 (page), 2 (section), 3 (card).
 - `align`: `"left" | "center"`, default `"left"`. Text alignment.
 - `children`: `ReactNode`. Extra content under the byline.
+- `frame`: `boolean`. Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off.
 
 ```json
-{"type":"headline","size":"page","kicker":"Energy transition","title":"Solar generated more electricity than coal in Europe in 2024","deck":"Solar was the continent's second-largest source of electricity that year.","byline":"By Ana Ruiz and Tom Okafor","date":"2025-03-14"}
+{"type":"headline","theme":"ledger","size":"page","kicker":"Energy transition","title":"Solar generated more electricity than coal in Europe in 2024","deck":"Solar was the continent's second-largest source of electricity that year.","byline":"By Ana Ruiz and Tom Okafor","date":"2025-03-14"}
 ```
 
 ### heatmap
@@ -659,7 +674,7 @@ Props:
 - `domain`: `[number, number]`. Fix the ends of the colour scale.
 
 ```json
-{"type":"heatmap","data":[{"day":"Mon","slot":"6am","orders":12},{"day":"Mon","slot":"9am","orders":48},{"day":"Mon","slot":"12pm","orders":61},{"day":"Mon","slot":"3pm","orders":55},{"day":"Mon","slot":"6pm","orders":38},{"day":"Mon","slot":"9pm","orders":14},{"day":"Tue","slot":"6am","orders":11},{"day":"Tue","slot":"9am","orders":52}],"x":"slot","y":"day","value":"orders","title":"Orders peak at 70 per hour at 12pm on Wednesdays","subtitle":"Average orders per hour by weekday and time of day","note":"Illustrative data"}
+{"type":"heatmap","theme":"dusk","data":[{"day":"Mon","slot":"6am","orders":12},{"day":"Mon","slot":"9am","orders":48},{"day":"Mon","slot":"12pm","orders":61},{"day":"Mon","slot":"3pm","orders":55},{"day":"Mon","slot":"6pm","orders":38},{"day":"Mon","slot":"9pm","orders":14},{"day":"Tue","slot":"6am","orders":11},{"day":"Tue","slot":"9am","orders":52}],"x":"slot","y":"day","value":"orders","title":"Orders peak at 70 per hour at 12pm on Wednesdays","subtitle":"Average orders per hour by weekday and time of day","note":"Illustrative data"}
 ```
 
 (`data` cut to 8 rows.)
@@ -679,7 +694,7 @@ Props:
 - `countLabel`: `string`. Title for the count axis, e.g. "Runners".
 
 ```json
-{"type":"histogram","data":[{"minutes":14},{"minutes":18},{"minutes":18},{"minutes":19},{"minutes":20},{"minutes":21},{"minutes":21},{"minutes":22}],"value":"minutes","step":5,"median":true,"countLabel":"Commuters","format":"{value} min","title":"The median commute of 90 surveyed employees was 34.5 minutes","subtitle":"One-way commute time, in 5-minute bins","note":"Illustrative data"}
+{"type":"histogram","theme":"earth","data":[{"minutes":14},{"minutes":18},{"minutes":18},{"minutes":19},{"minutes":20},{"minutes":21},{"minutes":21},{"minutes":22}],"value":"minutes","step":5,"median":true,"countLabel":"Commuters","format":"{value} min","title":"The median commute of 90 surveyed employees was 34.5 minutes","subtitle":"One-way commute time, in 5-minute bins","note":"Illustrative data"}
 ```
 
 (`data` cut to 8 rows.)
@@ -701,7 +716,7 @@ Props:
 - `sort`: `"none" | "asc" | "desc"`, default `"none"`. Order of the tiles.
 
 ```json
-{"type":"icon-array-grid","data":[{"district":"Ashby","cars":118},{"district":"Brook End","cars":104},{"district":"Castle Hill","cars":97},{"district":"Dockside","cars":41},{"district":"Eastfield","cars":88},{"district":"Fairmile","cars":126},{"district":"Greenway","cars":73},{"district":"Hollins","cars":110}],"name":"district","value":"cars","icon":"car","unitLabel":"1 car per 100 households","columns":4,"title":"Fairmile had 126 cars per 100 households in 2025","subtitle":"Cars per 100 households in 12 districts of Port Aldwin, 2025","source":"Illustrative data","note":"Invented figures for a fictional city"}
+{"type":"icon-array-grid","theme":"sunrise","data":[{"district":"Ashby","cars":118},{"district":"Brook End","cars":104},{"district":"Castle Hill","cars":97},{"district":"Dockside","cars":41},{"district":"Eastfield","cars":88},{"district":"Fairmile","cars":126},{"district":"Greenway","cars":73},{"district":"Hollins","cars":110}],"name":"district","value":"cars","icon":"car","unitLabel":"1 car per 100 households","columns":4,"title":"Fairmile had 126 cars per 100 households in 2025","subtitle":"Cars per 100 households in 12 districts of Port Aldwin, 2025","source":"Illustrative data","note":"Invented figures for a fictional city"}
 ```
 
 (`data` cut to 8 rows.)
@@ -722,6 +737,7 @@ Props:
 - `size`: `number`. Glyph height in px; shrinks to fit narrow containers.
 - `tone`: `"accent" | "positive" | "negative" | "neutral"`, default `"accent"`. Fill colour by meaning.
 - `align`: `"left" | "center"`, default `"left"`. Alignment.
+- `frame`: `boolean`. Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off.
 
 ```json
 {"type":"icon-stat","icon":"person","count":1,"total":4,"text":"households could not cover an unexpected bill of €500 without borrowing."}
@@ -743,9 +759,10 @@ Props:
 - `orientation`: `"horizontal" | "vertical"`, default `"horizontal"`. Categorical layout.
 - `width`: `number`, default `240`. Ramp width in px, capped at the container.
 - `align`: `"left" | "center"`, default `"left"`. Alignment within the container.
+- `frame`: `boolean`. Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off.
 
 ```json
-{"type":"legend-key","title":"Source of electricity","items":["Solar","Wind","Hydro","Gas",{"label":"Other","muted":true}]}
+{"type":"legend-key","theme":"poster","title":"Source of electricity","items":["Solar","Wind","Hydro","Gas",{"label":"Other","muted":true}]}
 ```
 
 ### line-chart
@@ -786,7 +803,7 @@ Props:
 - `names`: `Record<string, string>`. Display names for series keys.
 
 ```json
-{"type":"lollipop-chart","data":[{"country":"Netherlands","share":27},{"country":"Denmark","share":19},{"country":"Germany","share":10},{"country":"Sweden","share":9},{"country":"Japan","share":8},{"country":"France","share":4},{"country":"United Kingdom","share":2},{"country":"United States","share":1}],"x":"country","y":"share","format":"{value}%","height":300,"title":"27% of trips in the Netherlands are made by bike","subtitle":"Share of all trips made by bicycle","source":"National travel surveys, latest available year (rounded)","note":"Figures are approximate, for illustration"}
+{"type":"lollipop-chart","theme":"mono","data":[{"country":"Netherlands","share":27},{"country":"Denmark","share":19},{"country":"Germany","share":10},{"country":"Sweden","share":9},{"country":"Japan","share":8},{"country":"France","share":4},{"country":"United Kingdom","share":2},{"country":"United States","share":1}],"x":"country","y":"share","format":"{value}%","height":300,"title":"27% of trips in the Netherlands are made by bike","subtitle":"Share of all trips made by bicycle","source":"National travel surveys, latest available year (rounded)","note":"Figures are approximate, for illustration"}
 ```
 
 ### nested-shares
@@ -802,7 +819,7 @@ Props:
 - `corner`: `"bottom-left" | "top-left"`, default `"bottom-left"`. The corner every outline grows from.
 
 ```json
-{"type":"nested-shares","data":[{"year":"2005","share":4},{"year":"2010","share":7},{"year":"2015","share":12},{"year":"2020","share":19},{"year":"2025","share":27}],"name":"year","value":"share","format":"{value}%","highlight":"2025","wholeLabel":"All trips in the city","title":"Bicycles made 27% of trips in Port Aldwin in 2025","subtitle":"Share of all trips made by bicycle, 2005 to 2025","source":"Illustrative data","note":"Invented figures for a fictional city"}
+{"type":"nested-shares","theme":"ocean","data":[{"year":"2005","share":4},{"year":"2010","share":7},{"year":"2015","share":12},{"year":"2020","share":19},{"year":"2025","share":27}],"name":"year","value":"share","format":"{value}%","highlight":"2025","wholeLabel":"All trips in the city","title":"Bicycles made 27% of trips in Port Aldwin in 2025","subtitle":"Share of all trips made by bicycle, 2005 to 2025","source":"Illustrative data","note":"Invented figures for a fictional city"}
 ```
 
 ### orbit-chart
@@ -826,7 +843,7 @@ Props:
 - `showKey`: `boolean`, default `true`. Show the key that explains rings, angle and dot area.
 
 ```json
-{"type":"orbit-chart","data":[{"supplier":"Halden Cells","tier":"Tier 1","spend":84},{"supplier":"Orrin Motors","tier":"Tier 1","spend":61},{"supplier":"Vale Castings","tier":"Tier 1","spend":37},{"supplier":"Kestrel Wiring","tier":"Tier 2","spend":22},{"supplier":"Brask Cathodes","tier":"Tier 2","spend":48},{"supplier":"Lumen Glass","tier":"Tier 2","spend":15},{"supplier":"Pell Magnets","tier":"Tier 2","spend":29},{"supplier":"Tarn Lithium","tier":"Tier 3","spend":33}],"name":"supplier","ring":"tier","value":"spend","format":"${value}m","centerLabel":"Car plant","highlight":"Brask Cathodes","ringLabel":"Tier 1 sells to the plant, each further ring sells to the ring inside it","sizeLabel":"annual spend","title":"Brask Cathodes is a tier 2 supplier with $48 million of annual spend","subtitle":"12 suppliers to one car plant by supply-chain tier, annual spend in $ million","note":"Illustrative figures for invented companies"}
+{"type":"orbit-chart","theme":"noir","data":[{"supplier":"Halden Cells","tier":"Tier 1","spend":84},{"supplier":"Orrin Motors","tier":"Tier 1","spend":61},{"supplier":"Vale Castings","tier":"Tier 1","spend":37},{"supplier":"Kestrel Wiring","tier":"Tier 2","spend":22},{"supplier":"Brask Cathodes","tier":"Tier 2","spend":48},{"supplier":"Lumen Glass","tier":"Tier 2","spend":15},{"supplier":"Pell Magnets","tier":"Tier 2","spend":29},{"supplier":"Tarn Lithium","tier":"Tier 3","spend":33}],"name":"supplier","ring":"tier","value":"spend","format":"${value}m","centerLabel":"Car plant","highlight":"Brask Cathodes","ringLabel":"Tier 1 sells to the plant, each further ring sells to the ring inside it","sizeLabel":"annual spend","title":"Brask Cathodes is a tier 2 supplier with $48 million of annual spend","subtitle":"12 suppliers to one car plant by supply-chain tier, annual spend in $ million","note":"Illustrative figures for invented companies"}
 ```
 
 (`data` cut to 8 rows.)
@@ -848,7 +865,7 @@ Props:
 - `sort`: `"none" | "asc" | "desc"`, default `"none"`. Row order.
 
 ```json
-{"type":"pictogram-chart","data":[{"city":"Tokyo","people":37.1},{"city":"Delhi","people":33.8},{"city":"Shanghai","people":29.9},{"city":"São Paulo","people":22.8},{"city":"Mexico City","people":22.5}],"name":"city","value":"people","unit":2,"unitLabel":"2 million people","format":"{value}m","highlight":"Delhi","title":"Delhi had 33.8 million people in 2024, 3.3 million fewer than Tokyo","subtitle":"Population of the five largest urban agglomerations, 2024","source":"UN World Urbanization Prospects","note":"Figures are approximate, for illustration"}
+{"type":"pictogram-chart","theme":"magenta","data":[{"city":"Tokyo","people":37.1},{"city":"Delhi","people":33.8},{"city":"Shanghai","people":29.9},{"city":"São Paulo","people":22.8},{"city":"Mexico City","people":22.5}],"name":"city","value":"people","unit":2,"unitLabel":"2 million people","format":"{value}m","highlight":"Delhi","title":"Delhi had 33.8 million people in 2024, 3.3 million fewer than Tokyo","subtitle":"Population of the five largest urban agglomerations, 2024","source":"UN World Urbanization Prospects","note":"Figures are approximate, for illustration"}
 ```
 
 ### pill-rank
@@ -866,7 +883,7 @@ Props:
 - `ranks`: `boolean`, default `true`. Show the rank number at the right edge.
 
 ```json
-{"type":"pill-rank","data":[{"river":"Nile","km":6650},{"river":"Amazon","km":6400},{"river":"Yangtze","km":6300},{"river":"Mississippi-Missouri","km":6275},{"river":"Yenisei","km":5539},{"river":"Yellow River","km":5464},{"river":"Ob-Irtysh","km":5410},{"river":"Congo","km":4700}],"name":"river","value":"km","format":"{value} km","highlight":"Congo","compare":["Danube","Rhine"],"compareLabel":"Europe, for comparison","title":"The Congo is 4,700 km long","subtitle":"Length of eight major river systems and two European rivers, kilometres","source":"Encyclopaedia Britannica","note":"Lengths of river systems are approximate and vary by source"}
+{"type":"pill-rank","theme":"paper","data":[{"river":"Nile","km":6650},{"river":"Amazon","km":6400},{"river":"Yangtze","km":6300},{"river":"Mississippi-Missouri","km":6275},{"river":"Yenisei","km":5539},{"river":"Yellow River","km":5464},{"river":"Ob-Irtysh","km":5410},{"river":"Congo","km":4700}],"name":"river","value":"km","format":"{value} km","highlight":"Congo","compare":["Danube","Rhine"],"compareLabel":"Europe, for comparison","title":"The Congo is 4,700 km long","subtitle":"Length of eight major river systems and two European rivers, kilometres","source":"Encyclopaedia Britannica","note":"Lengths of river systems are approximate and vary by source"}
 ```
 
 (`data` cut to 8 rows.)
@@ -886,8 +903,11 @@ Props:
 - `showMax`: `boolean`. Print "of {max}" after the value. Default: only when `max` is given.
 - `context`: `string`. A line under the meter that gives the number meaning.
 - `format`: `FormatSpec`. Number format. Defaults to `"percent"` when the track ends at 1 or less, otherwise `"auto"`.
-- `tone`: `"accent" | "positive" | "negative" | "neutral"`, default `"accent"`. Fill colour by meaning.
-- `size`: `"sm" | "md"`, default `"md"`. `sm` for dense stacks.
+- `tone`: `"accent" | "positive" | "negative" | "neutral" | number`, default `"accent"`. Fill colour by meaning. A number picks from the theme's categorical palette, 0-based, for a stack of meters that name different entities.
+- `size`: `"sm" | "md" | "lg"`, default `"md"`. Track of 6, 8 or 12px. `sm` for dense stacks, `lg` for a single featured meter.
+- `detail`: `string`. A short muted note after the value, e.g. a share of the total ("26%").
+- `theme`: `ThemeInput`. A theme name such as `"science"`, or token overrides. A named theme paints its own ground.
+- `frame`: `boolean`. Set false to stop a named theme painting its ground.
 
 ```json
 {"type":"progress-meter","label":"Homes with a heat pump or district heating","value":0.46,"max":1,"showMax":false,"target":0.7,"targetLabel":"2030 target","context":"Up from 31% in 2020. At the current rate the target is reached in 2033."}
@@ -907,7 +927,7 @@ Props:
 - `sort`: `"none" | "asc" | "desc"`, default `"none"`. Order of the shapes in the row layout. Nested and packed always draw largest first.
 
 ```json
-{"type":"proportional-area","data":[{"lake":"Superior","area":82100},{"lake":"Victoria","area":68900},{"lake":"Tanganyika","area":32900},{"lake":"Erie","area":25700},{"lake":"Titicaca","area":8370}],"name":"lake","value":"area","format":"integer","ratio":true,"title":"Lake Superior covers 82,100 km², 9.8 times Lake Titicaca","subtitle":"Surface area of five lakes, square kilometres","source":"Approximate published figures","note":"Rounded, for illustration"}
+{"type":"proportional-area","theme":"blueprint","data":[{"lake":"Superior","area":82100},{"lake":"Victoria","area":68900},{"lake":"Tanganyika","area":32900},{"lake":"Erie","area":25700},{"lake":"Titicaca","area":8370}],"name":"lake","value":"area","format":"integer","ratio":true,"title":"Lake Superior covers 82,100 km², 9.8 times Lake Titicaca","subtitle":"Surface area of five lakes, square kilometres","source":"Approximate published figures","note":"Rounded, for illustration"}
 ```
 
 ### prose
@@ -923,6 +943,7 @@ Props:
 - `lead`: `boolean`, default `false`. Set the first paragraph a step larger.
 - `tone`: `"default" | "muted"`, default `"default"`. `muted` for secondary narration.
 - `align`: `"left" | "center"`, default `"left"`. Centres the block (text stays left-aligned).
+- `frame`: `boolean`. Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off.
 
 ```json
 {"type":"prose","text":"In 2015 solar supplied **3% of Europe's electricity**. Hydro supplied more than three times as much.\n\nPanel prices fell by about 80% in the years that followed. In 2024 solar generated more electricity than coal across the EU, according to [Ember's annual review](https://ember-energy.org).\n\nSolar's share differs by country. The next chart shows it for each EU member state."}
@@ -941,9 +962,10 @@ Props:
 - `cite`: `string`. Source URL: set as the blockquote `cite` and linked from the attribution.
 - `size`: `"md" | "lg"`, default `"lg"`. `lg` anchors a section; `md` sits inside a column.
 - `align`: `"left" | "center"`, default `"left"`. Left-aligned quotes carry a side rule; centred ones do not.
+- `frame`: `boolean`. Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off.
 
 ```json
-{"type":"pull-quote","quote":"Solar set the midday wholesale price on most days in 2023. Our plans had assumed that would happen in the 2030s.","attribution":"Marit de Vries","role":"Head of system operations, Dutch grid operator"}
+{"type":"pull-quote","theme":"editorial","quote":"Solar set the midday wholesale price on most days in 2023. Our plans had assumed that would happen in the 2030s.","attribution":"Marit de Vries","role":"Head of system operations, Dutch grid operator"}
 ```
 
 ### radial-bar-chart
@@ -962,7 +984,7 @@ Props:
 - `names`: `Record<string, string>`. Display names for series keys.
 
 ```json
-{"type":"radial-bar-chart","data":[{"hour":"00:00","trips":2.1},{"hour":"01:00","trips":1.2},{"hour":"02:00","trips":0.8},{"hour":"03:00","trips":0.6},{"hour":"04:00","trips":0.7},{"hour":"05:00","trips":1.4},{"hour":"06:00","trips":3.6},{"hour":"07:00","trips":6.9}],"x":"hour","y":"trips","format":"{value}%","centerLabel":"24 hours","highlight":["08:00","17:00"],"title":"Weekday bike-share trips peak at 9.2% in the 5pm hour and 8.8% in the 8am hour","subtitle":"Share of daily bike-share trips starting in each hour, weekdays","source":"Illustrative bike-share data"}
+{"theme":"dusk","type":"radial-bar-chart","data":[{"hour":"00:00","trips":2.1},{"hour":"01:00","trips":1.2},{"hour":"02:00","trips":0.8},{"hour":"03:00","trips":0.6},{"hour":"04:00","trips":0.7},{"hour":"05:00","trips":1.4},{"hour":"06:00","trips":3.6},{"hour":"07:00","trips":6.9}],"x":"hour","y":"trips","format":"{value}%","centerLabel":"24 hours","highlight":["08:00","17:00"],"title":"Weekday bike-share trips peak at 9.2% in the 5pm hour and 8.8% in the 8am hour","subtitle":"Share of daily bike-share trips starting in each hour, weekdays","source":"Illustrative bike-share data"}
 ```
 
 (`data` cut to 8 rows.)
@@ -985,7 +1007,7 @@ Props:
 - `colorBy`: `"single" | "value"`, default `"single"`. The accent for every spoke, or a shade by value along the sequential ramp.
 
 ```json
-{"type":"radial-spokes","data":[{"use":"Space heating","share":42},{"use":"Hot water","share":17},{"use":"Cooking","share":6},{"use":"Fridge and freezer","share":8},{"use":"Laundry","share":7},{"use":"Lighting","share":5},{"use":"Screens and computers","share":9},{"use":"Everything else","share":6}],"name":"use","value":"share","format":"{value}%","icon":"house","highlight":"Space heating","title":"Space heating uses 42% of a home's energy","subtitle":"Share of household energy by end use, a typical home in a cool climate","note":"Illustrative figures"}
+{"theme":"forest","type":"radial-spokes","data":[{"use":"Space heating","share":42},{"use":"Hot water","share":17},{"use":"Cooking","share":6},{"use":"Fridge and freezer","share":8},{"use":"Laundry","share":7},{"use":"Lighting","share":5},{"use":"Screens and computers","share":9},{"use":"Everything else","share":6}],"name":"use","value":"share","format":"{value}%","icon":"house","highlight":"Space heating","title":"Space heating uses 42% of a home's energy","subtitle":"Share of household energy by end use, a typical home in a cool climate","note":"Illustrative figures"}
 ```
 
 ### ribbon-chart
@@ -1003,7 +1025,7 @@ Props:
 - `colorBy`: `"auto" | "series" | "none"`, default `"auto"`. `auto`: the largest entities take the theme's colours and any past the palette size (at most 8) are grey. `series`: every band gets its own colour, the extra ones derived from the theme's own. `none`: every band in the accent.
 
 ```json
-{"type":"ribbon-chart","data":[{"year":"2019","Potatoes":7.4,"Carrots":5.1,"Onions":4.2,"Beans":2.6,"Squash":1.2},{"year":"2020","Potatoes":6.9,"Carrots":5.6,"Onions":3.8,"Beans":3.1,"Squash":2.3},{"year":"2021","Potatoes":6.1,"Carrots":5.9,"Onions":3.1,"Beans":3.4,"Squash":3.9},{"year":"2022","Potatoes":5.2,"Carrots":6.3,"Onions":2.9,"Beans":3.2,"Squash":5},{"year":"2023","Potatoes":4.8,"Carrots":6,"Onions":2.4,"Beans":3.6,"Squash":6.1},{"year":"2024","Potatoes":4.1,"Carrots":6.2,"Onions":2.2,"Beans":3.5,"Squash":6.8}],"x":"year","y":["Potatoes","Carrots","Onions","Beans","Squash"],"format":"{value} t","title":"The squash harvest rose from 1.2 to 6.8 tonnes between 2019 and 2024","subtitle":"Harvest of five crops at one community farm, tonnes, 2019 to 2024, largest at the top each year","note":"Illustrative figures."}
+{"theme":"sunrise","type":"ribbon-chart","data":[{"year":"2019","Potatoes":7.4,"Carrots":5.1,"Onions":4.2,"Beans":2.6,"Squash":1.2},{"year":"2020","Potatoes":6.9,"Carrots":5.6,"Onions":3.8,"Beans":3.1,"Squash":2.3},{"year":"2021","Potatoes":6.1,"Carrots":5.9,"Onions":3.1,"Beans":3.4,"Squash":3.9},{"year":"2022","Potatoes":5.2,"Carrots":6.3,"Onions":2.9,"Beans":3.2,"Squash":5},{"year":"2023","Potatoes":4.8,"Carrots":6,"Onions":2.4,"Beans":3.6,"Squash":6.1},{"year":"2024","Potatoes":4.1,"Carrots":6.2,"Onions":2.2,"Beans":3.5,"Squash":6.8}],"x":"year","y":["Potatoes","Carrots","Onions","Beans","Squash"],"format":"{value} t","title":"The squash harvest rose from 1.2 to 6.8 tonnes between 2019 and 2024","subtitle":"Harvest of five crops at one community farm, tonnes, 2019 to 2024, largest at the top each year","note":"Illustrative figures."}
 ```
 
 ### sankey-chart
@@ -1020,7 +1042,7 @@ Props:
 - `names`: `Record<string, string>`. Display names for node keys.
 
 ```json
-{"type":"sankey-chart","data":[{"from":"Coal","to":"Electricity","twh":290},{"from":"Gas","to":"Electricity","twh":210},{"from":"Gas","to":"Heat","twh":330},{"from":"Wind and solar","to":"Electricity","twh":240},{"from":"Nuclear","to":"Electricity","twh":120},{"from":"Oil","to":"Transport","twh":560},{"from":"Oil","to":"Heat","twh":90},{"from":"Electricity","to":"Homes","twh":280}],"from":"from","to":"to","value":"twh","format":"{value} TWh","title":"220 TWh of the 860 TWh used to generate electricity was lost","subtitle":"Energy flows from fuel to end use, terawatt-hours per year","source":"Illustrative national energy balance"}
+{"theme":"noir","type":"sankey-chart","data":[{"from":"Coal","to":"Electricity","twh":290},{"from":"Gas","to":"Electricity","twh":210},{"from":"Gas","to":"Heat","twh":330},{"from":"Wind and solar","to":"Electricity","twh":240},{"from":"Nuclear","to":"Electricity","twh":120},{"from":"Oil","to":"Transport","twh":560},{"from":"Oil","to":"Heat","twh":90},{"from":"Electricity","to":"Homes","twh":280}],"from":"from","to":"to","value":"twh","format":"{value} TWh","title":"220 TWh of the 860 TWh used to generate electricity was lost","subtitle":"Energy flows from fuel to end use, terawatt-hours per year","source":"Illustrative national energy balance"}
 ```
 
 (`data` cut to 8 rows.)
@@ -1046,7 +1068,7 @@ Props:
 - `bandWidth`: `number`. Width of the band in px, at most 40% of the plot width. Default 60, or 46 on narrow screens.
 
 ```json
-{"type":"scale-ladder","data":[{"thing":"Fridge","c":4},{"thing":"Chocolate melts","c":34},{"thing":"Egg white sets","c":62},{"thing":"Water boils","c":100,"icon":"drop"},{"thing":"Sugar caramelises","c":170},{"thing":"Deep-frying oil","c":180,"icon":"drop"},{"thing":"Bread bakes","c":220},{"thing":"Home oven at full heat","c":250}],"name":"thing","value":"c","iconField":"icon","format":"{value}°C","scaleLabel":"Temperature","min":0,"max":500,"zones":[{"from":0,"to":100,"label":"Below boiling"},{"from":100,"to":250,"label":"Home oven range"},{"from":250,"to":500,"label":"Wood-fired oven range"}],"title":"Nine kitchen temperatures from 4°C to 450°C","subtitle":"Typical temperatures in a kitchen, degrees Celsius","note":"Approximate, rounded figures."}
+{"theme":"magenta","type":"scale-ladder","data":[{"thing":"Fridge","c":4},{"thing":"Chocolate melts","c":34},{"thing":"Egg white sets","c":62},{"thing":"Water boils","c":100,"icon":"drop"},{"thing":"Sugar caramelises","c":170},{"thing":"Deep-frying oil","c":180,"icon":"drop"},{"thing":"Bread bakes","c":220},{"thing":"Home oven at full heat","c":250}],"name":"thing","value":"c","iconField":"icon","format":"{value}°C","scaleLabel":"Temperature","min":0,"max":500,"zones":[{"from":0,"to":100,"label":"Below boiling"},{"from":100,"to":250,"label":"Home oven range"},{"from":250,"to":500,"label":"Wood-fired oven range"}],"title":"Nine kitchen temperatures from 4°C to 450°C","subtitle":"Typical temperatures in a kitchen, degrees Celsius","note":"Approximate, rounded figures."}
 ```
 
 (`data` cut to 8 rows.)
@@ -1091,7 +1113,7 @@ Props:
 - `names`: `Record<string, string>`. Display names for category keys.
 
 ```json
-{"type":"segmented-bar","data":[{"party":"Labour","seats":411},{"party":"Conservative","seats":121},{"party":"Liberal Democrat","seats":72},{"party":"SNP","seats":9},{"party":"Others","seats":37}],"name":"party","value":"seats","title":"Labour won 411 of 650 seats in the 2024 general election","subtitle":"Seats in the House of Commons by party after the 2024 general election","source":"House of Commons Library","note":"Figures are approximate, for illustration"}
+{"theme":"ledger","type":"segmented-bar","data":[{"party":"Labour","seats":411},{"party":"Conservative","seats":121},{"party":"Liberal Democrat","seats":72},{"party":"SNP","seats":9},{"party":"Others","seats":37}],"name":"party","value":"seats","title":"Labour won 411 of 650 seats in the 2024 general election","subtitle":"Seats in the House of Commons by party after the 2024 general election","source":"House of Commons Library","note":"Figures are approximate, for illustration"}
 ```
 
 ### shape-fill
@@ -1110,7 +1132,7 @@ Props:
 - `iconSize`: `number`. Silhouette height in px. Default: sized to the width, or grown to fill the box when the `height` prop or `aspect` is given, so one silhouette can be the main figure of a poster.
 
 ```json
-{"type":"shape-fill","data":[{"reservoir":"Carrow","level":63},{"reservoir":"Upper Fen","level":41},{"reservoir":"Stonebeck","level":88}],"name":"reservoir","value":"level","icon":"drop","format":"{value}%","title":"Carrow Reservoir was 63% full on 1 September 2025","subtitle":"Water stored as a share of capacity, three reservoirs, 1 September 2025","source":"Illustrative data","note":"Invented figures for fictional reservoirs"}
+{"theme":"blueprint","type":"shape-fill","data":[{"reservoir":"Carrow","level":63},{"reservoir":"Upper Fen","level":41},{"reservoir":"Stonebeck","level":88}],"name":"reservoir","value":"level","icon":"drop","format":"{value}%","title":"Carrow Reservoir was 63% full on 1 September 2025","subtitle":"Water stored as a share of capacity, three reservoirs, 1 September 2025","source":"Illustrative data","note":"Invented figures for fictional reservoirs"}
 ```
 
 ### slope-chart
@@ -1168,9 +1190,10 @@ Props:
 - `layout`: `"list" | "inline"`, default `"list"`. Labelled list, or one running paragraph.
 - `rule`: `boolean`, default `true`. Hairline above the note.
 - `children`: `ReactNode`. Extra content after the rows.
+- `frame`: `boolean`. Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off.
 
 ```json
-{"type":"source-note","sources":[{"name":"Ember, European Electricity Review 2025","url":"https://ember-energy.org"},{"name":"ENTSO-E Transparency Platform","url":"https://transparency.entsoe.eu"}],"note":"Figures are approximate, for illustration","period":"January 2015 to December 2024, monthly","method":"Generation shares are net of pumped-storage consumption. Figures for 2024 are provisional and exclude Malta and Cyprus.","credit":"Analysis and charts by the data desk"}
+{"type":"source-note","theme":"earth","sources":[{"name":"Ember, European Electricity Review 2025","url":"https://ember-energy.org"},{"name":"ENTSO-E Transparency Platform","url":"https://transparency.entsoe.eu"}],"note":"Figures are approximate, for illustration","period":"January 2015 to December 2024, monthly","method":"Generation shares are net of pumped-storage consumption. Figures for 2024 are provisional and exclude Malta and Cyprus.","credit":"Analysis and charts by the data desk"}
 ```
 
 ### sparkline
@@ -1208,24 +1231,45 @@ Props:
 - `icon`: `string | Record<string, string>`. Icon above the number in large circles: one for all, or a map from label to icon. Built-in name or `path://`.
 
 ```json
-{"type":"stat-circles","data":[{"who":"per person in the United States","kg":124},{"who":"per person in Brazil","kg":100},{"who":"per person in China","kg":63},{"who":"per person in India","kg":6}],"name":"who","value":"kg","unit":"kg","title":"Meat supply in the United States was 124 kg per person in 2021","subtitle":"Meat supply per person per year, kilograms, 2021","source":"FAO food balance sheets","note":"Rounded, approximate figures for illustration"}
+{"theme":"dusk","type":"stat-circles","data":[{"who":"per person in the United States","kg":124},{"who":"per person in Brazil","kg":100},{"who":"per person in China","kg":63},{"who":"per person in India","kg":6}],"name":"who","value":"kg","unit":"kg","title":"Meat supply in the United States was 124 kg per person in 2021","subtitle":"Meat supply per person per year, kilograms, 2021","source":"FAO food balance sheets","note":"Rounded, approximate figures for illustration"}
 ```
 
 ### stat-tile
 
-`<StatTile>`, HTML, category figure. A compact, bordered KPI tile: label, value, change against a baseline and an optional trend graphic.
+`<StatTile>`, HTML, category figure. A compact KPI tile: label, value, change against a baseline and an optional graphic. Twenty variants display the same data as a card, a trend, progress toward a target, a comparison, a breakdown, a rank or a count of icons.
 
 Props:
 
 - `label` (required): `string`. What it measures, sentence case.
-- `value` (required): `number | string`. The figure. Numbers are formatted with `format`.
-- `delta`: `number | string`. Change against a baseline. Numbers render as signed percentages (0.12 is +12%).
+- `value` (required): `number | string`. The figure. Numbers are formatted with `format`. `progress`, `ring` and `unit` need a number.
+- `delta`: `number | string`. Change against a baseline. Numbers render as signed percentages (0.12 is +12%). `comparison` computes it from `value` and `comparison` when omitted.
 - `deltaLabel`: `string`. What the delta is against, e.g. "vs last month".
-- `upIsGood`: `boolean`, default `true`. Whether an increase is an improvement. Sets the delta colour.
+- `upIsGood`: `boolean`, default `true`. Whether an increase is an improvement. Sets the delta colour; the arrow and sign always show the direction.
 - `context`: `string`. A line that states a comparison or reference for the number.
-- `trend`: `Slot | number[]`. A chart spec, a React element, or an array of numbers drawn as a sparkline.
-- `trendPosition`: `"bottom" | "right"`, default `"bottom"`. Where the trend sits; `right` falls back to `bottom` under 280px.
-- `format`: `FormatSpec`, default `"auto"`. Number format for `value`.
+- `variant`: `"plain" | "borderless" | "filled" | "tinted" | "outline-accent" | "sparkline" | "area" | "bars" | "dots" | "progress" | "ring" | "comparison" | "delta-first" | "icon" | "unit" | "breakdown" | "rank" | "split" | "compact" | "hero"`, default `"plain"`. The display. Grounds: `plain` (bordered card), `borderless`, `filled` (solid tone with contrasting ink), `tinted` (10% wash), `outline-accent` (a 2px rule on one edge). Trends, from `series`: `sparkline` (line), `area` (filled, edge to edge along the bottom, zero-based), `bars` (columns, zero-based), `dots`, `split` (figure left, line in a tinted panel right), `compact` (one line: label, small line, value, change). Goals, from `target` or `max`: `progress` (bar with the target marked), `ring`. Others: `comparison` (needs `comparison`: two labelled bars), `delta-first` (the change is the large figure), `icon` (needs `icon`: a tinted badge), `unit` (the count as repeated icons, up to 60), `breakdown` (needs `parts`: a segmented bar with a key), `rank` (needs `rank`: "3rd of 12" with a position strip), `hero` (a numeral of 40 to 96px). A variant whose data is missing renders as `plain`.
+- `surface`: `"plain" | "borderless" | "filled" | "tinted" | "outline-accent"`. The ground, independent of the display, so any variant can sit on any ground: `variant: "sparkline", surface: "filled"`. Default: the variant's own, otherwise `plain`.
+- `tone`: `"neutral" | "accent" | "positive" | "negative" | number`, default `"accent"`. Colour of the graphic and of a filled or tinted ground. A number picks from the theme's categorical palette, 0-based. `neutral` is ink.
+- `size`: `"sm" | "md" | "lg"`, default `"md"`. Type and padding scale: 22, 28 or 36px numerals with 12, 16 or 20px padding. The numeral shrinks to fit a narrow tile.
+- `align`: `"left" | "center" | "right"`, default `"left"`. Text alignment.
+- `orientation`: `"vertical" | "horizontal"`. Graphic under the figure or beside it, for `sparkline`, `bars`, `dots`, `ring` and `icon`. Default `vertical`, `horizontal` for `ring`. Falls back to vertical under about 250px (180px for `ring` and `icon`).
+- `series`: `number[]`. Past values in time order, oldest first, ending with the current value, in the units of `value`. A numeric `trend` array is used when `series` is omitted.
+- `target`: `number`. The goal for `value`, marked on `progress` and `ring`.
+- `targetLabel`: `string`, default `"Target"`. Name for the target.
+- `max`: `number`. End of the scale for `progress` and `ring`, and the total count drawn by `unit`. Default: the target, or 1 for a share.
+- `comparison`: `number | string`. The value compared with, for `comparison`: a previous period or a peer.
+- `comparisonLabel`: `string`, default `"Before"`. Names the comparison value, e.g. "September".
+- `valueLabel`: `string`, default `"Now"`. Names the current value in `comparison`, e.g. "December".
+- `parts`: `{ label: string; value: number }[]`. What the value is made of, for `breakdown`. Should sum to `value`. Past six parts the smallest fold into Other.
+- `icon`: `IconInput`. A built-in icon name or `path://...`, for `icon` and `unit`. `unit` defaults to `circle`.
+- `unitValue`: `number`, default `1`. What one icon stands for in `unit`. A caption states it when it is not 1.
+- `rank`: `number`. Position in a ranking, 1 is first, for `rank`.
+- `rankOf`: `number`. Number of entries ranked. Up to 32 are drawn as one segment each.
+- `edge`: `"left" | "top"`, default `"left"`. Which edge carries the rule on an `outline-accent` surface.
+- `trend`: `Slot | number[]`. A chart spec, a React element, or an array of numbers drawn as a sparkline. Works in every variant that does not draw `series` itself.
+- `trendPosition`: `"bottom" | "right"`, default `"bottom"`. Where the trend slot sits; `right` falls back to `bottom` in narrow tiles.
+- `format`: `FormatSpec`, default `"auto"`. Number format for `value`, `target`, `max`, `comparison` and `series`.
+- `theme`: `ThemeInput`. A theme name such as `"ledger"`, or token overrides. A named theme paints its own ground behind the tile.
+- `frame`: `boolean`. Set false to stop a named theme painting its ground.
 - `children`: `ReactNode`. Extra content at the bottom of the tile.
 
 ```json
@@ -1247,9 +1291,10 @@ Props:
 - `size`: `"md" | "lg"`, default `"md"`. `lg` for chapter openers.
 - `layout`: `"inline" | "stacked"`, default `"inline"`. Number beside or above the title. Narrow containers always stack.
 - `rule`: `boolean`, default `false`. Hairline above the marker.
+- `frame`: `boolean`. Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off.
 
 ```json
-{"type":"step-marker","step":1,"title":"Electricity sources in 2015","text":"Europe's electricity generation by source in 2015.","size":"lg"}
+{"type":"step-marker","theme":"mono","step":1,"title":"Electricity sources in 2015","text":"Europe's electricity generation by source in 2015.","size":"lg"}
 ```
 
 ### strip-plot
@@ -1285,7 +1330,7 @@ Props:
 - `precision`: `"year" | "month" | "day"`. Date precision in tooltips. Default: chosen from the span of the data.
 
 ```json
-{"type":"timeline-chart","data":[{"mission":"Mercury","programme":"Crewed programmes","from":"1958-10","to":"1963-05"},{"mission":"Gemini","programme":"Crewed programmes","from":"1961-12","to":"1966-11"},{"mission":"Apollo","programme":"Crewed programmes","from":"1961-05","to":"1972-12"},{"mission":"Skylab","programme":"Crewed programmes","from":"1973-05","to":"1974-02"},{"mission":"Shuttle development","programme":"Crewed programmes","from":"1972-01","to":"1981-04"},{"mission":"Glenn orbits Earth","programme":"Milestones","from":"1962-02-20"},{"mission":"Apollo 1 fire","programme":"Milestones","from":"1967-01-27"},{"mission":"First Moon landing","programme":"Milestones","from":"1969-07-20"}],"name":"mission","start":"from","end":"to","lane":"programme","highlight":["Apollo","First Moon landing"],"title":"The Apollo programme ran from May 1961 to December 1972","subtitle":"NASA human spaceflight programmes and milestones, 1958 to 1981","source":"NASA History Office","note":"Figures are approximate, for illustration"}
+{"theme":"editorial","type":"timeline-chart","data":[{"mission":"Mercury","programme":"Crewed programmes","from":"1958-10","to":"1963-05"},{"mission":"Gemini","programme":"Crewed programmes","from":"1961-12","to":"1966-11"},{"mission":"Apollo","programme":"Crewed programmes","from":"1961-05","to":"1972-12"},{"mission":"Skylab","programme":"Crewed programmes","from":"1973-05","to":"1974-02"},{"mission":"Shuttle development","programme":"Crewed programmes","from":"1972-01","to":"1981-04"},{"mission":"Glenn orbits Earth","programme":"Milestones","from":"1962-02-20"},{"mission":"Apollo 1 fire","programme":"Milestones","from":"1967-01-27"},{"mission":"First Moon landing","programme":"Milestones","from":"1969-07-20"}],"name":"mission","start":"from","end":"to","lane":"programme","highlight":["Apollo","First Moon landing"],"title":"The Apollo programme ran from May 1961 to December 1972","subtitle":"NASA human spaceflight programmes and milestones, 1958 to 1981","source":"NASA History Office","note":"Figures are approximate, for illustration"}
 ```
 
 (`data` cut to 8 rows.)
@@ -1304,7 +1349,7 @@ Props:
 - `names`: `Record<string, string>`. Display names for group keys.
 
 ```json
-{"type":"treemap","data":[{"sector":"Energy","source":"Electricity and heat","gt":15.8},{"sector":"Energy","source":"Transport","gt":8.4},{"sector":"Energy","source":"Manufacturing and construction","gt":6.3},{"sector":"Energy","source":"Buildings","gt":3},{"sector":"Energy","source":"Fugitive emissions","gt":3.3},{"sector":"Agriculture","source":"Livestock and manure","gt":3.5},{"sector":"Agriculture","source":"Soils and rice","gt":2.4},{"sector":"Industry","source":"Cement","gt":1.6}],"group":"sector","name":"source","value":"gt","format":"{value} Gt","title":"Energy produced 75% of global greenhouse gas emissions in 2021","subtitle":"Global emissions by sector and source, billion tonnes of CO2 equivalent, 2021","source":"Climate Watch, World Resources Institute","note":"Rounded, approximate figures for illustration"}
+{"theme":"paper","type":"treemap","data":[{"sector":"Energy","source":"Electricity and heat","gt":15.8},{"sector":"Energy","source":"Transport","gt":8.4},{"sector":"Energy","source":"Manufacturing and construction","gt":6.3},{"sector":"Energy","source":"Buildings","gt":3},{"sector":"Energy","source":"Fugitive emissions","gt":3.3},{"sector":"Agriculture","source":"Livestock and manure","gt":3.5},{"sector":"Agriculture","source":"Soils and rice","gt":2.4},{"sector":"Industry","source":"Cement","gt":1.6}],"group":"sector","name":"source","value":"gt","format":"{value} Gt","title":"Energy produced 75% of global greenhouse gas emissions in 2021","subtitle":"Global emissions by sector and source, billion tonnes of CO2 equivalent, 2021","source":"Climate Watch, World Resources Institute","note":"Rounded, approximate figures for illustration"}
 ```
 
 (`data` cut to 8 rows.)
@@ -1327,7 +1372,7 @@ Props:
 - `sort`: `"none" | "asc" | "desc"`, default `"none"`. Order of the blocks.
 
 ```json
-{"type":"unit-blocks","data":[{"age":"Under 30","finishers":4180},{"age":"30 to 39","finishers":6920},{"age":"40 to 49","finishers":5340},{"age":"50 to 59","finishers":2760},{"age":"60 and over","finishers":1150}],"name":"age","value":"finishers","unit":10,"unitLabel":"10 finishers","format":"integer","title":"6,920 of the 20,350 finishers were aged 30 to 39","subtitle":"Finishers of the Lakeshore Marathon by age group, 2025","source":"Illustrative data","note":"Invented figures for a fictional race"}
+{"theme":"noir","type":"unit-blocks","data":[{"age":"Under 30","finishers":4180},{"age":"30 to 39","finishers":6920},{"age":"40 to 49","finishers":5340},{"age":"50 to 59","finishers":2760},{"age":"60 and over","finishers":1150}],"name":"age","value":"finishers","unit":10,"unitLabel":"10 finishers","format":"integer","title":"6,920 of the 20,350 finishers were aged 30 to 39","subtitle":"Finishers of the Lakeshore Marathon by age group, 2025","source":"Illustrative data","note":"Invented figures for a fictional race"}
 ```
 
 ### waffle-chart
@@ -1346,7 +1391,7 @@ Props:
 - `names`: `Record<string, string>`. Display names for category keys.
 
 ```json
-{"type":"waffle-chart","data":[{"group":"Have never been online","share":33}],"name":"group","value":"share","total":100,"restLabel":"Use the internet","title":"33% of the world's population had never used the internet in 2023","subtitle":"Share of the global population, 2023. Each square is 1% of people","source":"ITU Facts and Figures 2023","note":"Figures are approximate, for illustration"}
+{"theme":"poster","type":"waffle-chart","data":[{"group":"Have never been online","share":33}],"name":"group","value":"share","total":100,"restLabel":"Use the internet","title":"33% of the world's population had never used the internet in 2023","subtitle":"Share of the global population, 2023. Each square is 1% of people","source":"ITU Facts and Figures 2023","note":"Figures are approximate, for illustration"}
 ```
 
 ## Molecules
@@ -1366,23 +1411,32 @@ Props:
 - `subtitle`: `string`. Scope and period.
 - `source`: `string`. Shown under the timeline as "Source: ...".
 - `note`: `string`. Method note or caveat.
-- `theme`: `ThemeInput`. Theme override, passed on to every event.
+- `theme`: `ThemeInput`. A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to every event. A named theme with its own surface paints that surface behind the component.
+- `frame`: `boolean`. Paint the theme's surface behind the component. Default: on for a named theme with its own surface.
 - `mode`: `"auto" | "system" | "light" | "dark"`, default `"auto"`. Colour mode.
 
 ```json
-{"type":"annotated-timeline","title":"The ECB raised its deposit rate from −0.5% to 4% between July 2022 and September 2023","subtitle":"Euro area deposit facility rate and annual inflation, 2021 to 2024","events":[{"date":"July 2021","title":"Inflation reaches 2.2%","text":"The ECB's target is 2%. The bank kept its deposit rate at −0.5%."},{"date":"July 2022","title":"The deposit rate rises from −0.5% to 0%","emphasis":true,"text":"This was the ECB's first rate rise in eleven years. Inflation was 8.9%.","figure":{"type":"big-number","value":"8.9%","label":"Annual inflation, July 2022","context":"The target is 2%"}},{"date":"October 2022","title":"Inflation reaches 10.6%","text":"This was the highest monthly figure of 2022. The ECB raised rates by 0.75 points at each of two consecutive meetings.","figure":{"type":"sparkline","data":[{"month":"2022-01","rate":5.1},{"month":"2022-02","rate":5.9},{"month":"2022-03","rate":7.4},{"month":"2022-04","rate":7.4},{"month":"2022-05","rate":8.1},{"month":"2022-06","rate":8.6},{"month":"2022-07","rate":8.9},{"month":"2022-08","rate":9.1},{"month":"2022-09","rate":9.9},{"month":"2022-10","rate":10.6},{"month":"2022-11","rate":10.1},{"month":"2022-12","rate":9.2}],"x":"month","y":"rate","format":"{value}%","extremes":true,"showValue":true,"style":{"maxWidth":260}}},{"date":"September 2023","title":"The deposit rate reaches 4%","text":"This was the tenth rise in a row. Inflation was 4.3%."},{"date":"June 2024","title":"The deposit rate is cut to 3.75%","emphasis":true,"text":"The cut was 0.25 points. Inflation was 2.5%."}],"source":"European Central Bank; Eurostat","note":"Figures are approximate, for illustration"}
+{"type":"annotated-timeline","theme":"paper","title":"The ECB raised its deposit rate from −0.5% to 4% between July 2022 and September 2023","subtitle":"Euro area deposit facility rate and annual inflation, 2021 to 2024","events":[{"date":"July 2021","title":"Inflation reaches 2.2%","text":"The ECB's target is 2%. The bank kept its deposit rate at −0.5%."},{"date":"July 2022","title":"The deposit rate rises from −0.5% to 0%","emphasis":true,"text":"This was the ECB's first rate rise in eleven years. Inflation was 8.9%.","figure":{"type":"big-number","value":"8.9%","label":"Annual inflation, July 2022","context":"The target is 2%"}},{"date":"October 2022","title":"Inflation reaches 10.6%","text":"This was the highest monthly figure of 2022. The ECB raised rates by 0.75 points at each of two consecutive meetings.","figure":{"type":"sparkline","data":[{"month":"2022-01","rate":5.1},{"month":"2022-02","rate":5.9},{"month":"2022-03","rate":7.4},{"month":"2022-04","rate":7.4},{"month":"2022-05","rate":8.1},{"month":"2022-06","rate":8.6},{"month":"2022-07","rate":8.9},{"month":"2022-08","rate":9.1},{"month":"2022-09","rate":9.9},{"month":"2022-10","rate":10.6},{"month":"2022-11","rate":10.1},{"month":"2022-12","rate":9.2}],"x":"month","y":"rate","format":"{value}%","extremes":true,"showValue":true,"style":{"maxWidth":260}}},{"date":"September 2023","title":"The deposit rate reaches 4%","text":"This was the tenth rise in a row. Inflation was 4.3%."},{"date":"June 2024","title":"The deposit rate is cut to 3.75%","emphasis":true,"text":"The cut was 0.25 points. Inflation was 2.5%."}],"source":"European Central Bank; Eurostat","note":"Figures are approximate, for illustration"}
 ```
 
 ### before-after
 
-`<BeforeAfter>`, HTML, category layout. Two states of one measure side by side, as figures or small charts, with the change between them stated in the middle.
+`<BeforeAfter>`, HTML, category layout. Two states of one measure side by side, as figures, stat tiles of any variant or small charts, with the change between them stated in the middle.
 
-Composes: `big-number`, `delta`, `bar-chart`, `sparkline`.
+Composes: `big-number`, `stat-tile`, `delta`, `bar-chart`, `sparkline`.
 
 Props:
 
-- `before` (required): `{ heading?, value?, label?, context?, format?, chart? }`. The first state: a figure, a chart slot, or both.
-- `after` (required): `{ heading?, value?, label?, context?, format?, chart? }`. The second state.
+- `before` (required): `{ heading?, value?, label?, context?, format?, chart?, variant?, surface?, tone?, series?, target?, targetLabel?, max?, parts?, icon?, unitValue?, rank?, rankOf?, orientation? }`. The first state: a figure, a chart slot, or both. The fields after `chart` apply when the states are tiles and are passed to `stat-tile`.
+- `after` (required): `{ heading?, value?, label?, context?, format?, chart?, variant?, surface?, tone?, series?, target?, targetLabel?, max?, parts?, icon?, unitValue?, rank?, rankOf?, orientation? }`. The second state.
+- `variant`: `"plain" | "tiles" | StatTileVariant`, default `"plain"`. `plain`: open `big-number` figures under a ruled heading. `tiles`: bordered `stat-tile` cards. Any `stat-tile` variant (`progress`, `ring`, `sparkline`, `area`, `bars`, `unit`, `breakdown`, `rank`, `icon`, `filled`, `tinted`, `hero`...) draws both states as that tile; a state's own `variant` overrides it.
+- `surface`: `"plain" | "borderless" | "filled" | "tinted" | "outline-accent"`. Tiles only: the ground of both tiles.
+- `emphasis`: `"after" | "none"`, default `"after"`. Tiles only: `after` draws the first state in neutral ink and the second in the accent; `none` draws both in the accent. A state's own `tone` overrides it.
+- `layout`: `"auto" | "side" | "stacked"`, default `"auto"`. Side by side from 520px, or force one arrangement.
+- `deltaVariant`: `"text" | "pill" | "solid"`, default `"pill"`. How the change between the states is set: passed to `delta`.
+- `arrow`: `boolean`, default `true`. The arrow between the states.
+- `density`: `"dense" | "default" | "roomy"`, default `"default"`. Spacing and tile scale (`sm`, `md`, `lg`).
+- `frame`: `boolean`. Set false to stop a named theme painting its ground.
 - `delta`: `number | string`. The change stated between the two. Default: the relative change when both values are numbers.
 - `deltaLabel`: `string`. Words under the change, e.g. "in five years".
 - `deltaFormat`: `FormatSpec`, default `signed percent`. Number format for a numeric `delta`.
@@ -1392,7 +1446,7 @@ Props:
 - `subtitle`: `string`. Measure and population.
 - `source`: `string`. Shown underneath as "Source: ...".
 - `note`: `string`. Method note or caveat.
-- `theme`: `ThemeInput`. Theme override, passed on to both states.
+- `theme`: `ThemeInput`. A theme name such as `"editorial"`, or token overrides, passed on to both states. A named theme paints its own ground.
 - `mode`: `"auto" | "system" | "light" | "dark"`, default `"auto"`. Colour mode.
 
 ```json
@@ -1403,7 +1457,7 @@ Props:
 
 `<ChartCallout>`, HTML, category layout. A chart with a callout beside it that states the main fact. In narrow containers the callout goes underneath.
 
-Composes: `callout`, `line-chart`, `bar-chart`.
+Composes: `callout`, `line-chart`, `bar-chart`, `dumbbell-chart`, `slope-chart`.
 
 Props:
 
@@ -1416,11 +1470,12 @@ Props:
 - `variant`: `"plain" | "soft" | "outline"`, default `"plain"`. `plain` separates the callout with a hairline; the others box it.
 - `align`: `"start" | "center" | "end"`, default `"center"`. Vertical position of the callout beside the chart.
 - `children`: `ReactNode`. JSX alternative to `chart`.
-- `theme`: `ThemeInput`. Theme override, passed on to the chart and callout.
+- `theme`: `ThemeInput`. A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the chart and callout. A named theme with its own surface paints that surface behind the component.
+- `frame`: `boolean`. Paint the theme's surface behind the component. Default: on for a named theme with its own surface.
 - `mode`: `"auto" | "system" | "light" | "dark"`, default `"auto"`. Colour mode.
 
 ```json
-{"type":"chart-callout","chart":{"type":"line-chart","data":[{"month":"2024-01-01","rate":4.2},{"month":"2024-02-01","rate":4.3},{"month":"2024-03-01","rate":4.1},{"month":"2024-04-01","rate":3.6},{"month":"2024-05-01","rate":3.1},{"month":"2024-06-01","rate":2.9},{"month":"2024-07-01","rate":2.6},{"month":"2024-08-01","rate":2.4},{"month":"2024-09-01","rate":2.3},{"month":"2024-10-01","rate":2.2},{"month":"2024-11-01","rate":2.1},{"month":"2024-12-01","rate":2.1}],"x":"month","y":"rate","format":"{value}%","zero":true,"height":280,"title":"Monthly churn fell from 4.2% to 2.1% in 2024","subtitle":"Monthly customer churn, 2024","source":"Internal analytics","note":"Illustrative data","annotations":[{"type":"line","axis":"x","value":"2024-03-01","label":"New onboarding"}]},"label":"Takeaway","lead":"Churn fell 2 points after March","body":"Churn was 4.1% in March, when the new onboarding launched. It fell every month from April to November. It was 2.1% in December."}
+{"type":"chart-callout","theme":"ledger","chart":{"type":"line-chart","data":[{"2023":4.4,"2024":4.2,"month":"Jan"},{"2023":4.3,"2024":4.3,"month":"Feb"},{"2023":4.4,"2024":4.1,"month":"Mar"},{"2023":4.2,"2024":3.6,"month":"Apr"},{"2023":4.3,"2024":3.1,"month":"May"},{"2023":4.1,"2024":2.9,"month":"Jun"},{"2023":4.2,"2024":2.6,"month":"Jul"},{"2023":4.3,"2024":2.4,"month":"Aug"},{"2023":4.1,"2024":2.3,"month":"Sep"},{"2023":4.2,"2024":2.2,"month":"Oct"},{"2023":4.3,"2024":2.1,"month":"Nov"},{"2023":4.2,"2024":2.1,"month":"Dec"}],"x":"month","y":["2024","2023"],"highlight":"2024","contextLabels":true,"format":"{value}%","zero":true,"height":280,"title":"Monthly churn fell from 4.2% to 2.1% in 2024","subtitle":"Monthly customer churn, 2024 and 2023","source":"Internal analytics","note":"Illustrative data","annotations":[{"type":"line","axis":"x","value":"Mar","label":"New onboarding"}]},"label":"Takeaway","lead":"Churn fell 2 points after March","body":"Churn was 4.1% in March 2024, when the new onboarding launched. It was 2.1% in December 2024. It was 4.2% in December 2023."}
 ```
 
 ### chart-tabs
@@ -1443,11 +1498,12 @@ Props:
 - `source`: `string`. Shown under the chart as "Source: ...".
 - `note`: `string`. Method note or caveat.
 - `children`: `ReactNode`. Extra content under the chart.
-- `theme`: `ThemeInput`. Theme override, passed on to the chart.
+- `theme`: `ThemeInput`. A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the chart. A named theme with its own surface paints that surface behind the component.
+- `frame`: `boolean`. Paint the theme's surface behind the component. Default: on for a named theme with its own surface.
 - `mode`: `"auto" | "system" | "light" | "dark"`, default `"auto"`. Colour mode.
 
 ```json
-{"type":"chart-tabs","title":"CO2 emissions of six large emitters, 2023","tabsPosition":"below","chart":{"type":"bar-chart","data":[{"country":"China","total":11.9,"perCapita":8.4,"change":0.38},{"country":"United States","total":4.9,"perCapita":14.3,"change":-0.13},{"country":"India","total":3.1,"perCapita":2.1,"change":0.74},{"country":"Russia","total":1.8,"perCapita":12.5,"change":0.1},{"country":"Japan","total":1,"perCapita":8,"change":-0.19},{"country":"Germany","total":0.6,"perCapita":7.1,"change":-0.28}],"x":"country","y":"total","sort":"desc","orientation":"horizontal","height":280,"highlight":"China","format":"{value} Gt","subtitle":"CO2 emissions from fossil fuels, billion tonnes, 2023"},"views":[{"label":"Total","id":"total"},{"label":"Per capita","id":"per-capita","props":{"y":"perCapita","highlight":"United States","format":"{value} t","subtitle":"CO2 emissions per person, tonnes, 2023"}},{"label":"Change since 2010","id":"change","props":{"y":"change","highlight":"India","format":"percent","subtitle":"Change in CO2 emissions, 2010 to 2023"}}],"source":"Global Carbon Budget 2024","note":"Rounded, approximate figures for illustration"}
+{"type":"chart-tabs","theme":"mono","title":"CO2 emissions of six large emitters, 2023","tabsPosition":"below","chart":{"type":"bar-chart","data":[{"country":"China","total":11.9,"perCapita":8.4,"change":0.38},{"country":"United States","total":4.9,"perCapita":14.3,"change":-0.13},{"country":"India","total":3.1,"perCapita":2.1,"change":0.74},{"country":"Russia","total":1.8,"perCapita":12.5,"change":0.1},{"country":"Japan","total":1,"perCapita":8,"change":-0.19},{"country":"Germany","total":0.6,"perCapita":7.1,"change":-0.28}],"x":"country","y":"total","sort":"desc","orientation":"horizontal","height":280,"highlight":"China","format":"{value} Gt","subtitle":"CO2 emissions from fossil fuels, billion tonnes, 2023"},"views":[{"label":"Total","id":"total"},{"label":"Per capita","id":"per-capita","props":{"y":"perCapita","highlight":"United States","format":"{value} t","subtitle":"CO2 emissions per person, tonnes, 2023"}},{"label":"Change since 2010","id":"change","props":{"y":"change","highlight":"India","format":"percent","subtitle":"Change in CO2 emissions, 2010 to 2023"}}],"source":"Global Carbon Budget 2024","note":"Rounded, approximate figures for illustration"}
 ```
 
 ### comparison-table
@@ -1471,7 +1527,8 @@ Props:
 - `subtitle`: `string`. Units and period.
 - `source`: `string`. Shown under the table as "Source: ...".
 - `note`: `string`. Method note or caveat.
-- `theme`: `ThemeInput`. Theme override, passed on to the sparklines and deltas.
+- `theme`: `ThemeInput`. A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the sparklines and deltas. A named theme with its own surface paints that surface behind the component.
+- `frame`: `boolean`. Paint the theme's surface behind the component. Default: on for a named theme with its own surface.
 - `mode`: `"auto" | "system" | "light" | "dark"`, default `"auto"`. Colour mode.
 
 ```json
@@ -1491,7 +1548,8 @@ Props:
 - `resetLabel`: `string`, default `"Reset"`. Text of the clear-all control.
 - `count`: `boolean`, default `false`. Show "1,204 of 5,000 rows" at the end of the line.
 - `unit`: `string`, default `"rows"`. Noun for the count, e.g. "orders".
-- `theme`: `ThemeInput`. Theme override.
+- `theme`: `ThemeInput`. A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object. A named theme with its own surface paints that surface behind the component.
+- `frame`: `boolean`. Paint the theme's surface behind the component. Default: on for a named theme with its own surface.
 - `mode`: `"auto" | "system" | "light" | "dark"`, default `"auto"`. Colour mode.
 
 ```json
@@ -1502,7 +1560,7 @@ Props:
 
 `<HeroFigure>`, HTML, category story. The opening exhibit of a piece: kicker, headline and deck above one large chart, with a source line underneath.
 
-Composes: `headline`, `source-note`, `line-chart`, `big-number`.
+Composes: `headline`, `source-note`, `line-chart`, `big-number`, `dumbbell-chart`, `waffle-chart`.
 
 Props:
 
@@ -1518,25 +1576,34 @@ Props:
 - `align`: `"left" | "center"`, default `"left"`. Headline alignment.
 - `level`: `1 | 2 | 3 | 4 | 5 | 6`, default `1`. Heading level of the title.
 - `children`: `ReactNode`. JSX alternative to `chart`.
-- `theme`: `ThemeInput`. Theme override, passed on to the headline, chart and source note.
+- `theme`: `ThemeInput`. A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the headline, chart and source note. A named theme with its own surface paints that surface behind the component.
+- `frame`: `boolean`. Paint the theme's surface behind the component. Default: on for a named theme with its own surface.
 - `mode`: `"auto" | "system" | "light" | "dark"`, default `"auto"`. Colour mode.
 
 ```json
-{"type":"hero-figure","kicker":"Energy transition","title":"Solar supplied 11.1% of EU electricity in 2024","deck":"Coal's share fell from 24.6% in 2015 to 9.8% in 2024.","byline":"By Ana Ruiz","date":"2025-01-23","chart":{"type":"line-chart","data":[{"year":"2015","Solar":2.9,"Coal":24.6},{"year":"2016","Solar":3,"Coal":22},{"year":"2017","Solar":3.4,"Coal":20.6},{"year":"2018","Solar":3.7,"Coal":19.2},{"year":"2019","Solar":4.2,"Coal":15},{"year":"2020","Solar":5,"Coal":13},{"year":"2021","Solar":5.4,"Coal":14.7},{"year":"2022","Solar":7,"Coal":15.8},{"year":"2023","Solar":9.1,"Coal":12.3},{"year":"2024","Solar":11.1,"Coal":9.8}],"x":"year","y":["Solar","Coal"],"format":"{value}%","zero":true,"height":380,"subtitle":"Solar and coal share of EU electricity generation, 2015 to 2024","annotations":[{"type":"point","x":"2024","y":11.1,"label":"Solar 11.1%","position":"left"}]},"source":{"name":"Ember, European Electricity Review 2025","url":"https://ember-energy.org"},"note":"Figures are approximate, for illustration","period":"2015 to 2024"}
+{"type":"hero-figure","theme":"editorial","kicker":"Energy transition","title":"Solar supplied 11.1% of EU electricity in 2024","deck":"Coal's share fell from 24.6% in 2015 to 9.8% in 2024.","byline":"By Ana Ruiz","date":"2025-01-23","chart":{"type":"line-chart","data":[{"year":"2015","Solar":2.9,"Coal":24.6,"Wind":9.2,"Gas":15.6},{"year":"2016","Solar":3,"Coal":22,"Wind":9.5,"Gas":18.4},{"year":"2017","Solar":3.4,"Coal":20.6,"Wind":11,"Gas":19.7},{"year":"2018","Solar":3.7,"Coal":19.2,"Wind":11.4,"Gas":18.3},{"year":"2019","Solar":4.2,"Coal":15,"Wind":13,"Gas":21},{"year":"2020","Solar":5,"Coal":13,"Wind":14.4,"Gas":20.1},{"year":"2021","Solar":5.4,"Coal":14.7,"Wind":13.3,"Gas":18.8},{"year":"2022","Solar":7,"Coal":15.8,"Wind":15.1,"Gas":19.6},{"year":"2023","Solar":9.1,"Coal":12.3,"Wind":17.5,"Gas":16.8},{"year":"2024","Solar":11.1,"Coal":9.8,"Wind":17.4,"Gas":15.7}],"x":"year","y":["Solar","Coal","Wind","Gas"],"highlight":["Solar","Coal"],"contextLabels":true,"format":"{value}%","zero":true,"height":380,"subtitle":"Share of EU electricity generation by source, 2015 to 2024"},"source":{"name":"Ember, European Electricity Review 2025","url":"https://ember-energy.org"},"note":"Figures are approximate, for illustration","period":"2015 to 2024"}
 ```
 
 ### kpi-grid
 
-`<KpiGrid>`, HTML, category layout. A responsive grid of trend cards drawn from one dataset: each metric shows its latest value, its change and a sparkline.
+`<KpiGrid>`, HTML, category layout. A responsive grid of trend cards drawn from one dataset: each metric shows its latest value, its change and a graphic, in one `stat-tile` variant or a deliberate mix of them.
 
-Composes: `trend-card`.
+Composes: `trend-card`, `stat-tile`.
 
 Props:
 
 - `data`: `DataInput`. One dataset in time order: a row per period, a column per metric. Omit inside `<InsightData>`.
 - `transform`: `Transform | Transform[]`. Applied once, before the cards read the rows.
 - `x`: `string`. Period field shared by every metric.
-- `metrics` (required): `{ y, label, format?, upIsGood?, compare?, change?, deltaFormat?, deltaLabel?, context?, value?, delta?, kind? }[]`. One card per metric; each takes the props of `trend-card`.
+- `metrics` (required): `{ y, label, format?, upIsGood?, compare?, change?, deltaFormat?, deltaLabel?, context?, value?, delta?, kind?, variant?, surface?, tone?, size?, align?, orientation?, icon?, target?, targetLabel?, max?, parts?, rank?, rankOf?, unitValue?, showTrend? }[]`. One card per metric; each takes the props of `trend-card`, including its own `variant`, `surface`, `tone` and `size`.
+- `variant`: `StatTileVariant`. The display of every card: any `stat-tile` variant (`sparkline`, `area`, `bars`, `dots`, `split`, `compact`, `progress`, `ring`, `comparison`, `delta-first`, `icon`, `breakdown`, `rank`, `hero`, `filled`, `tinted`, `borderless`, `outline-accent`). Omit for the original cards with an interactive sparkline.
+- `variants`: `StatTileVariant[]`. A display per card, by position, so one grid mixes them on purpose: `["split", "area", "bars", "progress"]`. A metric's own `variant` wins; cards past the end use `variant`.
+- `surface`: `"plain" | "borderless" | "filled" | "tinted" | "outline-accent"`. The ground of every card.
+- `tone`: `"neutral" | "accent" | "positive" | "negative" | number | "series"`. Tone of every card. `series` gives each card the next categorical colour.
+- `layout`: `"cards" | "dividers"`, default `"cards"`. Separate cards, or open tiles with hairlines between them.
+- `featured`: `boolean`, default `false`. The first card spans two columns and is set one size larger.
+- `density`: `"dense" | "default" | "roomy"`, default `"default"`. Spacing and type scale: cards are `sm`, `md` or `lg`, with 8, 12 or 16px between them.
+- `frame`: `boolean`. Set false to stop a named theme painting its ground.
 - `compare`: `"first" | "previous" | number`, default `"first"`. Baseline for every card's change; a metric can override it.
 - `change`: `"percent" | "absolute"`, default `"percent"`. Relative change, or the difference between the two values; a metric can override it. An absolute change of a percentage metric is shown in percentage points ("−2.1 pts").
 - `deltaFormat`: `FormatSpec`. Format for absolute changes, e.g. `"{value} pp"` or `"signed"`; a metric can override it. Default: points for percentage formats, otherwise the metric's own `format`.
@@ -1545,7 +1612,7 @@ Props:
 - `subtitle`: `string`. Population and period.
 - `source`: `string`. Shown under the grid as "Source: ...".
 - `note`: `string`. Method note or caveat.
-- `theme`: `ThemeInput`. Theme override, passed on to every card.
+- `theme`: `ThemeInput`. A theme name such as `"ledger"`, or token overrides, passed on to every card. A named theme paints its own ground.
 - `mode`: `"auto" | "system" | "light" | "dark"`, default `"auto"`. Colour mode.
 
 ```json
@@ -1582,11 +1649,12 @@ Props:
 - `before`: `Slot | Slot[]`. Content rendered inside the shared store above the grid: figures, text, a custom component that calls `useInsightData()`, or a spec that omits `data` (e.g. `stat-row`, `data-table`). It sees the same filtered rows as the charts.
 - `after`: `Slot | Slot[]`. Content rendered inside the shared store below the grid, e.g. a detail table of the filtered rows.
 - `gap`: `number`, default `24`. Space in px between the `before` slot, the grid and the `after` slot.
-- `theme`: `ThemeInput`. Theme override, passed on to every chart.
+- `theme`: `ThemeInput`. A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to every chart. A named theme with its own surface paints that surface behind the component.
+- `frame`: `boolean`. Paint the theme's surface behind the component. Default: on for a named theme with its own surface.
 - `mode`: `"auto" | "system" | "light" | "dark"`, default `"auto"`. Colour mode.
 
 ```json
-{"type":"linked-charts","title":"Asia generated 46% of the renewable electricity in these four regions from 2020 to 2024","subtitle":"Electricity generation from hydro, wind and solar, TWh, four regions, 2020 to 2024","data":[{"region":"Asia","year":"2020","source":"Hydro","twh":1810},{"region":"Asia","year":"2020","source":"Wind","twh":480},{"region":"Asia","year":"2020","source":"Solar","twh":420},{"region":"Asia","year":"2021","source":"Hydro","twh":1790},{"region":"Asia","year":"2021","source":"Wind","twh":590},{"region":"Asia","year":"2021","source":"Solar","twh":560},{"region":"Asia","year":"2022","source":"Hydro","twh":1830},{"region":"Asia","year":"2022","source":"Wind","twh":700}],"labels":{"region":"Region","source":"Source","year":"Year"},"hint":"Click a bar to filter the other charts","count":true,"charts":[{"type":"bar-chart","id":"by-region","x":"region","y":"twh","select":true,"format":"compact","height":200,"title":"By region","transform":{"type":"aggregate","groupBy":"region","measures":{"twh":{"op":"sum","field":"twh"}}}},{"type":"bar-chart","id":"by-source","x":"source","y":"twh","select":true,"format":"compact","height":200,"title":"By source","transform":{"type":"aggregate","groupBy":"source","measures":{"twh":{"op":"sum","field":"twh"}}}},{"type":"bar-chart","id":"by-year","x":"year","y":"twh","series":"source","stack":true,"orientation":"vertical","sort":"none","select":"year","format":"compact","height":240,"title":"By year","transform":{"type":"aggregate","groupBy":["year","source"],"measures":{"twh":{"op":"sum","field":"twh"}}}}],"source":"Ember, Global Electricity Review 2025","note":"Regional figures rounded, illustrative"}
+{"type":"linked-charts","theme":"science","title":"Asia generated 46% of the renewable electricity in these four regions from 2020 to 2024","subtitle":"Electricity generation from hydro, wind and solar, TWh, four regions, 2020 to 2024","data":[{"region":"Asia","year":"2020","source":"Hydro","twh":1810},{"region":"Asia","year":"2020","source":"Wind","twh":480},{"region":"Asia","year":"2020","source":"Solar","twh":420},{"region":"Asia","year":"2021","source":"Hydro","twh":1790},{"region":"Asia","year":"2021","source":"Wind","twh":590},{"region":"Asia","year":"2021","source":"Solar","twh":560},{"region":"Asia","year":"2022","source":"Hydro","twh":1830},{"region":"Asia","year":"2022","source":"Wind","twh":700}],"labels":{"region":"Region","source":"Source","year":"Year"},"hint":"Click a bar or a slice to filter the other charts","count":true,"charts":[{"type":"bar-chart","id":"by-region","x":"region","y":"twh","select":true,"format":"compact","height":200,"title":"By region","transform":{"type":"aggregate","groupBy":"region","measures":{"twh":{"op":"sum","field":"twh"}}}},{"type":"donut-chart","id":"by-source","name":"source","value":"twh","select":true,"format":"compact","centerLabel":"TWh","height":200,"title":"By source","transform":{"type":"aggregate","groupBy":"source","measures":{"twh":{"op":"sum","field":"twh"}}}},{"type":"bar-chart","id":"by-year","x":"year","y":"twh","series":"source","stack":true,"orientation":"vertical","sort":"none","select":"year","format":"compact","height":240,"title":"By year","transform":{"type":"aggregate","groupBy":["year","source"],"measures":{"twh":{"op":"sum","field":"twh"}}}}],"source":"Ember, Global Electricity Review 2025","note":"Regional figures rounded, illustrative"}
 ```
 
 (`data` cut to 8 rows.)
@@ -1595,7 +1663,7 @@ Props:
 
 `<MetricBreakdown>`, HTML, category layout. A headline number with its composition underneath: one segmented bar and a key giving each part's value and share.
 
-Composes: `big-number`, `segmented-bar`.
+Composes: `big-number`, `segmented-bar`, `progress-meter`, `stat-tile`.
 
 Props:
 
@@ -1616,7 +1684,19 @@ Props:
 - `format`: `FormatSpec`, default `"auto"`. Number format for the headline and the parts.
 - `source`: `string`. Shown underneath as "Source: ...".
 - `note`: `string`. Method note or caveat.
-- `theme`: `ThemeInput`. Theme override, passed on to the number and the bar.
+- `variant`: `"plain" | "filled" | "tinted" | "with-icon" | "with-ring" | "with-trend"`, default `"plain"`. How the headline number is dressed: passed to `big-number`.
+- `icon`: `IconInput`. Icon for the headline when `variant` is `with-icon`.
+- `tone`: `"neutral" | "accent" | "positive" | "negative" | number`. Tone of a filled or tinted headline.
+- `display`: `"key" | "inline" | "meters" | "tiles"`, default `"key"`. How the parts are shown: a list with values and shares, one wrapped line, a `progress-meter` per part scaled to the total, or a `stat-tile` per part.
+- `tileVariant`: `StatTileVariant`, default `"progress"`. The tile display when `display` is `tiles`: `progress`, `ring`, `filled`, `tinted`, `plain`... Each tile gets the part's value, the total as `max` and the part's categorical colour.
+- `tileSurface`: `"plain" | "borderless" | "filled" | "tinted" | "outline-accent"`. The ground of each tile when `display` is `tiles`.
+- `layout`: `"stacked" | "side"`, default `"stacked"`. `side` puts the headline left and the parts right from 600px.
+- `columns`: `number`. Columns for the key, meters or tiles. Default: by width.
+- `bar`: `boolean`, default `true`. Set false to leave out the segmented bar, e.g. with `meters` or `tiles`.
+- `dividers`: `boolean`, default `true`. Hairlines between key rows.
+- `density`: `"dense" | "default" | "roomy"`, default `"default"`. Spacing between the bar, the key rows and the tiles.
+- `frame`: `boolean`. Set false to stop a named theme painting its ground.
+- `theme`: `ThemeInput`. A theme name such as `"earth"`, or token overrides, passed on to the number and the bar. A named theme paints its own ground.
 - `mode`: `"auto" | "system" | "light" | "dark"`, default `"auto"`. Colour mode.
 
 ```json
@@ -1678,18 +1758,19 @@ Props:
 - `detail`: `string`. A second, quieter sentence under the statement.
 - `source`: `string`. Shown under the statement as "Source: ...".
 - `note`: `string`. Method note or caveat.
-- `theme`: `ThemeInput`. Theme override, passed on to the visual.
+- `theme`: `ThemeInput`. A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the visual. A named theme with its own surface paints that surface behind the component.
+- `frame`: `boolean`. Paint the theme's surface behind the component. Default: on for a named theme with its own surface.
 - `mode`: `"auto" | "system" | "light" | "dark"`, default `"auto"`. Colour mode.
 
 ```json
-{"type":"proportion-statement","value":33,"total":100,"text":"people in the world have never used the internet.","detail":"That was about 2.6 billion people in 2023.","source":"ITU Facts and Figures 2023","note":"Figures are approximate, for illustration"}
+{"type":"proportion-statement","theme":"sunrise","value":33,"total":100,"text":"people in the world have never used the internet.","detail":"That was about 2.6 billion people in 2023.","source":"ITU Facts and Figures 2023","note":"Figures are approximate, for illustration"}
 ```
 
 ### quote-figure
 
 `<QuoteFigure>`, HTML, category story. A pull-quote paired with the statistic or small chart that backs it up, side by side and stacking in narrow containers.
 
-Composes: `pull-quote`, `big-number`, `sparkline`.
+Composes: `pull-quote`, `big-number`, `sparkline`, `progress-meter`.
 
 Props:
 
@@ -1702,11 +1783,12 @@ Props:
 - `side`: `"left" | "right"`, default `"right"`. Side the evidence sits on; under 640px it goes underneath.
 - `source`: `string`. Shown underneath as "Source: ...".
 - `note`: `string`. Method note or caveat.
-- `theme`: `ThemeInput`. Theme override, passed on to the quote and the figure.
+- `theme`: `ThemeInput`. A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the quote and the figure. A named theme with its own surface paints that surface behind the component.
+- `frame`: `boolean`. Paint the theme's surface behind the component. Default: on for a named theme with its own surface.
 - `mode`: `"auto" | "system" | "light" | "dark"`, default `"auto"`. Colour mode.
 
 ```json
-{"type":"quote-figure","quote":"Solar met more than half of demand on 41% of summer afternoons in 2024. We do not have enough storage for the midday surplus yet.","attribution":"Marta Keller","role":"Grid planner, quoted in the 2024 system adequacy review","stat":{"value":0.41,"format":"percent","label":"Summer afternoons when solar met over half of demand","context":"It was 6% of afternoons in 2019"},"figure":{"type":"sparkline","data":[{"year":"2019","share":6},{"year":"2020","share":9},{"year":"2021","share":14},{"year":"2022","share":22},{"year":"2023","share":31},{"year":"2024","share":41}],"x":"year","y":"share","format":"{value}%","area":true},"source":"National grid operator, hourly generation data","note":"Illustrative data"}
+{"type":"quote-figure","theme":"magenta","quote":"Solar met more than half of demand on 41% of summer afternoons in 2024. We do not have enough storage for the midday surplus yet.","attribution":"Marta Keller","role":"Grid planner, quoted in the 2024 system adequacy review","stat":{"value":0.41,"format":"percent","label":"Summer afternoons when solar met over half of demand","context":"It was 6% of afternoons in 2019"},"figure":{"type":"sparkline","data":[{"year":"2019","share":6},{"year":"2020","share":9},{"year":"2021","share":14},{"year":"2022","share":22},{"year":"2023","share":31},{"year":"2024","share":41}],"x":"year","y":"share","format":"{value}%","area":true},"source":"National grid operator, hourly generation data","note":"Illustrative data"}
 ```
 
 ### ranked-list
@@ -1735,7 +1817,8 @@ Props:
 - `subtitle`: `string`. Measure, population and period.
 - `source`: `string`. Shown under the list as "Source: ...".
 - `note`: `string`. Method note or caveat.
-- `theme`: `ThemeInput`. Theme override.
+- `theme`: `ThemeInput`. A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object. A named theme with its own surface paints that surface behind the component.
+- `frame`: `boolean`. Paint the theme's surface behind the component. Default: on for a named theme with its own surface.
 - `mode`: `"auto" | "system" | "light" | "dark"`, default `"auto"`. Colour mode.
 
 ```json
@@ -1746,7 +1829,7 @@ Props:
 
 `<ScrollyChart>`, HTML, category story. A scroll-driven story from JSON: one base chart spec and a list of steps, each with narration and a patch of chart props applied while that step is active.
 
-Composes: `prose`, `bar-chart`.
+Composes: `prose`, `bar-chart`, `line-chart`.
 
 Props:
 
@@ -1762,18 +1845,19 @@ Props:
 - `subtitle`: `string`. Line under the heading.
 - `source`: `string`. Shown after the last step as "Source: ...". Prefer the chart's own `source`, which stays visible.
 - `note`: `string`. Method note or caveat.
-- `theme`: `ThemeInput`. Theme override, passed on to the chart and the step cards.
+- `theme`: `ThemeInput`. A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the chart and the step cards. A named theme with its own surface paints that surface behind the component.
+- `frame`: `boolean`. Paint the theme's surface behind the component. Default: on for a named theme with its own surface.
 - `mode`: `"auto" | "system" | "light" | "dark"`, default `"auto"`. Colour mode.
 
 ```json
-{"type":"scrolly-chart","chart":{"type":"bar-chart","data":[{"source":"Coal","y2015":24.6,"y2024":9.8},{"source":"Gas","y2015":15.8,"y2024":15.7},{"source":"Nuclear","y2015":27.1,"y2024":23.7},{"source":"Wind","y2015":9.2,"y2024":17.4},{"source":"Hydro","y2015":12,"y2024":13.2},{"source":"Solar","y2015":2.9,"y2024":11.1}],"x":"source","y":"y2015","sort":"none","orientation":"horizontal","format":"{value}%","height":300,"title":"EU electricity generation by source, 2015","subtitle":"Share of EU electricity generation, %","source":"Ember, European Electricity Review 2025","note":"Rounded, approximate figures for illustration"},"steps":[{"id":"baseline","label":"2015","content":"In 2015 **nuclear and coal** together supplied 51.7% of the EU's electricity."},{"id":"coal","content":"Coal supplied 24.6% in 2015. Only nuclear supplied more.","highlight":"Coal"},{"id":"today","label":"2024","content":"In 2024 coal supplied 9.8%.","highlight":"Coal","y":"y2024","title":"EU electricity generation by source, 2024"},{"id":"solar","content":"**Solar** supplied 11.1% in 2024. It supplied 2.9% in 2015.","highlight":"Solar","y":"y2024","title":"Solar supplied 11.1% of EU electricity in 2024"}],"stepHeight":"70vh","stickyTop":16}
+{"type":"scrolly-chart","theme":"earth","chart":{"type":"bar-chart","data":[{"source":"Coal","y2015":24.6,"y2024":9.8},{"source":"Gas","y2015":15.8,"y2024":15.7},{"source":"Nuclear","y2015":27.1,"y2024":23.7},{"source":"Wind","y2015":9.2,"y2024":17.4},{"source":"Hydro","y2015":12,"y2024":13.2},{"source":"Solar","y2015":2.9,"y2024":11.1}],"x":"source","y":"y2015","sort":"none","orientation":"horizontal","format":"{value}%","height":300,"title":"EU electricity generation by source, 2015","subtitle":"Share of EU electricity generation, %","source":"Ember, European Electricity Review 2025","note":"Rounded, approximate figures for illustration"},"steps":[{"id":"baseline","label":"2015","content":"In 2015 **nuclear and coal** together supplied 51.7% of the EU's electricity."},{"id":"coal","content":"Coal supplied 24.6% in 2015. Only nuclear supplied more.","highlight":"Coal"},{"id":"today","label":"2024","content":"In 2024 coal supplied 9.8%.","highlight":"Coal","y":"y2024","title":"EU electricity generation by source, 2024"},{"id":"solar","content":"**Solar** supplied 11.1% in 2024. It supplied 2.9% in 2015.","highlight":"Solar","y":"y2024","title":"Solar supplied 11.1% of EU electricity in 2024"}],"stepHeight":"70vh","stickyTop":16}
 ```
 
 ### section
 
 `<Section>`, HTML, category story. A story section: a numbered step marker or a headline, introductory prose, then one or more exhibits in a responsive one- to three-column grid.
 
-Composes: `step-marker`, `headline`, `prose`, `line-chart`, `bar-chart`, `stat-tile`.
+Composes: `step-marker`, `headline`, `prose`, `line-chart`, `bar-chart`, `area-chart`, `stat-tile`.
 
 Props:
 
@@ -1791,18 +1875,19 @@ Props:
 - `id`: `string`. Anchor id for deep links.
 - `spacing`: `"compact" | "comfortable"`, default `"comfortable"`. Vertical rhythm between heading, intro and body.
 - `children`: `ReactNode`. JSX alternative to `body`; each child becomes a grid item.
-- `theme`: `ThemeInput`. Theme override, passed on to everything inside.
+- `theme`: `ThemeInput`. A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the component.
+- `frame`: `boolean`. Paint the theme's surface behind the component. Default: on for a named theme with its own surface.
 - `mode`: `"auto" | "system" | "light" | "dark"`, default `"auto"`. Colour mode.
 
 ```json
-{"type":"section","step":2,"total":4,"title":"First-quarter churn was 2.0% for customers who joined after March","intro":"Monthly churn fell from 4.2% in January to 2.1% in December 2024. The new onboarding launched in March. Customers who joined after March had first-quarter churn of **2.0%**. Customers who joined before March had 4.1%.","columns":2,"body":[{"type":"line-chart","data":[{"month":"2024-01-01","rate":4.2},{"month":"2024-02-01","rate":4.3},{"month":"2024-03-01","rate":4.1},{"month":"2024-04-01","rate":3.6},{"month":"2024-05-01","rate":3.1},{"month":"2024-06-01","rate":2.9},{"month":"2024-07-01","rate":2.6},{"month":"2024-08-01","rate":2.4},{"month":"2024-09-01","rate":2.3},{"month":"2024-10-01","rate":2.2},{"month":"2024-11-01","rate":2.1},{"month":"2024-12-01","rate":2.1}],"x":"month","y":"rate","format":"{value}%","zero":true,"height":240,"title":"Monthly churn fell from 4.2% to 2.1% in 2024","subtitle":"Monthly customer churn, 2024","annotations":[{"type":"line","axis":"x","value":"2024-03-01","label":"New onboarding"}]},{"type":"bar-chart","data":[{"cohort":"Before March","churn":4.1},{"cohort":"After March","churn":2}],"x":"cohort","y":"churn","format":"{value}%","height":240,"highlight":"After March","title":"First-quarter churn was 4.1% for customers who joined before March","subtitle":"First-quarter churn by sign-up cohort, 2024"}],"outro":"The next section covers the first 90 days after sign-up."}
+{"type":"section","theme":"ocean","step":2,"total":4,"title":"First-quarter churn was 2.0% for customers who joined after March","intro":"Monthly churn fell from 4.2% in January to 2.1% in December 2024. The new onboarding launched in March. Customers who joined after March had first-quarter churn of **2.0%**. Customers who joined before March had 4.1%.","columns":2,"body":[{"type":"line-chart","data":[{"month":"2024-01-01","rate":4.2},{"month":"2024-02-01","rate":4.3},{"month":"2024-03-01","rate":4.1},{"month":"2024-04-01","rate":3.6},{"month":"2024-05-01","rate":3.1},{"month":"2024-06-01","rate":2.9},{"month":"2024-07-01","rate":2.6},{"month":"2024-08-01","rate":2.4},{"month":"2024-09-01","rate":2.3},{"month":"2024-10-01","rate":2.2},{"month":"2024-11-01","rate":2.1},{"month":"2024-12-01","rate":2.1}],"x":"month","y":"rate","format":"{value}%","zero":true,"height":240,"title":"Monthly churn fell from 4.2% to 2.1% in 2024","subtitle":"Monthly customer churn, 2024","annotations":[{"type":"line","axis":"x","value":"2024-03-01","label":"New onboarding"}]},{"type":"bar-chart","data":[{"cohort":"Before March","churn":4.1},{"cohort":"After March","churn":2}],"x":"cohort","y":"churn","format":"{value}%","height":240,"highlight":"After March","title":"First-quarter churn was 4.1% for customers who joined before March","subtitle":"First-quarter churn by sign-up cohort, 2024"}],"outro":"The next section covers the first 90 days after sign-up."}
 ```
 
 ### small-multiple-grid
 
 `<SmallMultipleGrid>`, HTML, category layout. Repeats any chart spec once per value of a facet field, each panel with its own filtered rows and a title, in a grid that follows the container width.
 
-Composes: `legend-key`, `bar-chart`, `waffle-chart`.
+Composes: `legend-key`, `bar-chart`, `waffle-chart`, `dumbbell-chart`.
 
 Props:
 
@@ -1823,31 +1908,40 @@ Props:
 - `subtitle`: `string`. Measure, population, period, and whether the panels share a scale.
 - `source`: `string`. Shown under the grid as "Source: ...".
 - `note`: `string`. Method note or caveat.
-- `theme`: `ThemeInput`. Theme override, passed on to every panel.
+- `theme`: `ThemeInput`. A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to every panel. A named theme with its own surface paints that surface behind the component.
+- `frame`: `boolean`. Paint the theme's surface behind the component. Default: on for a named theme with its own surface.
 - `mode`: `"auto" | "system" | "light" | "dark"`, default `"auto"`. Colour mode.
 
 ```json
-{"type":"small-multiple-grid","title":"65% of Dutch workers aged 25 to 34 worked from home usually or sometimes in 2023","subtitle":"Share of employed people working from home usually or sometimes, by age group, six EU countries, 2023. All panels run from 0 to 70%","data":[{"country":"Netherlands","age":"16-24","Usually":18,"Sometimes":22},{"country":"Netherlands","age":"25-34","Usually":44,"Sometimes":21},{"country":"Netherlands","age":"35-49","Usually":41,"Sometimes":19},{"country":"Netherlands","age":"50-64","Usually":33,"Sometimes":17},{"country":"Netherlands","age":"65+","Usually":14,"Sometimes":9},{"country":"Sweden","age":"16-24","Usually":14,"Sometimes":20},{"country":"Sweden","age":"25-34","Usually":39,"Sometimes":22},{"country":"Sweden","age":"35-49","Usually":37,"Sometimes":20}],"facet":"country","columns":3,"panelHeight":170,"legend":["Usually","Sometimes"],"chart":{"type":"bar-chart","x":"age","y":["Usually","Sometimes"],"stack":true,"sort":"none","orientation":"horizontal","format":"{value}%","labels":false,"legend":false,"option":{"xAxis":{"max":70}}},"source":"Eurostat, Labour Force Survey","note":"Rounded, illustrative"}
+{"type":"small-multiple-grid","theme":"poster","title":"65% of Dutch workers aged 25 to 34 worked from home usually or sometimes in 2023","subtitle":"Share of employed people working from home usually or sometimes, by age group, six EU countries, 2023. All panels run from 0 to 70%","data":[{"country":"Netherlands","age":"16-24","Usually":18,"Sometimes":22},{"country":"Netherlands","age":"25-34","Usually":44,"Sometimes":21},{"country":"Netherlands","age":"35-49","Usually":41,"Sometimes":19},{"country":"Netherlands","age":"50-64","Usually":33,"Sometimes":17},{"country":"Netherlands","age":"65+","Usually":14,"Sometimes":9},{"country":"Sweden","age":"16-24","Usually":14,"Sometimes":20},{"country":"Sweden","age":"25-34","Usually":39,"Sometimes":22},{"country":"Sweden","age":"35-49","Usually":37,"Sometimes":20}],"facet":"country","columns":3,"panelHeight":170,"legend":["Usually","Sometimes"],"chart":{"type":"bar-chart","x":"age","y":["Usually","Sometimes"],"stack":true,"sort":"none","orientation":"horizontal","format":"{value}%","labels":false,"legend":false,"option":{"xAxis":{"max":70}}},"source":"Eurostat, Labour Force Survey","note":"Rounded, illustrative"}
 ```
 
 (`data` cut to 8 rows.)
 
 ### stat-row
 
-`<StatRow>`, HTML, category layout. Two to five key figures in one row separated by hairlines, collapsing to two columns and then one as the container narrows.
+`<StatRow>`, HTML, category layout. Two to five key figures in one row, as open numbers separated by hairlines or as stat tiles of any variant, collapsing to two columns and then one as the container narrows.
 
 Composes: `big-number`, `stat-tile`.
 
 Props:
 
-- `items` (required): `{ value, label, context?, delta?, deltaLabel?, upIsGood?, format?, trend? }[]`. Two to five figures, most important first. Each takes the props of `big-number` (or `stat-tile` when `variant` is `tiles`).
-- `variant`: `"plain" | "tiles"`, default `"plain"`. Open figures divided by hairlines, or bordered tiles that can carry a `trend`.
+- `items` (required): `{ value, label, context?, delta?, deltaLabel?, upIsGood?, format?, trend?, variant?, surface?, tone?, size?, align?, series?, target?, targetLabel?, max?, comparison?, comparisonLabel?, valueLabel?, parts?, icon?, unitValue?, rank?, rankOf?, orientation?, edge? }[]`. Two to five figures, most important first. In `plain` each takes the props of `big-number`; otherwise each takes the props of `stat-tile`, and an item's own `variant`, `surface`, `tone` and `size` override the row's.
+- `variant`: `"plain" | "tiles" | StatTileVariant`, default `"plain"`. `plain`: open `big-number` figures divided by hairlines. `tiles`: bordered `stat-tile` cards. Any `stat-tile` variant (`sparkline`, `area`, `bars`, `dots`, `progress`, `ring`, `comparison`, `delta-first`, `icon`, `unit`, `breakdown`, `rank`, `split`, `compact`, `hero`, `filled`, `tinted`, `borderless`, `outline-accent`) draws every item as that tile. Setting `variant` on any item also switches the row to tiles.
+- `surface`: `"plain" | "borderless" | "filled" | "tinted" | "outline-accent"`. Tiles only: the ground of every tile.
+- `tone`: `"neutral" | "accent" | "positive" | "negative" | number | "series"`. Tone of every tile. `series` gives each tile the next categorical colour, for figures that name different entities.
+- `layout`: `"cards" | "dividers"`, default `"cards"`. Tiles only: separate cards, or open tiles with hairlines between them.
+- `columns`: `number`. Preferred number of columns. Default: one row when every figure has room.
+- `featured`: `boolean`, default `false`. The first figure spans two columns and is set one size larger.
+- `density`: `"dense" | "default" | "roomy"`, default `"default"`. Spacing and type scale: tiles are `sm`, `md` or `lg`.
+- `align`: `"left" | "center"`, default `"left"`. Text alignment of every figure.
+- `frame`: `boolean`. Set false to stop a named theme painting its ground.
 - `format`: `FormatSpec`, default `"auto"`. Number format for every figure that does not set its own.
 - `title`: `string`. The main fact with its number, or a plain label.
 - `subtitle`: `string`. Population and period the figures share.
 - `source`: `string`. Shown under the row as "Source: ...".
 - `note`: `string`. Method note or caveat.
-- `theme`: `ThemeInput`. Theme override, passed on to every figure.
+- `theme`: `ThemeInput`. A theme name such as `"ledger"`, or token overrides, passed on to every figure. A named theme paints its own ground.
 - `mode`: `"auto" | "system" | "light" | "dark"`, default `"auto"`. Colour mode, passed on to every figure.
 
 ```json
@@ -1856,7 +1950,7 @@ Props:
 
 ### trend-card
 
-`<TrendCard>`, HTML, category layout. A KPI card computed from a series: the latest value, its change against a baseline in the same data, and a sparkline of the series.
+`<TrendCard>`, HTML, category layout. A KPI card computed from a series: the latest value, its change against a baseline in the same data, and a trend graphic, in any `stat-tile` variant.
 
 Composes: `stat-tile`, `sparkline`.
 
@@ -1879,7 +1973,24 @@ Props:
 - `kind`: `"line" | "bar"`, default `"line"`. Sparkline form: a line for a trend, bars for discrete counts.
 - `area`: `boolean`, default `false`. Light fill under the line; the scale then includes zero.
 - `trendPosition`: `"bottom" | "right"`, default `"bottom"`. Where the sparkline sits; `right` falls back to `bottom` in narrow cards.
-- `theme`: `ThemeInput`. Theme override, passed on to the tile and sparkline.
+- `variant`: `StatTileVariant`. The tile display: any `stat-tile` variant (`sparkline`, `area`, `bars`, `dots`, `split`, `compact`, `progress`, `ring`, `comparison`, `delta-first`, `icon`, `breakdown`, `rank`, `unit`, `hero`, `filled`, `tinted`, `borderless`, `outline-accent`, `plain`). The series is passed as the tile's `series`; `comparison` takes the baseline value and both period names from the rows. Omit for the original card with an interactive `sparkline` atom (tooltip on hover).
+- `showTrend`: `boolean`, default `true`. With a `variant` that does not draw the series itself (`filled`, `icon`, `hero`, `delta-first`...), a line is drawn at the bottom; set false to leave it off.
+- `surface`: `"plain" | "borderless" | "filled" | "tinted" | "outline-accent"`. The tile's ground, with any `variant`.
+- `tone`: `"neutral" | "accent" | "positive" | "negative" | number`. Colour of the tile's graphic or ground; a number picks a categorical colour, 0-based.
+- `size`: `"sm" | "md" | "lg"`, default `"md"`. Tile scale.
+- `align`: `"left" | "center" | "right"`. Text alignment.
+- `orientation`: `"vertical" | "horizontal"`. Graphic under or beside the figure, as in `stat-tile`.
+- `icon`: `IconInput`. Icon for the `icon` and `unit` variants.
+- `target`: `number`. Goal for the `progress` and `ring` variants.
+- `targetLabel`: `string`, default `"Target"`. Name for the target.
+- `max`: `number`. End of the scale for `progress` and `ring`; total count for `unit`.
+- `parts`: `{ label: string; value: number }[]`. Composition of the latest value, for `breakdown`.
+- `rank`: `number`. Position for the `rank` variant.
+- `rankOf`: `number`. Entries ranked.
+- `unitValue`: `number`. What one icon stands for in `unit`.
+- `edge`: `"left" | "top"`. Edge of the rule on an `outline-accent` surface.
+- `frame`: `boolean`. Set false to stop a named theme painting its ground.
+- `theme`: `ThemeInput`. A theme name such as `"ledger"`, or token overrides, passed on to the tile. A named theme paints its own ground.
 - `mode`: `"auto" | "system" | "light" | "dark"`, default `"auto"`. Colour mode.
 
 ```json
@@ -1931,7 +2042,7 @@ Props:
 
 `<ComparisonBrief>`, HTML, category layout. A compared with B on one page. It has a headline that states the result, the headline figures mirrored either side of their labels, one hero exhibit that shows both sides, paired exhibits on a shared scale, a verdict callout and a source note.
 
-Composes: `headline`, `prose`, `callout`, `source-note`, `line-chart`, `bar-chart`, `segmented-bar`.
+Composes: `headline`, `prose`, `callout`, `source-note`, `line-chart`, `bar-chart`, `segmented-bar`, `waffle-chart`.
 
 Props:
 
@@ -1955,11 +2066,12 @@ Props:
 - `credit`: `string`. Who made the piece.
 - `level`: `1 | 2 | 3 | 4 | 5 | 6`, default `1`. Heading level of the title; section headings follow one level down.
 - `maxWidth`: `number | string`. Widest the piece may get. It is centred in wider containers.
-- `theme`: `ThemeInput`. Theme override, passed on to everything inside.
+- `theme`: `ThemeInput`. A built-in theme name (`"editorial"`, `"ledger"`, `"noir"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece.
+- `frame`: `boolean`. Paint the theme's surface behind the piece, with page padding. Default: on when `theme` is a named theme with its own surface. Set false when the host already paints it.
 - `mode`: `"auto" | "system" | "light" | "dark"`, default `"auto"`. Colour mode, passed on to everything inside.
 
 ```json
-{"type":"comparison-brief","kicker":"Home heating","title":"With the £7,500 grant, a heat pump repays its extra £500 cost in 4 years","deck":"After the grant a heat pump costs £3,500 to buy and fit. A gas boiler costs £3,000. The heat pump costs £855 a year to run. The boiler costs £980.","a":{"name":"Heat pump","detail":"Air source, 7 kW"},"b":{"name":"Gas boiler","detail":"Condensing combi, 30 kW"},"figures":[{"label":"Cost to buy and fit, after grant","a":3500,"b":3000,"format":{"style":"currency","currency":"GBP","maximumFractionDigits":0},"better":"lower"},{"label":"Running cost per year","a":855,"b":980,"format":"currency:GBP","better":"lower"},{"label":"CO2 per year, tonnes","a":0.6,"b":2.3,"format":"decimal:1","better":"lower"},{"label":"Heat out per unit of energy in","a":3.2,"b":0.9,"format":"decimal:1","better":"higher"},{"label":"Expected life, years","a":20,"b":15,"better":"higher"}],"hero":{"type":"line-chart","data":[{"year":"0","saving":-500},{"year":"1","saving":-375},{"year":"2","saving":-250},{"year":"3","saving":-125},{"year":"4","saving":0},{"year":"5","saving":125},{"year":"6","saving":250},{"year":"7","saving":375},{"year":"8","saving":500},{"year":"9","saving":625},{"year":"10","saving":750},{"year":"11","saving":875},{"year":"12","saving":1000},{"year":"13","saving":1125},{"year":"14","saving":1250},{"year":"15","saving":1375}],"x":"year","y":"saving","format":{"style":"currency","currency":"GBP","maximumFractionDigits":0,"signDisplay":"exceptZero"},"area":true,"title":"After 15 years the heat pump has cost £1,375 less than the boiler","subtitle":"Cumulative saving of a heat pump over a gas boiler in pounds, by years since installation. Includes purchase after the £7,500 grant, energy and servicing","annotations":[{"type":"line","axis":"y","value":0,"label":"Same cost as the boiler","dashed":false,"emphasis":true},{"type":"point","x":"4","y":0,"label":"Break-even","position":"top"}]},"heroText":"Without the grant the heat pump costs £11,000 to buy and fit. That is £8,000 more than the boiler. A saving of £125 a year would take 64 years to repay it.","pairs":[{"title":"The January energy bill is £142 for the heat pump and £158 for the boiler","text":"Estimated monthly energy cost for heating and hot water. Both charts use the same scale. The heat pump's bill is lower in all 12 months.","a":{"type":"bar-chart","data":[{"month":"Jan","cost":142},{"month":"Feb","cost":128},{"month":"Mar","cost":102},{"month":"Apr","cost":68},{"month":"May","cost":40},{"month":"Jun","cost":28},{"month":"Jul","cost":25},{"month":"Aug","cost":26},{"month":"Sep","cost":38},{"month":"Oct","cost":66},{"month":"Nov","cost":98},{"month":"Dec","cost":134}],"x":"month","y":"cost","orientation":"vertical","sort":"none","labels":false,"format":"currency:GBP","height":200,"option":{"yAxis":{"max":160}}},"b":{"type":"bar-chart","data":[{"month":"Jan","cost":158},{"month":"Feb","cost":141},{"month":"Mar","cost":115},{"month":"Apr","cost":78},{"month":"May","cost":49},{"month":"Jun","cost":37},{"month":"Jul","cost":34},{"month":"Aug","cost":35},{"month":"Sep","cost":46},{"month":"Oct","cost":74},{"month":"Nov","cost":107},{"month":"Dec","cost":146}],"x":"month","y":"cost","orientation":"vertical","sort":"none","labels":false,"format":"currency:GBP","height":200,"highlight":"none","option":{"yAxis":{"max":160}}}},{"title":"Cost over 15 years by part","text":"Energy is £12,075 of the heat pump's cost. It is £13,500 of the boiler's.","a":{"type":"segmented-bar","data":[{"part":"Purchase and fitting","gbp":3500},{"part":"Energy","gbp":12075},{"part":"Servicing","gbp":1500}],"name":"part","value":"gbp","format":"currency:GBP"},"b":{"type":"segmented-bar","data":[{"part":"Purchase and fitting","gbp":3000},{"part":"Energy","gbp":13500},{"part":"Servicing","gbp":1200}],"name":"part","value":"gbp","format":"currency:GBP"}}],"verdict":{"lead":"Choose the heat pump if you get the grant and will stay at least 5 years","body":"Without the grant the boiler is cheaper. The figures assume electricity and gas prices stay at their Q4 2024 levels."},"sources":["Energy regulator price cap, Q4 2024","Installer quotes collected by the author"],"method":"A house using 11,500 kWh of heat a year. Heat pump seasonal efficiency is 3.2. Boiler efficiency is 90%. Prices held flat in real terms.","note":"Illustrative data"}
+{"type":"comparison-brief","theme":"earth","kicker":"Home heating","title":"With the £7,500 grant, a heat pump repays its extra £500 cost in 4 years","deck":"After the grant a heat pump costs £3,500 to buy and fit. A gas boiler costs £3,000. The heat pump costs £855 a year to run. The boiler costs £980.","a":{"name":"Heat pump","detail":"Air source, 7 kW"},"b":{"name":"Gas boiler","detail":"Condensing combi, 30 kW"},"figures":[{"label":"Cost to buy and fit, after grant","a":3500,"b":3000,"format":{"style":"currency","currency":"GBP","maximumFractionDigits":0},"better":"lower"},{"label":"Running cost per year","a":855,"b":980,"format":"currency:GBP","better":"lower"},{"label":"CO2 per year, tonnes","a":0.6,"b":2.3,"format":"decimal:1","better":"lower"},{"label":"Heat out per unit of energy in","a":3.2,"b":0.9,"format":"decimal:1","better":"higher"},{"label":"Expected life, years","a":20,"b":15,"better":"higher"}],"hero":{"type":"line-chart","data":[{"year":"0","saving":-500},{"year":"1","saving":-375},{"year":"2","saving":-250},{"year":"3","saving":-125},{"year":"4","saving":0},{"year":"5","saving":125},{"year":"6","saving":250},{"year":"7","saving":375},{"year":"8","saving":500},{"year":"9","saving":625},{"year":"10","saving":750},{"year":"11","saving":875},{"year":"12","saving":1000},{"year":"13","saving":1125},{"year":"14","saving":1250},{"year":"15","saving":1375}],"x":"year","y":"saving","format":{"style":"currency","currency":"GBP","maximumFractionDigits":0,"signDisplay":"exceptZero"},"area":true,"title":"After 15 years the heat pump has cost £1,375 less than the boiler","subtitle":"Cumulative saving of a heat pump over a gas boiler in pounds, by years since installation. Includes purchase after the £7,500 grant, energy and servicing","annotations":[{"type":"line","axis":"y","value":0,"label":"Same cost as the boiler","dashed":false,"emphasis":true},{"type":"point","x":"4","y":0,"label":"Break-even","position":"top"}]},"heroText":"Without the grant the heat pump costs £11,000 to buy and fit. That is £8,000 more than the boiler. A saving of £125 a year would take 64 years to repay it.","pairs":[{"title":"The January energy bill is £120 for the heat pump and £139 for the boiler","text":"Estimated monthly energy cost for heating and hot water. Both charts use the same scale. The heat pump's bill is lower in all 12 months.","a":{"type":"bar-chart","data":[{"month":"Jan","cost":120},{"month":"Feb","cost":108},{"month":"Mar","cost":86},{"month":"Apr","cost":57},{"month":"May","cost":34},{"month":"Jun","cost":24},{"month":"Jul","cost":21},{"month":"Aug","cost":22},{"month":"Sep","cost":32},{"month":"Oct","cost":56},{"month":"Nov","cost":83},{"month":"Dec","cost":112}],"x":"month","y":"cost","orientation":"vertical","sort":"none","labels":false,"format":"currency:GBP","height":200,"option":{"yAxis":{"max":140}}},"b":{"type":"bar-chart","data":[{"month":"Jan","cost":139},{"month":"Feb","cost":124},{"month":"Mar","cost":101},{"month":"Apr","cost":69},{"month":"May","cost":43},{"month":"Jun","cost":33},{"month":"Jul","cost":30},{"month":"Aug","cost":31},{"month":"Sep","cost":41},{"month":"Oct","cost":65},{"month":"Nov","cost":94},{"month":"Dec","cost":130}],"x":"month","y":"cost","orientation":"vertical","sort":"none","labels":false,"format":"currency:GBP","height":200,"highlight":"none","option":{"yAxis":{"max":140}}}},{"title":"Cost over 15 years by part","text":"Energy is £11,325 of the heat pump's £16,325. It is £13,500 of the boiler's £17,700.","a":{"type":"segmented-bar","data":[{"part":"Purchase and fitting","gbp":3500},{"part":"Energy","gbp":11325},{"part":"Servicing","gbp":1500}],"name":"part","value":"gbp","format":"currency:GBP"},"b":{"type":"segmented-bar","data":[{"part":"Purchase and fitting","gbp":3000},{"part":"Energy","gbp":13500},{"part":"Servicing","gbp":1200}],"name":"part","value":"gbp","format":"currency:GBP"}}],"verdict":{"lead":"Choose the heat pump if you get the grant and will stay at least 5 years","body":"Without the grant the boiler is cheaper. The figures assume electricity and gas prices stay at their Q4 2024 levels."},"sources":["Energy regulator price cap, Q4 2024","Installer quotes collected by the author"],"method":"A house using 11,500 kWh of heat a year. Heat pump seasonal efficiency is 3.2. Boiler efficiency is 90%. Prices held flat in real terms.","note":"Illustrative data"}
 ```
 
 ### count-poster
@@ -2001,7 +2113,7 @@ Props:
 
 `<DataExplorer>`, HTML, category story. A set of linked charts over one shared dataset that filter each other. It has a headline, a sentence of instructions with filter chips, a row of figures that recompute from the filtered rows, two to four charts and an optional detail table. It opens on selections the author chooses.
 
-Composes: `headline`, `callout`, `filter-chips`, `stat-row`, `linked-charts`, `data-table`, `source-note`, `bar-chart`.
+Composes: `headline`, `callout`, `filter-chips`, `stat-row`, `linked-charts`, `data-table`, `source-note`, `bar-chart`, `donut-chart`, `lollipop-chart`, `segmented-bar`.
 
 Props:
 
@@ -2017,6 +2129,7 @@ Props:
 - `charts` (required): `Slot[]`. Two to four chart specs. Give each a stable `id`, `select: true` (or a field name) and its own aggregating `transform`; leave out `data`.
 - `initialSelections`: `Record<string, { field, values?, range? }>`. Selections the piece opens with, keyed by chart `id`. A button restores them after the reader changes the filter.
 - `figures`: `{ label, field?, op?, where?: { field, value }, per?, format?, context? }[]`. Figures recomputed from the filtered rows: `op` over `field` (default sum; count without a field), optionally restricted by `where` and divided by the sum of `per` for a rate or share. While a filter is active each shows the all-rows value as context.
+- `figuresVariant`: `StatRowProps["variant"]`, default `"plain"`. How the figures are displayed: any `variant` of `stat-row`, e.g. `tiles`, `tinted` or `outline-accent`. Extra fields on a figure (`tone`, `surface`, `icon`...) are passed to its `stat-row` item.
 - `table`: `{ transform?, columns?, caption?, sort?, highlight?, ... }`. A detail table of the filtered rows: the props of `data-table` without `rows`, plus a `transform` applied first.
 - `labels`: `Record<string, string>`. Display names for fields in the filter chips.
 - `unit`: `string`, default `"rows"`. Noun for what the figures total, used in figure context ("3,650 across all trips").
@@ -2031,11 +2144,12 @@ Props:
 - `credit`: `string`. Who made the piece.
 - `level`: `1 | 2 | 3 | 4 | 5 | 6`, default `1`. Heading level of the title; section headings follow one level down.
 - `maxWidth`: `number | string`. Widest the piece may get. It is centred in wider containers.
-- `theme`: `ThemeInput`. Theme override, passed on to everything inside.
+- `theme`: `ThemeInput`. A built-in theme name (`"editorial"`, `"ledger"`, `"noir"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece.
+- `frame`: `boolean`. Paint the theme's surface behind the piece, with page padding. Default: on when `theme` is a named theme with its own surface. Set false when the host already paints it.
 - `mode`: `"auto" | "system" | "light" | "dark"`, default `"auto"`. Colour mode, passed on to everything inside.
 
 ```json
-{"type":"data-explorer","kicker":"City bike share · June","title":"Casual riders' trips averaged 24.6 minutes in June, against 12.0 for members","deck":"70% of casual trips were at weekends. 40% started in Riverside. The view below is filtered to casual riders.","instructions":"Click a bar to filter the other charts and the figures. Click it again to clear.","finding":{"lead":"Casual riders made 1.43 million of the 3.65 million trips in June","body":"520,000 of them were at weekend middays. Members made 34% of their trips at weekends."},"data":[{"rider":"Member","day":"Weekday","daypart":"Morning","district":"Centre","trips":198,"minutes":2376},{"rider":"Member","day":"Weekday","daypart":"Morning","district":"Riverside","trips":114,"minutes":1368},{"rider":"Member","day":"Weekday","daypart":"Morning","district":"University","trips":125,"minutes":1500},{"rider":"Member","day":"Weekday","daypart":"Morning","district":"Docklands","trips":83,"minutes":996},{"rider":"Member","day":"Weekday","daypart":"Midday","district":"Centre","trips":99,"minutes":1188},{"rider":"Member","day":"Weekday","daypart":"Midday","district":"Riverside","trips":57,"minutes":684},{"rider":"Member","day":"Weekday","daypart":"Midday","district":"University","trips":62,"minutes":744},{"rider":"Member","day":"Weekday","daypart":"Midday","district":"Docklands","trips":42,"minutes":504}],"unit":"trips","labels":{"rider":"Rider","daypart":"Time of day","district":"District","day":"Day"},"initialSelections":{"by-rider":{"field":"rider","values":["Casual"]}},"figures":[{"label":"Trips, thousands","field":"trips","format":"integer"},{"label":"Average trip length, minutes","field":"minutes","per":"trips","format":"decimal:1"},{"label":"Share taken at weekends","field":"trips","where":{"field":"day","value":"Weekend"},"per":"trips","format":"percent"},{"label":"Share starting in Riverside","field":"trips","where":{"field":"district","value":"Riverside"},"per":"trips","format":"percent"}],"charts":[{"type":"bar-chart","id":"by-rider","x":"rider","y":"trips","select":true,"sort":"none","orientation":"horizontal","format":"integer","title":"Rider","subtitle":"Trips, thousands","transform":{"type":"aggregate","groupBy":"rider","measures":{"trips":{"op":"sum","field":"trips"}}}},{"type":"bar-chart","id":"by-day","x":"day","y":"trips","select":true,"sort":"none","orientation":"horizontal","format":"integer","title":"Day","subtitle":"Trips, thousands","transform":{"type":"aggregate","groupBy":"day","measures":{"trips":{"op":"sum","field":"trips"}}}},{"type":"bar-chart","id":"by-daypart","x":"daypart","y":"trips","select":true,"sort":"none","orientation":"vertical","format":"integer","height":220,"title":"Time of day","subtitle":"Trips, thousands","transform":{"type":"aggregate","groupBy":"daypart","measures":{"trips":{"op":"sum","field":"trips"}}}},{"type":"bar-chart","id":"by-district","x":"district","y":"trips","select":true,"sort":"desc","orientation":"horizontal","format":"integer","title":"Start district","subtitle":"Trips, thousands","transform":{"type":"aggregate","groupBy":"district","measures":{"trips":{"op":"sum","field":"trips"}}}}],"table":{"caption":"Selected trips by start district and time of day","transform":[{"type":"aggregate","groupBy":["district","daypart"],"measures":{"trips":{"op":"sum","field":"trips"},"minutes":{"op":"sum","field":"minutes"}}},{"type":"derive","as":"length","op":"divide","fields":["minutes","trips"]},{"type":"sort","by":"trips","order":"desc"},{"type":"limit","n":6}],"columns":[{"key":"district","label":"District"},{"key":"daypart","label":"Time of day"},{"key":"trips","label":"Trips, thousands","format":"integer","bar":true,"width":"34%"},{"key":"length","label":"Average minutes","format":"decimal:1"}]},"sources":"City bike-share operator, trip records","period":"June 2024","method":"A trip is a hire of more than one minute. Morning is 6 to 10am, evening 4 to 8pm.","note":"Illustrative data"}
+{"type":"data-explorer","theme":"science","kicker":"City bike share · June","title":"Casual riders' trips averaged 24.6 minutes in June, against 12.0 for members","deck":"70% of casual trips were at weekends. 40% started in Riverside. The view below is filtered to casual riders.","instructions":"Click a bar to filter the other charts and the figures. Click it again to clear.","finding":{"lead":"Casual riders made 1.43 million of the 3.65 million trips in June","body":"520,000 of them were at weekend middays. Members made 34% of their trips at weekends."},"data":[{"rider":"Member","day":"Weekday","daypart":"Morning","district":"Centre","trips":198,"minutes":2376},{"rider":"Member","day":"Weekday","daypart":"Morning","district":"Riverside","trips":114,"minutes":1368},{"rider":"Member","day":"Weekday","daypart":"Morning","district":"University","trips":125,"minutes":1500},{"rider":"Member","day":"Weekday","daypart":"Morning","district":"Docklands","trips":83,"minutes":996},{"rider":"Member","day":"Weekday","daypart":"Midday","district":"Centre","trips":99,"minutes":1188},{"rider":"Member","day":"Weekday","daypart":"Midday","district":"Riverside","trips":57,"minutes":684},{"rider":"Member","day":"Weekday","daypart":"Midday","district":"University","trips":62,"minutes":744},{"rider":"Member","day":"Weekday","daypart":"Midday","district":"Docklands","trips":42,"minutes":504}],"unit":"trips","figuresVariant":"outline-accent","labels":{"rider":"Rider","daypart":"Time of day","district":"District","day":"Day"},"initialSelections":{"by-rider":{"field":"rider","values":["Casual"]}},"figures":[{"label":"Trips, thousands","field":"trips","format":"integer"},{"label":"Average trip length, minutes","field":"minutes","per":"trips","format":"decimal:1"},{"label":"Share taken at weekends","field":"trips","where":{"field":"day","value":"Weekend"},"per":"trips","format":"percent"},{"label":"Share starting in Riverside","field":"trips","where":{"field":"district","value":"Riverside"},"per":"trips","format":"percent"}],"charts":[{"type":"donut-chart","id":"by-rider","name":"rider","value":"trips","select":true,"format":"integer","height":220,"title":"Rider","subtitle":"Trips, thousands","transform":{"type":"aggregate","groupBy":"rider","measures":{"trips":{"op":"sum","field":"trips"}}}},{"type":"bar-chart","id":"by-day","x":"day","y":"trips","select":true,"sort":"none","orientation":"horizontal","format":"integer","title":"Day","subtitle":"Trips, thousands","transform":{"type":"aggregate","groupBy":"day","measures":{"trips":{"op":"sum","field":"trips"}}}},{"type":"bar-chart","id":"by-daypart","x":"daypart","y":"trips","select":true,"sort":"none","orientation":"vertical","format":"integer","height":220,"title":"Time of day","subtitle":"Trips, thousands","transform":{"type":"aggregate","groupBy":"daypart","measures":{"trips":{"op":"sum","field":"trips"}}}},{"type":"lollipop-chart","id":"by-district","x":"district","y":"trips","select":true,"sort":"desc","format":"integer","title":"Start district","subtitle":"Trips, thousands","transform":{"type":"aggregate","groupBy":"district","measures":{"trips":{"op":"sum","field":"trips"}}}}],"table":{"caption":"Selected trips by start district and time of day","transform":[{"type":"aggregate","groupBy":["district","daypart"],"measures":{"trips":{"op":"sum","field":"trips"},"minutes":{"op":"sum","field":"minutes"}}},{"type":"derive","as":"length","op":"divide","fields":["minutes","trips"]},{"type":"sort","by":"trips","order":"desc"},{"type":"limit","n":6}],"columns":[{"key":"district","label":"District"},{"key":"daypart","label":"Time of day"},{"key":"trips","label":"Trips, thousands","format":"integer","bar":true,"width":"34%"},{"key":"length","label":"Average minutes","format":"decimal:1"}]},"sources":"City bike-share operator, trip records","period":"June 2024","method":"A trip is a hire of more than one minute. Morning is 6 to 10am, evening 4 to 8pm.","note":"Illustrative data"}
 ```
 
 (`data` cut to 8 rows.)
@@ -2044,7 +2158,7 @@ Props:
 
 `<ExecutiveBrief>`, HTML, category layout. A one-page summary. It has a headline that states the main finding with its number, a deck, a row of three or four key figures, one hero chart with a takeaway callout, two smaller supporting exhibits, a short list of actions and a source note.
 
-Composes: `headline`, `stat-row`, `chart-callout`, `prose`, `source-note`, `line-chart`, `dumbbell-chart`, `bar-chart`.
+Composes: `headline`, `stat-row`, `chart-callout`, `prose`, `source-note`, `line-chart`, `dumbbell-chart`, `slope-chart`, `bar-chart`, `heatmap`, `diverging-bar-chart`.
 
 Props:
 
@@ -2053,7 +2167,7 @@ Props:
 - `deck`: `string`. One to three short sentences. Each states one more fact.
 - `byline`: `string`. Author line, shown as written.
 - `date`: `string`. Publication date. ISO dates are formatted for the locale.
-- `figures`: `{ value, label, context?, delta?, deltaLabel?, upIsGood?, format? }[]`. Three or four key figures, most important first. Rendered with `stat-row`.
+- `figures`: `StatRowItem[] | StatRowProps`. Three or four key figures, most important first. A list of `{ value, label, context?, delta?, deltaLabel?, upIsGood?, format? }`, or the props of `stat-row` (`{ items, variant, ... }`) to choose how they are drawn.
 - `hero` (required): `Slot`. The hero exhibit: a chart spec or element whose `title` states one fact with its number. Gets a height of 340px (260px on phones) unless it sets one.
 - `takeaway`: `{ lead?, body?, label?, tone? }`. The callout beside the hero. `lead` is one short sentence stating the main fact. `body` gives the supporting numbers.
 - `supporting`: `Slot[]`. Two (at most three) smaller exhibits shown side by side; they stack in narrow containers. Default height 220px.
@@ -2066,18 +2180,19 @@ Props:
 - `credit`: `string`. Who made the piece.
 - `level`: `1 | 2 | 3 | 4 | 5 | 6`, default `1`. Heading level of the title; section headings follow one level down.
 - `maxWidth`: `number | string`. Widest the piece may get. It is centred in wider containers.
-- `theme`: `ThemeInput`. Theme override, passed on to everything inside.
+- `theme`: `ThemeInput`. A built-in theme name (`"editorial"`, `"ledger"`, `"noir"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece.
+- `frame`: `boolean`. Paint the theme's surface behind the piece, with page padding. Default: on when `theme` is a named theme with its own surface. Set false when the host already paints it.
 - `mode`: `"auto" | "system" | "light" | "dark"`, default `"auto"`. Colour mode, passed on to everything inside.
 
 ```json
-{"type":"executive-brief","kicker":"Retention review · Q4 2024","title":"Monthly churn fell from 4.2% to 2.1% in 2024","deck":"The new onboarding shipped in March. Accounts that joined before March still churn at 3.8% a month.","byline":"Growth analytics","date":"2025-01-14","figures":[{"value":"2.1%","label":"Monthly churn, December","delta":"−2.1 pts","deltaLabel":"vs January","upIsGood":false},{"value":0.61,"format":"percent","label":"New accounts finishing setup in week one","delta":"+19 pts","deltaLabel":"vs January"},{"value":1.12,"format":"percent","label":"Net revenue retention","context":"Top quartile for the sector is 110%"},{"value":"$1.9m","label":"Annual revenue retained","context":"Compared with churn staying at the January rate of 4.2%"}],"hero":{"type":"line-chart","data":[{"month":"2024-01-01","churn":4.2},{"month":"2024-02-01","churn":4.3},{"month":"2024-03-01","churn":4.1},{"month":"2024-04-01","churn":3.6},{"month":"2024-05-01","churn":3.1},{"month":"2024-06-01","churn":2.9},{"month":"2024-07-01","churn":2.6},{"month":"2024-08-01","churn":2.4},{"month":"2024-09-01","churn":2.3},{"month":"2024-10-01","churn":2.2},{"month":"2024-11-01","churn":2.1},{"month":"2024-12-01","churn":2.1}],"x":"month","y":"churn","format":"{value}%","zero":true,"title":"Monthly churn fell from 4.1% in March to 2.1% in December","subtitle":"Share of paying accounts cancelling each month, 2024","annotations":[{"type":"line","axis":"x","value":"2024-03-01","label":"New onboarding ships"},{"type":"band","axis":"y","from":2,"to":2.5,"label":"Target range"}],"source":"Billing system"},"takeaway":{"lead":"Churn was between 2.1% and 2.4% from August to December","body":"The new onboarding shipped in March. Churn did not fall in the same months of 2023."},"supporting":[{"type":"dumbbell-chart","data":[{"plan":"Starter","jan":6.1,"dec":2.9},{"plan":"Team","jan":4,"dec":2},{"plan":"Business","jan":2.4,"dec":1.6},{"plan":"Enterprise","jan":0.9,"dec":0.8}],"category":"plan","from":"jan","to":"dec","names":{"jan":"January","dec":"December"},"format":"{value}%","sort":"none","highlight":"Starter","title":"Starter plan churn fell from 6.1% to 2.9%","subtitle":"Monthly churn by plan, January and December 2024"},{"type":"bar-chart","data":[{"reason":"Setup not finished","before":38,"after":14},{"reason":"Too expensive","before":22,"after":27},{"reason":"Missing a feature","before":17,"after":24},{"reason":"Went to a rival","before":13,"after":19},{"reason":"Company closed","before":10,"after":16}],"x":"reason","y":"after","sort":"none","orientation":"horizontal","format":"{value}%","highlight":"Setup not finished","title":"“Setup not finished” was the reason for 14% of cancellations in Q4","subtitle":"Share of cancellations by stated reason, Q4 2024. “Setup not finished” was 38% in Q1"}],"actions":[{"title":"Offer the guided setup to the 2,400 accounts that joined before March","text":"These accounts churn at 3.8% a month.","owner":"Lifecycle · by end of February"},{"title":"Make the setup checklist the default on the Team plan","text":"The checklist is opt-in on Team today. Team churn was 2.0% in December.","owner":"Product · Q1"},{"title":"Measure churn again in March 2025","text":"That will give 12 months of data since the new onboarding shipped.","owner":"Growth analytics"}],"sources":["Billing system","Product analytics warehouse"],"period":"January to December 2024, monthly","method":"Churn is the share of accounts paying at the start of a month that cancel during it. Downgrades are not counted.","note":"Illustrative data"}
+{"type":"executive-brief","theme":"ledger","kicker":"Retention review · Q4 2024","title":"Monthly churn fell from 4.2% to 2.1% in 2024","deck":"The new onboarding shipped in March. Accounts that joined before March still churn at 3.8% a month.","byline":"Growth analytics","date":"2025-01-14","figures":{"variant":"tiles","items":[{"surface":"outline-accent","edge":"top","value":"2.1%","label":"Monthly churn, December","delta":"−2.1 pts","deltaLabel":"vs January","upIsGood":false},{"surface":"outline-accent","edge":"top","value":0.61,"format":"percent","label":"New accounts finishing setup in week one","delta":"+19 pts","deltaLabel":"vs January"},{"surface":"outline-accent","edge":"top","value":1.12,"format":"percent","label":"Net revenue retention","context":"Top quartile for the sector is 110%"},{"surface":"outline-accent","edge":"top","value":"$1.9m","label":"Annual revenue retained","context":"Compared with churn staying at the January rate of 4.2%"}]},"hero":{"type":"line-chart","data":[{"month":"2024-01-01","churn":4.2,"prior":4.4},{"month":"2024-02-01","churn":4.3,"prior":4.3},{"month":"2024-03-01","churn":4.1,"prior":4.4},{"month":"2024-04-01","churn":3.6,"prior":4.2},{"month":"2024-05-01","churn":3.1,"prior":4.3},{"month":"2024-06-01","churn":2.9,"prior":4.1},{"month":"2024-07-01","churn":2.6,"prior":4.2},{"month":"2024-08-01","churn":2.4,"prior":4.3},{"month":"2024-09-01","churn":2.3,"prior":4.1},{"month":"2024-10-01","churn":2.2,"prior":4.2},{"month":"2024-11-01","churn":2.1,"prior":4.3},{"month":"2024-12-01","churn":2.1,"prior":4.2}],"x":"month","y":["churn","prior"],"names":{"churn":"2024","prior":"2023"},"highlight":"churn","contextLabels":true,"format":"{value}%","zero":true,"title":"Monthly churn fell from 4.1% in March to 2.1% in December","subtitle":"Share of paying accounts cancelling each month, 2024 and the same months of 2023","annotations":[{"type":"line","axis":"x","value":"2024-03-01","label":"New onboarding ships"},{"type":"band","axis":"y","from":2,"to":2.5,"label":"Target range"}],"source":"Billing system"},"takeaway":{"lead":"Churn was between 2.1% and 2.4% from August to December","body":"The new onboarding shipped in March. Churn was between 4.1% and 4.4% in every month of 2023."},"supporting":[{"type":"dumbbell-chart","data":[{"plan":"Starter","jan":6.1,"dec":2.9},{"plan":"Team","jan":4,"dec":2},{"plan":"Business","jan":2.4,"dec":1.6},{"plan":"Enterprise","jan":0.9,"dec":0.8}],"category":"plan","from":"jan","to":"dec","names":{"jan":"January","dec":"December"},"format":"{value}%","sort":"none","highlight":"Starter","title":"Starter plan churn fell from 6.1% to 2.9%","subtitle":"Monthly churn by plan, January and December 2024"},{"type":"slope-chart","data":[{"reason":"Setup not finished","before":38,"after":14},{"reason":"Too expensive","before":22,"after":27},{"reason":"Missing a feature","before":17,"after":24},{"reason":"Went to a rival","before":13,"after":19},{"reason":"Company closed","before":10,"after":16}],"series":"reason","y":["before","after"],"names":{"before":"Q1","after":"Q4"},"format":"{value}%","highlight":"Setup not finished","height":260,"title":"“Setup not finished” fell from 38% to 14% of cancellations","subtitle":"Share of cancellations by stated reason, Q1 and Q4 2024"}],"actions":[{"title":"Offer the guided setup to the 2,400 accounts that joined before March","text":"These accounts churn at 3.8% a month.","owner":"Lifecycle · by end of February"},{"title":"Make the setup checklist the default on the Team plan","text":"The checklist is opt-in on Team today. Team churn was 2.0% in December.","owner":"Product · Q1"},{"title":"Measure churn again in March 2025","text":"That will give 12 months of data since the new onboarding shipped.","owner":"Growth analytics"}],"sources":["Billing system","Product analytics warehouse"],"period":"January to December 2024, monthly","method":"Churn is the share of accounts paying at the start of a month that cancel during it. Downgrades are not counted.","note":"Illustrative data"}
 ```
 
 ### explainer
 
 `<Explainer>`, HTML, category story. A vertical infographic in one narrow column. It opens with a big number or a proportion statement (`hook`), then the hero exhibit, then numbered sections with one exhibit each, a conclusion with an optional link, and sources.
 
-Composes: `headline`, `big-number`, `proportion-statement`, `step-marker`, `prose`, `callout`, `source-note`, `bar-chart`, `icon-stat`, `line-chart`, `segmented-bar`.
+Composes: `headline`, `big-number`, `proportion-statement`, `step-marker`, `prose`, `callout`, `source-note`, `bar-chart`, `donut-chart`, `pictogram-chart`, `icon-stat`, `line-chart`, `segmented-bar`, `treemap`, `lollipop-chart`.
 
 Props:
 
@@ -2086,7 +2201,7 @@ Props:
 - `deck`: `string`. One-sentence standfirst.
 - `byline`: `string`. Author line.
 - `date`: `string`. Publication date.
-- `hook`: `{ value, total?, text?, figure?, visual?, icon?, detail?, label?, context?, format? } | Slot`. The opening number. With `text` it renders a `proportion-statement` ("19 in every 100 ..."); with `label` a hero `big-number`. A spec or element is rendered as given.
+- `hook`: `{ value, total?, text?, figure?, visual?, icon?, detail?, label?, context?, format?, variant?, tone?, series?, target?, max? } | Slot`. The opening number. With `text` it renders a `proportion-statement` ("19 in every 100 ..."); with `label` a hero `big-number`, which also takes that atom's `variant` (`filled`, `tinted`, `with-icon`, `with-ring`, `with-trend`), `tone`, `icon`, `series`, `target` and `max`. A spec or element is rendered as given.
 - `hero`: `Slot`. The main exhibit. Its `title` states one fact with its number. Default height 360px.
 - `heroText`: `string`. One or two sentences under the hero. Each states one more fact.
 - `sections`: `{ title, text?, exhibit?, takeaway?, id? }[]`. Numbered sections. Each has a heading, one exhibit and a `takeaway` sentence with its main number.
@@ -2099,11 +2214,12 @@ Props:
 - `credit`: `string`. Who made the piece.
 - `level`: `1 | 2 | 3 | 4 | 5 | 6`, default `1`. Heading level of the title; section headings follow one level down.
 - `maxWidth`: `number | string`. Widest the piece may get. It is centred in wider containers.
-- `theme`: `ThemeInput`. Theme override, passed on to everything inside.
+- `theme`: `ThemeInput`. A built-in theme name (`"editorial"`, `"ledger"`, `"noir"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece.
+- `frame`: `boolean`. Paint the theme's surface behind the piece, with page padding. Default: on when `theme` is a named theme with its own surface. Set false when the host already paints it.
 - `mode`: `"auto" | "system" | "light" | "dark"`, default `"auto"`. Colour mode, passed on to everything inside.
 
 ```json
-{"type":"explainer","kicker":"Food and climate","title":"Households threw away 631 million tonnes of food in 2022","deck":"That is 60% of the 1.05 billion tonnes of food wasted worldwide. Food service wasted 290 million tonnes and retail 131 million.","hook":{"value":19,"total":100,"text":"tonnes of food that reach shops, restaurants and homes are thrown away.","detail":"That was 1.05 billion tonnes in 2022."},"hero":{"type":"bar-chart","data":[{"sector":"Households","mt":631},{"sector":"Food service","mt":290},{"sector":"Retail","mt":131}],"x":"sector","y":"mt","sort":"none","orientation":"horizontal","highlight":"Households","format":"{value} Mt","title":"Households produced 60% of the world's food waste in 2022","subtitle":"Food waste by sector, million tonnes (Mt), 2022","source":"UNEP Food Waste Index Report 2024","note":"Figures are approximate, for illustration"},"heroText":"Food service produced 290 million tonnes, or 28%. Retail produced 131 million tonnes, or 12%.","sections":[{"title":"Household food waste by income group","text":"Households in high-income countries waste 81 kg of food per person a year. In upper-middle-income countries the figure is 88 kg. In lower-middle-income countries it is 86 kg.","exhibit":{"type":"bar-chart","data":[{"group":"High income","kg":81},{"group":"Upper-middle","kg":88},{"group":"Lower-middle","kg":86}],"x":"group","y":"kg","sort":"none","orientation":"horizontal","format":"{value} kg","subtitle":"Household food waste per person per year, by country income group"},"takeaway":"The three income groups are within 7 kg per person of each other."},{"title":"Lost and wasted food causes 4.4 billion tonnes of emissions a year","text":"Growing, transporting and chilling food uses land, fertiliser and fuel. Food releases methane when it rots. Lost and wasted food causes 8 to 10% of global greenhouse gas emissions.","exhibit":{"type":"bar-chart","data":[{"emitter":"China","gt":13},{"emitter":"United States","gt":6},{"emitter":"Wasted food","gt":4.4},{"emitter":"India","gt":3.9},{"emitter":"European Union","gt":3.4}],"x":"emitter","y":"gt","sort":"desc","orientation":"horizontal","highlight":"Wasted food","format":"{value} Gt","subtitle":"Annual greenhouse gas emissions, billion tonnes of CO2 equivalent. Wasted food includes losses before retail"},"takeaway":"Only China and the United States emit more than lost and wasted food."},{"title":"733 million people faced hunger in 2023","exhibit":{"type":"icon-stat","icon":"person","count":1,"total":11,"columns":11,"text":"people in the world faced hunger in 2023."}}],"conclusion":{"title":"The UN target is to halve food waste by 2030","text":"Britain and Japan publish household food waste figures. Britain has cut household waste by 18% and Japan by 31%.","points":["Measure household food waste and publish the figure every year.","State on packaging that “best before” refers to quality and “use by” refers to safety.","Plan meals before shopping and freeze food that will not be eaten in time."],"action":{"label":"Read the UNEP report","href":"https://www.unep.org/resources/publication/food-waste-index-report-2024"}},"sources":[{"name":"UNEP Food Waste Index Report 2024","url":"https://www.unep.org/resources/publication/food-waste-index-report-2024"},"FAO, State of Food Security and Nutrition in the World 2024","Emissions figures rounded from national inventories"],"note":"Figures are approximate, for illustration","period":"2022 (waste), 2023 (hunger and emissions)","method":"Food waste is measured at retail, food service and household level and includes inedible parts. Losses on farms and in transport are counted separately."}
+{"type":"explainer","theme":"sunrise","kicker":"Food and climate","title":"Households threw away 631 million tonnes of food in 2022","deck":"That is 60% of the 1.05 billion tonnes of food wasted worldwide. Food service wasted 290 million tonnes and retail 131 million.","hook":{"value":19,"total":100,"text":"tonnes of food that reach shops, restaurants and homes are thrown away.","detail":"That was 1.05 billion tonnes in 2022."},"hero":{"type":"donut-chart","data":[{"sector":"Households","mt":631},{"sector":"Food service","mt":290},{"sector":"Retail","mt":131}],"name":"sector","value":"mt","format":"{value} Mt","centerLabel":"Million tonnes wasted","centerValue":"1,052","height":340,"title":"Households produced 60% of the world's food waste in 2022","subtitle":"Food waste by sector, million tonnes (Mt), 2022","source":"UNEP Food Waste Index Report 2024","note":"Figures are approximate, for illustration"},"heroText":"Food service produced 290 million tonnes, or 28%. Retail produced 131 million tonnes, or 12%.","sections":[{"title":"Household food waste by income group","text":"Households in high-income countries waste 81 kg of food per person a year. In upper-middle-income countries the figure is 88 kg. In lower-middle-income countries it is 86 kg.","exhibit":{"type":"pictogram-chart","data":[{"group":"High income","kg":81},{"group":"Upper-middle","kg":88},{"group":"Lower-middle","kg":86}],"name":"group","value":"kg","unit":10,"unitLabel":"10 kg of food","icon":"apple","format":"{value} kg","subtitle":"Household food waste per person per year, by country income group"},"takeaway":"The three income groups are within 7 kg per person of each other."},{"title":"Lost and wasted food causes 4.4 billion tonnes of emissions a year","text":"Growing, transporting and chilling food uses land, fertiliser and fuel. Food releases methane when it rots. Lost and wasted food causes 8 to 10% of global greenhouse gas emissions.","exhibit":{"type":"bar-chart","data":[{"emitter":"China","gt":13},{"emitter":"United States","gt":6},{"emitter":"Wasted food","gt":4.4},{"emitter":"India","gt":3.9},{"emitter":"European Union","gt":3.4}],"x":"emitter","y":"gt","sort":"desc","orientation":"horizontal","highlight":"Wasted food","format":"{value} Gt","subtitle":"Annual greenhouse gas emissions, billion tonnes of CO2 equivalent. Wasted food includes losses before retail"},"takeaway":"Only China and the United States emit more than lost and wasted food."},{"title":"733 million people faced hunger in 2023","exhibit":{"type":"icon-stat","icon":"person","tone":"negative","count":1,"total":11,"columns":11,"text":"people in the world faced hunger in 2023."}}],"conclusion":{"title":"The UN target is to halve food waste by 2030","text":"Britain and Japan publish household food waste figures. Britain has cut household waste by 18% and Japan by 31%.","points":["Measure household food waste and publish the figure every year.","State on packaging that “best before” refers to quality and “use by” refers to safety.","Plan meals before shopping and freeze food that will not be eaten in time."],"action":{"label":"Read the UNEP report","href":"https://www.unep.org/resources/publication/food-waste-index-report-2024"}},"sources":[{"name":"UNEP Food Waste Index Report 2024","url":"https://www.unep.org/resources/publication/food-waste-index-report-2024"},"FAO, State of Food Security and Nutrition in the World 2024","Emissions figures rounded from national inventories"],"note":"Figures are approximate, for illustration","period":"2022 (waste), 2023 (hunger and emissions)","method":"Food waste is measured at retail, food service and household level and includes inedible parts. Losses on farms and in transport are counted separately."}
 ```
 
 ### flow-poster
@@ -2297,7 +2413,7 @@ Props:
 
 `<ReportPage>`, HTML, category layout. A section of an analytical report laid out as a document. It has a title block, a summary, numbered findings, then method, limitations and sources. Each finding has one exhibit, an observation and a separately labelled interpretation with a confidence rating and a caveat.
 
-Composes: `headline`, `prose`, `source-note`, `bar-chart`, `progress-meter`, `line-chart`.
+Composes: `headline`, `prose`, `stat-row`, `source-note`, `bar-chart`, `progress-meter`, `line-chart`, `dumbbell-chart`, `histogram`, `diverging-bar-chart`.
 
 Props:
 
@@ -2308,6 +2424,7 @@ Props:
 - `date`: `string`. Publication date.
 - `summary`: `string | string[]`. One paragraph with the main findings, their numbers and the recommendation. Supports `**bold**`.
 - `summaryTitle`: `string`, default `"Summary"`. Heading of the summary.
+- `figures`: `StatRowItem[] | StatRowProps`. Two to four key figures shown under the summary. A list of `{ value, label, context?, delta?, ... }`, or the props of `stat-row` (`{ items, variant, ... }`) to choose how they are drawn.
 - `findings`: `{ title, exhibit?, observation?, interpretation?, confidence?: "high" | "medium" | "low", caveat?, id? }[]`. Numbered findings. `observation` is what the data shows; `interpretation` is what the authors infer, with an optional confidence rating and caveat.
 - `observationLabel`: `string`, default `"What the data shows"`. Label over each observation.
 - `interpretationLabel`: `string`, default `"What we think it means"`. Label over each interpretation.
@@ -2319,11 +2436,12 @@ Props:
 - `credit`: `string`. Who made the piece.
 - `level`: `1 | 2 | 3 | 4 | 5 | 6`, default `1`. Heading level of the title; section headings follow one level down.
 - `maxWidth`: `number | string`. Widest the piece may get. It is centred in wider containers.
-- `theme`: `ThemeInput`. Theme override, passed on to everything inside.
+- `theme`: `ThemeInput`. A built-in theme name (`"editorial"`, `"ledger"`, `"noir"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece.
+- `frame`: `boolean`. Paint the theme's surface behind the piece, with page padding. Default: on when `theme` is a named theme with its own surface. Set false when the host already paints it.
 - `mode`: `"auto" | "system" | "light" | "dark"`, default `"auto"`. Colour mode, passed on to everything inside.
 
 ```json
-{"type":"report-page","kicker":"Small-group tutoring programme · Year 1 evaluation","title":"Tutored pupils gained 2.9 more scaled-score points in maths than matched pupils","deck":"The difference in reading was 0.5 points. 31% of tutored pupils were eligible for free school meals against a funding target of 50%.","byline":"Evaluation team","date":"2025-02-20","summary":"Pupils offered tutoring gained **2.9 more scaled-score points in maths** over the year than matched pupils who were not. That is about three months of additional learning. The difference in reading was 0.5 points and could be chance. Pupils who attended fewer than 12 sessions gained less than 1 point over their matches. 58% of pupils attended 12 or more. We recommend continuing the maths strand. Attendance should be the main delivery target. The way pupils are selected should change.","findings":[{"title":"Tutored pupils gained 8.1 points in maths against 5.2 for comparison pupils","exhibit":{"type":"bar-chart","data":[{"subject":"Maths","Tutored":8.1,"Comparison":5.2},{"subject":"Reading","Tutored":5.9,"Comparison":5.4}],"x":"subject","y":["Tutored","Comparison"],"orientation":"horizontal","sort":"none","highlight":"Tutored","format":"decimal:1","subtitle":"Mean gain in scaled score, autumn 2023 to summer 2024","source":"Standardised assessments, 42 schools"},"observation":"The difference in maths was 2.9 points (95% interval 1.6 to 4.2). In reading tutored pupils gained 5.9 points and comparison pupils 5.4. That difference was 0.5 points (−0.7 to 1.7).","interpretation":"The maths difference is unlikely to be chance. Trials of similar programmes found effects of about the same size. We do not conclude that reading tutoring failed, because half the reading tutors were recruited after January.","confidence":"medium","caveat":"Pupils were matched on prior attainment and background. They were not randomised. Unmeasured differences, such as parental engagement, could account for part of the difference."},{"title":"Pupils who attended 18 or more sessions gained 4.4 points over their matches","exhibit":{"type":"bar-chart","data":[{"sessions":"Under 6","effect":0.2},{"sessions":"6–11","effect":0.9},{"sessions":"12–17","effect":3.1},{"sessions":"18+","effect":4.4}],"x":"sessions","y":"effect","orientation":"vertical","sort":"none","format":{"signDisplay":"exceptZero","maximumFractionDigits":1},"height":260,"subtitle":"Maths gain over comparison pupils, scaled-score points, by sessions attended (of 20 offered)"},"observation":"Pupils who attended fewer than 6 sessions gained 0.2 points more than their matches. Those who attended 6 to 11 gained 0.9 points more. 42% of tutored pupils attended fewer than 12 sessions.","interpretation":"A gain that rises with attendance is consistent with a real effect. Pupils who attend more may also differ in ways that raise attainment. The effect of extra sessions is therefore probably smaller than the bars show.","confidence":"low"},{"title":"31% of tutored pupils were eligible for free school meals against a target of 50%","exhibit":{"type":"progress-meter","label":"Tutored pupils eligible for free school meals","value":0.31,"max":1,"showMax":false,"target":0.5,"targetLabel":"Funding target","format":"percent","context":"984 of 3,180 pupils. In the same schools, 38% of all pupils are eligible."},"observation":"984 of the 3,180 tutored pupils were eligible for free school meals. The funding agreement specifies 50%. 38% of all pupils in the participating schools are eligible.","interpretation":"Schools selected pupils by teacher nomination. Nomination appears to favour pupils just below the expected standard over the most disadvantaged. The schools have enough eligible pupils to meet the target, so we think the selection rules cause the shortfall.","confidence":"high"}],"method":"We compared 3,180 tutored pupils in 42 schools with 3,180 pupils in the same schools and year groups, matched one to one on prior attainment, free-school-meal eligibility, special educational needs and attendance in the previous year. Outcomes are scaled scores on the standardised assessments schools already use. Intervals are 95% and account for clustering by school.","limitations":["Matching cannot rule out differences we did not measure. A randomised design is planned for year two.","Attendance was recorded by tutors and may be overstated.","One year of outcomes does not show whether the gain lasts."],"sources":["School assessment returns","Tutor session logs","National pupil database extract"],"period":"September 2023 to July 2024","note":"Illustrative data"}
+{"type":"report-page","theme":"paper","kicker":"Small-group tutoring programme · Year 1 evaluation","title":"Tutored pupils gained 2.9 more scaled-score points in maths than matched pupils","deck":"The difference in reading was 0.5 points. 31% of tutored pupils were eligible for free school meals against a funding target of 50%.","byline":"Evaluation team","date":"2025-02-20","summary":"Pupils offered tutoring gained **2.9 more scaled-score points in maths** over the year than matched pupils who were not. That is about three months of additional learning. The difference in reading was 0.5 points and could be chance. Pupils who attended fewer than 12 sessions gained less than 1 point over their matches. 58% of pupils attended 12 or more. We recommend continuing the maths strand. Attendance should be the main delivery target. The way pupils are selected should change.","figures":{"variant":"tiles","items":[{"variant":"comparison","value":8.1,"comparison":5.2,"valueLabel":"Tutored","comparisonLabel":"Comparison","delta":"+2.9 points","format":"decimal:1","label":"Mean gain in maths, scaled-score points"},{"variant":"ring","value":0.58,"max":1,"format":"percent","label":"Tutored pupils attending 12 or more sessions","context":"20 sessions were offered"},{"variant":"progress","value":0.31,"max":1,"target":0.5,"targetLabel":"Funding target","format":"percent","label":"Tutored pupils eligible for free school meals"}]},"findings":[{"title":"Tutored pupils gained 8.1 points in maths against 5.2 for comparison pupils","exhibit":{"type":"bar-chart","data":[{"subject":"Maths","Tutored":8.1,"Comparison":5.2},{"subject":"Reading","Tutored":5.9,"Comparison":5.4}],"x":"subject","y":["Tutored","Comparison"],"orientation":"horizontal","sort":"none","format":"decimal:1","subtitle":"Mean gain in scaled score, autumn 2023 to summer 2024","source":"Standardised assessments, 42 schools"},"observation":"The difference in maths was 2.9 points (95% interval 1.6 to 4.2). In reading tutored pupils gained 5.9 points and comparison pupils 5.4. That difference was 0.5 points (−0.7 to 1.7).","interpretation":"The maths difference is unlikely to be chance. Trials of similar programmes found effects of about the same size. We do not conclude that reading tutoring failed, because half the reading tutors were recruited after January.","confidence":"medium","caveat":"Pupils were matched on prior attainment and background. They were not randomised. Unmeasured differences, such as parental engagement, could account for part of the difference."},{"title":"Pupils who attended 18 or more sessions gained 4.4 points over their matches","exhibit":{"type":"bar-chart","data":[{"sessions":"Under 6","effect":0.2},{"sessions":"6–11","effect":0.9},{"sessions":"12–17","effect":3.1},{"sessions":"18+","effect":4.4}],"x":"sessions","y":"effect","orientation":"vertical","sort":"none","format":{"signDisplay":"exceptZero","maximumFractionDigits":1},"height":260,"subtitle":"Maths gain over comparison pupils, scaled-score points, by sessions attended (of 20 offered)"},"observation":"Pupils who attended fewer than 6 sessions gained 0.2 points more than their matches. Those who attended 6 to 11 gained 0.9 points more. 42% of tutored pupils attended fewer than 12 sessions.","interpretation":"A gain that rises with attendance is consistent with a real effect. Pupils who attend more may also differ in ways that raise attainment. The effect of extra sessions is therefore probably smaller than the bars show.","confidence":"low"},{"title":"31% of tutored pupils were eligible for free school meals against a target of 50%","exhibit":{"type":"progress-meter","label":"Tutored pupils eligible for free school meals","value":0.31,"max":1,"showMax":false,"target":0.5,"targetLabel":"Funding target","format":"percent","context":"984 of 3,180 pupils. In the same schools, 38% of all pupils are eligible."},"observation":"984 of the 3,180 tutored pupils were eligible for free school meals. The funding agreement specifies 50%. 38% of all pupils in the participating schools are eligible.","interpretation":"Schools selected pupils by teacher nomination. Nomination appears to favour pupils just below the expected standard over the most disadvantaged. The schools have enough eligible pupils to meet the target, so we think the selection rules cause the shortfall.","confidence":"high"}],"method":"We compared 3,180 tutored pupils in 42 schools with 3,180 pupils in the same schools and year groups, matched one to one on prior attainment, free-school-meal eligibility, special educational needs and attendance in the previous year. Outcomes are scaled scores on the standardised assessments schools already use. Intervals are 95% and account for clustering by school.","limitations":["Matching cannot rule out differences we did not measure. A randomised design is planned for year two.","Attendance was recorded by tutors and may be overstated.","One year of outcomes does not show whether the gain lasts."],"sources":["School assessment returns","Tutor session logs","National pupil database extract"],"period":"September 2023 to July 2024","note":"Illustrative data"}
 ```
 
 ### scale-poster
@@ -2361,7 +2479,7 @@ Props:
 
 `<Scorecard>`, HTML, category layout. A recurring report. It has a masthead with the report name and period, a headline that states the main change, a KPI grid with changes and sparklines, a ranked list beside one or two trend charts, an optional comparison table, short notes and a source note.
 
-Composes: `headline`, `kpi-grid`, `ranked-list`, `comparison-table`, `prose`, `source-note`, `line-chart`, `bar-chart`.
+Composes: `headline`, `kpi-grid`, `ranked-list`, `comparison-table`, `prose`, `source-note`, `line-chart`, `bar-chart`, `bullet-chart`.
 
 Props:
 
@@ -2384,18 +2502,19 @@ Props:
 - `credit`: `string`. Who made the piece.
 - `level`: `1 | 2 | 3 | 4 | 5 | 6`, default `1`. Heading level of the title; section headings follow one level down.
 - `maxWidth`: `number | string`. Widest the piece may get. It is centred in wider containers.
-- `theme`: `ThemeInput`. Theme override, passed on to everything inside.
+- `theme`: `ThemeInput`. A built-in theme name (`"editorial"`, `"ledger"`, `"noir"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece.
+- `frame`: `boolean`. Paint the theme's surface behind the piece, with page padding. Default: on when `theme` is a named theme with its own surface. Set false when the host already paints it.
 - `mode`: `"auto" | "system" | "light" | "dark"`, default `"auto"`. Colour mode, passed on to everything inside.
 
 ```json
-{"type":"scorecard","kicker":"Online store scorecard","reportPeriod":"October 2024","title":"Orders rose 12% in October to 24,900","deck":"The return rate was 11.4%. It was 8.4% in July, the month before free returns launched. Outerwear had the highest return rate at 19.2%.","kpis":{"data":[{"month":"2023-11-01","orders":18200,"conversion":2.61,"aov":64.1,"returns":8.1},{"month":"2023-12-01","orders":26900,"conversion":3.02,"aov":66.8,"returns":8.4},{"month":"2024-01-01","orders":17100,"conversion":2.55,"aov":63,"returns":9},{"month":"2024-02-01","orders":16400,"conversion":2.58,"aov":62.4,"returns":8.2},{"month":"2024-03-01","orders":17900,"conversion":2.66,"aov":62.9,"returns":8},{"month":"2024-04-01","orders":18800,"conversion":2.71,"aov":62.2,"returns":7.9},{"month":"2024-05-01","orders":19600,"conversion":2.74,"aov":61.8,"returns":8.3},{"month":"2024-06-01","orders":19900,"conversion":2.78,"aov":61.5,"returns":8.1},{"month":"2024-07-01","orders":20400,"conversion":2.83,"aov":61.9,"returns":8.4},{"month":"2024-08-01","orders":21300,"conversion":2.9,"aov":61.2,"returns":9.6},{"month":"2024-09-01","orders":22200,"conversion":2.97,"aov":60.8,"returns":10.5},{"month":"2024-10-01","orders":24900,"conversion":3.1,"aov":61,"returns":11.4}],"x":"month","compare":"previous","metrics":[{"y":"orders","label":"Orders","format":"compact","deltaLabel":"vs September"},{"y":"conversion","label":"Conversion rate","format":"{value}%","delta":"+0.13 pts","deltaLabel":"vs September"},{"y":"aov","label":"Average order value","format":"currency:EUR","deltaLabel":"vs September"},{"y":"returns","label":"Return rate","format":"{value}%","delta":"+0.9 pts","upIsGood":false,"deltaLabel":"vs September"}]},"ranking":{"data":[{"category":"Outerwear","revenue":412,"change":0.31,"returns":19.2},{"category":"Footwear","revenue":371,"change":0.08,"returns":14.1},{"category":"Knitwear","revenue":298,"change":0.22,"returns":9.8},{"category":"Accessories","revenue":164,"change":-0.04,"returns":4.2},{"category":"Denim","revenue":152,"change":-0.11,"returns":12.6},{"category":"Home","revenue":88,"change":0.02,"returns":3.1}],"name":"category","value":"revenue","change":"change","format":"€{value}k","highlight":"Outerwear","title":"Outerwear revenue rose 31% to €412k in October","subtitle":"Revenue by category, October, with change on September"},"trends":[{"type":"line-chart","data":[{"month":"2023-11-01","orders":18200,"conversion":2.61,"aov":64.1,"returns":8.1},{"month":"2023-12-01","orders":26900,"conversion":3.02,"aov":66.8,"returns":8.4},{"month":"2024-01-01","orders":17100,"conversion":2.55,"aov":63,"returns":9},{"month":"2024-02-01","orders":16400,"conversion":2.58,"aov":62.4,"returns":8.2},{"month":"2024-03-01","orders":17900,"conversion":2.66,"aov":62.9,"returns":8},{"month":"2024-04-01","orders":18800,"conversion":2.71,"aov":62.2,"returns":7.9},{"month":"2024-05-01","orders":19600,"conversion":2.74,"aov":61.8,"returns":8.3},{"month":"2024-06-01","orders":19900,"conversion":2.78,"aov":61.5,"returns":8.1},{"month":"2024-07-01","orders":20400,"conversion":2.83,"aov":61.9,"returns":8.4},{"month":"2024-08-01","orders":21300,"conversion":2.9,"aov":61.2,"returns":9.6},{"month":"2024-09-01","orders":22200,"conversion":2.97,"aov":60.8,"returns":10.5},{"month":"2024-10-01","orders":24900,"conversion":3.1,"aov":61,"returns":11.4}],"x":"month","y":"returns","format":"{value}%","zero":true,"title":"The return rate rose from 8.4% in July to 11.4% in October","subtitle":"Share of orders returned, by month of order","annotations":[{"type":"line","axis":"x","value":"2024-08-01","label":"Free returns"}]},{"type":"bar-chart","data":[{"category":"Outerwear","revenue":412,"change":0.31,"returns":19.2},{"category":"Footwear","revenue":371,"change":0.08,"returns":14.1},{"category":"Knitwear","revenue":298,"change":0.22,"returns":9.8},{"category":"Accessories","revenue":164,"change":-0.04,"returns":4.2},{"category":"Denim","revenue":152,"change":-0.11,"returns":12.6},{"category":"Home","revenue":88,"change":0.02,"returns":3.1}],"x":"category","y":"returns","sort":"desc","orientation":"horizontal","format":"{value}%","highlight":"Outerwear","title":"19.2% of outerwear orders were returned in October","subtitle":"Return rate by category, October"}],"notes":[{"title":"Returns cost about €62k in October","text":"About 2,840 parcels came back. Carriage and handling cost €22 a parcel. At September's return rate of 10.5% the cost would have been about €58k."},{"title":"62% of outerwear returns give “too small” as the reason","text":"A size guide goes into test on 4 November."},{"title":"Orders were highest in December 2023 at 26,900","text":"October 2024 was the second-highest month of the 12."}],"sources":["Store order database","Returns portal"],"period":"November 2023 to October 2024","method":"Return rate is by month of order and is revised for 30 days as parcels arrive.","note":"Illustrative data"}
+{"type":"scorecard","theme":"noir","kicker":"Online store scorecard","reportPeriod":"October 2024","title":"Orders rose 12% in October to 24,900","deck":"The return rate was 11.4%. It was 8.4% in July, the month before free returns launched. Outerwear had the highest return rate at 19.2%.","kpis":{"data":[{"month":"2023-11-01","orders":18200,"conversion":2.61,"aov":64.1,"returns":8.1,"outerwear":13},{"month":"2023-12-01","orders":26900,"conversion":3.02,"aov":66.8,"returns":8.4,"outerwear":13.2},{"month":"2024-01-01","orders":17100,"conversion":2.55,"aov":63,"returns":9,"outerwear":13.6},{"month":"2024-02-01","orders":16400,"conversion":2.58,"aov":62.4,"returns":8.2,"outerwear":13.1},{"month":"2024-03-01","orders":17900,"conversion":2.66,"aov":62.9,"returns":8,"outerwear":12.9},{"month":"2024-04-01","orders":18800,"conversion":2.71,"aov":62.2,"returns":7.9,"outerwear":13.3},{"month":"2024-05-01","orders":19600,"conversion":2.74,"aov":61.8,"returns":8.3,"outerwear":13},{"month":"2024-06-01","orders":19900,"conversion":2.78,"aov":61.5,"returns":8.1,"outerwear":13.4},{"month":"2024-07-01","orders":20400,"conversion":2.83,"aov":61.9,"returns":8.4,"outerwear":13.2},{"month":"2024-08-01","orders":21300,"conversion":2.9,"aov":61.2,"returns":9.6,"outerwear":13.5},{"month":"2024-09-01","orders":22200,"conversion":2.97,"aov":60.8,"returns":10.5,"outerwear":16.1},{"month":"2024-10-01","orders":24900,"conversion":3.1,"aov":61,"returns":11.4,"outerwear":17.8}],"x":"month","compare":"previous","metrics":[{"variant":"area","y":"orders","label":"Orders","format":"compact","deltaLabel":"vs September"},{"variant":"area","y":"conversion","label":"Conversion rate","format":"{value}%","delta":"+0.13 pts","deltaLabel":"vs September"},{"variant":"area","y":"aov","label":"Average order value","format":"currency:EUR","deltaLabel":"vs September"},{"variant":"area","y":"returns","label":"Return rate","format":"{value}%","delta":"+0.9 pts","upIsGood":false,"deltaLabel":"vs September"}]},"ranking":{"data":[{"category":"Outerwear","revenue":412,"change":0.31,"returns":19.2},{"category":"Footwear","revenue":371,"change":0.08,"returns":14.1},{"category":"Knitwear","revenue":298,"change":0.22,"returns":9.8},{"category":"Accessories","revenue":164,"change":-0.04,"returns":4.2},{"category":"Denim","revenue":152,"change":-0.11,"returns":12.6},{"category":"Home","revenue":88,"change":0.02,"returns":3.1}],"name":"category","value":"revenue","change":"change","format":"€{value}k","highlight":"Outerwear","title":"Outerwear revenue rose 31% to €412k in October","subtitle":"Revenue by category, October, with change on September"},"trends":[{"type":"line-chart","data":[{"month":"2023-11-01","orders":18200,"conversion":2.61,"aov":64.1,"returns":8.1,"outerwear":13},{"month":"2023-12-01","orders":26900,"conversion":3.02,"aov":66.8,"returns":8.4,"outerwear":13.2},{"month":"2024-01-01","orders":17100,"conversion":2.55,"aov":63,"returns":9,"outerwear":13.6},{"month":"2024-02-01","orders":16400,"conversion":2.58,"aov":62.4,"returns":8.2,"outerwear":13.1},{"month":"2024-03-01","orders":17900,"conversion":2.66,"aov":62.9,"returns":8,"outerwear":12.9},{"month":"2024-04-01","orders":18800,"conversion":2.71,"aov":62.2,"returns":7.9,"outerwear":13.3},{"month":"2024-05-01","orders":19600,"conversion":2.74,"aov":61.8,"returns":8.3,"outerwear":13},{"month":"2024-06-01","orders":19900,"conversion":2.78,"aov":61.5,"returns":8.1,"outerwear":13.4},{"month":"2024-07-01","orders":20400,"conversion":2.83,"aov":61.9,"returns":8.4,"outerwear":13.2},{"month":"2024-08-01","orders":21300,"conversion":2.9,"aov":61.2,"returns":9.6,"outerwear":13.5},{"month":"2024-09-01","orders":22200,"conversion":2.97,"aov":60.8,"returns":10.5,"outerwear":16.1},{"month":"2024-10-01","orders":24900,"conversion":3.1,"aov":61,"returns":11.4,"outerwear":17.8}],"x":"month","y":["outerwear","returns"],"names":{"outerwear":"Outerwear","returns":"All orders"},"format":"{value}%","zero":true,"title":"The return rate rose from 8.4% in July to 11.4% in October","subtitle":"Share of orders returned by month of order, all orders and outerwear","annotations":[{"type":"line","axis":"x","value":"2024-08-01","label":"Free returns"}]},{"type":"bar-chart","data":[{"category":"Outerwear","revenue":412,"change":0.31,"returns":19.2},{"category":"Footwear","revenue":371,"change":0.08,"returns":14.1},{"category":"Knitwear","revenue":298,"change":0.22,"returns":9.8},{"category":"Accessories","revenue":164,"change":-0.04,"returns":4.2},{"category":"Denim","revenue":152,"change":-0.11,"returns":12.6},{"category":"Home","revenue":88,"change":0.02,"returns":3.1}],"x":"category","y":"returns","sort":"desc","orientation":"horizontal","format":"{value}%","highlight":"Outerwear","title":"19.2% of outerwear orders were returned in October","subtitle":"Return rate by category, October"}],"notes":[{"title":"Returns cost about €62k in October","text":"About 2,840 parcels came back. Carriage and handling cost €22 a parcel. At September's return rate of 10.5% the cost would have been about €58k."},{"title":"62% of outerwear returns give “too small” as the reason","text":"A size guide goes into test on 4 November."},{"title":"Orders were highest in December 2023 at 26,900","text":"October 2024 was the second-highest month of the 12."}],"sources":["Store order database","Returns portal"],"period":"November 2023 to October 2024","method":"Return rate is by month of order and is revised for 30 days as parcels arrive.","note":"Illustrative data"}
 ```
 
 ### social-card
 
 `<SocialCard>`, HTML, category layout. A graphic that states one fact, at a fixed aspect ratio (1:1, 4:5, 16:9 or 9:16). It has a kicker, a headline, one exhibit, a source and a credit, painted on the theme surface. A button downloads the whole card as a PNG.
 
-Composes: `bar-chart`, `big-number`, `waffle-chart`, `source-note`.
+Composes: `bar-chart`, `big-number`, `waffle-chart`, `area-chart`, `source-note`.
 
 Props:
 
@@ -2415,22 +2534,22 @@ Props:
 - `maxWidth`: `number`. Widest the card is drawn on screen, in px. Default 540 (520 for 4:5, 720 for 16:9, 400 for 9:16). In narrower containers the whole card is scaled down, like an image, so its composition never changes.
 - `onExport`: `(blob: Blob) => void`. Called with the PNG after a download.
 - `level`: `1 | 2 | 3 | 4 | 5 | 6`, default `2`. Heading level of the title.
-- `theme`: `ThemeInput`. Theme override, passed on to the exhibit.
+- `theme`: `ThemeInput`. A built-in theme name (`"magenta"`, `"noir"`, `"editorial"`...) or a theme object, passed on to the exhibit. A named theme with its own surface paints the card in that surface; the download button stays in the page's theme.
 - `mode`: `"auto" | "system" | "light" | "dark"`, default `"auto"`. Colour mode.
 
 ```json
-{"type":"social-card","aspect":"1:1","kicker":"Climate","title":"The world was 1.6°C warmer in 2024 than in 1850 to 1900","exhibit":{"type":"bar-chart","data":[{"year":"2015","c":1.17},{"year":"2016","c":1.31},{"year":"2017","c":1.22},{"year":"2018","c":1.14},{"year":"2019","c":1.26},{"year":"2020","c":1.31},{"year":"2021","c":1.14},{"year":"2022","c":1.18},{"year":"2023","c":1.48},{"year":"2024","c":1.6}],"x":"year","y":"c","orientation":"vertical","sort":"none","highlight":"2024","format":"{value}°C","labels":false,"subtitle":"Global average temperature above the 1850 to 1900 level","annotations":[{"type":"line","axis":"y","value":1.5,"label":"Paris Agreement limit"}]},"source":"Copernicus Climate Change Service, ERA5 (rounded)","note":"Figures are approximate, for illustration","credit":"InsightCharts"}
+{"type":"social-card","theme":"magenta","aspect":"1:1","kicker":"Climate","title":"The world was 1.6°C warmer in 2024 than in 1850 to 1900","exhibit":{"type":"bar-chart","data":[{"year":"2015","c":1.17},{"year":"2016","c":1.31},{"year":"2017","c":1.22},{"year":"2018","c":1.14},{"year":"2019","c":1.26},{"year":"2020","c":1.31},{"year":"2021","c":1.14},{"year":"2022","c":1.18},{"year":"2023","c":1.48},{"year":"2024","c":1.6}],"x":"year","y":"c","orientation":"vertical","sort":"none","highlight":"2024","format":"{value}°C","labels":false,"subtitle":"Global average temperature above the 1850 to 1900 level","annotations":[{"type":"line","axis":"y","value":1.5,"label":"Paris Agreement limit"}]},"source":"Copernicus Climate Change Service, ERA5 (rounded)","note":"Figures are approximate, for illustration","credit":"InsightCharts"}
 ```
 
 ### story-deck
 
 `<StoryDeck>`, HTML, category story. A sequence of full-frame cards (title, stat, chart, quote, closing) that the reader swipes or steps through. Each card states one fact. It has an optional fixed aspect ratio, a keyboard-accessible pager and a stacked layout for print.
 
-Composes: `big-number`, `prose`, `pull-quote`, `source-note`, `bar-chart`, `line-chart`, `radial-bar-chart`.
+Composes: `big-number`, `prose`, `pull-quote`, `source-note`, `bar-chart`, `line-chart`, `radial-bar-chart`, `waffle-chart`.
 
 Props:
 
-- `cards` (required): `Card[]`. The cards in order. Each has a `kind`: `title` `{ title, deck?, byline? }`; `stat` `{ value, label, context?, delta?, deltaLabel?, upIsGood?, format?, text? }`; `chart` `{ title, chart, text? }`; `quote` `{ quote, attribution?, role? }`; `closing` `{ title, text?, points?, action?: { label, href } }`. Any card takes `kicker`, `tone: "surface" | "inverse" | "accent"` and `id`.
+- `cards` (required): `Card[]`. The cards in order. Each has a `kind`: `title` `{ title, deck?, byline? }`; `stat` `{ value, label, context?, delta?, deltaLabel?, upIsGood?, format?, text?, variant?, icon?, series?, target?, max? }`, where `variant` is any `big-number` display (`with-icon`, `with-ring`, `with-trend`, `filled`, `tinted`); `chart` `{ title, chart, text? }`; `quote` `{ quote, attribution?, role? }`; `closing` `{ title, text?, points?, action?: { label, href } }`. Any card takes `kicker`, `tone: "surface" | "inverse" | "accent"` and `id`.
 - `label`: `string`. Accessible name of the deck. Defaults to the first card's title.
 - `aspect`: `"auto" | "9:16" | "4:5" | "1:1" | "16:9"`, default `"4:5"`. Shape of every card. `auto` lets cards take the height their content needs. `16:9` falls back to `4:5` in containers under 520px.
 - `layout`: `"pager" | "stack"`, default `"pager"`. `pager` shows one card at a time (swipe, buttons, dots, arrow keys, Home/End). `stack` lists every card in a column.
@@ -2445,11 +2564,11 @@ Props:
 - `note`: `string`. Caveats the reader should know, e.g. "Illustrative data".
 - `credit`: `string`. Who made the piece.
 - `level`: `1 | 2 | 3 | 4 | 5 | 6`, default `1`. Heading level of the title; section headings follow one level down.
-- `theme`: `ThemeInput`. Theme override, passed on to everything inside.
+- `theme`: `ThemeInput`. A built-in theme name (`"dusk"`, `"magenta"`, `"paper"`...) or a theme object, passed on to everything in the cards. A named theme with its own surface paints each card in that surface; the pager and the source note stay in the page's theme.
 - `mode`: `"auto" | "system" | "light" | "dark"`, default `"auto"`. Colour mode, passed on to everything inside.
 
 ```json
-{"type":"story-deck","aspect":"4:5","cards":[{"kind":"title","tone":"inverse","kicker":"Your 2024 on the road","title":"You ran 1,842 km in 2024","deck":"That was 23% more than in 2023. You ran 187 times.","byline":"Riverside Runners · member report"},{"kind":"stat","kicker":"Distance","value":1842,"format":"integer","label":"Kilometres run in 2024","delta":0.23,"deltaLabel":"vs 2023","context":"An average of 154 km a month","text":"You ran in 46 of the year's 52 weeks."},{"kind":"chart","kicker":"Month by month","title":"October was your highest month at 224 km","chart":{"type":"bar-chart","data":[{"month":"Jan","km":96},{"month":"Feb","km":104},{"month":"Mar","km":131},{"month":"Apr","km":148},{"month":"May","km":162},{"month":"Jun","km":171},{"month":"Jul","km":120},{"month":"Aug","km":158},{"month":"Sep","km":196},{"month":"Oct","km":224},{"month":"Nov","km":181},{"month":"Dec","km":151}],"x":"month","y":"km","orientation":"vertical","sort":"none","highlight":"Oct","labels":false,"format":"{value} km","height":240},"text":"You ran 120 km in July while you were injured. You ran 158 km in August."},{"kind":"chart","kicker":"Pace","title":"Your easy pace fell from 5.52 to 5.04 minutes per kilometre","chart":{"type":"line-chart","data":[{"month":"Jan","pace":5.52},{"month":"Feb","pace":5.47},{"month":"Mar","pace":5.41},{"month":"Apr","pace":5.36},{"month":"May","pace":5.33},{"month":"Jun","pace":5.28},{"month":"Jul","pace":5.31},{"month":"Aug","pace":5.24},{"month":"Sep","pace":5.16},{"month":"Oct","pace":5.09},{"month":"Nov","pace":5.07},{"month":"Dec","pace":5.04}],"x":"month","y":"pace","format":"{value} min/km","height":240},"text":"A lower number is a faster pace. Your pace in August was 5.24."},{"kind":"chart","kicker":"Habits","tone":"accent","title":"41 of your 187 runs started between 6am and 7am","chart":{"type":"radial-bar-chart","data":[{"hour":"00","runs":0},{"hour":"01","runs":0},{"hour":"02","runs":0},{"hour":"03","runs":0},{"hour":"04","runs":0},{"hour":"05","runs":9},{"hour":"06","runs":41},{"hour":"07","runs":38},{"hour":"08","runs":12},{"hour":"09","runs":4},{"hour":"10","runs":2},{"hour":"11","runs":3},{"hour":"12","runs":8},{"hour":"13","runs":6},{"hour":"14","runs":2},{"hour":"15","runs":1},{"hour":"16","runs":3},{"hour":"17","runs":11},{"hour":"18","runs":22},{"hour":"19","runs":17},{"hour":"20","runs":6},{"hour":"21","runs":2},{"hour":"22","runs":0},{"hour":"23","runs":0}],"x":"hour","y":"runs","labelEvery":3,"labels":false,"height":260},"text":"Another 38 started between 7am and 8am. 22 started between 6pm and 7pm."},{"kind":"quote","quote":"I started running before work in the spring. I have kept to it since.","attribution":"Club member","role":"Club newsletter, December 2024"},{"kind":"closing","kicker":"Next year","title":"2,000 km in 2025 needs 167 km a month","text":"You averaged 154 km a month in 2024.","points":["You ran 167 km or more in 4 months of 2024.","July was 51 km below June."],"action":{"label":"Set a 2025 goal","href":"#goal"}}],"sources":"Club activity tracker","period":"1 January to 31 December 2024","note":"Illustrative data"}
+{"type":"story-deck","theme":"dusk","aspect":"4:5","cards":[{"kind":"title","tone":"inverse","kicker":"Your 2024 on the road","title":"You ran 1,842 km in 2024","deck":"That was 23% more than in 2023. You ran 187 times.","byline":"Riverside Runners · member report"},{"kind":"stat","kicker":"Distance","variant":"with-trend","series":[1120,1310,1498,1842],"value":1842,"format":"integer","label":"Kilometres run in 2024","delta":0.23,"deltaLabel":"vs 2023","context":"You ran 1,120 km in 2021 and 1,498 km in 2023."},{"kind":"chart","kicker":"Weeks","title":"You ran in 46 of the year's 52 weeks","chart":{"type":"waffle-chart","data":[{"weeks":"Weeks with a run","n":46}],"name":"weeks","value":"n","total":52,"rows":4,"columns":13,"restLabel":"Weeks without a run","format":"integer","aspect":2.6},"text":"Each square is one week. Four of the six weeks without a run were in July."},{"kind":"chart","kicker":"Month by month","title":"October was your highest month at 224 km","chart":{"type":"bar-chart","data":[{"month":"Jan","km":96},{"month":"Feb","km":104},{"month":"Mar","km":131},{"month":"Apr","km":148},{"month":"May","km":162},{"month":"Jun","km":171},{"month":"Jul","km":120},{"month":"Aug","km":158},{"month":"Sep","km":196},{"month":"Oct","km":224},{"month":"Nov","km":181},{"month":"Dec","km":151}],"x":"month","y":"km","orientation":"vertical","sort":"none","highlight":"Oct","labels":false,"format":"{value} km","height":240},"text":"You ran 120 km in July while you were injured. You ran 158 km in August."},{"kind":"chart","kicker":"Pace","title":"Your easy pace fell from 5.52 to 5.04 minutes per kilometre","chart":{"type":"line-chart","data":[{"month":"Jan","pace":5.52},{"month":"Feb","pace":5.47},{"month":"Mar","pace":5.41},{"month":"Apr","pace":5.36},{"month":"May","pace":5.33},{"month":"Jun","pace":5.28},{"month":"Jul","pace":5.31},{"month":"Aug","pace":5.24},{"month":"Sep","pace":5.16},{"month":"Oct","pace":5.09},{"month":"Nov","pace":5.07},{"month":"Dec","pace":5.04}],"x":"month","y":"pace","format":"{value} min/km","height":240},"text":"A lower number is a faster pace. Your pace in August was 5.24."},{"kind":"chart","kicker":"Habits","tone":"accent","title":"41 of your 187 runs started between 6am and 7am","chart":{"type":"radial-bar-chart","data":[{"hour":"00","runs":0},{"hour":"01","runs":0},{"hour":"02","runs":0},{"hour":"03","runs":0},{"hour":"04","runs":0},{"hour":"05","runs":9},{"hour":"06","runs":41},{"hour":"07","runs":38},{"hour":"08","runs":12},{"hour":"09","runs":4},{"hour":"10","runs":2},{"hour":"11","runs":3},{"hour":"12","runs":8},{"hour":"13","runs":6},{"hour":"14","runs":2},{"hour":"15","runs":1},{"hour":"16","runs":3},{"hour":"17","runs":11},{"hour":"18","runs":22},{"hour":"19","runs":17},{"hour":"20","runs":6},{"hour":"21","runs":2},{"hour":"22","runs":0},{"hour":"23","runs":0}],"x":"hour","y":"runs","labelEvery":3,"labels":false,"height":260},"text":"Another 38 started between 7am and 8am. 22 started between 6pm and 7pm."},{"kind":"quote","quote":"I started running before work in the spring. I have kept to it since.","attribution":"Club member","role":"Club newsletter, December 2024"},{"kind":"closing","kicker":"Next year","title":"2,000 km in 2025 needs 167 km a month","text":"You averaged 154 km a month in 2024.","points":["You ran 167 km or more in 4 months of 2024.","July was 51 km below June."],"action":{"label":"Set a 2025 goal","href":"#goal"}}],"sources":"Club activity tracker","period":"1 January to 31 December 2024","note":"Illustrative data"}
 ```
 
 ### timeline-poster
@@ -2486,7 +2605,7 @@ Props:
 
 `<TimelineStory>`, HTML, category story. A story told in date order. It has a headline, one overview exhibit of the whole period (a timeline chart or an annotated line), dated chapters along a rail, a closing paragraph and a source note. Each chapter has a short text and an optional small exhibit.
 
-Composes: `headline`, `prose`, `annotated-timeline`, `source-note`, `line-chart`, `timeline-chart`, `bar-chart`, `big-number`.
+Composes: `headline`, `prose`, `annotated-timeline`, `source-note`, `line-chart`, `timeline-chart`, `bar-chart`, `big-number`, `stat-tile`, `waffle-chart`.
 
 Props:
 
@@ -2508,18 +2627,19 @@ Props:
 - `credit`: `string`. Who made the piece.
 - `level`: `1 | 2 | 3 | 4 | 5 | 6`, default `1`. Heading level of the title; section headings follow one level down.
 - `maxWidth`: `number | string`. Widest the piece may get. It is centred in wider containers.
-- `theme`: `ThemeInput`. Theme override, passed on to everything inside.
+- `theme`: `ThemeInput`. A built-in theme name (`"editorial"`, `"ledger"`, `"noir"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece.
+- `frame`: `boolean`. Paint the theme's surface behind the piece, with page padding. Default: on when `theme` is a named theme with its own surface. Set false when the host already paints it.
 - `mode`: `"auto" | "system" | "light" | "dark"`, default `"auto"`. Colour mode, passed on to everything inside.
 
 ```json
-{"type":"timeline-story","kicker":"Energy","title":"Coal generated 39% of Britain's electricity in 2012 and 0.6% in 2024","deck":"The first public coal power station opened in 1882. The last coal plant closed on 30 September 2024.","byline":"By the data desk","date":"2024-10-01","timeline":{"type":"line-chart","data":[{"year":"1990-01-01","share":65},{"year":"1994-01-01","share":50},{"year":"1998-01-01","share":35},{"year":"2002-01-01","share":32},{"year":"2006-01-01","share":38},{"year":"2010-01-01","share":28},{"year":"2012-01-01","share":39},{"year":"2013-01-01","share":36},{"year":"2014-01-01","share":30},{"year":"2015-01-01","share":22},{"year":"2016-01-01","share":9},{"year":"2017-01-01","share":7},{"year":"2018-01-01","share":5},{"year":"2019-01-01","share":2},{"year":"2020-01-01","share":2},{"year":"2021-01-01","share":2},{"year":"2022-01-01","share":1.5},{"year":"2023-01-01","share":1},{"year":"2024-01-01","share":0.6}],"x":"year","y":"share","format":"{value}%","zero":true,"area":true,"title":"Coal's share of generation fell from 65% in 1990 to 0.6% in 2024","subtitle":"Share of Great Britain's electricity generated from coal, 1990 to 2024","annotations":[{"type":"band","axis":"x","from":"1990-01-01","to":"1998-01-01","label":"Gas plants built"},{"type":"line","axis":"x","value":"2013-01-01","label":"Carbon price floor"},{"type":"point","x":"2012-01-01","y":39,"label":"39% in 2012","position":"top"}],"source":"Department for Energy Security and Net Zero and National Grid ESO (rounded)","note":"Figures are approximate, for illustration"},"intro":"Coal's share fell in two periods. It fell from 65% to 35% between 1990 and 1998, when generators built gas plants. It fell from 39% to 9% between 2012 and 2016, after the carbon price floor was introduced.","chapters":[{"date":"1882","title":"The first public coal power station opens in London","text":"Thomas Edison's company built the plant at Holborn Viaduct. It supplied street lamps and nearby buildings."},{"date":"1990s","title":"Coal's share falls from 65% to 35% between 1990 and 1998","text":"Privatised generators built gas plants, which were cheaper and quicker to build than coal plants. Coal's share was between 28% and 39% from 1998 to 2013."},{"date":"April 2013","title":"The carbon price floor takes effect","emphasis":true,"text":"The floor set a minimum price on power-station emissions. The rate doubled in 2015. Coal's share fell from 22% in 2015 to 9% in 2016.","exhibit":{"type":"bar-chart","data":[{"year":"2012","share":39},{"year":"2013","share":36},{"year":"2014","share":30},{"year":"2015","share":22},{"year":"2016","share":9}],"x":"year","y":"share","orientation":"vertical","sort":"none","highlight":"2016","format":"{value}%","height":170,"subtitle":"Coal share of generation, 2012 to 2016"}},{"date":"21 April 2017","title":"The first full day without coal since 1882","text":"Britain had 1 coal-free day in 2017. It had 180 in 2020.","exhibit":{"type":"bar-chart","data":[{"year":"2017","days":1},{"year":"2018","days":21},{"year":"2019","days":83},{"year":"2020","days":180}],"x":"year","y":"days","orientation":"vertical","sort":"none","highlight":"2020","height":170,"subtitle":"Coal-free days per year"}},{"date":"30 September 2024","title":"Ratcliffe-on-Soar, the last coal plant, shuts down","emphasis":true,"text":"The plant had run since 1968. In 2024 wind generated 30% of the country's electricity and gas generated 26%.","exhibit":{"type":"big-number","value":"0%","label":"Coal share of generation since October 2024","context":"Britain was the first G7 country to end coal power"}}],"closing":"Coal generated 0.6% of Britain's electricity in 2024, all of it before 30 September. Gas generated 26%.","sources":["Digest of UK Energy Statistics","National Grid ESO"],"period":"1990 to 2024","note":"Annual shares are rounded. Intermediate years before 2012 are interpolated for the chart. Figures are approximate, for illustration."}
+{"type":"timeline-story","theme":"forest","kicker":"Energy","title":"Coal generated 39% of Britain's electricity in 2012 and 0.6% in 2024","deck":"The first public coal power station opened in 1882. The last coal plant closed on 30 September 2024.","byline":"By the data desk","date":"2024-10-01","timeline":{"type":"line-chart","data":[{"year":"1990-01-01","share":65,"wind":0},{"year":"1994-01-01","share":50,"wind":0},{"year":"1998-01-01","share":35,"wind":0.2},{"year":"2002-01-01","share":32,"wind":0.4},{"year":"2006-01-01","share":38,"wind":1},{"year":"2010-01-01","share":28,"wind":3},{"year":"2012-01-01","share":39,"wind":6},{"year":"2013-01-01","share":36,"wind":8},{"year":"2014-01-01","share":30,"wind":9},{"year":"2015-01-01","share":22,"wind":12},{"year":"2016-01-01","share":9,"wind":11},{"year":"2017-01-01","share":7,"wind":15},{"year":"2018-01-01","share":5,"wind":17},{"year":"2019-01-01","share":2,"wind":20},{"year":"2020-01-01","share":2,"wind":24},{"year":"2021-01-01","share":2,"wind":21},{"year":"2022-01-01","share":1.5,"wind":27},{"year":"2023-01-01","share":1,"wind":29},{"year":"2024-01-01","share":0.6,"wind":30}],"x":"year","y":["share","wind"],"names":{"share":"Coal","wind":"Wind"},"format":"{value}%","zero":true,"title":"Coal's share of generation fell from 65% in 1990 to 0.6% in 2024","subtitle":"Share of Great Britain's electricity generated from coal and from wind, 1990 to 2024","annotations":[{"type":"band","axis":"x","from":"1990-01-01","to":"1998-01-01","label":"Gas plants built"},{"type":"line","axis":"x","value":"2013-01-01","label":"Carbon price floor"},{"type":"point","x":"2012-01-01","y":39,"label":"39% in 2012","position":"top"}],"source":"Department for Energy Security and Net Zero and National Grid ESO (rounded)","note":"Figures are approximate, for illustration"},"intro":"Coal's share fell in two periods. It fell from 65% to 35% between 1990 and 1998, when generators built gas plants. It fell from 39% to 9% between 2012 and 2016, after the carbon price floor was introduced.","chapters":[{"date":"1882","title":"The first public coal power station opens in London","text":"Thomas Edison's company built the plant at Holborn Viaduct. It supplied street lamps and nearby buildings."},{"date":"1990s","title":"Coal's share falls from 65% to 35% between 1990 and 1998","text":"Privatised generators built gas plants, which were cheaper and quicker to build than coal plants. Coal's share was between 28% and 39% from 1998 to 2013."},{"date":"April 2013","title":"The carbon price floor takes effect","emphasis":true,"text":"The floor set a minimum price on power-station emissions. The rate doubled in 2015. Coal's share fell from 22% in 2015 to 9% in 2016.","exhibit":{"type":"bar-chart","data":[{"year":"2012","share":39},{"year":"2013","share":36},{"year":"2014","share":30},{"year":"2015","share":22},{"year":"2016","share":9}],"x":"year","y":"share","orientation":"vertical","sort":"none","highlight":"2016","format":"{value}%","height":170,"subtitle":"Coal share of generation, 2012 to 2016"}},{"date":"21 April 2017","title":"The first full day without coal since 1882","text":"Britain had 1 coal-free day in 2017. It had 180 in 2020.","exhibit":{"type":"bar-chart","data":[{"year":"2017","days":1},{"year":"2018","days":21},{"year":"2019","days":83},{"year":"2020","days":180}],"x":"year","y":"days","orientation":"vertical","sort":"none","highlight":"2020","height":170,"subtitle":"Coal-free days per year"}},{"date":"30 September 2024","title":"Ratcliffe-on-Soar, the last coal plant, shuts down","emphasis":true,"text":"The plant had run since 1968. In 2024 wind generated 30% of the country's electricity and gas generated 26%.","exhibit":{"type":"stat-tile","variant":"comparison","surface":"borderless","upIsGood":false,"value":0.6,"comparison":39,"valueLabel":"2024","comparisonLabel":"2012","format":"{value}%","label":"Coal share of generation","context":"Britain was the first G7 country to end coal power"}}],"closing":"Coal generated 0.6% of Britain's electricity in 2024, all of it before 30 September. Gas generated 26%.","sources":["Digest of UK Energy Statistics","National Grid ESO"],"period":"1990 to 2024","note":"Annual shares are rounded. Intermediate years before 2012 are interpolated for the chart. Figures are approximate, for illustration."}
 ```
 
 ### visual-essay
 
 `<VisualEssay>`, HTML, category story. A long article read by scrolling. It has a headline, then an ordered list of blocks in a reading column, then a source note. The blocks are prose, figures, charts with a callout, scrolly sequences, pull quotes, stat rows, small multiples and chapter breaks. Exhibits can be wider than the column.
 
-Composes: `headline`, `prose`, `pull-quote`, `step-marker`, `small-multiples`, `chart-callout`, `scrolly-chart`, `small-multiple-grid`, `stat-row`, `source-note`, `line-chart`, `bar-chart`.
+Composes: `headline`, `prose`, `pull-quote`, `step-marker`, `small-multiples`, `chart-callout`, `scrolly-chart`, `small-multiple-grid`, `stat-row`, `source-note`, `line-chart`, `bar-chart`, `waffle-chart`, `dumbbell-chart`, `heatmap`.
 
 Props:
 
@@ -2528,7 +2648,7 @@ Props:
 - `deck`: `string`. One-sentence standfirst.
 - `byline`: `string`. Author line.
 - `date`: `string`. Publication date. ISO dates are formatted for the locale.
-- `blocks` (required): `(Block | Slot)[]`. The story in reading order. Each block has a `kind`: `prose` `{ text, lead? }`; `figure` `{ chart, caption? }`; `callout` `{ chart, lead, body, label?, tone?, side? }`; `scrolly` `{ chart, steps, cumulative?, scrollMode?, side?, stepHeight? }` (the props of `scrolly-chart`); `quote` `{ quote, attribution?, role? }`; `stats` `{ items, title? }`; `multiples` `{ facet, ... }` (props of `small-multiples`, or of `small-multiple-grid` when it has a `chart`); `break` `{ title, step?, total?, text? }`. Any block takes `width: "text" | "wide" | "full"` and an `id`. A bare chart spec is treated as a wide figure.
+- `blocks` (required): `(Block | Slot)[]`. The story in reading order. Each block has a `kind`: `prose` `{ text, lead? }`; `figure` `{ chart, caption? }`; `callout` `{ chart, lead, body, label?, tone?, side? }`; `scrolly` `{ chart, steps, cumulative?, scrollMode?, side?, stepHeight? }` (the props of `scrolly-chart`); `quote` `{ quote, attribution?, role? }`; `stats` `{ items, variant?, title? }` (the props of `stat-row`); `multiples` `{ facet, ... }` (props of `small-multiples`, or of `small-multiple-grid` when it has a `chart`); `break` `{ title, step?, total?, text? }`. Any block takes `width: "text" | "wide" | "full"` and an `id`. A bare chart spec is treated as a wide figure.
 - `measure`: `number`, default `680`. Width of the reading column in px.
 - `textSize`: `"md" | "lg"`. Body text size. Default 18px, 16px in narrow containers.
 - `sources`: `string | { name, url? } | (string | { name, url? })[]`. Where the data comes from, shown in the closing source note. Entries with a `url` are linked.
@@ -2538,11 +2658,12 @@ Props:
 - `credit`: `string`. Who made the piece.
 - `level`: `1 | 2 | 3 | 4 | 5 | 6`, default `1`. Heading level of the title; section headings follow one level down.
 - `maxWidth`: `number | string`. Widest the piece may get. It is centred in wider containers.
-- `theme`: `ThemeInput`. Theme override, passed on to everything inside.
+- `theme`: `ThemeInput`. A built-in theme name (`"editorial"`, `"ledger"`, `"noir"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece.
+- `frame`: `boolean`. Paint the theme's surface behind the piece, with page padding. Default: on when `theme` is a named theme with its own surface. Set false when the host already paints it.
 - `mode`: `"auto" | "system" | "light" | "dark"`, default `"auto"`. Colour mode, passed on to everything inside.
 
 ```json
-{"type":"visual-essay","kicker":"Energy transition","title":"Solar supplied 11.1% of EU electricity in 2024, more than coal's 9.8%","deck":"Solar's share was 2.9% in 2015. Coal's share was 24.6% in 2015.","byline":"By the data desk","date":"2025-03-14","blocks":[{"kind":"prose","lead":true,"text":"Solar supplied **2.9% of the EU's electricity** in 2015. Hydro supplied 11.5%.\n\nIn 2024 solar supplied 11.1%. It was the first full year in which solar generated more electricity than coal."},{"kind":"figure","chart":{"type":"line-chart","data":[{"year":"2015","Solar":2.9,"Coal":24.6},{"year":"2016","Solar":3,"Coal":22},{"year":"2017","Solar":3.4,"Coal":20.6},{"year":"2018","Solar":3.7,"Coal":19.2},{"year":"2019","Solar":4.2,"Coal":15},{"year":"2020","Solar":5,"Coal":13},{"year":"2021","Solar":5.4,"Coal":14.7},{"year":"2022","Solar":7,"Coal":15.8},{"year":"2023","Solar":9.1,"Coal":12.3},{"year":"2024","Solar":11.1,"Coal":9.8}],"x":"year","y":["Solar","Coal"],"highlight":"Solar","format":"{value}%","zero":true,"title":"Solar's share rose from 2.9% to 11.1% between 2015 and 2024","subtitle":"Share of EU electricity generation, 2015 to 2024","annotations":[{"type":"band","axis":"x","from":"2021","to":"2022","label":"Gas price crisis"},{"type":"point","x":"2016","y":22,"label":"Coal","position":"top","dot":false}],"source":"Ember, European Electricity Review 2025"}},{"kind":"prose","text":"Coal's share was 15.8% in 2022. It fell to 12.3% in 2023 and 9.8% in 2024. Solar's share rose from 7.0% to 11.1% in the same two years."},{"kind":"break","step":1,"total":3,"title":"Solar module prices, 2010 to 2024","text":"A module cost $2.00 a watt in 2010. It cost $0.11 a watt in 2024."},{"kind":"callout","chart":{"type":"line-chart","data":[{"year":"2010","usd":2},{"year":"2012","usd":0.9},{"year":"2014","usd":0.65},{"year":"2016","usd":0.5},{"year":"2018","usd":0.3},{"year":"2020","usd":0.22},{"year":"2022","usd":0.26},{"year":"2024","usd":0.11}],"x":"year","y":"usd","format":{"style":"currency","currency":"USD"},"zero":true,"area":true,"title":"Solar module prices fell from $2.00 to $0.11 a watt between 2010 and 2024","subtitle":"Average price of crystalline silicon solar modules, US dollars per watt","source":"IRENA and BloombergNEF (rounded)"},"label":"Rooftop system cost","lead":"Modules are now the smaller part of the cost of a rooftop system","body":"Mounting, wiring, labour and the grid connection make up most of the cost."},{"kind":"stats","items":[{"value":"338 GW","label":"Solar capacity installed in the EU, end of 2024","delta":"+66 GW","deltaLabel":"in 2024"},{"value":"304 TWh","label":"Solar generation, 2024","delta":0.22,"deltaLabel":"vs 2023"},{"value":"269 TWh","label":"Coal generation, 2024","delta":-0.16,"deltaLabel":"vs 2023","upIsGood":false}]},{"kind":"break","step":2,"total":3,"title":"EU electricity generation by source, 2015 and 2024","text":"Scroll to see the shares in 2015 and then in 2024."},{"kind":"scrolly","chart":{"type":"bar-chart","data":[{"source":"Nuclear","y2015":26.5,"y2024":23.7},{"source":"Coal","y2015":24.6,"y2024":9.8},{"source":"Gas","y2015":15.8,"y2024":15.7},{"source":"Hydro","y2015":11.5,"y2024":12.5},{"source":"Wind","y2015":9.3,"y2024":17.4},{"source":"Solar","y2015":2.9,"y2024":11.1}],"x":"source","y":"y2015","sort":"none","orientation":"horizontal","format":"{value}%","height":320,"title":"EU electricity generation by source, 2015","subtitle":"Share of electricity generation","source":"Ember, European Electricity Review 2025","option":{"xAxis":{"max":30}}},"stepHeight":"70vh","stickyTop":16,"steps":[{"id":"baseline","label":"2015","content":"In 2015 **nuclear and coal** together supplied 51% of the EU's electricity."},{"id":"coal","content":"Coal supplied 24.6% in 2015. It was the second-largest source after nuclear.","highlight":"Coal"},{"id":"coal-now","label":"2024","content":"Coal supplied 9.8% in 2024. Plants closed in Germany, Spain and Portugal.","highlight":"Coal","y":"y2024","title":"EU electricity generation by source, 2024"},{"id":"solar","content":"**Solar** supplied 11.1% in 2024. It supplied 2.9% in 2015. Wind supplied 17.4% in 2024 and gas 15.7%.","highlight":"Solar","y":"y2024","title":"Solar supplied 11.1% of EU electricity in 2024"}]},{"kind":"quote","quote":"Solar was 1% of Dutch generation in 2015. It was 18% in 2024. We have had to change how we run the grid at midday.","attribution":"Marit de Vries","role":"Head of system operations at a Dutch grid operator"},{"kind":"break","step":3,"total":3,"title":"Solar share by country","text":"Greece had the highest share in 2024 at 22.1%. Spain had 21.0%. France had 4.6%."},{"kind":"multiples","data":[{"country":"Greece","year":"2015","share":7.8},{"country":"Greece","year":"2018","share":8.1},{"country":"Greece","year":"2021","share":10.9},{"country":"Greece","year":"2024","share":22.1},{"country":"Spain","year":"2015","share":4.9},{"country":"Spain","year":"2018","share":4.7},{"country":"Spain","year":"2021","share":9.6},{"country":"Spain","year":"2024","share":21},{"country":"Netherlands","year":"2015","share":1},{"country":"Netherlands","year":"2018","share":3.2},{"country":"Netherlands","year":"2021","share":9.3},{"country":"Netherlands","year":"2024","share":17.9},{"country":"Germany","year":"2015","share":6},{"country":"Germany","year":"2018","share":7.1},{"country":"Germany","year":"2021","share":8.4},{"country":"Germany","year":"2024","share":14.7},{"country":"Poland","year":"2015","share":0},{"country":"Poland","year":"2018","share":0.2},{"country":"Poland","year":"2021","share":2.2},{"country":"Poland","year":"2024","share":10.8},{"country":"France","year":"2015","share":1.3},{"country":"France","year":"2018","share":1.9},{"country":"France","year":"2021","share":2.8},{"country":"France","year":"2024","share":4.6}],"facet":"country","x":"year","y":"share","highlight":["Netherlands","Poland"],"format":"{value}%","columns":3,"title":"Solar's share in the Netherlands rose from 1.0% to 17.9% between 2015 and 2024","subtitle":"Solar share of electricity generation, 2015 to 2024, same scale in every panel","source":"Ember (country series rounded, illustrative)","width":"wide"},{"kind":"prose","text":"Poland's solar share rose from 0.0% in 2015 to 10.8% in 2024. Retail electricity prices in the Netherlands and Poland rose after 2022. At those prices a rooftop system paid for itself in under seven years without subsidy.\n\nFrance has cheap nuclear power and slow permitting. Its solar share was 4.6% in 2024. Germany's was 14.7%."}],"sources":[{"name":"Ember, European Electricity Review 2025","url":"https://ember-energy.org"},"IRENA Renewable Power Generation Costs","BloombergNEF"],"period":"2010 to 2024, annual","method":"Generation shares are of total net generation in the EU-27. Module prices are annual averages in nominal dollars.","note":"EU totals are approximate, rounded for illustration. Country series and the quotation are illustrative.","credit":"Analysis and charts by the data desk"}
+{"type":"visual-essay","theme":"editorial","kicker":"Energy transition","title":"Solar supplied 11.1% of EU electricity in 2024, more than coal's 9.8%","deck":"Solar's share was 2.9% in 2015. Coal's share was 24.6% in 2015.","byline":"By the data desk","date":"2025-03-14","blocks":[{"kind":"prose","lead":true,"text":"Solar supplied **2.9% of the EU's electricity** in 2015. Hydro supplied 11.5%.\n\nIn 2024 solar supplied 11.1%. It was the first full year in which solar generated more electricity than coal."},{"kind":"figure","chart":{"type":"line-chart","data":[{"year":"2015","Solar":2.9,"Coal":24.6},{"year":"2016","Solar":3,"Coal":22},{"year":"2017","Solar":3.4,"Coal":20.6},{"year":"2018","Solar":3.7,"Coal":19.2},{"year":"2019","Solar":4.2,"Coal":15},{"year":"2020","Solar":5,"Coal":13},{"year":"2021","Solar":5.4,"Coal":14.7},{"year":"2022","Solar":7,"Coal":15.8},{"year":"2023","Solar":9.1,"Coal":12.3},{"year":"2024","Solar":11.1,"Coal":9.8}],"x":"year","y":["Solar","Coal"],"format":"{value}%","zero":true,"title":"Solar's share rose from 2.9% to 11.1% between 2015 and 2024","subtitle":"Share of EU electricity generation, 2015 to 2024","annotations":[{"type":"band","axis":"x","from":"2021","to":"2022","label":"Gas price crisis"}],"source":"Ember, European Electricity Review 2025"}},{"kind":"prose","text":"Coal's share was 15.8% in 2022. It fell to 12.3% in 2023 and 9.8% in 2024. Solar's share rose from 7.0% to 11.1% in the same two years."},{"kind":"break","step":1,"total":3,"title":"Solar module prices, 2010 to 2024","text":"A module cost $2.00 a watt in 2010. It cost $0.11 a watt in 2024."},{"kind":"callout","chart":{"type":"line-chart","data":[{"year":"2010","usd":2},{"year":"2012","usd":0.9},{"year":"2014","usd":0.65},{"year":"2016","usd":0.5},{"year":"2018","usd":0.3},{"year":"2020","usd":0.22},{"year":"2022","usd":0.26},{"year":"2024","usd":0.11}],"x":"year","y":"usd","format":{"style":"currency","currency":"USD"},"zero":true,"area":true,"title":"Solar module prices fell from $2.00 to $0.11 a watt between 2010 and 2024","subtitle":"Average price of crystalline silicon solar modules, US dollars per watt","source":"IRENA and BloombergNEF (rounded)"},"label":"Rooftop system cost","lead":"Modules are now the smaller part of the cost of a rooftop system","body":"Mounting, wiring, labour and the grid connection make up most of the cost."},{"kind":"stats","variant":"tiles","subtitle":"Bars show 2020 to 2024","items":[{"variant":"bars","series":[137,165,205,272,338],"value":338,"format":"{value} GW","label":"Solar capacity installed in the EU, end of 2024","delta":"+66 GW","deltaLabel":"in 2024"},{"variant":"bars","series":[145,165,210,249,304],"value":304,"format":"{value} TWh","label":"Solar generation, 2024","delta":0.22,"deltaLabel":"vs 2023"},{"variant":"bars","tone":1,"series":[350,400,430,320,269],"value":269,"format":"{value} TWh","label":"Coal generation, 2024","delta":-0.16,"deltaLabel":"vs 2023","upIsGood":false}]},{"kind":"break","step":2,"total":3,"title":"EU electricity generation by source, 2015 and 2024","text":"Scroll to see the shares in 2015 and then in 2024."},{"kind":"scrolly","chart":{"type":"bar-chart","data":[{"source":"Nuclear","y2015":26.5,"y2024":23.7},{"source":"Coal","y2015":24.6,"y2024":9.8},{"source":"Gas","y2015":15.8,"y2024":15.7},{"source":"Hydro","y2015":11.5,"y2024":12.5},{"source":"Wind","y2015":9.3,"y2024":17.4},{"source":"Solar","y2015":2.9,"y2024":11.1}],"x":"source","y":"y2015","sort":"none","orientation":"horizontal","format":"{value}%","height":320,"title":"EU electricity generation by source, 2015","subtitle":"Share of electricity generation","source":"Ember, European Electricity Review 2025","option":{"xAxis":{"max":30}}},"stepHeight":"70vh","stickyTop":16,"steps":[{"id":"baseline","label":"2015","content":"In 2015 **nuclear and coal** together supplied 51% of the EU's electricity."},{"id":"coal","content":"Coal supplied 24.6% in 2015. It was the second-largest source after nuclear.","highlight":"Coal"},{"id":"coal-now","label":"2024","content":"Coal supplied 9.8% in 2024. Plants closed in Germany, Spain and Portugal.","highlight":"Coal","y":"y2024","title":"EU electricity generation by source, 2024"},{"id":"solar","content":"**Solar** supplied 11.1% in 2024. It supplied 2.9% in 2015. Wind supplied 17.4% in 2024 and gas 15.7%.","highlight":"Solar","y":"y2024","title":"Solar supplied 11.1% of EU electricity in 2024"}]},{"kind":"quote","quote":"Solar was 1% of Dutch generation in 2015. It was 18% in 2024. We have had to change how we run the grid at midday.","attribution":"Marit de Vries","role":"Head of system operations at a Dutch grid operator"},{"kind":"break","step":3,"total":3,"title":"Solar share by country","text":"Greece had the highest share in 2024 at 22.1%. Spain had 21.0%. France had 4.6%."},{"kind":"multiples","data":[{"country":"Greece","year":"2015","share":7.8},{"country":"Greece","year":"2018","share":8.1},{"country":"Greece","year":"2021","share":10.9},{"country":"Greece","year":"2024","share":22.1},{"country":"Spain","year":"2015","share":4.9},{"country":"Spain","year":"2018","share":4.7},{"country":"Spain","year":"2021","share":9.6},{"country":"Spain","year":"2024","share":21},{"country":"Netherlands","year":"2015","share":1},{"country":"Netherlands","year":"2018","share":3.2},{"country":"Netherlands","year":"2021","share":9.3},{"country":"Netherlands","year":"2024","share":17.9},{"country":"Germany","year":"2015","share":6},{"country":"Germany","year":"2018","share":7.1},{"country":"Germany","year":"2021","share":8.4},{"country":"Germany","year":"2024","share":14.7},{"country":"Poland","year":"2015","share":0},{"country":"Poland","year":"2018","share":0.2},{"country":"Poland","year":"2021","share":2.2},{"country":"Poland","year":"2024","share":10.8},{"country":"France","year":"2015","share":1.3},{"country":"France","year":"2018","share":1.9},{"country":"France","year":"2021","share":2.8},{"country":"France","year":"2024","share":4.6}],"facet":"country","x":"year","y":"share","highlight":["Netherlands","Poland"],"format":"{value}%","columns":3,"title":"Solar's share in the Netherlands rose from 1.0% to 17.9% between 2015 and 2024","subtitle":"Solar share of electricity generation, 2015 to 2024, same scale in every panel","source":"Ember (country series rounded, illustrative)","width":"wide"},{"kind":"prose","text":"Poland's solar share rose from 0.0% in 2015 to 10.8% in 2024. Retail electricity prices in the Netherlands and Poland rose after 2022. At those prices a rooftop system paid for itself in under seven years without subsidy.\n\nFrance has cheap nuclear power and slow permitting. Its solar share was 4.6% in 2024. Germany's was 14.7%."}],"sources":[{"name":"Ember, European Electricity Review 2025","url":"https://ember-energy.org"},"IRENA Renewable Power Generation Costs","BloombergNEF"],"period":"2010 to 2024, annual","method":"Generation shares are of total net generation in the EU-27. Module prices are annual averages in nominal dollars.","note":"EU totals are approximate, rounded for illustration. Country series and the quotation are illustrative.","credit":"Analysis and charts by the data desk"}
 ```
 
 ## Common chart props
@@ -2564,7 +2685,8 @@ Props:
 | `select` | `boolean \| string` | Make marks clickable to filter. Inside `<InsightData>` the selection filters every other chart. Pass a field name, or `true` to use the chart's category field. |
 | `onSelect` | `(values: string[], field: string) => void` | Called with the selected values whenever the selection changes. |
 | `option` | `EChartsOption \| ((option: EChartsOption, ctx: BuildContext) => EChartsOption)` | Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers. |
-| `theme` | `ThemeInput` | A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme. |
+| `theme` | `ThemeInput` | A built-in theme name (`"editorial"`, `"ledger"`, `"noir"`...), or a theme object. A named theme paints its own background behind the chart. |
+| `frame` | `boolean` | Paint the theme's background behind the chart. Default: on for a named theme with its own surface. |
 | `mode` | `ModeInput` | `"auto"` (default) follows the page, `"system"` follows the OS, or force `"light"` / `"dark"`. |
 | `renderer` | `RendererInput` | `"auto"` (default) uses SVG for light charts and canvas for heavy ones. |
 | `animate` | `boolean` | Set false to disable animation for this chart. Reduced-motion preferences are always respected. |

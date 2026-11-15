@@ -246,6 +246,7 @@ const converging = (() => {
 
 export const examples = {
   "Highlight with named context lines": {
+    theme: "editorial",
     data: converging.flatMap((r) => ["Lagos", "Nairobi", "Kampala", "Addis"].map((city) => ({ year: r.year, city, share: r[city] }))),
     x: "year",
     y: "share",
@@ -258,6 +259,8 @@ export const examples = {
     note: "Illustrative data",
   },
   "Highlight, one legend entry for the rest, annotations near the right edge": {
+    // One token overridden on the default theme: the accent.
+    theme: { accent: "#b4237a" },
     data: converging.flatMap((r) => ["Lagos", "Nairobi", "Kampala", "Addis"].map((city) => ({ year: r.year, city, share: r[city] }))),
     x: "year",
     y: "share",
@@ -274,6 +277,7 @@ export const examples = {
     note: "Illustrative data",
   },
   "Stress: six lines converge": {
+    theme: "science",
     data: converging,
     x: "year",
     y: ["Lagos", "Nairobi", "Accra", "Dakar", "Kampala", "Addis"],
@@ -283,6 +287,7 @@ export const examples = {
     note: "Illustrative data",
   },
   "Long format with highlight": {
+    theme: "noir",
     data: converging.flatMap((r) => ["Lagos", "Nairobi", "Kampala", "Addis"].map((city) => ({ year: r.year, city, share: r[city] }))),
     x: "year",
     y: "share",

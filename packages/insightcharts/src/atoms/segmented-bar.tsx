@@ -43,6 +43,7 @@ const Inner = defineChart<SegmentedBarProps>({
     { name: "names", type: "Record<string, string>", description: "Display names for category keys." },
   ],
   example: {
+    theme: "ledger",
     type: "segmented-bar",
     data: [
       { party: "Labour", seats: 411 },
@@ -68,10 +69,15 @@ const Inner = defineChart<SegmentedBarProps>({
     }
     let parts = [...byKey].map(([key, value], index) => ({ key, name: p.names?.[key] ?? key, value, index, other: false }));
     if (p.sort === "desc") parts.sort((a, b) => b.value - a.value);
-    if (parts.length > MAX_SEGMENTS) {
-      const keep = new Set([...parts].sort((a, b) => b.value - a.value).slice(0, MAX_SEGMENTS - 1).map((x) => x.key));
+    // Never more identity colours than the theme has (poster themes have four or five): the smallest parts fold into a neutral "Other".
+    // With a highlight only the named entities take a colour, so the palette is not the limit.
+    const palette = ctx.highlight.length ? MAX_SEGMENTS : t.categorical.length;
+    if (parts.length > Math.min(MAX_SEGMENTS, palette)) {
+      const keep = new Set([...parts].sort((a, b) => b.value - a.value).slice(0, Math.min(MAX_SEGMENTS - 1, palette)).map((x) => x.key));
       const folded = parts.filter((x) => !keep.has(x.key));
-      parts = [...parts.filter((x) => keep.has(x.key)), { key: "__other", name: `Other (${folded.length})`, value: folded.reduce((s, x) => s + x.value, 0), index: -1, other: true }];
+      // A single folded part keeps its own name; it only loses its colour.
+      const rest = folded.length === 1 ? { ...folded[0], index: -1, other: true } : { key: "__other", name: `Other (${folded.length})`, value: folded.reduce((s, x) => s + x.value, 0), index: -1, other: true };
+      parts = [...parts.filter((x) => keep.has(x.key)).map((x, index) => ({ ...x, index })), rest];
     }
     const total = parts.reduce((s, x) => s + x.value, 0);
     const pct = ctx.formatter({ style: "percent", maximumFractionDigits: 0 });
@@ -176,6 +182,7 @@ export const examples = {
     subtitle: "Sessions by device, last 30 days",
   },
   "With highlight": {
+    theme: "sunrise",
     data: [
       { item: "Housing", spend: 33 },
       { item: "Transport", spend: 17 },
@@ -192,6 +199,7 @@ export const examples = {
     note: "Figures are approximate, for illustration",
   },
   "Stress: many parts, long names, slivers": {
+    theme: "mono",
     data: [
       { cause: "Cardiovascular diseases", deaths: 19.8 },
       { cause: "Cancers", deaths: 10.0 },

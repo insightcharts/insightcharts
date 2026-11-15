@@ -7,6 +7,7 @@ registerComponents({ BarChart });
 export function ScrollyChartDemo() {
   return (
     <ScrollyChart
+      theme="earth"
       chart={{
         type: "bar-chart",
         data: [

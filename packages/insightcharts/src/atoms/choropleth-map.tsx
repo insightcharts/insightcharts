@@ -87,6 +87,7 @@ const ENGLAND_TILES = tiles([
 
 const EXAMPLE = {
   type: "choropleth-map",
+  theme: "earth",
   geo: AUSTRALIA_BLOCKS,
   data: [
     { state: "Queensland", share: 45 },
@@ -366,6 +367,7 @@ export const examples = {
     source: "Illustrative data",
   },
   "Tile grid with labels, loaded from a URL": {
+    theme: "ocean",
     // A data: URL exercises the fetch-and-register path without touching the network.
     geo: `data:application/json,${encodeURIComponent(JSON.stringify(ENGLAND_TILES))}`,
     data: [
@@ -390,5 +392,31 @@ export const examples = {
     subtitle: "Median full-time annual earnings by English region, £ thousand, 2023",
     source: "ONS Annual Survey of Hours and Earnings",
     note: "Rounded. Each region is drawn as one equal tile",
+  },
+  "Diverging on a tile grid": {
+    theme: "ledger",
+    geo: ENGLAND_TILES,
+    data: [
+      { region: "North East", change: 3.9 },
+      { region: "North West", change: 3.4 },
+      { region: "Yorkshire", change: 2.8 },
+      { region: "West Midlands", change: 1.7 },
+      { region: "East Midlands", change: 1.2 },
+      { region: "East", change: -0.6 },
+      { region: "South West", change: -0.3 },
+      { region: "South East", change: -1.2 },
+      { region: "London", change: -2.1 },
+    ],
+    region: "region",
+    value: "change",
+    scale: "diverging",
+    labels: "value",
+    labelProperty: "code",
+    format: "signed",
+    aspectScale: 1,
+    height: 340,
+    title: "Average house prices in London fell 2.1% in one year",
+    subtitle: "Change in average house price over 12 months by English region, %",
+    note: "Illustrative figures. Each region is drawn as one equal tile",
   },
 };

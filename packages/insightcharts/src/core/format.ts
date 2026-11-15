@@ -17,7 +17,15 @@ export function makeFormatter(spec: FormatSpec = "auto", locale?: string): Forma
   let scale = 1;
   let auto = false;
   let template: string | null = null;
-  if (typeof spec === "object") nf = new Intl.NumberFormat(locale, spec);
+  if (typeof spec === "object") {
+    // A malformed options object (for example from a hand-written JSON spec) must not take
+    // the page down; fall back to the automatic format.
+    try {
+      nf = new Intl.NumberFormat(locale, spec);
+    } catch {
+      auto = true;
+    }
+  }
   else if (spec.includes("{value}")) {
     template = spec;
     auto = true;

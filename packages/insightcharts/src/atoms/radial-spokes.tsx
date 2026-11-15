@@ -221,6 +221,7 @@ export const RadialSpokes = defineChart<RadialSpokesProps>({
     { name: "colorBy", type: '"single" | "value"', default: '"single"', description: "The accent for every spoke, or a shade by value along the sequential ramp." },
   ],
   example: {
+    theme: "forest",
     type: "radial-spokes",
     data: [
       { use: "Space heating", share: 42 },
@@ -401,6 +402,7 @@ export const examples = {
     note: "Illustrative scores for an invented phone",
   },
   "Fan over 180 degrees, shaded by value": {
+    theme: "noir",
     data: [
       ["Drowsiness", 31], ["Dry mouth", 22], ["Headache", 14], ["Nausea", 9], ["Dizziness", 6], ["Rash", 2],
     ].map(([effect, pct]) => ({ effect, pct })),
@@ -415,6 +417,7 @@ export const examples = {
     note: "Illustrative figures for an invented medicine",
   },
   "Stress: 12 spokes, long labels, values from 0 to 96": {
+    theme: "magenta",
     data: [
       ["Unplanned maintenance and emergency call-outs", 96], ["Fuel", 71], ["Crew wages and overtime", 88], ["Port fees", 34], ["Insurance", 27], ["Training", 0],
       ["Catering", 12], ["Navigation and satellite communications", 19], ["Cleaning", 5], ["Dry-dock inspection", 41], ["Waste disposal", 3], ["Ticketing", 8],

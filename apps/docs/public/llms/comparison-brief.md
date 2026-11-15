@@ -38,6 +38,7 @@ The file lands at `components/insightcharts/templates/comparison-brief.tsx`. `@i
 import { BarChart, ComparisonBrief, LineChart, SegmentedBar } from "insightcharts";
 
 <ComparisonBrief
+  theme="earth"
   kicker="Home heating"
   title="With the £7,500 grant, a heat pump repays its extra £500 cost in 4 years"
   deck="After the grant a heat pump costs £3,500 to buy and fit. A gas boiler costs £3,000. The heat pump costs £855 a year to run. The boiler costs £980."
@@ -102,22 +103,22 @@ import { BarChart, ComparisonBrief, LineChart, SegmentedBar } from "insightchart
   heroText="Without the grant the heat pump costs £11,000 to buy and fit. That is £8,000 more than the boiler. A saving of £125 a year would take 64 years to repay it."
   pairs={[
     {
-      title: "The January energy bill is £142 for the heat pump and £158 for the boiler",
+      title: "The January energy bill is £120 for the heat pump and £139 for the boiler",
       text: "Estimated monthly energy cost for heating and hot water. Both charts use the same scale. The heat pump's bill is lower in all 12 months.",
       a: <BarChart
         data={[
-          { month: "Jan", cost: 142 },
-          { month: "Feb", cost: 128 },
-          { month: "Mar", cost: 102 },
-          { month: "Apr", cost: 68 },
-          { month: "May", cost: 40 },
-          { month: "Jun", cost: 28 },
-          { month: "Jul", cost: 25 },
-          { month: "Aug", cost: 26 },
-          { month: "Sep", cost: 38 },
-          { month: "Oct", cost: 66 },
-          { month: "Nov", cost: 98 },
-          { month: "Dec", cost: 134 },
+          { month: "Jan", cost: 120 },
+          { month: "Feb", cost: 108 },
+          { month: "Mar", cost: 86 },
+          { month: "Apr", cost: 57 },
+          { month: "May", cost: 34 },
+          { month: "Jun", cost: 24 },
+          { month: "Jul", cost: 21 },
+          { month: "Aug", cost: 22 },
+          { month: "Sep", cost: 32 },
+          { month: "Oct", cost: 56 },
+          { month: "Nov", cost: 83 },
+          { month: "Dec", cost: 112 },
         ]}
         x="month"
         y="cost"
@@ -126,22 +127,22 @@ import { BarChart, ComparisonBrief, LineChart, SegmentedBar } from "insightchart
         labels={false}
         format="currency:GBP"
         height={200}
-        option={{ yAxis: { max: 160 } }}
+        option={{ yAxis: { max: 140 } }}
       />,
       b: <BarChart
         data={[
-          { month: "Jan", cost: 158 },
-          { month: "Feb", cost: 141 },
-          { month: "Mar", cost: 115 },
-          { month: "Apr", cost: 78 },
-          { month: "May", cost: 49 },
-          { month: "Jun", cost: 37 },
-          { month: "Jul", cost: 34 },
-          { month: "Aug", cost: 35 },
-          { month: "Sep", cost: 46 },
-          { month: "Oct", cost: 74 },
-          { month: "Nov", cost: 107 },
-          { month: "Dec", cost: 146 },
+          { month: "Jan", cost: 139 },
+          { month: "Feb", cost: 124 },
+          { month: "Mar", cost: 101 },
+          { month: "Apr", cost: 69 },
+          { month: "May", cost: 43 },
+          { month: "Jun", cost: 33 },
+          { month: "Jul", cost: 30 },
+          { month: "Aug", cost: 31 },
+          { month: "Sep", cost: 41 },
+          { month: "Oct", cost: 65 },
+          { month: "Nov", cost: 94 },
+          { month: "Dec", cost: 130 },
         ]}
         x="month"
         y="cost"
@@ -151,16 +152,16 @@ import { BarChart, ComparisonBrief, LineChart, SegmentedBar } from "insightchart
         format="currency:GBP"
         height={200}
         highlight="none"
-        option={{ yAxis: { max: 160 } }}
+        option={{ yAxis: { max: 140 } }}
       />,
     },
     {
       title: "Cost over 15 years by part",
-      text: "Energy is £12,075 of the heat pump's cost. It is £13,500 of the boiler's.",
+      text: "Energy is £11,325 of the heat pump's £16,325. It is £13,500 of the boiler's £17,700.",
       a: <SegmentedBar
         data={[
           { part: "Purchase and fitting", gbp: 3500 },
-          { part: "Energy", gbp: 12075 },
+          { part: "Energy", gbp: 11325 },
           { part: "Servicing", gbp: 1500 },
         ]}
         name="part"
@@ -196,6 +197,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 ```json
 {
   "type": "comparison-brief",
+  "theme": "earth",
   "kicker": "Home heating",
   "title": "With the £7,500 grant, a heat pump repays its extra £500 cost in 4 years",
   "deck": "After the grant a heat pump costs £3,500 to buy and fit. A gas boiler costs £3,000. The heat pump costs £855 a year to run. The boiler costs £980.",
@@ -278,23 +280,23 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
   "heroText": "Without the grant the heat pump costs £11,000 to buy and fit. That is £8,000 more than the boiler. A saving of £125 a year would take 64 years to repay it.",
   "pairs": [
     {
-      "title": "The January energy bill is £142 for the heat pump and £158 for the boiler",
+      "title": "The January energy bill is £120 for the heat pump and £139 for the boiler",
       "text": "Estimated monthly energy cost for heating and hot water. Both charts use the same scale. The heat pump's bill is lower in all 12 months.",
       "a": {
         "type": "bar-chart",
         "data": [
-          { "month": "Jan", "cost": 142 },
-          { "month": "Feb", "cost": 128 },
-          { "month": "Mar", "cost": 102 },
-          { "month": "Apr", "cost": 68 },
-          { "month": "May", "cost": 40 },
-          { "month": "Jun", "cost": 28 },
-          { "month": "Jul", "cost": 25 },
-          { "month": "Aug", "cost": 26 },
-          { "month": "Sep", "cost": 38 },
-          { "month": "Oct", "cost": 66 },
-          { "month": "Nov", "cost": 98 },
-          { "month": "Dec", "cost": 134 }
+          { "month": "Jan", "cost": 120 },
+          { "month": "Feb", "cost": 108 },
+          { "month": "Mar", "cost": 86 },
+          { "month": "Apr", "cost": 57 },
+          { "month": "May", "cost": 34 },
+          { "month": "Jun", "cost": 24 },
+          { "month": "Jul", "cost": 21 },
+          { "month": "Aug", "cost": 22 },
+          { "month": "Sep", "cost": 32 },
+          { "month": "Oct", "cost": 56 },
+          { "month": "Nov", "cost": 83 },
+          { "month": "Dec", "cost": 112 }
         ],
         "x": "month",
         "y": "cost",
@@ -303,23 +305,23 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
         "labels": false,
         "format": "currency:GBP",
         "height": 200,
-        "option": { "yAxis": { "max": 160 } }
+        "option": { "yAxis": { "max": 140 } }
       },
       "b": {
         "type": "bar-chart",
         "data": [
-          { "month": "Jan", "cost": 158 },
-          { "month": "Feb", "cost": 141 },
-          { "month": "Mar", "cost": 115 },
-          { "month": "Apr", "cost": 78 },
-          { "month": "May", "cost": 49 },
-          { "month": "Jun", "cost": 37 },
-          { "month": "Jul", "cost": 34 },
-          { "month": "Aug", "cost": 35 },
-          { "month": "Sep", "cost": 46 },
-          { "month": "Oct", "cost": 74 },
-          { "month": "Nov", "cost": 107 },
-          { "month": "Dec", "cost": 146 }
+          { "month": "Jan", "cost": 139 },
+          { "month": "Feb", "cost": 124 },
+          { "month": "Mar", "cost": 101 },
+          { "month": "Apr", "cost": 69 },
+          { "month": "May", "cost": 43 },
+          { "month": "Jun", "cost": 33 },
+          { "month": "Jul", "cost": 30 },
+          { "month": "Aug", "cost": 31 },
+          { "month": "Sep", "cost": 41 },
+          { "month": "Oct", "cost": 65 },
+          { "month": "Nov", "cost": 94 },
+          { "month": "Dec", "cost": 130 }
         ],
         "x": "month",
         "y": "cost",
@@ -329,17 +331,17 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
         "format": "currency:GBP",
         "height": 200,
         "highlight": "none",
-        "option": { "yAxis": { "max": 160 } }
+        "option": { "yAxis": { "max": 140 } }
       }
     },
     {
       "title": "Cost over 15 years by part",
-      "text": "Energy is £12,075 of the heat pump's cost. It is £13,500 of the boiler's.",
+      "text": "Energy is £11,325 of the heat pump's £16,325. It is £13,500 of the boiler's £17,700.",
       "a": {
         "type": "segmented-bar",
         "data": [
           { "part": "Purchase and fitting", "gbp": 3500 },
-          { "part": "Energy", "gbp": 12075 },
+          { "part": "Energy", "gbp": 11325 },
           { "part": "Servicing", "gbp": 1500 }
         ],
         "name": "part",
@@ -393,22 +395,24 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `credit` | `string` |  | Who made the piece. |
 | `level` | `1 \| 2 \| 3 \| 4 \| 5 \| 6` | `1` | Heading level of the title; section headings follow one level down. |
 | `maxWidth` | `number \| string` |  | Widest the piece may get. It is centred in wider containers. |
-| `theme` | `ThemeInput` |  | Theme override, passed on to everything inside. |
+| `theme` | `ThemeInput` |  | A built-in theme name (`"editorial"`, `"ledger"`, `"noir"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece. |
+| `frame` | `boolean` |  | Paint the theme's surface behind the piece, with page padding. Default: on when `theme` is a named theme with its own surface. Set false when the host already paints it. |
 | `mode` | `"auto" \| "system" \| "light" \| "dark"` | `"auto"` | Colour mode, passed on to everything inside. |
 
 ## Composition
 
-- Composes: [headline](https://insightcharts.dev/llms/headline.md), [prose](https://insightcharts.dev/llms/prose.md), [callout](https://insightcharts.dev/llms/callout.md), [source-note](https://insightcharts.dev/llms/source-note.md), [line-chart](https://insightcharts.dev/llms/line-chart.md), [bar-chart](https://insightcharts.dev/llms/bar-chart.md), [segmented-bar](https://insightcharts.dev/llms/segmented-bar.md)
+- Composes: [headline](https://insightcharts.dev/llms/headline.md), [prose](https://insightcharts.dev/llms/prose.md), [callout](https://insightcharts.dev/llms/callout.md), [source-note](https://insightcharts.dev/llms/source-note.md), [line-chart](https://insightcharts.dev/llms/line-chart.md), [bar-chart](https://insightcharts.dev/llms/bar-chart.md), [segmented-bar](https://insightcharts.dev/llms/segmented-bar.md), [waffle-chart](https://insightcharts.dev/llms/waffle-chart.md)
 - Used by: no molecule or template yet
 
 ## More examples
 
-### Transport: a stacked hero, no pairs
+### Transport: a stacked hero and a pair of waffles
 
 ```tsx
-import { BarChart, ComparisonBrief } from "insightcharts";
+import { BarChart, ComparisonBrief, WaffleChart } from "insightcharts";
 
 <ComparisonBrief
+  theme="poster"
   kicker="London to Edinburgh"
   title="Flying from London to Edinburgh is 35 minutes faster than the train, door to door"
   deck="The plane takes 275 minutes and the train 310. The flight itself lasts 80 minutes. The plane emits 140 kg of CO2 per passenger. The train emits 13 kg."
@@ -453,6 +457,31 @@ import { BarChart, ComparisonBrief } from "insightcharts";
     subtitle="Minutes per stage, city centre to city centre"
     source="Timetables and airport guidance, weekday morning departures"
   />}
+  pairs={[
+    {
+      title: "240 of the train's 310 minutes can be spent working",
+      text: "On the plane it is 50 of 275 minutes. Each square is 1% of the journey.",
+      a: <WaffleChart
+        data={[{ part: "Working time", minutes: 240 }]}
+        name="part"
+        value="minutes"
+        total={310}
+        restLabel="Other time"
+        format="{value} min"
+        aspect={1.6}
+      />,
+      b: <WaffleChart
+        data={[{ part: "Working time", minutes: 50 }]}
+        name="part"
+        value="minutes"
+        total={275}
+        restLabel="Other time"
+        format="{value} min"
+        aspect={1.6}
+        highlight="none"
+      />,
+    },
+  ]}
   verdict={{
     lead: "Take the train unless you need the 35 minutes",
     body: "The train fare is £78 and the plane fare is £92. The train gives 240 minutes of working time. The plane gives 50.",
@@ -460,6 +489,136 @@ import { BarChart, ComparisonBrief } from "insightcharts";
   }}
   sources={["Operator timetables", "Government greenhouse gas conversion factors"]}
   note="Illustrative fares and times"
+/>
+```
+
+### Housing: buying against renting, two pairs
+
+```tsx
+import { BarChart, ComparisonBrief, LineChart, SegmentedBar } from "insightcharts";
+
+<ComparisonBrief
+  theme="ledger"
+  kicker="Housing costs"
+  title="Buying a £300,000 flat costs £56,100 less than renting it over 10 years"
+  deck="The buyer pays out £218,000 and gains £107,300 in wealth. The renter pays out £185,700 and gains £18,900."
+  a={{ name: "Buying", detail: "£30,000 deposit, 4% mortgage" }}
+  b={{ name: "Renting", detail: "£1,350 a month, rising 2.5% a year" }}
+  figures={[
+    {
+      label: "Net cost over 10 years",
+      a: 110700,
+      b: 166800,
+      format: { style: "currency", currency: "GBP", maximumFractionDigits: 0 },
+      better: "lower",
+    },
+    {
+      label: "Paid out over 10 years",
+      a: 218000,
+      b: 185700,
+      format: { style: "currency", currency: "GBP", maximumFractionDigits: 0 },
+      better: "lower",
+    },
+    {
+      label: "Wealth gained over 10 years",
+      a: 107300,
+      b: 18900,
+      format: { style: "currency", currency: "GBP", maximumFractionDigits: 0 },
+      better: "higher",
+    },
+    {
+      label: "Monthly outgoing in year 1",
+      a: 1725,
+      b: 1385,
+      format: { style: "currency", currency: "GBP", maximumFractionDigits: 0 },
+      better: "lower",
+    },
+    {
+      label: "Cash needed at the start",
+      a: 41000,
+      b: 1950,
+      format: { style: "currency", currency: "GBP", maximumFractionDigits: 0 },
+      better: "lower",
+    },
+  ]}
+  hero={<LineChart
+    data={[
+      { year: "0", Buying: 0, Renting: 0 },
+      { year: "1", Buying: 20970, Renting: 16680 },
+      { year: "2", Buying: 30940, Renting: 33360 },
+      { year: "3", Buying: 40910, Renting: 50040 },
+      { year: "4", Buying: 50880, Renting: 66720 },
+      { year: "5", Buying: 60850, Renting: 83400 },
+      { year: "6", Buying: 70820, Renting: 100080 },
+      { year: "7", Buying: 80790, Renting: 116760 },
+      { year: "8", Buying: 90760, Renting: 133440 },
+      { year: "9", Buying: 100730, Renting: 150120 },
+      { year: "10", Buying: 110700, Renting: 166800 },
+    ]}
+    x="year"
+    y={["Buying", "Renting"]}
+    highlight="Buying"
+    contextLabels
+    zero
+    format={{ style: "currency", currency: "GBP", maximumFractionDigits: 0 }}
+    title="Buying has a lower net cost than renting from year 2"
+    subtitle="Cumulative net cost in pounds by years since moving in. Net cost is payments minus wealth gained"
+  />}
+  heroText="The buyer pays £11,000 in tax and fees in year 1. After 2 years buying has a net cost of £30,940 and renting £33,360."
+  pairs={[
+    {
+      title: "Mortgage interest is £93,700 of the buyer's £218,000",
+      text: "Payments over 10 years by part. Rent is £181,500 of the renter's £185,700.",
+      a: <SegmentedBar
+        data={[
+          { part: "Mortgage interest", gbp: 93700 },
+          { part: "Capital repaid", gbp: 77300 },
+          { part: "Upkeep and insurance", gbp: 36000 },
+          { part: "Tax and fees", gbp: 11000 },
+        ]}
+        name="part"
+        value="gbp"
+        format="currency:GBP"
+      />,
+      b: <SegmentedBar
+        data={[{ part: "Rent", gbp: 181500 }, { part: "Fees and insurance", gbp: 4200 }]}
+        name="part"
+        value="gbp"
+        format="currency:GBP"
+      />,
+    },
+    {
+      title: "The buyer gains £107,300 in wealth and the renter £18,900",
+      text: "Wealth gained over 10 years by source. Both charts use the same scale.",
+      a: <BarChart
+        data={[{ part: "Capital repaid", gbp: 77300 }, { part: "Rise in the flat's price", gbp: 30000 }]}
+        x="part"
+        y="gbp"
+        sort="none"
+        orientation="horizontal"
+        format="currency:GBP"
+        option={{ xAxis: { max: 90000 } }}
+      />,
+      b: <BarChart
+        data={[{ part: "Growth on the invested deposit", gbp: 18900 }]}
+        x="part"
+        y="gbp"
+        sort="none"
+        orientation="horizontal"
+        format="currency:GBP"
+        highlight="none"
+        option={{ xAxis: { max: 90000 } }}
+      />,
+    },
+  ]}
+  verdict={{
+    lead: "Buy if you will stay 2 years or more",
+    body: "The figures assume a 4% mortgage rate, a flat price that rises 1% a year and a 5% annual return on the renter's invested deposit.",
+    tone: "positive",
+  }}
+  sources={["Lender mortgage calculator", "Letting agent listings collected by the author"]}
+  method="A £270,000 repayment mortgage over 25 years at 4%. The renter invests the £30,000 deposit. Net cost is payments minus capital repaid and growth."
+  note="Illustrative data"
 />
 ```
 

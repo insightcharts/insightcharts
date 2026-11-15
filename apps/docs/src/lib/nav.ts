@@ -52,4 +52,4 @@ export function guideOrder(): NavItem[] {
     .flatMap((g) => g.blocks.flatMap((b) => b.items));
 }
 
-export const topNav: NavItem[] = [{ title: "Docs", href: "/docs" }, ...LEVELS.map((l) => ({ title: l.title, href: `/${l.slug}` })), { title: INFOGRAPHICS.title, href: `/${INFOGRAPHICS.slug}`, paths: infographics().map(hrefOf) }];
+export const topNav: NavItem[] = [{ title: "Docs", href: "/docs" }, ...LEVELS.map((l) => ({ title: l.title, href: `/${l.slug}` })), { title: INFOGRAPHICS.title, href: `/${INFOGRAPHICS.slug}`, paths: infographics().map(hrefOf) }, { title: "Stories", href: "/stories" }];

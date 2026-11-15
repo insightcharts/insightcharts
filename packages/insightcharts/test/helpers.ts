@@ -12,5 +12,5 @@ export function stubCanvas(): void {
 
 /** A chart context as `build` functions and option helpers receive it, with no DOM involved. */
 export function makeCtx(overrides: Partial<ChartContext> = {}, tokens: ThemeTokens = defaultTheme.light): ChartContext {
-  return { tokens: resolveTokens(tokens), mode: "light", width: 640, height: 360, compact: false, locale: "en-US", animate: false, ...overrides };
+  return { tokens: resolveTokens(tokens), mode: "light", width: 640, height: 360, compact: false, locale: "en-US", animate: false, onDark: false, ...overrides };
 }

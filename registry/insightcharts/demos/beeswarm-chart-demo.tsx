@@ -90,6 +90,7 @@ const data = [
 export function BeeswarmChartDemo() {
   return (
     <BeeswarmChart
+      theme="science"
       data={data}
       value="rate"
       label="country"

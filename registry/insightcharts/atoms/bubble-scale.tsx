@@ -303,6 +303,7 @@ export const BubbleScale = defineChart<BubbleScaleProps>({
   ],
   example: {
     type: "bubble-scale",
+    theme: "sunrise",
     data: [
       { material: "Lithium", imported: 100, kt: 38 },
       { material: "Cobalt", imported: 86, kt: 21 },

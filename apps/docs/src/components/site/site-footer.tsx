@@ -8,6 +8,7 @@ export function SiteFooter() {
     { title: "Atoms", href: "/atoms" },
     { title: "Molecules", href: "/molecules" },
     { title: "Templates", href: "/templates" },
+    { title: "Stories", href: "/stories" },
     { title: "llms.txt", href: "/llms.txt", external: true },
     { title: "GitHub", href: site.github, external: true },
   ];

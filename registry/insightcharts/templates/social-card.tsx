@@ -1,7 +1,7 @@
 "use client";
 
 import { createElement, useEffect, useRef, useState, type CSSProperties, type RefObject } from "react";
-import { downloadBlob, withMeta, useTheme, renderSlot, type Slot, chromeVars, canvasToBlob, rasterize } from "insightcharts/core";
+import { downloadBlob, withMeta, themeGround, useTheme, renderSlot, type Slot, chromeVars, canvasToBlob, rasterize } from "insightcharts/core";
 import { Provide } from "@/components/insightcharts/molecules/_shared";
 import { button, INVERSE_HOST, useTemplate, withDefaults, type TemplateProps } from "@/components/insightcharts/templates/_shared";
 
@@ -55,9 +55,13 @@ const slug = (s: string) =>
  * at any size and in the downloaded image.
  */
 function SocialCardImpl({ title, kicker, deck, exhibit, source, credit, note, aspect = "1:1", tone = "surface", downloadable = true, exportWidth, filename, downloadLabel = "Download PNG", maxWidth, level = 2, onExport, className, style, ...rest }: SocialCardProps) {
-  const { ref, width, mode, root } = useTemplate(rest);
+  // A named theme with its own ground paints the card, not the frame around it: the frame and
+  // the download control stay in the host page's theme, so they stay legible on the host page.
+  const ownGround = typeof rest.theme === "string" && themeGround(rest.theme, "light") !== null;
+  const { ref, width, mode, root } = useTemplate(ownGround ? { mode: rest.mode, frame: false } : { ...rest, frame: false });
   const theme = useTheme(rest.theme);
   const cardMode = tone === "inverse" ? (mode === "dark" ? "light" : "dark") : mode;
+  const ground = (ownGround ? themeGround(rest.theme, cardMode) : null) ?? "var(--_ic-surface)";
   const card = useRef<HTMLDivElement>(null);
   const plot = useRef<HTMLDivElement>(null);
   const inner = useRef<HTMLDivElement>(null);
@@ -137,7 +141,7 @@ function SocialCardImpl({ title, kicker, deck, exhibit, source, credit, note, as
             padding: pad,
             display: "flex",
             flexDirection: "column",
-            background: "var(--_ic-surface)",
+            background: ground,
             color: "var(--_ic-ink)",
             fontFamily: "var(--_ic-font)",
             border: "1px solid var(--_ic-grid)",
@@ -220,7 +224,7 @@ export const SocialCard = withMeta(SocialCardImpl, {
   description: "A graphic that states one fact, at a fixed aspect ratio (1:1, 4:5, 16:9 or 9:16). It has a kicker, a headline, one exhibit, a source and a credit, painted on the theme surface. A button downloads the whole card as a PNG.",
   whenToUse: "Use it for one finding that will be shared in a feed, a slide or a chat thread with no text around it. State the fact with its number in the headline. Use one simple exhibit, such as one highlighted bar, one line or one number. Put the source and your name on the card, because it will be shared without the page. Use 1:1 or 4:5 for feeds, 16:9 for slides and link previews, 9:16 for stories.",
   avoid: "More than one fact or more than one exhibit (use `story-deck` for a sequence, `executive-brief` for a page). Charts that need a legend, small labels or hovering to read, because a shared image is not interactive. An exhibit with its own `title`, because the card's headline is the title.",
-  composes: ["bar-chart", "big-number", "waffle-chart", "source-note"],
+  composes: ["bar-chart", "big-number", "waffle-chart", "area-chart", "source-note"],
   props: [
     { name: "title", type: "string", required: true, description: "The card's one fact, as a plain sentence with the number in it." },
     { name: "kicker", type: "string", description: "Small label above the title." },
@@ -238,11 +242,12 @@ export const SocialCard = withMeta(SocialCardImpl, {
     { name: "maxWidth", type: "number", description: "Widest the card is drawn on screen, in px. Default 540 (520 for 4:5, 720 for 16:9, 400 for 9:16). In narrower containers the whole card is scaled down, like an image, so its composition never changes." },
     { name: "onExport", type: "(blob: Blob) => void", description: "Called with the PNG after a download." },
     { name: "level", type: "1 | 2 | 3 | 4 | 5 | 6", default: "2", description: "Heading level of the title." },
-    { name: "theme", type: "ThemeInput", description: "Theme override, passed on to the exhibit." },
+    { name: "theme", type: "ThemeInput", description: 'A built-in theme name (`"magenta"`, `"noir"`, `"editorial"`...) or a theme object, passed on to the exhibit. A named theme with its own surface paints the card in that surface; the download button stays in the page\'s theme.' },
     { name: "mode", type: '"auto" | "system" | "light" | "dark"', default: '"auto"', description: "Colour mode." },
   ],
   example: {
     type: "social-card",
+    theme: "magenta",
     aspect: "1:1",
     kicker: "Climate",
     title: "The world was 1.6°C warmer in 2024 than in 1850 to 1900",

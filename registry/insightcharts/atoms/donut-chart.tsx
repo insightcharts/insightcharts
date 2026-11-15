@@ -48,6 +48,7 @@ export const DonutChart = defineChart<DonutChartProps>({
   ],
   example: {
     type: "donut-chart",
+    theme: "paper",
     data: [
       { tenure: "Own outright", households: 8.8 },
       { tenure: "Own with a mortgage", households: 7.4 },

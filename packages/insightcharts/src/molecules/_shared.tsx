@@ -2,7 +2,7 @@ import { createElement, useEffect, type CSSProperties, type ReactNode } from "re
 import { useInsightStyles } from "../core/figure";
 import { formatDate } from "../core/format";
 import { useColorMode, type ModeInput } from "../core/mode";
-import { InsightProvider, useInsightConfig, useTheme } from "../core/provider";
+import { frameStyle, InsightProvider, useInsightConfig, useTheme } from "../core/provider";
 import { useData, useInsightData, type DataState } from "../core/store";
 import { chromeVars, type ThemeInput } from "../core/theme";
 import { useContainerWidth } from "../core/use-container-width";
@@ -13,7 +13,10 @@ import type { DataInput, Transform } from "../data/types";
 
 /** Props every molecule accepts. */
 export interface MoleculeProps {
+  /** A built-in theme name (`"editorial"`, `"ledger"`, `"noir"`...) or a theme object. A named theme with its own surface paints that surface behind the component. */
   theme?: ThemeInput;
+  /** Paint the theme's surface behind the component. Default: on when `theme` is a named theme with its own surface. `true` paints the surrounding theme's surface. */
+  frame?: boolean;
   /** `"auto"` (default) follows the page, `"system"` follows the OS, or force `"light"` / `"dark"`. */
   mode?: ModeInput;
   className?: string;
@@ -52,8 +55,13 @@ export function useMolecule<T extends HTMLElement = HTMLDivElement>(props: Molec
   const theme = useTheme(props.theme);
   const { mode } = useColorMode(ref, props.mode ?? config.mode);
   const tokens = theme[mode];
-  const root: CSSProperties = { ...(chromeVars(tokens) as CSSProperties), fontFamily: "var(--_ic-font)", color: "var(--_ic-ink)", minWidth: 0, boxSizing: "border-box" };
-  return { ref, width, mode, tokens, root, locale: config.locale };
+  // Only a component that was given the named theme itself paints the ground. Everything nested
+  // receives the theme through the provider, with no `theme` prop of its own, so it draws on
+  // that ground instead of painting a second card.
+  const painted = frameStyle(props.theme, mode, props.frame) ?? (props.frame === true ? { background: tokens.surface, padding: "1.25rem", borderRadius: 12 } : undefined);
+  // A percentage padding is measured against the container, so the frame is thinner on a phone without a width feedback loop.
+  const root: CSSProperties = { ...(chromeVars(tokens) as CSSProperties), fontFamily: "var(--_ic-font)", color: "var(--_ic-ink)", minWidth: 0, boxSizing: "border-box", ...painted, ...(painted ? { padding: "min(1.25rem, 4.2%)" } : null) };
+  return { ref, width, mode, tokens, root, locale: config.locale, painted: painted !== undefined };
 }
 
 /** Hands the molecule's `theme` and `mode` to every atom inside it, so nested charts and figures agree. */

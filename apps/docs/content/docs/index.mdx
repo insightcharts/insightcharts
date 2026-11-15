@@ -9,9 +9,15 @@ Every chart takes a **title** that states one fact with its number, an entity to
 
 Open the **Code** and **JSON** tabs above. They show the same chart as JSX and as a plain JSON spec. Every component in this library can be written both ways.
 
-## Three levels
+## Atomic Design
 
-Components are grouped into three levels by size.
+Atomic Design is a way of organising an interface as small parts that combine into larger ones. Brad Frost described it in 2013 with five levels named after chemistry: atoms, molecules, organisms, templates and pages. InsightCharts uses three of those names.
+
+- An **atom** is the smallest part that is useful alone. Here that is one chart form or one figure primitive.
+- A **molecule** is a few atoms combined to do one job. Here that is a combination that makes one point, such as a chart with a callout beside it.
+- A **template** is a complete layout with places for content. Here that is a whole page or poster that takes its content as props.
+
+InsightCharts has no organism level. A template filled with your data is the page.
 
 | Level | What it is | Examples |
 |---|---|---|
@@ -29,7 +35,7 @@ Every component page lists what the component is built from and where it is used
 
 <Example name="flow-poster" maxHeight={520} />
 
-## Features every chart has
+## Features on every chart
 
 Each chart is defined by one pure function that turns props and rows into an ECharts option. A shared factory supplies the features below, so they work the same way on every chart.
 

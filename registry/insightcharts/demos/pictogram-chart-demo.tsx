@@ -11,6 +11,7 @@ const data = [
 export function PictogramChartDemo() {
   return (
     <PictogramChart
+      theme="magenta"
       data={data}
       name="city"
       value="people"

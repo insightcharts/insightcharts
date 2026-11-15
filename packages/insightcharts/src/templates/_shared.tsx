@@ -42,7 +42,8 @@ export const SOURCING_DOCS = [
 export const FRAME_DOCS = [
   { name: "level", type: "1 | 2 | 3 | 4 | 5 | 6", default: "1", description: "Heading level of the title; section headings follow one level down." },
   { name: "maxWidth", type: "number | string", description: "Widest the piece may get. It is centred in wider containers." },
-  { name: "theme", type: "ThemeInput", description: "Theme override, passed on to everything inside." },
+  { name: "theme", type: "ThemeInput", description: 'A built-in theme name (`"editorial"`, `"ledger"`, `"noir"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece.' },
+  { name: "frame", type: "boolean", description: "Paint the theme's surface behind the piece, with page padding. Default: on when `theme` is a named theme with its own surface. Set false when the host already paints it." },
   { name: "mode", type: '"auto" | "system" | "light" | "dark"', default: '"auto"', description: "Colour mode, passed on to everything inside." },
 ];
 
@@ -72,7 +73,9 @@ export function useTemplate(props: MoleculeProps) {
   const phone = m.width < 560;
   // Space between the major blocks of a piece, on the 4px rhythm.
   const gap = phone ? 32 : m.width < 900 ? 40 : 48;
-  return { ...m, phone, gap };
+  // A painted piece is a page, not a chart card: it gets page margins that scale with its width.
+  const root: CSSProperties = m.painted ? { ...m.root, padding: phone ? "28px 20px" : m.width < 900 ? "40px 36px" : "56px 56px", borderRadius: phone ? 12 : 16 } : m.root;
+  return { ...m, root, phone, gap };
 }
 
 /** Style for a template's root `<article>`. */

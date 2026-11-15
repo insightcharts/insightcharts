@@ -1,5 +1,5 @@
 import { ScatterChart as EScatter } from "echarts/charts";
-import { alpha } from "../core/color";
+import { alpha, luminance } from "../core/color";
 import { defineChart } from "../core/define";
 import { measureText } from "../core/layout";
 import type { LegendItem } from "../core/figure";
@@ -136,6 +136,7 @@ export const BeeswarmChart = defineChart<BeeswarmChartProps>({
   ],
   example: {
     type: "beeswarm-chart",
+    theme: "science",
     data: [
       ["Qatar", 0.4], ["Kuwait", 0.6], ["UAE", 0.9], ["Saudi Arabia", 1.2], ["Japan", 2.5], ["Italy", 2.9], ["Germany", 3.0], ["United States", 3.6], ["France", 3.1], ["Spain", 3.3], ["United Kingdom", 3.4], ["Canada", 3.2],
       ["Australia", 3.1], ["South Korea", 2.4], ["Netherlands", 2.8], ["Sweden", 2.6], ["Norway", 2.5], ["Switzerland", 2.3], ["Poland", 4.2], ["Portugal", 3.1], ["Greece", 3.9], ["Ireland", 2.7], ["Denmark", 2.4], ["Finland", 2.9],
@@ -164,6 +165,8 @@ export const BeeswarmChart = defineChart<BeeswarmChartProps>({
   },
   build(p, ctx) {
     const t = ctx.tokens;
+    // Judged by the surface, not the page mode: a poster theme paints a dark ground on a light page.
+    const onDark = /^(#|rgb)/.test(t.surface) ? luminance(t.surface) < 0.2 : ctx.mode === "dark";
     const fmt = ctx.fmt;
 
     const dots: Dot[] = [];
@@ -264,7 +267,7 @@ export const BeeswarmChart = defineChart<BeeswarmChartProps>({
     const nameOf = (id: string) => (id === "__other" ? "Other" : id === "__dots" ? p.value : p.names?.[id] ?? id);
     const groupIdx = new Map(groups.map((g, i) => [g, i]));
     const ring = r >= 3 ? 1 : 0;
-    const base = ctx.mode === "dark" ? 0.95 : 0.9;
+    const base = onDark ? 0.95 : 0.9;
 
     const labelHalf = (name: string) => measureText(name, t.fontSize, t.fontFamily, 600) / 2 - right + 4;
 
@@ -290,7 +293,7 @@ export const BeeswarmChart = defineChart<BeeswarmChartProps>({
             name: d.name,
             // The drawn x may differ slightly from the value (see `swarm`); the true value rides along for the tooltip.
             value: [lo + d.at / scale, centre(groupIdx.get(d.group) ?? 0) + clampOff(d.off), d.group, d.v],
-            itemStyle: { color: alpha(colorOf(d), (sel ? 1 : 0.25) * (anyHighlight && !lit ? (ctx.mode === "dark" ? 1 : 0.75) : base)), borderColor: t.surface, borderWidth: ring },
+            itemStyle: { color: alpha(colorOf(d), (sel ? 1 : 0.25) * (anyHighlight && !lit ? (onDark ? 1 : 0.75) : base)), borderColor: t.surface, borderWidth: ring },
             label: named ? { show: true, formatter: d.name, position: d.at < labelHalf(d.name) ? ("right" as const) : d.at > plotW - labelHalf(d.name) ? ("left" as const) : ("top" as const), distance: 4, ...labelStyle(ctx, { color: t.ink, fontWeight: 600 }), textBorderColor: t.surface, textBorderWidth: 2.5 } : { show: false },
           };
         }),
@@ -423,6 +426,7 @@ export const examples = {
     note: "Illustrative data",
   },
   "Colour by series, long format": {
+    theme: "poster",
     data: salaries,
     value: "salary",
     group: "team",
@@ -435,6 +439,7 @@ export const examples = {
     note: "Illustrative data",
   },
   "Highlight a whole row": {
+    theme: "dusk",
     data: salaries,
     value: "salary",
     group: "team",
@@ -447,6 +452,7 @@ export const examples = {
     note: "Illustrative data",
   },
   "Stress: 2,000 dots": {
+    theme: "earth",
     data: stress,
     value: "minutes",
     label: "id",

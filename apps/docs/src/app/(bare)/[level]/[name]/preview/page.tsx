@@ -7,7 +7,7 @@ import { PosterCanvas, PreviewCanvas, PreviewToolbar } from "@/components/catalo
 import { Render } from "@/components/catalog/render";
 import { ThemeToggle } from "@/components/site/theme-toggle";
 import { byLevel, getComponent, hrefOf, isPoster, levelBySlug, sectionOf } from "@/lib/catalog";
-import { posterGround } from "@/lib/posters";
+import { authoredGround, posterGround } from "@/lib/posters";
 
 // The full-screen view of a template: the example with nothing around it but a thin bar.
 export const dynamicParams = false;
@@ -55,8 +55,8 @@ export default async function TemplatePreview({ params }: { params: Params }) {
             <PosterRender name={c.name} />
           </PosterCanvas>
         ) : (
-          <PreviewCanvas className="flex-1 sm:px-8 sm:py-12">
-            <Render name={c.name} />
+          <PreviewCanvas ground={authoredGround(c.example)} className="flex-1 sm:px-8 sm:py-12">
+            <Render name={c.name} followTheme />
           </PreviewCanvas>
         )}
       </main>

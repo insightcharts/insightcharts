@@ -14,6 +14,7 @@ export function BarChartDemo() {
       y="share"
       format="{value}%"
       title="Renewables supplied 98% of Norway's electricity in 2023"
+      theme="ledger"
     />
   );
 }

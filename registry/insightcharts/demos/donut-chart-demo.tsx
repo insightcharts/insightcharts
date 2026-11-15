@@ -10,6 +10,7 @@ const data = [
 export function DonutChartDemo() {
   return (
     <DonutChart
+      theme="paper"
       data={data}
       name="tenure"
       value="households"

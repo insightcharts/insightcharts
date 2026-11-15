@@ -1,7 +1,7 @@
 "use client";
 
 import { CustomChart } from "echarts/charts";
-import { alpha, inkOn, mix, defineChart, measureText, truncateText, morph, tooltipHtml } from "insightcharts/core";
+import { alpha, inkOn, luminance, mix, defineChart, measureText, truncateText, morph, tooltipHtml } from "insightcharts/core";
 import { toNumber } from "insightcharts/data";
 
 export interface PillRankProps {
@@ -56,6 +56,7 @@ export const PillRank = defineChart<PillRankProps>({
   ],
   example: {
     type: "pill-rank",
+    theme: "paper",
     data: [
       { river: "Nile", km: 6650 },
       { river: "Amazon", km: 6400 },
@@ -81,6 +82,8 @@ export const PillRank = defineChart<PillRankProps>({
   },
   build(p, ctx) {
     const t = ctx.tokens;
+    // Judged by the surface, not the page mode: a poster theme paints a dark ground on a light page.
+    const onDark = /^(#|rgb)/.test(t.surface) ? luminance(t.surface) < 0.2 : ctx.mode === "dark";
     const W = ctx.width;
     type Row = { key: string; value: number; rank: number | null };
     const all: Row[] = [];
@@ -126,7 +129,7 @@ export const PillRank = defineChart<PillRankProps>({
     const anyHighlight = ctx.highlight.length > 0;
     const baseOf = (r: Row) => (cmp.has(r.key) && !(anyHighlight && !ctx.dimmed(r.key)) ? t.context : ctx.color(r.key));
     const fillOf = (r: Row) => (ctx.selected(r.key) ? baseOf(r) : mix(t.surface, baseOf(r), 0.3));
-    const track = alpha(t.ink, ctx.mode === "dark" ? 0.09 : 0.055);
+    const track = alpha(t.ink, onDark ? 0.09 : 0.055);
 
     const renderItem = (params: any) => {
       const i = params.dataIndex;

@@ -1,24 +1,22 @@
 import { ArrowRight, Braces, FileText, Package, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { ComponentCard } from "@/components/catalog/component-card";
-import { Thumbnail } from "@/components/catalog/component-card";
 import { PosterThumb } from "@/components/catalog/poster-thumb";
 import { Render } from "@/components/catalog/render";
+import { HeroStory } from "@/components/landing/hero-story";
 import { Section } from "@/components/landing/section";
 import { BareDemo, Demo } from "@/components/mdx/demo";
 import { CopyButton } from "@/components/site/copy-button";
-import { byLevel, components, getComponent, hrefOf, infographics, INFOGRAPHICS, levelInfo, LEVELS, pageTemplates, posterPrimitives, type CatalogEntry } from "@/lib/catalog";
+import { byLevel, components, hrefOf, infographics, INFOGRAPHICS, LEVELS, pageTemplates, type CatalogEntry } from "@/lib/catalog";
 import { groundOfTheme, posterGround, posterWidth } from "@/lib/posters";
+import { STORIES } from "@/lib/stories";
 
 const INSTALL = "npm i insightcharts echarts";
 
-// The ladder the page walks: an atom, a molecule that lists it in its composes, and a template
-// that lists the molecule. Checked against the catalogue below, so it cannot quietly go stale.
-const HERO = { atom: "big-number", molecule: "stat-row", template: "executive-brief" };
 // Preferred examples for the tour. Anything missing is filled from the catalogue.
 const FEATURED: Record<string, string[]> = {
-  atom: ["line-chart", "callout", "big-number"],
-  molecule: ["chart-callout", "stat-row", "kpi-grid"],
+  atom: ["line-chart", "waffle-chart", "big-number"],
+  molecule: ["chart-callout", "stat-row", "proportion-statement"],
   template: ["visual-essay", "executive-brief"],
 };
 
@@ -65,34 +63,10 @@ function Links({ label, items }: { label: string; items: CatalogEntry[] }) {
   );
 }
 
-/** One rung of the hero ladder: a labelled, linked frame around a live example. */
-function Rung({ index, entry, children, className }: { index: number; entry: CatalogEntry; children: React.ReactNode; className?: string }) {
-  return (
-    <div className={`group relative flex min-w-0 flex-col overflow-hidden rounded-xl border bg-background transition-colors focus-within:ring-2 focus-within:ring-ring hover:border-foreground/25 ${className ?? ""}`}>
-      <div className="flex items-center gap-2 border-b px-3.5 py-2 text-xs">
-        <span className="font-mono tabular-nums text-muted-foreground">0{index}</span>
-        <span className="text-muted-foreground">{levelInfo(entry.level).singular}</span>
-        <Link href={hrefOf(entry)} className="truncate font-medium outline-none after:absolute after:inset-0 after:content-['']">
-          {entry.title}
-        </Link>
-        <ArrowRight className="ml-auto size-3.5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" aria-hidden />
-      </div>
-      {children}
-    </div>
-  );
-}
-
 const button = "inline-flex h-9 items-center gap-1.5 rounded-md px-3.5 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none";
 
 export default function Home() {
   const counts = LEVELS.map((l) => byLevel(l.level).length);
-  const atom = getComponent(HERO.atom);
-  const molecule = getComponent(HERO.molecule);
-  const template = getComponent(HERO.template);
-  const ladder = atom && molecule && template && molecule.composes?.includes(atom.name) && template.composes?.includes(molecule.name) ? { atom, molecule, template } : null;
-  // The same figures at all three levels: the template's first figure is the atom, its row
-  // of figures is the molecule. Falls back to each component's own example.
-  const figures = Array.isArray(template?.example?.figures) ? (template.example.figures as Record<string, unknown>[]) : null;
   const picks = Object.fromEntries(LEVELS.map((l) => [l.level, featured(l.level, l.level === "template" ? 2 : 3)])) as Record<CatalogEntry["level"], CatalogEntry[]>;
   const templates = pageTemplates();
   const posters = featuredPosters(3);
@@ -105,64 +79,43 @@ export default function Home() {
   ];
   return (
     <main id="content">
-      {/* Hero: description and install on the left, live components on the right. */}
-      <section className="container-page grid items-center gap-x-12 gap-y-10 py-12 sm:py-16 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:py-20">
-        <div>
-          <p className="mb-4 font-mono text-xs tracking-wide text-muted-foreground">Open source · React 19 · Apache ECharts 6</p>
-          <h1 className="max-w-[16ch] text-4xl font-semibold tracking-tight text-balance sm:text-5xl sm:leading-[1.05]">A React chart library built on Apache ECharts</h1>
-          <p className="mt-5 max-w-[46ch] text-[17px] leading-7 text-muted-foreground text-pretty">
-            InsightCharts has {counts[0]} atoms, {counts[1]} molecules and {counts[2]} templates.{posterCount ? ` ${posterCount} of the templates are infographics.` : ""} Each one is a chart, a figure, a page layout or a poster that can be written as JSX or as a JSON spec.
-          </p>
-          <div className="mt-7 flex max-w-sm items-center gap-2 rounded-lg border bg-muted/40 py-1.5 pl-3.5 pr-1.5 font-mono text-[13px]">
-            <span className="select-none text-muted-foreground/70">$</span>
-            <code className="min-w-0 flex-1 truncate">{INSTALL}</code>
-            <CopyButton value={INSTALL} label="Copy install command" />
+      {/* Hero: the title and install line, then one live piece that shows the library at work. */}
+      <section className="container-page pb-14 pt-10 sm:pb-20 sm:pt-14">
+        <div className="grid items-end gap-x-12 gap-y-6 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
+          <div>
+            <p className="mb-4 font-mono text-xs tracking-wide text-muted-foreground">Open source · React 19 · Apache ECharts 6</p>
+            <h1 className="max-w-[26ch] text-[30px] font-semibold leading-[1.1] tracking-[-0.022em] text-balance sm:text-[40px] sm:leading-[1.06] xl:text-[46px]">An Infographics, Data Stories, and Data Journalism Chart Framework</h1>
           </div>
-          <div className="mt-5 flex flex-wrap gap-2.5">
-            <Link href="/docs/quickstart" className={`${button} bg-primary text-primary-foreground hover:bg-primary/90`}>
-              Get started <ArrowRight className="size-3.5" />
-            </Link>
-            <Link href="/atoms" className={`${button} border hover:bg-accent`}>
-              Browse {components.length} components
-            </Link>
+          <div>
+            <p className="max-w-[52ch] text-base leading-7 text-muted-foreground text-pretty">An open source react library built on Apache Echarts with flexible components to build any data graphic, following data journalism visualization best practices.</p>
+            <div className="mt-5 flex flex-wrap items-center gap-2.5">
+              <div className="flex h-9 min-w-0 max-w-full items-center gap-2 rounded-md border bg-muted/40 pl-3 pr-1 font-mono text-[13px]">
+                <span className="select-none text-muted-foreground/70">$</span>
+                <code className="min-w-0 flex-1 truncate">{INSTALL}</code>
+                <CopyButton value={INSTALL} label="Copy install command" />
+              </div>
+              <Link href="/docs/quickstart" className={`${button} bg-primary text-primary-foreground hover:bg-primary/90`}>
+                Get started <ArrowRight className="size-3.5" />
+              </Link>
+              <Link href="/atoms" className={`${button} border hover:bg-accent`}>
+                Browse {components.length} components
+              </Link>
+            </div>
           </div>
         </div>
-        {ladder ? (
-          <figure className="min-w-0">
-            <div className="grid gap-3 sm:grid-cols-[minmax(0,5fr)_minmax(0,9fr)]">
-              <Rung index={1} entry={ladder.atom}>
-                <div className="flex flex-1 items-center overflow-hidden px-4 py-4 sm:h-[224px]">
-                  <div className="w-full min-w-0">
-                    <Render name={ladder.atom.name} props={figures?.[0] ?? ladder.atom.example} />
-                  </div>
-                </div>
-              </Rung>
-              <Rung index={2} entry={ladder.molecule}>
-                {/* The row is laid out for a wide container on the server and re-flows once it is
-                    measured. A fixed height keeps that from moving the rest of the page. */}
-                <div className="flex h-[264px] items-center overflow-hidden px-4 py-4 sm:h-[224px]">
-                  <div className="w-full min-w-0">
-                    <Render name={ladder.molecule.name} props={figures ? { items: figures } : ladder.molecule.example} />
-                  </div>
-                </div>
-              </Rung>
-              <Rung index={3} entry={ladder.template} className="sm:col-span-2">
-                <Thumbnail entry={ladder.template} aspect={16 / 9} eager />
-              </Rung>
-            </div>
-            <figcaption className="mt-3 text-xs leading-5 text-muted-foreground">These are live components. The first is one figure as an atom. The second is a row of figures as a molecule. The third is a one-page brief that starts with that row, as a template.</figcaption>
-          </figure>
-        ) : null}
+        <div className="mt-9 sm:mt-11">
+          <HeroStory />
+        </div>
       </section>
 
       {posters.length ? (
         <Section
           id="infographics"
           label="Infographics"
-          title={`${posterCount} templates draw a whole poster`}
+          title="Build interactive infographic posters"
           intro={
             <p>
-              An infographic is one designed sheet with a painted background, little text and large graphics. <Link href={`/${INFOGRAPHICS.slug}`}>See all {posterCount} infographics</Link>, or <Link href="/docs/infographics">read the guide</Link>.
+              {posterCount} of the templates are infographics. Each one is a designed sheet with a painted background, little text and large graphics, and every mark has a tooltip and can be clicked. <Link href={`/${INFOGRAPHICS.slug}`}>See all {posterCount} infographics</Link>, or <Link href="/docs/infographics">read the guide</Link>.
             </p>
           }
         >
@@ -186,8 +139,12 @@ export default function Home() {
       <Section
         id="levels"
         label="Atoms, molecules, templates"
-        title="Components come in three levels"
-        intro={<p>Atoms are single charts and figure primitives. Molecules combine a few atoms to make one point. Templates arrange molecules and atoms into a complete page. Each card below names the components it uses. Every component page lists what the component is built from and where it is used.</p>}
+        title="Chart components follow Atomic Design"
+        intro={
+          <p>
+            The {components.length} components are {counts[0]} atoms, {counts[1]} molecules and {counts[2]} templates. Atoms are single charts and figure primitives. Molecules combine a few atoms to make one point. Templates arrange molecules and atoms into a complete page. Each card below names the components it uses. <Link href="/docs#atomic-design">Read what the Atomic Design terms mean</Link>.
+          </p>
+        }
       >
         <div className="grid gap-12">
           {LEVELS.map((l, i) => {
@@ -230,7 +187,8 @@ export default function Home() {
         <Section
           id="templates"
           label="Templates"
-          title="Templates lay out a whole page"
+          title="Data journalism templates inspired by the NY Times, Reuters, FiveThirtyEight, Edward Tufte, Stephen Few, and industry giants."
+          titleClassName="max-w-[30ch] text-xl sm:text-2xl sm:leading-8"
           intro={
             <p>
               Each template is one component that takes its whole content as props: a title, figures, chart specs and sources. <Link href="/docs/templates">Read the guide</Link>, or open any of the {templates.length} below.
@@ -250,7 +208,7 @@ export default function Home() {
       <Section
         id="agents"
         label="JSON specs"
-        title="Every component can be written as JSON"
+        title="Write any component as JSON"
         intro={
           <p>
             Props are field names, format strings and transform objects, with no accessor functions, so a chart can be a plain JSON document. Edit the spec below. <code>{"<Insight spec />"}</code> redraws it each time the JSON is valid.
@@ -288,7 +246,7 @@ export default function Home() {
       <Section
         id="crossfilter"
         label="Crossfiltering"
-        title="A click on one chart filters the others"
+        title="Easily add cross-filtering across multiple charts"
         intro={
           <p>
             Wrap charts in <code>InsightData</code>, mark some as <code>select</code>, and they share one dataset and one selection. You do not write any state code. <Link href="/docs/crossfiltering">Read the guide</Link>.
@@ -301,14 +259,33 @@ export default function Home() {
       <Section
         id="story"
         label="Scroll stories"
-        title="A chart that changes as the reader scrolls"
+        title="Scrolling animated data stories"
         intro={
           <p>
-            <code>Scrolly</code> pins a graphic and gives it a new state at each step. The chart animates from one state to the next. On phones the steps become cards that swipe, and a steps mode with buttons works in any container. <Link href="/docs/stories">Read the guide</Link>.
+            <code>Scrolly</code> pins a graphic and gives it a new state at each step. The chart animates from one state to the next. The story below regroups and recolours 96 dots in five steps. <Link href="/stories">See all {STORIES.length} scroll stories</Link>, or <Link href="/docs/stories">read the guide</Link>.
           </p>
         }
       >
-        <BareDemo name="scroll-story" props={{ stickyTop: 72, stepHeight: "64vh" }} />
+        <BareDemo name="story-dots" props={{ stickyTop: 56, stepHeight: "64vh" }} />
+        <div className="mt-12 grid gap-x-12 gap-y-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+          <div>
+            <h3 className="text-lg font-semibold tracking-tight">Step through with buttons</h3>
+            <p className="mt-1.5 max-w-[46ch] text-sm leading-6 text-muted-foreground">
+              The same component in <code className="rounded bg-muted px-1 py-0.5 font-mono text-[0.86em] text-foreground">mode="steps"</code> needs no scrolling room. This story adds one period to a ribbon chart at each step. The left and right arrow keys also move between steps.
+            </p>
+            <p className="mt-6 font-mono text-xs tracking-wide text-muted-foreground">In the gallery</p>
+            <ul className="mt-2.5 grid gap-2 text-sm">
+              {STORIES.map((s) => (
+                <li key={s.id}>
+                  <Link href={`/stories#${s.id}`} className="group inline-flex items-center gap-1.5 font-medium underline decoration-border underline-offset-4 hover:decoration-foreground">
+                    {s.title} <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <BareDemo name="story-ribbon" props={{ mode: "steps" }} />
+        </div>
       </Section>
 
       <Section

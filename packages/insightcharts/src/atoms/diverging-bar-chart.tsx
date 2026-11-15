@@ -298,6 +298,7 @@ export const DivergingBarChart = defineChart<DivergingBarChartProps>({
 
 export const examples = {
   "Likert scale around a neutral midpoint": {
+    theme: "science",
     data: [
       { statement: "My manager gives me useful feedback", sd: 4, d: 9, n: 14, a: 45, sa: 28 },
       { statement: "I have the tools I need to do my job", sd: 6, d: 15, n: 17, a: 42, sa: 20 },
@@ -315,6 +316,7 @@ export const examples = {
     note: "Illustrative figures.",
   },
   "Two opposed groups, long format": {
+    theme: "paper",
     data: [
       ["75+", 3.1, 4.6], ["60 to 74", 7.9, 8.6], ["45 to 59", 10.2, 10.4], ["30 to 44", 10.1, 9.9], ["15 to 29", 9.3, 8.8], ["0 to 14", 8.7, 8.3],
     ].flatMap(([age, men, women]) => [
@@ -332,6 +334,7 @@ export const examples = {
     note: "Illustrative figures.",
   },
   "Vertical over time, good and bad": {
+    theme: "earth",
     data: [
       { month: "2024-01", jobs: 119 }, { month: "2024-02", jobs: 222 }, { month: "2024-03", jobs: 246 }, { month: "2024-04", jobs: 118 }, { month: "2024-05", jobs: 193 }, { month: "2024-06", jobs: 87 },
       { month: "2024-07", jobs: -32 }, { month: "2024-08", jobs: -71 }, { month: "2024-09", jobs: 44 }, { month: "2024-10", jobs: -28 }, { month: "2024-11", jobs: 161 }, { month: "2024-12", jobs: 203 },
@@ -345,6 +348,7 @@ export const examples = {
     note: "Illustrative figures.",
   },
   "Stress: 14 long statements, one highlighted, normalised": {
+    theme: "mono",
     data: [
       "The government should raise taxes on the highest earners", "Public transport should be free for people under 25", "The retirement age should rise in line with life expectancy", "New housing should be allowed on protected countryside",
       "Private cars should be banned from the city centre", "University tuition should be paid entirely by the state", "The country should build new nuclear power stations", "Immigration quotas should be set by regional governments",

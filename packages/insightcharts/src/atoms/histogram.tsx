@@ -46,6 +46,7 @@ export const Histogram = defineChart<HistogramProps>({
   ],
   example: {
     type: "histogram",
+    theme: "earth",
     data: [14, 18, 18, 19, 20, 21, 21, 22, 23, 23, 23, 23, 24, 25, 25, 27, 27, 27, 27, 27, 28, 28, 28, 28, 29, 29, 29, 29, 30, 31, 31, 31, 31, 32, 32, 32, 32, 32, 33, 33, 33, 34, 34, 34, 34, 35, 35, 35, 35, 35, 35, 35, 36, 36, 36, 37, 37, 37, 38, 38, 40, 40, 40, 40, 41, 41, 42, 42, 42, 43, 45, 45, 46, 47, 47, 48, 48, 49, 49, 51, 51, 54, 54, 55, 57, 57, 59, 59, 61, 66].map((minutes) => ({ minutes })),
     value: "minutes",
     step: 5,
@@ -217,6 +218,7 @@ export const examples = {
     note: "Illustrative data",
   },
   "Skewed, with mean and median": {
+    theme: "mono",
     data: incomes,
     value: "income",
     step: 10000,
@@ -230,6 +232,7 @@ export const examples = {
     note: "Illustrative data",
   },
   "Two peaks": {
+    theme: "magenta",
     data: eruptions,
     value: "wait",
     bins: 20,
@@ -241,6 +244,7 @@ export const examples = {
     note: "Illustrative data modelled on the Old Faithful geyser dataset",
   },
   "Stress: few rows, many bins": {
+    theme: "ledger",
     data: [2, 3, 3, 4, 4, 4, 5, 5, 6, 7, 7, 9, 12, 18, 31].map((days) => ({ days })),
     value: "days",
     step: 1,

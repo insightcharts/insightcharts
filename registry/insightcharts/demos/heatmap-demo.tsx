@@ -48,6 +48,7 @@ const data = [
 export function HeatmapDemo() {
   return (
     <Heatmap
+      theme="dusk"
       data={data}
       x="slot"
       y="day"

@@ -3,6 +3,7 @@ import { GlyphTable } from "@/components/insightcharts/atoms/glyph-table";
 export function GlyphTableDemo() {
   return (
     <GlyphTable
+      theme="noir"
       caption="Filter coffee sold 310 cups a day at £2.40 a cup"
       subtitle="Six drinks at one café: price, cups sold per day, share ordered with oat milk, seconds to prepare and caffeine"
       note="Illustrative figures."

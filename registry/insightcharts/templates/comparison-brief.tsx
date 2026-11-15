@@ -194,8 +194,8 @@ function ComparisonBriefImpl({ title, kicker, deck, byline, date, a, b, subject 
 // Cumulative cost of ownership: purchase (after grant) plus running costs, per year.
 const ownership = Array.from({ length: 16 }, (_, year) => ({ year: String(year), saving: 3000 + 980 * year - (3500 + 855 * year) }));
 const MONTH = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-const pumpBill = [142, 128, 102, 68, 40, 28, 25, 26, 38, 66, 98, 134].map((cost, i) => ({ month: MONTH[i], cost }));
-const boilerBill = [158, 141, 115, 78, 49, 37, 34, 35, 46, 74, 107, 146].map((cost, i) => ({ month: MONTH[i], cost }));
+const pumpBill = [120, 108, 86, 57, 34, 24, 21, 22, 32, 56, 83, 112].map((cost, i) => ({ month: MONTH[i], cost }));
+const boilerBill = [139, 124, 101, 69, 43, 33, 30, 31, 41, 65, 94, 130].map((cost, i) => ({ month: MONTH[i], cost }));
 const lifetime = (purchase: number, energy: number, service: number) => [
   { part: "Purchase and fitting", gbp: purchase },
   { part: "Energy", gbp: energy },
@@ -210,7 +210,7 @@ export const ComparisonBrief = withMeta(ComparisonBriefImpl, {
   description: "A compared with B on one page. It has a headline that states the result, the headline figures mirrored either side of their labels, one hero exhibit that shows both sides, paired exhibits on a shared scale, a verdict callout and a source note.",
   whenToUse: "Use it for two things a reader has to choose between or compare, such as two countries, two products or a before and an after. Write the result with its number in the headline. Put the four or five most important measures in `figures`. Use a two-series line, dumbbell, slope or `before-after` as the hero. In each pair, use the same chart form and the same scale for both sides. The `subject` side takes the accent colour everywhere and the other side stays grey.",
   avoid: "Three or more things (use a `comparison-table` or `small-multiple-grid` inside a `report-page`). One thing over time with nothing to compare it with (use `timeline-story`). Paired charts on different scales, because readers compare bar lengths across the pair.",
-  composes: ["headline", "prose", "callout", "source-note", "line-chart", "bar-chart", "segmented-bar"],
+  composes: ["headline", "prose", "callout", "source-note", "line-chart", "bar-chart", "segmented-bar", "waffle-chart"],
   props: [
     { name: "title", type: "string", required: true, description: "The result of the comparison, as one plain sentence with the number in it." },
     { name: "kicker", type: "string", description: "Small label above the title." },
@@ -230,6 +230,7 @@ export const ComparisonBrief = withMeta(ComparisonBriefImpl, {
   ],
   example: {
     type: "comparison-brief",
+    theme: "earth",
     kicker: "Home heating",
     title: "With the £7,500 grant, a heat pump repays its extra £500 cost in 4 years",
     deck: "After the grant a heat pump costs £3,500 to buy and fit. A gas boiler costs £3,000. The heat pump costs £855 a year to run. The boiler costs £980.",
@@ -259,15 +260,15 @@ export const ComparisonBrief = withMeta(ComparisonBriefImpl, {
     heroText: "Without the grant the heat pump costs £11,000 to buy and fit. That is £8,000 more than the boiler. A saving of £125 a year would take 64 years to repay it.",
     pairs: [
       {
-        title: "The January energy bill is £142 for the heat pump and £158 for the boiler",
+        title: "The January energy bill is £120 for the heat pump and £139 for the boiler",
         text: "Estimated monthly energy cost for heating and hot water. Both charts use the same scale. The heat pump's bill is lower in all 12 months.",
-        a: { type: "bar-chart", data: pumpBill, x: "month", y: "cost", orientation: "vertical", sort: "none", labels: false, format: "currency:GBP", height: 200, option: { yAxis: { max: 160 } } },
-        b: { type: "bar-chart", data: boilerBill, x: "month", y: "cost", orientation: "vertical", sort: "none", labels: false, format: "currency:GBP", height: 200, highlight: "none", option: { yAxis: { max: 160 } } },
+        a: { type: "bar-chart", data: pumpBill, x: "month", y: "cost", orientation: "vertical", sort: "none", labels: false, format: "currency:GBP", height: 200, option: { yAxis: { max: 140 } } },
+        b: { type: "bar-chart", data: boilerBill, x: "month", y: "cost", orientation: "vertical", sort: "none", labels: false, format: "currency:GBP", height: 200, highlight: "none", option: { yAxis: { max: 140 } } },
       },
       {
         title: "Cost over 15 years by part",
-        text: "Energy is £12,075 of the heat pump's cost. It is £13,500 of the boiler's.",
-        a: { type: "segmented-bar", data: lifetime(3500, 12075, 1500), name: "part", value: "gbp", format: "currency:GBP" },
+        text: "Energy is £11,325 of the heat pump's £16,325. It is £13,500 of the boiler's £17,700.",
+        a: { type: "segmented-bar", data: lifetime(3500, 11325, 1500), name: "part", value: "gbp", format: "currency:GBP" },
         b: { type: "segmented-bar", data: lifetime(3000, 13500, 1200), name: "part", value: "gbp", format: "currency:GBP" },
       },
     ],

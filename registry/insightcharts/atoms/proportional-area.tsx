@@ -3,6 +3,7 @@
 import { CustomChart } from "echarts/charts";
 import { alpha, inkOn, mix, defineChart, type LegendItem, makeFormatter, type Formatter, dodge, measureText, truncateText, wrapText, morph, tooltipHtml } from "insightcharts/core";
 import { toNumber } from "insightcharts/data";
+import { _posterPalette } from "@/components/insightcharts/atoms/_poster-colors";
 
 export interface ProportionalAreaProps {
   /** Category field: one shape per row. */
@@ -425,6 +426,7 @@ export const ProportionalArea = defineChart<ProportionalAreaProps>({
   ],
   example: {
     type: "proportional-area",
+    theme: "blueprint",
     data: [
       { lake: "Superior", area: 82100 },
       { lake: "Victoria", area: 68900 },
@@ -450,8 +452,10 @@ export const ProportionalArea = defineChart<ProportionalAreaProps>({
     const nested = p.layout === "nested";
     // A layout taller than an explicit `height`: scale the whole drawing down rather than clip it.
     const k = L.height > ctx.height + 1 ? ctx.height / L.height : 1;
+    // A poster palette may hold only 4 colours: past its size take steps derived from the theme rather than repeat one.
+    const derived = !ctx.highlight.length && items.length > t.categorical.length ? _posterPalette(t, items.length) : null;
     const colours = items.map((it, i) => {
-      const base = ctx.color(it.key, i);
+      const base = derived ? derived[i] : ctx.color(it.key, i);
       // Faded by mixing towards the surface, not by transparency: nested shapes sit on each other, and the printed label needs a readable ink.
       return ctx.selected(it.key) ? base : mix(t.surface, base, 0.3);
     });

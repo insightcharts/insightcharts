@@ -4,7 +4,7 @@ import { useInsightStyles } from "../core/figure";
 import { makeFormatter, type FormatSpec } from "../core/format";
 import { withMeta } from "../core/meta";
 import { useColorMode, type ModeInput } from "../core/mode";
-import { useInsightConfig, useTheme } from "../core/provider";
+import { frameStyle, useInsightConfig, useTheme } from "../core/provider";
 import { chromeVars, type ThemeInput } from "../core/theme";
 
 export interface DeltaProps {
@@ -18,23 +18,31 @@ export interface DeltaProps {
   direction?: "up" | "down" | "flat";
   format?: FormatSpec;
   /** Text size. Inherits from the surrounding text when omitted. */
-  size?: "sm" | "md" | "lg";
-  /** `"pill"` wraps the value in a tinted capsule, for use in tiles and table cells. */
-  variant?: "text" | "pill";
+  size?: "sm" | "md" | "lg" | "xl";
+  /** `"pill"` wraps the value in a tinted capsule, for use in tiles and table cells; `"solid"` fills the capsule. */
+  variant?: "text" | "pill" | "solid";
+  /**
+   * Colour of the value. `"auto"` (default) is positive or negative according to the direction and `upIsGood`.
+   * `"inherit"` takes the surrounding text colour, for use on a coloured ground.
+   */
+  tone?: "auto" | "neutral" | "accent" | "positive" | "negative" | "inherit";
+  /** Paint a named theme's own background behind the indicator. Default true when `theme` is a theme name. */
+  frame?: boolean;
   theme?: ThemeInput;
   mode?: ModeInput;
   className?: string;
   style?: CSSProperties;
 }
 
-const SIZES = { sm: "0.75rem", md: "0.875rem", lg: "1rem" } as const;
+const SIZES = { sm: "0.75rem", md: "0.875rem", lg: "1rem", xl: "1.25rem" } as const;
+const TONES = { neutral: "var(--_ic-ink-2)", accent: "var(--_ic-accent)", positive: "var(--_ic-positive)", negative: "var(--_ic-negative)", inherit: "currentColor" } as const;
 const WORD = { 1: "Up", [-1]: "Down", 0: "No change" } as const;
 
 /**
  * An inline change indicator: arrow, signed value and an optional baseline label.
  * Direction is carried by the arrow and the sign, so colour is never the only signal.
  */
-function DeltaImpl({ value, label, upIsGood = true, direction, format, size, variant = "text", className, style, ...rest }: DeltaProps) {
+function DeltaImpl({ value, label, upIsGood = true, direction, format, size, variant = "text", tone = "auto", frame, className, style, ...rest }: DeltaProps) {
   useInsightStyles();
   const config = useInsightConfig();
   const ref = useRef<HTMLSpanElement>(null);
@@ -46,13 +54,19 @@ function DeltaImpl({ value, label, upIsGood = true, direction, format, size, var
   const inferred: 1 | 0 | -1 = numeric ? (value > 0 ? 1 : value < 0 ? -1 : 0) : /^\s*[-−]/.test(value) ? -1 : /^\s*(\+?0+([.,]0+)?\s*(%|pp|pts?)?|[–—]|n\/a)\s*$/i.test(value) ? 0 : 1;
   const dir: 1 | 0 | -1 = direction ? (direction === "up" ? 1 : direction === "down" ? -1 : 0) : inferred;
   const good = dir === 0 ? null : dir > 0 === upIsGood;
-  const base = good == null ? "var(--_ic-ink-2)" : good ? "var(--_ic-positive)" : "var(--_ic-negative)";
+  const plain = tone === "auto" ? good == null : tone === "neutral" || tone === "inherit";
+  const base = tone !== "auto" ? TONES[tone] : good == null ? "var(--_ic-ink-2)" : good ? "var(--_ic-positive)" : "var(--_ic-negative)";
   // Mixed toward ink so small coloured text clears 4.5:1 on the surface in both modes.
-  const color = good == null ? base : `color-mix(in srgb, ${base} 76%, var(--_ic-ink))`;
-  const pill: CSSProperties = variant === "pill" ? { padding: "0.14em 0.55em", borderRadius: 999, background: `color-mix(in srgb, ${base} ${good == null ? 10 : 13}%, transparent)` } : {};
+  const color = plain ? base : `color-mix(in srgb, ${base} 76%, var(--_ic-ink))`;
+  const pill: CSSProperties =
+    variant === "pill"
+      ? { padding: "0.14em 0.55em", borderRadius: 999, background: `color-mix(in srgb, ${base} ${plain ? 10 : 13}%, transparent)` }
+      : variant === "solid"
+        ? { padding: "0.14em 0.6em", borderRadius: 999, background: color, color: "var(--_ic-surface)" }
+        : {};
 
   return (
-    <span ref={ref} data-slot="ic-delta" data-direction={dir > 0 ? "up" : dir < 0 ? "down" : "flat"} data-ic-mode={mode} className={className} style={{ ...(chromeVars(theme[mode]) as CSSProperties), fontFamily: "var(--_ic-font)", fontSize: size ? SIZES[size] : undefined, lineHeight: 1.4, display: "inline-flex", alignItems: "baseline", flexWrap: "wrap", columnGap: "0.4em", verticalAlign: "baseline", color: "var(--_ic-ink-2)", ...style }}>
+    <span ref={ref} data-slot="ic-delta" data-direction={dir > 0 ? "up" : dir < 0 ? "down" : "flat"} data-ic-mode={mode} className={className} style={{ ...(chromeVars(theme[mode]) as CSSProperties), fontFamily: "var(--_ic-font)", fontSize: size ? SIZES[size] : undefined, lineHeight: 1.4, display: "inline-flex", alignItems: "baseline", flexWrap: "wrap", columnGap: "0.4em", verticalAlign: "baseline", color: tone === "inherit" ? "inherit" : "var(--_ic-ink-2)", ...frameStyle(rest.theme, mode, frame), ...style }}>
       <span data-slot="ic-delta-value" style={{ display: "inline-flex", alignItems: "center", gap: "0.3em", fontWeight: 600, fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap", color, ...pill }}>
         {/* No glyph when flat: a dash beside "0%" reads as a minus sign. */}
         {dir !== 0 ? (
@@ -84,8 +98,11 @@ export const Delta = withMeta(DeltaImpl, {
     { name: "upIsGood", type: "boolean", default: "true", description: "Whether an increase is good news; decides the colour only." },
     { name: "direction", type: '"up" | "down" | "flat"', description: "Override the direction inferred from the sign." },
     { name: "format", type: "FormatSpec", default: "signed percent", description: 'Number format, e.g. `"signed"` for absolute changes or `"{value} pts"`.' },
-    { name: "size", type: '"sm" | "md" | "lg"', description: "12, 14 or 16px. Inherits the surrounding size when omitted." },
-    { name: "variant", type: '"text" | "pill"', default: '"text"', description: "`pill` adds a tinted capsule behind the value." },
+    { name: "size", type: '"sm" | "md" | "lg" | "xl"', description: "12, 14, 16 or 20px. Inherits the surrounding size when omitted." },
+    { name: "variant", type: '"text" | "pill" | "solid"', default: '"text"', description: "`pill` adds a tinted capsule behind the value; `solid` fills the capsule and sets the value in the surface colour." },
+    { name: "tone", type: '"auto" | "neutral" | "accent" | "positive" | "negative" | "inherit"', default: '"auto"', description: "Colour of the value. `auto` follows the direction and `upIsGood`; `inherit` takes the surrounding text colour, for a coloured ground." },
+    { name: "theme", type: "ThemeInput", description: 'A theme name such as `"ledger"`, or token overrides. A named theme paints its own ground.' },
+    { name: "frame", type: "boolean", description: "Set false to stop a named theme painting its ground." },
   ],
   example: { type: "delta", value: 0.124, label: "vs last quarter", size: "md" },
 });
@@ -95,4 +112,10 @@ export const examples = {
   "Down is bad, pill": { value: -1840, format: "signed", label: "net subscribers this month", variant: "pill", size: "md" },
   "No change": { value: 0, label: "vs 2023", size: "md" },
   "String value, large pill": { value: "3 places", direction: "up", label: "in the regional ranking", variant: "pill", size: "lg" },
+  "Solid capsule, extra large": { value: 0.33, label: "solar capacity added vs 2023", variant: "solid", size: "xl" },
+  "Solid, down is good, editorial": { theme: "editorial", value: "−2.1 pts", label: "monthly churn vs January", upIsGood: false, variant: "solid", size: "lg" },
+  "Accent tone, ledger": { theme: "ledger", value: 0.43, label: "recurring revenue vs January", tone: "accent", variant: "pill", size: "lg" },
+  "Neutral tone": { value: -0.124, label: "average energy bill vs 2023", tone: "neutral", size: "md" },
+  "Pill on a poster ground, noir": { theme: "noir", value: "2 places", direction: "up", label: "since matchday 20", variant: "pill", size: "lg" },
+  "Solid, magenta": { theme: "magenta", value: 0.152, label: "tickets sold vs the 2023 final", variant: "solid", tone: "inherit", size: "xl" },
 };

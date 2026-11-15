@@ -49,6 +49,7 @@ export const Treemap = defineChart<TreemapProps>({
     { name: "names", type: "Record<string, string>", description: "Display names for group keys." },
   ],
   example: {
+    theme: "paper",
     type: "treemap",
     data: [
       { sector: "Energy", source: "Electricity and heat", gt: 15.8 },
@@ -88,11 +89,14 @@ export const Treemap = defineChart<TreemapProps>({
     const groupName = (g: string) => p.names?.[g] ?? g;
     const groupTotal = (g: string) => leaves.filter((l) => l.group === g).reduce((s, l) => s + l.value, 0);
     // Identity colour belongs to the group; ungrouped tiles share the accent so area alone carries the comparison.
+    // Groups past the palette (poster themes have four or five colours) turn neutral instead of repeating a colour.
+    const maxColours = Math.min(MAX_COLOURS, t.categorical.length);
     const baseOf = (l: Leaf) => {
       if (!grouped) return ctx.color(l.key);
       const gi = groups.indexOf(l.group);
+      if (ctx.highlight.length === 0) return gi < maxColours ? ctx.color(l.group, gi) : t.context;
       if (!ctx.dimmed(l.key)) return ctx.color(l.key, gi);
-      return gi < MAX_COLOURS || ctx.dimmed(l.group) ? ctx.color(l.group, gi) : t.context;
+      return gi < maxColours || ctx.dimmed(l.group) ? ctx.color(l.group, gi) : t.context;
     };
     const showValues = p.labels !== false;
     const showHeads = grouped && (p.groupLabels ?? !ctx.compact);
@@ -199,7 +203,7 @@ export const Treemap = defineChart<TreemapProps>({
 
     const top = [...leaves].sort(desc)[0];
     const legend: LegendItem[] =
-      grouped && !showHeads ? groups.slice(0, MAX_COLOURS).map((g, gi) => ({ name: groupName(g), color: ctx.color(g, gi), muted: ctx.dimmed(g) && leaves.filter((l) => l.group === g).every((l) => ctx.dimmed(l.key)) })) : [];
+      grouped && !showHeads ? groups.slice(0, maxColours).map((g, gi) => ({ name: groupName(g), color: ctx.color(g, gi), muted: ctx.dimmed(g) && leaves.filter((l) => l.group === g).every((l) => ctx.dimmed(l.key)) })) : [];
 
     return {
       legend,
@@ -320,6 +324,7 @@ export const examples = {
     note: "Rounded, illustrative",
   },
   "Stress: many small tiles and long names": {
+    theme: "forest",
     data: [
       ["Health", "Hospital and community health services", 168],
       ["Health", "Primary care and prescribing", 38],
@@ -353,5 +358,27 @@ export const examples = {
     subtitle: "Public spending by area and programme, £ billion, 2023-24",
     source: "HM Treasury Public Expenditure Statistical Analyses",
     note: "Programme split is illustrative",
+  },
+  "Two levels, four groups": {
+    theme: "poster",
+    data: [
+      { item: "Rent", area: "Housing", gbp: 1150 },
+      { item: "Energy", area: "Housing", gbp: 160 },
+      { item: "Water", area: "Housing", gbp: 45 },
+      { item: "Groceries", area: "Food", gbp: 420 },
+      { item: "Eating out", area: "Food", gbp: 140 },
+      { item: "Car", area: "Transport", gbp: 260 },
+      { item: "Bus and rail", area: "Transport", gbp: 70 },
+      { item: "Leisure", area: "Other", gbp: 190 },
+      { item: "Phone and internet", area: "Other", gbp: 65 },
+    ],
+    name: "item",
+    value: "gbp",
+    group: "area",
+    format: "£{value}",
+    height: 340,
+    title: "Rent was £1,150 of a £2,500 monthly household budget",
+    subtitle: "Monthly spending of one household by item, pounds",
+    note: "Illustrative figures for an invented household.",
   },
 };

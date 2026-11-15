@@ -194,6 +194,7 @@ const noisy = (() => {
 
 export const examples = {
   "With a reference band": {
+    theme: { accent: "#b4237a" },
     data: glucose,
     x: "reading",
     y: "mmol",
@@ -207,6 +208,7 @@ export const examples = {
     note: "Illustrative data",
   },
   "Bars: gains and losses": {
+    theme: "mono",
     data: [4, 7, -3, 5, 9, -6, -2, 8, 11, 3, -4, 6, 10, 12].map((net, i) => ({ week: `W${i + 1}`, net })),
     x: "week",
     y: "net",
@@ -216,12 +218,14 @@ export const examples = {
     style: { maxWidth: 220 },
   },
   "Area fill, full width": {
+    theme: "ocean",
     data: [18, 22, 21, 27, 33, 31, 38, 44, 43, 52, 61, 66].map((signups, i) => ({ month: i + 1, signups })),
     y: "signups",
     area: true,
     height: 56,
   },
   "Stress: 400 points in 160px": {
+    theme: "science",
     data: noisy,
     x: "day",
     y: "price",

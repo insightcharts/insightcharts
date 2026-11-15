@@ -72,7 +72,7 @@ export const QuoteFigure = withMeta(QuoteFigureImpl, {
   description: "A pull-quote paired with the statistic or small chart that backs it up, side by side and stacking in narrow containers.",
   whenToUse: "A quotation shown next to the number it refers to: an interview finding with its survey figure, an executive's statement with the metric. One per section.",
   avoid: "A quote with no evidence (use `pull-quote`); a figure that needs axes to read (use `chart-callout` and put the quote in prose); unattributed quotations.",
-  composes: ["pull-quote", "big-number", "sparkline"],
+  composes: ["pull-quote", "big-number", "sparkline", "progress-meter"],
   props: [
     { name: "quote", type: "string", required: true, description: "The words quoted, without quotation marks." },
     { name: "attribution", type: "string", description: "Who said it." },
@@ -83,11 +83,13 @@ export const QuoteFigure = withMeta(QuoteFigureImpl, {
     { name: "side", type: '"left" | "right"', default: '"right"', description: "Side the evidence sits on; under 640px it goes underneath." },
     { name: "source", type: "string", description: 'Shown underneath as "Source: ...".' },
     { name: "note", type: "string", description: "Method note or caveat." },
-    { name: "theme", type: "ThemeInput", description: "Theme override, passed on to the quote and the figure." },
+    { name: "theme", type: "ThemeInput", description: "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the quote and the figure. A named theme with its own surface paints that surface behind the component." },
+    { name: "frame", type: "boolean", description: "Paint the theme's surface behind the component. Default: on for a named theme with its own surface." },
     { name: "mode", type: '"auto" | "system" | "light" | "dark"', default: '"auto"', description: "Colour mode." },
   ],
   example: {
     type: "quote-figure",
+    theme: "magenta",
     quote: "Solar met more than half of demand on 41% of summer afternoons in 2024. We do not have enough storage for the midday surplus yet.",
     attribution: "Marta Keller",
     role: "Grid planner, quoted in the 2024 system adequacy review",

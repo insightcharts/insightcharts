@@ -50,6 +50,7 @@ const data = [
 ];
 
 <ScaleLadder
+  theme="magenta"
   data={data}
   name="thing"
   value="c"
@@ -75,6 +76,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 
 ```json
 {
+  "theme": "magenta",
   "type": "scale-ladder",
   "data": [
     { "thing": "Fridge", "c": 4 },
@@ -144,7 +146,8 @@ Every chart also accepts these (shared by all charts; also at https://insightcha
 | `select` | `boolean \| string` | Make marks clickable to filter. Inside `<InsightData>` the selection filters every other chart. Pass a field name, or `true` to use the chart's category field. |
 | `onSelect` | `(values: string[], field: string) => void` | Called with the selected values whenever the selection changes. |
 | `option` | `EChartsOption \| ((option: EChartsOption, ctx: BuildContext) => EChartsOption)` | Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers. |
-| `theme` | `ThemeInput` | A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme. |
+| `theme` | `ThemeInput` | A built-in theme name (`"editorial"`, `"ledger"`, `"noir"`...), or a theme object. A named theme paints its own background behind the chart. |
+| `frame` | `boolean` | Paint the theme's background behind the chart. Default: on for a named theme with its own surface. |
 | `mode` | `ModeInput` | `"auto"` (default) follows the page, `"system"` follows the OS, or force `"light"` / `"dark"`. |
 | `renderer` | `RendererInput` | `"auto"` (default) uses SVG for light charts and canvas for heavy ones. |
 | `animate` | `boolean` | Set false to disable animation for this chart. Reduced-motion preferences are always respected. |
@@ -216,6 +219,7 @@ const data = [
 ];
 
 <ScaleLadder
+  theme="blueprint"
   data={data}
   name="structure"
   value="m"
@@ -226,6 +230,38 @@ const data = [
   title="The port wind turbine reached 198 metres at its blade tip"
   subtitle="Height of 14 structures in one city, metres above ground"
   note="Illustrative figures for an invented city."
+/>
+```
+
+### Height, one icon for all, one highlighted
+
+```tsx
+import { ScaleLadder } from "insightcharts";
+
+const data = [
+  { tree: "Apple tree", m: 5 },
+  { tree: "Silver birch", m: 20 },
+  { tree: "English oak", m: 30 },
+  { tree: "Norway spruce", m: 45 },
+  { tree: "Douglas fir", m: 75 },
+  { tree: "Coast redwood", m: 115 },
+];
+
+<ScaleLadder
+  theme="forest"
+  data={data}
+  name="tree"
+  value="m"
+  icon="tree"
+  scaleLabel="Height, metres"
+  format="{value} m"
+  min={0}
+  max={120}
+  ticks={[0, 30, 60, 90, 120]}
+  highlight="Coast redwood"
+  title="The coast redwood reaches 115 metres, 23 times the apple tree"
+  subtitle="Height of six trees at maturity, metres"
+  note="Approximate, rounded figures for illustration."
 />
 ```
 

@@ -96,6 +96,7 @@ const data = [
 export function HistogramDemo() {
   return (
     <Histogram
+      theme="earth"
       data={data}
       value="minutes"
       step={5}

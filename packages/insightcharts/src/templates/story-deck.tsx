@@ -1,9 +1,10 @@
 import { createElement, useCallback, useEffect, useId, useRef, useState, type CSSProperties, type KeyboardEvent, type ReactNode, type RefObject } from "react";
-import { BigNumber } from "../atoms/big-number";
+import { BigNumber, type BigNumberProps } from "../atoms/big-number";
 import { Prose } from "../atoms/prose";
 import { PullQuote } from "../atoms/pull-quote";
 import type { FormatSpec } from "../core/format";
 import { withMeta } from "../core/meta";
+import { themeGround } from "../core/named-themes";
 import { useTheme } from "../core/provider";
 import { renderSlot, type Slot } from "../core/spec";
 import { chromeVars } from "../core/theme";
@@ -21,8 +22,8 @@ interface CardBase {
 export type StoryDeckCard =
   /** Opens the deck: the title of the whole piece. */
   | (CardBase & { kind: "title"; title: string; deck?: string; byline?: string })
-  /** One number, large. */
-  | (CardBase & { kind: "stat"; value: number | string; label: string; context?: string; delta?: number | string; deltaLabel?: string; upIsGood?: boolean; format?: FormatSpec; text?: string })
+  /** One number, large. `variant`, `tone`, `icon`, `series`, `target` and `max` are those of `big-number`. */
+  | (CardBase & { kind: "stat"; value: number | string; label: string; context?: string; delta?: number | string; deltaLabel?: string; upIsGood?: boolean; format?: FormatSpec; text?: string; variant?: BigNumberProps["variant"]; icon?: BigNumberProps["icon"]; series?: number[]; target?: number; max?: number })
   /** One chart under a headline that states one fact. */
   | (CardBase & { kind: "chart"; title: string; chart: Slot; text?: string })
   | (CardBase & { kind: "quote"; quote: string; attribution?: string; role?: string })
@@ -68,8 +69,12 @@ function Arrow({ back }: { back?: boolean }) {
  * Every card is in the document in reading order.
  */
 function StoryDeckImpl({ cards, label, aspect = "4:5", layout = "pager", startAt = 0, onCardChange, maxWidth, previousLabel = "Previous", nextLabel = "Next", sources, period, method, note, credit, level = 1, className, style, ...rest }: StoryDeckProps) {
-  const { ref, width, mode, root } = useTemplate(rest);
+  // A named theme with its own ground paints the cards, not the deck around them: the pager and
+  // the source note stay in the host page's theme, so they stay legible on the host page.
+  const ownGround = typeof rest.theme === "string" && themeGround(rest.theme, "light") !== null;
+  const { ref, width, mode, root } = useTemplate(ownGround ? { mode: rest.mode, frame: false } : { ...rest, frame: false });
   const theme = useTheme(rest.theme);
+  const outerTheme = ownGround ? undefined : rest.theme;
   const uid = useId();
   const strip = useRef<HTMLDivElement>(null);
   const list = cards ?? [];
@@ -144,7 +149,7 @@ function StoryDeckImpl({ cards, label, aspect = "4:5", layout = "pager", startAt
       case "stat":
         return (
           <div style={{ margin: "auto 0", display: "grid", gap: u * 5 }}>
-            <BigNumber size="hero" value={card.value} label={card.label} context={card.context} delta={card.delta} deltaLabel={card.deltaLabel} upIsGood={card.upIsGood} format={card.format} />
+            <BigNumber size="hero" value={card.value} label={card.label} context={card.context} delta={card.delta} deltaLabel={card.deltaLabel} upIsGood={card.upIsGood} format={card.format} variant={card.variant} icon={card.icon} series={card.series} target={card.target} max={card.max} />
             {card.text ? body(card.text) : null}
           </div>
         );
@@ -198,6 +203,7 @@ function StoryDeckImpl({ cards, label, aspect = "4:5", layout = "pager", startAt
     const inverse = card.tone === "inverse";
     const cardMode = inverse ? (mode === "dark" ? "light" : "dark") : mode;
     const active = !pager || i === index;
+    const ground = (ownGround ? themeGround(rest.theme, cardMode) : null) ?? "var(--_ic-surface)";
     return (
       <section
         key={card.id ?? i}
@@ -227,7 +233,7 @@ function StoryDeckImpl({ cards, label, aspect = "4:5", layout = "pager", startAt
               padding: pad,
               display: "flex",
               flexDirection: "column",
-              background: card.tone === "accent" ? "color-mix(in srgb, var(--_ic-accent) 9%, var(--_ic-surface))" : "var(--_ic-surface)",
+              background: card.tone === "accent" ? "color-mix(in srgb, var(--_ic-accent) 9%, var(--_ic-surface))" : ground,
               color: "var(--_ic-ink)",
               fontFamily: "var(--_ic-font)",
               border: "1px solid var(--_ic-grid)",
@@ -252,7 +258,7 @@ function StoryDeckImpl({ cards, label, aspect = "4:5", layout = "pager", startAt
   const name = label ?? (first && "title" in first ? first.title : "Story");
   return (
     <article ref={ref} data-slot="ic-story-deck" data-layout={layout} data-ic-mode={mode} aria-label={name} className={className} style={{ ...root, display: "grid", gridTemplateColumns: "minmax(0, 1fr)", gap: 16, width: "100%", ...style }}>
-      <Provide theme={rest.theme} mode={rest.mode}>
+      <Provide theme={outerTheme} mode={rest.mode}>
         {pager ? (
           <>
             <div
@@ -324,6 +330,14 @@ const branches = [
   { branch: "Hillside", visits: 71 },
 ];
 
+const harvest = [
+  { crop: "Tomatoes", kg: 128 },
+  { crop: "Courgettes", kg: 96 },
+  { crop: "Potatoes", kg: 84 },
+  { crop: "Beans", kg: 61 },
+  { crop: "Salad leaves", kg: 43 },
+];
+
 export const StoryDeck = withMeta(StoryDeckImpl, {
   name: "story-deck",
   component: "StoryDeck",
@@ -333,14 +347,14 @@ export const StoryDeck = withMeta(StoryDeckImpl, {
   description: "A sequence of full-frame cards (title, stat, chart, quote, closing) that the reader swipes or steps through. Each card states one fact. It has an optional fixed aspect ratio, a keyboard-accessible pager and a stacked layout for print.",
   whenToUse: "Use it for a short sequence read on a phone, such as a “year in review”. Each card should be readable in a couple of seconds. State the main fact with its number on the title card. Put one fact on each later card, as a number or as one chart with one highlighted mark under a headline that states the fact. Use five to ten cards. End with a closing card and the sources. Charts in cards should have few data points and direct labels, with no legend.",
   avoid: "Findings that need two exhibits in view at once (use `executive-brief`). A single shareable image (use `social-card`). Dense charts or long paragraphs, because a card has little room. One chart that changes step by step (use `scrolly-chart` in `steps` mode).",
-  composes: ["big-number", "prose", "pull-quote", "source-note", "bar-chart", "line-chart", "radial-bar-chart"],
+  composes: ["big-number", "prose", "pull-quote", "source-note", "bar-chart", "line-chart", "radial-bar-chart", "waffle-chart"],
   props: [
     {
       name: "cards",
       type: "Card[]",
       required: true,
       description:
-        'The cards in order. Each has a `kind`: `title` `{ title, deck?, byline? }`; `stat` `{ value, label, context?, delta?, deltaLabel?, upIsGood?, format?, text? }`; `chart` `{ title, chart, text? }`; `quote` `{ quote, attribution?, role? }`; `closing` `{ title, text?, points?, action?: { label, href } }`. Any card takes `kicker`, `tone: "surface" | "inverse" | "accent"` and `id`.',
+        'The cards in order. Each has a `kind`: `title` `{ title, deck?, byline? }`; `stat` `{ value, label, context?, delta?, deltaLabel?, upIsGood?, format?, text?, variant?, icon?, series?, target?, max? }`, where `variant` is any `big-number` display (`with-icon`, `with-ring`, `with-trend`, `filled`, `tinted`); `chart` `{ title, chart, text? }`; `quote` `{ quote, attribution?, role? }`; `closing` `{ title, text?, points?, action?: { label, href } }`. Any card takes `kicker`, `tone: "surface" | "inverse" | "accent"` and `id`.',
     },
     { name: "label", type: "string", description: "Accessible name of the deck. Defaults to the first card's title." },
     { name: "aspect", type: '"auto" | "9:16" | "4:5" | "1:1" | "16:9"', default: '"4:5"', description: "Shape of every card. `auto` lets cards take the height their content needs. `16:9` falls back to `4:5` in containers under 520px." },
@@ -351,14 +365,16 @@ export const StoryDeck = withMeta(StoryDeckImpl, {
     { name: "previousLabel", type: "string", default: '"Previous"', description: "Label of the previous button." },
     { name: "nextLabel", type: "string", default: '"Next"', description: "Label of the next button." },
     ...SOURCING_DOCS,
-    ...FRAME_DOCS.filter((p) => p.name !== "maxWidth"),
+    ...FRAME_DOCS.filter((p) => p.name !== "maxWidth" && p.name !== "frame").map((p) => (p.name === "theme" ? { ...p, description: 'A built-in theme name (`"dusk"`, `"magenta"`, `"paper"`...) or a theme object, passed on to everything in the cards. A named theme with its own surface paints each card in that surface; the pager and the source note stay in the page\'s theme.' } : p)),
   ],
   example: {
     type: "story-deck",
+    theme: "dusk",
     aspect: "4:5",
     cards: [
       { kind: "title", tone: "inverse", kicker: "Your 2024 on the road", title: "You ran 1,842 km in 2024", deck: "That was 23% more than in 2023. You ran 187 times.", byline: "Riverside Runners · member report" },
-      { kind: "stat", kicker: "Distance", value: 1842, format: "integer", label: "Kilometres run in 2024", delta: 0.23, deltaLabel: "vs 2023", context: "An average of 154 km a month", text: "You ran in 46 of the year's 52 weeks." },
+      { kind: "stat", kicker: "Distance", variant: "with-trend", series: [1120, 1310, 1498, 1842], value: 1842, format: "integer", label: "Kilometres run in 2024", delta: 0.23, deltaLabel: "vs 2023", context: "You ran 1,120 km in 2021 and 1,498 km in 2023." },
+      { kind: "chart", kicker: "Weeks", title: "You ran in 46 of the year's 52 weeks", chart: { type: "waffle-chart", data: [{ weeks: "Weeks with a run", n: 46 }], name: "weeks", value: "n", total: 52, rows: 4, columns: 13, restLabel: "Weeks without a run", format: "integer", aspect: 2.6 }, text: "Each square is one week. Four of the six weeks without a run were in July." },
       { kind: "chart", kicker: "Month by month", title: "October was your highest month at 224 km", chart: { type: "bar-chart", data: km, x: "month", y: "km", orientation: "vertical", sort: "none", highlight: "Oct", labels: false, format: "{value} km", height: 240 }, text: "You ran 120 km in July while you were injured. You ran 158 km in August." },
       { kind: "chart", kicker: "Pace", title: "Your easy pace fell from 5.52 to 5.04 minutes per kilometre", chart: { type: "line-chart", data: pace, x: "month", y: "pace", format: "{value} min/km", height: 240 }, text: "A lower number is a faster pace. Your pace in August was 5.24." },
       { kind: "chart", kicker: "Habits", tone: "accent", title: "41 of your 187 runs started between 6am and 7am", chart: { type: "radial-bar-chart", data: hours, x: "hour", y: "runs", labelEvery: 3, labels: false, height: 260 }, text: "Another 38 started between 7am and 8am. 22 started between 6pm and 7pm." },
@@ -373,11 +389,12 @@ export const StoryDeck = withMeta(StoryDeckImpl, {
 
 export const examples = {
   "Education: landscape cards": {
+    theme: "magenta",
     aspect: "16:9",
     cards: [
-      { kind: "title", kicker: "City libraries · 2024 in review", title: "Digital loans were higher than print loans in 2024 for the first time", deck: "The five branches had 908,000 visits. That is 91% of the 2019 total." },
-      { kind: "chart", kicker: "Lending", title: "Digital loans were 1.33 million in 2024 against 1.24 million for print", chart: { type: "line-chart", data: loans, x: "year", y: ["Digital", "Print"], highlight: "Digital", format: "{value}m", zero: true, height: 220 } },
-      { kind: "stat", kicker: "Visits", value: 908000, format: "compact", label: "Visits to the five branches", delta: 0.07, deltaLabel: "vs 2023", context: "91% of the 2019 total" },
+      { kind: "title", kicker: "City libraries · 2024 in review", title: "City libraries lent 1.33 million digital items in 2024", deck: "They lent 1.24 million print items. The five branches had 908,000 visits." },
+      { kind: "chart", kicker: "Lending", title: "Digital loans were 1.33 million in 2024 against 1.24 million for print", chart: { type: "line-chart", data: loans, x: "year", y: ["Digital", "Print"], format: "{value}m", zero: true, height: 260 } },
+      { kind: "stat", kicker: "Visits", variant: "with-ring", target: 998000, value: 908000, format: "compact", label: "Visits to the five branches", delta: 0.07, deltaLabel: "vs 2023", context: "91% of the 998,000 visits in 2019" },
       { kind: "chart", kicker: "Branches", title: "Central had 412,000 of the 908,000 visits", chart: { type: "bar-chart", data: branches, x: "branch", y: "visits", orientation: "horizontal", sort: "none", highlight: "Central", format: "{value}k" } },
       { kind: "closing", tone: "inverse", title: "Eastgate will open for longer hours in 2025", text: "The e-book budget will also increase.", action: { label: "Read the annual report", href: "#report" } },
     ],
@@ -385,12 +402,15 @@ export const examples = {
     note: "Illustrative data",
   },
   "Stacked, auto height": {
+    theme: "paper",
     layout: "stack",
     aspect: "auto",
     cards: [
-      { kind: "stat", kicker: "Distance", value: 1842, format: "integer", label: "Kilometres run in 2024", delta: 0.23, deltaLabel: "vs 2023" },
-      { kind: "quote", quote: "I started running before work in the spring.", attribution: "Club member" },
+      { kind: "stat", kicker: "Harvest 2024", variant: "with-icon", icon: "carrot", value: 412, format: "integer", label: "Kilograms of vegetables grown on the 38 plots", delta: 0.18, deltaLabel: "vs 2023", context: "An average of 10.8 kg a plot" },
+      { kind: "chart", kicker: "Crops", title: "Tomatoes were 128 kg of the 412 kg", chart: { type: "bar-chart", data: harvest, x: "crop", y: "kg", orientation: "horizontal", sort: "none", highlight: "Tomatoes", format: "{value} kg" } },
+      { kind: "quote", quote: "We watered every evening in August. The tomatoes kept coming until October.", attribution: "Plot 14", role: "Members' survey, November 2024" },
     ],
+    sources: "Allotment society harvest log",
     note: "Illustrative data",
   },
 };

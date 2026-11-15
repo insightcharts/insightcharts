@@ -1,5 +1,5 @@
 import { CustomChart } from "echarts/charts";
-import { alpha } from "../core/color";
+import { alpha, luminance } from "../core/color";
 import { defineChart } from "../core/define";
 import { measureText } from "../core/layout";
 import { morph, tooltipHtml } from "../core/parts";
@@ -59,6 +59,8 @@ export const FunnelChart = defineChart<FunnelChartProps>({
   },
   build(p, ctx) {
     const t = ctx.tokens;
+    // Judged by the surface, not the page mode: a poster theme paints a dark ground on a light page.
+    const onDark = /^(#|rgb)/.test(t.surface) ? luminance(t.surface) < 0.2 : ctx.mode === "dark";
     const stages = ctx.rows.map((r) => ({ key: String(r[p.stage] ?? ""), value: Math.max(0, toNumber(r[p.value]) || 0) }));
     const n = stages.length;
     const first = stages[0]?.value ?? 0;
@@ -108,7 +110,7 @@ export const FunnelChart = defineChart<FunnelChartProps>({
         // The wash between bars is the funnel's silhouette. It carries no value of its own.
         const nb = span(i + 1);
         const ny = top(i + 1);
-        children.push({ type: "polygon", silent: true, shape: { points: [[b.x, y + barH], [b.x + b.w, y + barH], [nb.x + nb.w, ny], [nb.x, ny]] }, style: { fill: alpha(ctx.color(), ctx.mode === "dark" ? 0.16 : 0.1) } });
+        children.push({ type: "polygon", silent: true, shape: { points: [[b.x, y + barH], [b.x + b.w, y + barH], [nb.x + nb.w, ny], [nb.x, ny]] }, style: { fill: alpha(ctx.color(), onDark ? 0.16 : 0.1) } });
         if (showLoss) {
           const lost = s.value - stages[i + 1].value;
           const rate = s.value ? lost / s.value : 0;
@@ -178,6 +180,7 @@ export const FunnelChart = defineChart<FunnelChartProps>({
 
 export const examples = {
   "Three stages, highlight": {
+    theme: "blueprint",
     data: [
       { stage: "Applied", people: 12400 },
       { stage: "Interviewed", people: 1860 },
@@ -193,7 +196,25 @@ export const examples = {
     source: "HR recruitment data",
     note: "Illustrative data",
   },
+  "Four stages, custom drop-off word": {
+    theme: "editorial",
+    data: [
+      { stage: "Started an application", loans: 8400 },
+      { stage: "Submitted documents", loans: 5880 },
+      { stage: "Approved", loans: 3360 },
+      { stage: "Drew down the loan", loans: 2940 },
+    ],
+    stage: "stage",
+    value: "loans",
+    format: "integer",
+    dropoffLabel: "lost",
+    height: 300,
+    title: "2,940 of 8,400 loan applications ended in a loan",
+    subtitle: "Small-business loan applications at each stage, 2024",
+    note: "Illustrative data",
+  },
   "Stress: seven stages, long names, big numbers": {
+    theme: "earth",
     data: [
       { stage: "Impressions served across all paid channels", n: 18400000 },
       { stage: "Clicked through to the landing page", n: 2210000 },

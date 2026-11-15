@@ -46,7 +46,11 @@ export interface InsightTheme {
   dark: ThemeTokens;
 }
 
-export type ThemeInput = InsightTheme | { name?: string; light?: Partial<ThemeTokens>; dark?: Partial<ThemeTokens> } | Partial<ThemeTokens>;
+/**
+ * A theme: the name of a built-in one (`"editorial"`, `"ledger"`, `"noir"`...), a full theme,
+ * `{ light, dark }` overrides, or tokens that apply to both modes.
+ */
+export type ThemeInput = (string & {}) | InsightTheme | { name?: string; light?: Partial<ThemeTokens>; dark?: Partial<ThemeTokens> } | Partial<ThemeTokens>;
 
 const v = (name: string, fallback: string) => `var(--ic-${name}, ${fallback})`;
 const series = (hexes: string[]) => hexes.map((hex, i) => v(`series-${i + 1}`, hex));
@@ -107,6 +111,8 @@ const TOKEN_KEYS = new Set(Object.keys(defaultTheme.light));
 
 /** Build a complete theme from a partial one. Tokens given at the top level apply to both modes. */
 export function createTheme(input: ThemeInput = {}, base: InsightTheme = defaultTheme): InsightTheme {
+  // Names are resolved by the provider (see core/named-themes); here a name changes nothing.
+  if (typeof input === "string") return base;
   const anyInput = input as { name?: string; light?: Partial<ThemeTokens>; dark?: Partial<ThemeTokens> } & Partial<ThemeTokens>;
   const shared: Partial<ThemeTokens> = {};
   for (const key of Object.keys(anyInput)) if (TOKEN_KEYS.has(key)) (shared as Record<string, unknown>)[key] = (anyInput as Record<string, unknown>)[key];

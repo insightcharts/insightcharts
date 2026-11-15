@@ -4,6 +4,7 @@ import { Sparkline } from "@/components/insightcharts/atoms/sparkline";
 export function QuoteFigureDemo() {
   return (
     <QuoteFigure
+      theme="magenta"
       quote="Solar met more than half of demand on 41% of summer afternoons in 2024. We do not have enough storage for the midday surplus yet."
       attribution="Marta Keller"
       role="Grid planner, quoted in the 2024 system adequacy review"

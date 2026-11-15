@@ -127,7 +127,6 @@ const story = {
     { id: "solar", content: "**Solar** supplied 11.1% in 2024. It supplied 2.9% in 2015.", highlight: "Solar", y: "y2024", title: "Solar supplied 11.1% of EU electricity in 2024" },
   ],
 };
-
 export const ScrollyChart = withMeta(ScrollyChartImpl, {
   name: "scrolly-chart",
   component: "ScrollyChart",
@@ -137,7 +136,7 @@ export const ScrollyChart = withMeta(ScrollyChartImpl, {
   description: "A scroll-driven story from JSON: one base chart spec and a list of steps, each with narration and a patch of chart props applied while that step is active.",
   whenToUse: "Walking a reader through one chart in stages: show everything, highlight the subject, change the measure, add the annotation. Make ONE change per step (the highlight, the data or the encoding) so the reader can see what changed.",
   avoid: "Steps that change several things at once, or that swap to an unrelated chart (start a new `section` instead). More than about seven steps. A fact that one view can show (use `chart-callout`). In documents that will be printed or embedded in a short frame, set `scrollMode: \"steps\"`.",
-  composes: ["prose", "bar-chart"],
+  composes: ["prose", "bar-chart", "line-chart"],
   props: [
     { name: "chart", type: "InsightSpec", required: true, description: "The base chart spec: `{ type, data, x, y, ... }`. Give it a `title`; steps may replace it." },
     { name: "steps", type: "{ content, id?, label?, ...chart props }[]", required: true, description: "The steps in order. `content` is a short paragraph that says plainly what the chart now shows (`**bold**` works). Every other key is a chart prop merged over `chart` for that step: `highlight`, `transform`, `annotations`, `x`, `y`, `title`… Use `null` to remove a base prop. Change one thing per step." },
@@ -151,8 +150,9 @@ export const ScrollyChart = withMeta(ScrollyChartImpl, {
     { name: "subtitle", type: "string", description: "Line under the heading." },
     { name: "source", type: "string", description: 'Shown after the last step as "Source: ...". Prefer the chart\'s own `source`, which stays visible.' },
     { name: "note", type: "string", description: "Method note or caveat." },
-    { name: "theme", type: "ThemeInput", description: "Theme override, passed on to the chart and the step cards." },
+    { name: "theme", type: "ThemeInput", description: "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the chart and the step cards. A named theme with its own surface paints that surface behind the component." },
+    { name: "frame", type: "boolean", description: "Paint the theme's surface behind the component. Default: on for a named theme with its own surface." },
     { name: "mode", type: '"auto" | "system" | "light" | "dark"', default: '"auto"', description: "Colour mode." },
   ],
-  example: { type: "scrolly-chart", ...story, stepHeight: "70vh", stickyTop: 16 },
+  example: { type: "scrolly-chart", theme: "earth", ...story, stepHeight: "70vh", stickyTop: 16 },
 });

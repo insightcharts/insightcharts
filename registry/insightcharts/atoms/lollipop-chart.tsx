@@ -88,6 +88,7 @@ export const LollipopChart = defineChart<LollipopChartProps>({
   ],
   example: {
     type: "lollipop-chart",
+    theme: "mono",
     data: [
       { country: "Netherlands", share: 27 },
       { country: "Denmark", share: 19 },

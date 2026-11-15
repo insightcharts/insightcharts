@@ -69,6 +69,7 @@ export const ArrowChart = defineChart<ArrowChartProps>({
   ],
   example: {
     type: "arrow-chart",
+    theme: "editorial",
     data: [
       { group: "Under 30", y2019: 62, y2024: 71 },
       { group: "30 to 44", y2019: 58, y2024: 63 },

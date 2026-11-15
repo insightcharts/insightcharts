@@ -9,6 +9,7 @@ import { useEffect, useId, useRef, useState, type MouseEvent, type ReactNode } f
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { ClientOnly, LazyMount } from "./lazy";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { groundClass, groundVars } from "@/lib/ground";
 import { cn } from "@/lib/utils";
 import { usePreviewSettings, type PreviewWidth } from "./preview-settings";
 
@@ -108,7 +109,7 @@ export function PreviewToolbar({ className, poster }: { className?: string; post
   const s = usePreviewSettings();
   const effective = useEffectiveMode();
   const current = poster ? s.posterTheme : s.theme;
-  const label = current ? themeLabel(current) : "As designed";
+  const label = current ? themeLabel(current) : "As authored";
   return (
     <div className={cn("flex flex-wrap items-center justify-end gap-x-1.5 gap-y-1", className)} role="toolbar" aria-label="Preview options">
       <DropdownMenu>
@@ -122,7 +123,7 @@ export function PreviewToolbar({ className, poster }: { className?: string; post
             <>
               <DropdownMenuLabel className="text-xs font-normal text-muted-foreground">Poster theme</DropdownMenuLabel>
               <DropdownMenuItem onSelect={() => s.set({ posterTheme: null })}>
-                As designed
+                As authored
                 {s.posterTheme === null ? <Check className="ml-auto size-3.5" /> : null}
               </DropdownMenuItem>
               {POSTER_NAMES.map((name) => (
@@ -135,6 +136,11 @@ export function PreviewToolbar({ className, poster }: { className?: string; post
             </>
           ) : (
             <>
+              <DropdownMenuItem onSelect={() => s.set({ theme: null })}>
+                As authored
+                {s.theme === null ? <Check className="ml-auto size-3.5" /> : null}
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
               <DropdownMenuLabel className="text-xs font-normal text-muted-foreground">Theme preset</DropdownMenuLabel>
               {PRESET_NAMES.map((name) => (
                 <DropdownMenuItem key={name} onSelect={() => s.set({ theme: name })}>
@@ -187,19 +193,24 @@ export function PreviewToolbar({ className, poster }: { className?: string; post
   );
 }
 
-/** The surface a preview renders on: applies the shared mode, theme, width and renderer. */
-export function PreviewCanvas({ children, minHeight, padded = true, className }: { children: ReactNode; minHeight?: number; padded?: boolean; className?: string }) {
+/**
+ * The surface a preview renders on: applies the shared mode, width and renderer. By default
+ * each example keeps the theme it was authored in, and the canvas takes the ground that theme
+ * paints (`ground`), so no strip of the page's colour shows round the example. A theme picked
+ * in the toolbar replaces both.
+ */
+export function PreviewCanvas({ children, minHeight, padded = true, ground, className }: { children: ReactNode; minHeight?: number; padded?: boolean; /** The ground the example paints in each mode, when it paints one. */ ground?: { light: string; dark: string }; className?: string }) {
   const s = usePreviewSettings();
   const width = WIDTHS.find((w) => w.key === s.width)!.px;
-  const theme = themes[s.theme] ?? themes.insight;
   const effective = useEffectiveMode();
-  // Presets other than insight and shadcn paint for their own surface, and poster themes for
-  // their own ground, so the canvas takes it.
-  const surface = effective ? (surfaces[s.theme]?.[effective] ?? grounds[s.theme]?.[effective]) : undefined;
+  // A forced preset other than insight and shadcn paints for its own surface, and a poster
+  // theme for its own ground.
+  const forced = s.theme ? (grounds[s.theme] ?? surfaces[s.theme]) : undefined;
+  const own = s.theme ? forced : ground;
   return (
-    <div data-preview={s.mode ?? undefined} className={cn("bg-background text-foreground", width && "preview-canvas", padded && (width ? "p-4 sm:p-6" : "p-5 sm:p-8"), className)} style={{ minHeight, ...(surface && !width ? { background: surface } : null) }}>
-      <div className={cn("mx-auto min-w-0", width && "rounded-lg border bg-background p-4 shadow-xs")} style={{ maxWidth: width ?? undefined, ...(surface && width ? { background: surface } : null) }}>
-        <InsightProvider theme={theme} mode={s.mode ?? "auto"} renderer={s.renderer}>
+    <div data-preview={s.mode ?? undefined} className={cn("bg-background text-foreground", width && "preview-canvas", !width && groundClass(own), padded && (width ? "p-4 sm:p-6" : own ? (own.light.includes("gradient") ? "p-0" : "p-3 sm:p-4") : "p-5 sm:p-8"), className)} style={{ minHeight, ...groundVars(own) }}>
+      <div className={cn("mx-auto min-w-0", width && "rounded-lg border bg-background shadow-xs", width && (own ? "p-0" : "p-4"), width && groundClass(own))} style={{ maxWidth: width ?? undefined }}>
+        <InsightProvider theme={s.theme ? themes[s.theme] : undefined} mode={s.mode ?? "auto"} renderer={s.renderer}>
           {children}
         </InsightProvider>
       </div>
@@ -264,13 +275,17 @@ export interface PreviewFrameProps {
   fullHref?: string;
   /** The example is a whole poster: paint its ground edge to edge and show the poster toolbar. */
   poster?: { ground?: string; lazy?: boolean };
+  /** The ground the example paints in each mode, when it paints one. The canvas takes it. */
+  ground?: { light: string; dark: string };
+  /** No padding round the example: it paints its own background to the edges. */
+  flush?: boolean;
   className?: string;
 }
 
 const action = "inline-flex h-7 items-center gap-1.5 rounded-md px-2 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none";
 
 /** Preview / Code / JSON tabs around a live example. */
-export function PreviewFrame({ children, code, json, minHeight, toolbar = true, maxHeight, fullHref, poster, className }: PreviewFrameProps) {
+export function PreviewFrame({ children, code, json, minHeight, toolbar = true, maxHeight, fullHref, poster, ground, flush, className }: PreviewFrameProps) {
   const [tab, setTab] = useState<"preview" | "code" | "json">("preview");
   const [expanded, setExpanded] = useState(false);
   const id = useId();
@@ -336,7 +351,9 @@ export function PreviewFrame({ children, code, json, minHeight, toolbar = true, 
             {children}
           </PosterCanvas>
         ) : (
-          <PreviewCanvas minHeight={minHeight}>{children}</PreviewCanvas>
+          <PreviewCanvas minHeight={minHeight} ground={ground} padded={!flush} className={flush ? "[&_[data-story]]:rounded-none" : undefined}>
+            {children}
+          </PreviewCanvas>
         )}
       </div>
       {code ? (

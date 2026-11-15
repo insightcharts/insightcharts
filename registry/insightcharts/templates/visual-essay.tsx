@@ -11,7 +11,7 @@ import { ChartCallout } from "@/components/insightcharts/molecules/chart-callout
 import { Provide } from "@/components/insightcharts/molecules/_shared";
 import { ScrollyChart, type ScrollyChartStep } from "@/components/insightcharts/molecules/scrolly-chart";
 import { SmallMultipleGrid } from "@/components/insightcharts/molecules/small-multiple-grid";
-import { StatRow, type StatRowItem } from "@/components/insightcharts/molecules/stat-row";
+import { StatRow, type StatRowProps } from "@/components/insightcharts/molecules/stat-row";
 import { below, frame, FRAME_DOCS, Sourcing, SOURCING_DOCS, useTemplate, withHeight, type HeadingLevel, type TemplateProps, type TemplateSourcing } from "@/components/insightcharts/templates/_shared";
 
 /** How far a block may break out of the reading column. */
@@ -34,7 +34,7 @@ export type VisualEssayBlock =
   /** A pinned chart that changes one thing per scroll step. */
   | (BlockBase & { kind: "scrolly"; chart: InsightSpec; steps: ScrollyChartStep[]; cumulative?: boolean; scrollMode?: "auto" | "scroll" | "swipe" | "steps"; side?: "left" | "right"; stepHeight?: string; stickyTop?: number | string; source?: string; note?: string })
   | (BlockBase & { kind: "quote"; quote: string; attribution?: string; role?: string; cite?: string })
-  | (BlockBase & { kind: "stats"; items: StatRowItem[]; title?: string; subtitle?: string; source?: string; note?: string })
+  | (BlockBase & { kind: "stats" } & Omit<StatRowProps, "theme" | "mode" | "frame" | "className" | "style">)
   /** Small multiples. With `chart` it repeats that spec per facet (`small-multiple-grid`); without, it is the `small-multiples` atom. */
   | (BlockBase & { kind: "multiples"; facet: string; chart?: InsightSpec; [prop: string]: unknown })
   /** A chapter break: numbered when `step` is given. */
@@ -91,8 +91,10 @@ function VisualEssayImpl({ title, kicker, deck, byline, date, blocks, measure = 
       }
       case "quote":
         return <PullQuote quote={block.quote} attribution={block.attribution} role={block.role} cite={block.cite} size={phone ? "md" : "lg"} />;
-      case "stats":
-        return <StatRow items={block.items} title={block.title} subtitle={block.subtitle} source={block.source} note={block.note} />;
+      case "stats": {
+        const { kind: _k, width: _w, id: _i, ...props } = block;
+        return <StatRow {...props} />;
+      }
       case "multiples": {
         const { kind: _k, width: _w, id: _i, ...props } = block;
         return props.chart ? <SmallMultipleGrid {...(props as unknown as Parameters<typeof SmallMultipleGrid>[0])} /> : <SmallMultiples {...(props as unknown as Parameters<typeof SmallMultiples>[0])} />;
@@ -178,7 +180,7 @@ export const VisualEssay = withMeta(VisualEssayImpl, {
   description: "A long article read by scrolling. It has a headline, then an ordered list of blocks in a reading column, then a source note. The blocks are prose, figures, charts with a callout, scrolly sequences, pull quotes, stat rows, small multiples and chapter breaks. Exhibits can be wider than the column.",
   whenToUse: "Use it for a finding that takes several charts and some text to explain. State the main finding with its number in the headline. Put the main figure within the first screen. Alternate text and charts, with two or three short paragraphs before each exhibit. In a scrolly block change one thing per step, such as the highlight, the year or an annotation. Use one accent colour for the subject in every chart.",
   avoid: "A summary for someone who will not scroll (use `executive-brief`). Reference material read out of order (use `report-page`). More than one or two scrolly blocks. Use one only where the chart changes between steps.",
-  composes: ["headline", "prose", "pull-quote", "step-marker", "small-multiples", "chart-callout", "scrolly-chart", "small-multiple-grid", "stat-row", "source-note", "line-chart", "bar-chart"],
+  composes: ["headline", "prose", "pull-quote", "step-marker", "small-multiples", "chart-callout", "scrolly-chart", "small-multiple-grid", "stat-row", "source-note", "line-chart", "bar-chart", "waffle-chart", "dumbbell-chart", "heatmap"],
   props: [
     { name: "title", type: "string", required: true, description: "The essay's main finding, as one plain sentence with the number and the period in it." },
     { name: "kicker", type: "string", description: "Small label above the title." },
@@ -190,7 +192,7 @@ export const VisualEssay = withMeta(VisualEssayImpl, {
       type: "(Block | Slot)[]",
       required: true,
       description:
-        'The story in reading order. Each block has a `kind`: `prose` `{ text, lead? }`; `figure` `{ chart, caption? }`; `callout` `{ chart, lead, body, label?, tone?, side? }`; `scrolly` `{ chart, steps, cumulative?, scrollMode?, side?, stepHeight? }` (the props of `scrolly-chart`); `quote` `{ quote, attribution?, role? }`; `stats` `{ items, title? }`; `multiples` `{ facet, ... }` (props of `small-multiples`, or of `small-multiple-grid` when it has a `chart`); `break` `{ title, step?, total?, text? }`. Any block takes `width: "text" | "wide" | "full"` and an `id`. A bare chart spec is treated as a wide figure.',
+        'The story in reading order. Each block has a `kind`: `prose` `{ text, lead? }`; `figure` `{ chart, caption? }`; `callout` `{ chart, lead, body, label?, tone?, side? }`; `scrolly` `{ chart, steps, cumulative?, scrollMode?, side?, stepHeight? }` (the props of `scrolly-chart`); `quote` `{ quote, attribution?, role? }`; `stats` `{ items, variant?, title? }` (the props of `stat-row`); `multiples` `{ facet, ... }` (props of `small-multiples`, or of `small-multiple-grid` when it has a `chart`); `break` `{ title, step?, total?, text? }`. Any block takes `width: "text" | "wide" | "full"` and an `id`. A bare chart spec is treated as a wide figure.',
     },
     { name: "measure", type: "number", default: "680", description: "Width of the reading column in px." },
     { name: "textSize", type: '"md" | "lg"', description: "Body text size. Default 18px, 16px in narrow containers." },
@@ -199,6 +201,7 @@ export const VisualEssay = withMeta(VisualEssayImpl, {
   ],
   example: {
     type: "visual-essay",
+    theme: "editorial",
     kicker: "Energy transition",
     title: "Solar supplied 11.1% of EU electricity in 2024, more than coal's 9.8%",
     deck: "Solar's share was 2.9% in 2015. Coal's share was 24.6% in 2015.",
@@ -217,14 +220,12 @@ export const VisualEssay = withMeta(VisualEssayImpl, {
           data: mix,
           x: "year",
           y: ["Solar", "Coal"],
-          highlight: "Solar",
           format: "{value}%",
           zero: true,
           title: "Solar's share rose from 2.9% to 11.1% between 2015 and 2024",
           subtitle: "Share of EU electricity generation, 2015 to 2024",
           annotations: [
             { type: "band", axis: "x", from: "2021", to: "2022", label: "Gas price crisis" },
-            { type: "point", x: "2016", y: 22, label: "Coal", position: "top", dot: false },
           ],
           source: "Ember, European Electricity Review 2025",
         },
@@ -240,10 +241,12 @@ export const VisualEssay = withMeta(VisualEssayImpl, {
       },
       {
         kind: "stats",
+        variant: "tiles",
+        subtitle: "Bars show 2020 to 2024",
         items: [
-          { value: "338 GW", label: "Solar capacity installed in the EU, end of 2024", delta: "+66 GW", deltaLabel: "in 2024" },
-          { value: "304 TWh", label: "Solar generation, 2024", delta: 0.22, deltaLabel: "vs 2023" },
-          { value: "269 TWh", label: "Coal generation, 2024", delta: -0.16, deltaLabel: "vs 2023", upIsGood: false },
+          { variant: "bars", series: [137, 165, 205, 272, 338], value: 338, format: "{value} GW", label: "Solar capacity installed in the EU, end of 2024", delta: "+66 GW", deltaLabel: "in 2024" },
+          { variant: "bars", series: [145, 165, 210, 249, 304], value: 304, format: "{value} TWh", label: "Solar generation, 2024", delta: 0.22, deltaLabel: "vs 2023" },
+          { variant: "bars", tone: 1, series: [350, 400, 430, 320, 269], value: 269, format: "{value} TWh", label: "Coal generation, 2024", delta: -0.16, deltaLabel: "vs 2023", upIsGood: false },
         ],
       },
       { kind: "break", step: 2, total: 3, title: "EU electricity generation by source, 2015 and 2024", text: "Scroll to see the shares in 2015 and then in 2024." },

@@ -1,7 +1,7 @@
 import { CodeBlock } from "@/components/site/code-block";
 import { specToJson, specToJsx } from "@/lib/codegen";
 import { getComponent, isPoster, isPosterPrimitive } from "@/lib/catalog";
-import { posterGround } from "@/lib/posters";
+import { authoredGround, posterGround } from "@/lib/posters";
 import { ClientOnly } from "./lazy";
 import { PosterRender } from "./poster-render";
 import { PreviewFrame } from "./preview-frame";
@@ -23,6 +23,7 @@ export function ComponentPreview({ spec, example, toolbar, maxHeight, fullHref, 
       maxHeight={maxHeight}
       fullHref={fullHref}
       poster={poster}
+      ground={poster ? undefined : authoredGround(spec)}
       className={className}
       code={<CodeBlock bare code={specToJsx(spec)} lang="tsx" maxHeight={560} />}
       json={
@@ -38,10 +39,10 @@ export function ComponentPreview({ spec, example, toolbar, maxHeight, fullHref, 
         <PosterRender name={name} props={spec} example={example} />
       ) : entry && isPosterPrimitive(entry) ? (
         <ClientOnly className="min-h-[320px]">
-          <Render name={name} props={spec} example={example} />
+          <Render name={name} props={spec} example={example} followTheme />
         </ClientOnly>
       ) : (
-        <Render name={name} props={spec} example={example} />
+        <Render name={name} props={spec} example={example} followTheme />
       )}
     </PreviewFrame>
   );

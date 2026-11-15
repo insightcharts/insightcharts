@@ -1,10 +1,13 @@
 import { Explainer } from "@/components/insightcharts/templates/explainer";
+import { DonutChart } from "@/components/insightcharts/atoms/donut-chart";
+import { PictogramChart } from "@/components/insightcharts/atoms/pictogram-chart";
 import { BarChart } from "@/components/insightcharts/atoms/bar-chart";
 import { IconStat } from "@/components/insightcharts/atoms/icon-stat";
 
 export function ExplainerDemo() {
   return (
     <Explainer
+      theme="sunrise"
       kicker="Food and climate"
       title="Households threw away 631 million tonnes of food in 2022"
       deck="That is 60% of the 1.05 billion tonnes of food wasted worldwide. Food service wasted 290 million tonnes and retail 131 million."
@@ -14,18 +17,18 @@ export function ExplainerDemo() {
         text: "tonnes of food that reach shops, restaurants and homes are thrown away.",
         detail: "That was 1.05 billion tonnes in 2022.",
       }}
-      hero={<BarChart
+      hero={<DonutChart
         data={[
           { sector: "Households", mt: 631 },
           { sector: "Food service", mt: 290 },
           { sector: "Retail", mt: 131 },
         ]}
-        x="sector"
-        y="mt"
-        sort="none"
-        orientation="horizontal"
-        highlight="Households"
+        name="sector"
+        value="mt"
         format="{value} Mt"
+        centerLabel="Million tonnes wasted"
+        centerValue="1,052"
+        height={340}
         title="Households produced 60% of the world's food waste in 2022"
         subtitle="Food waste by sector, million tonnes (Mt), 2022"
         source="UNEP Food Waste Index Report 2024"
@@ -36,16 +39,17 @@ export function ExplainerDemo() {
         {
           title: "Household food waste by income group",
           text: "Households in high-income countries waste 81 kg of food per person a year. In upper-middle-income countries the figure is 88 kg. In lower-middle-income countries it is 86 kg.",
-          exhibit: <BarChart
+          exhibit: <PictogramChart
             data={[
               { group: "High income", kg: 81 },
               { group: "Upper-middle", kg: 88 },
               { group: "Lower-middle", kg: 86 },
             ]}
-            x="group"
-            y="kg"
-            sort="none"
-            orientation="horizontal"
+            name="group"
+            value="kg"
+            unit={10}
+            unitLabel="10 kg of food"
+            icon="apple"
             format="{value} kg"
             subtitle="Household food waste per person per year, by country income group"
           />,
@@ -76,6 +80,7 @@ export function ExplainerDemo() {
           title: "733 million people faced hunger in 2023",
           exhibit: <IconStat
             icon="person"
+            tone="negative"
             count={1}
             total={11}
             columns={11}

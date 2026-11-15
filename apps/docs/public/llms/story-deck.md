@@ -35,9 +35,10 @@ The file lands at `components/insightcharts/templates/story-deck.tsx`. `@insight
 ## Usage
 
 ```tsx
-import { BarChart, LineChart, RadialBarChart, StoryDeck } from "insightcharts";
+import { BarChart, LineChart, RadialBarChart, StoryDeck, WaffleChart } from "insightcharts";
 
 <StoryDeck
+  theme="dusk"
   aspect="4:5"
   cards={[
     {
@@ -51,13 +52,31 @@ import { BarChart, LineChart, RadialBarChart, StoryDeck } from "insightcharts";
     {
       kind: "stat",
       kicker: "Distance",
+      variant: "with-trend",
+      series: [1120, 1310, 1498, 1842],
       value: 1842,
       format: "integer",
       label: "Kilometres run in 2024",
       delta: 0.23,
       deltaLabel: "vs 2023",
-      context: "An average of 154 km a month",
-      text: "You ran in 46 of the year's 52 weeks.",
+      context: "You ran 1,120 km in 2021 and 1,498 km in 2023.",
+    },
+    {
+      kind: "chart",
+      kicker: "Weeks",
+      title: "You ran in 46 of the year's 52 weeks",
+      chart: <WaffleChart
+        data={[{ weeks: "Weeks with a run", n: 46 }]}
+        name="weeks"
+        value="n"
+        total={52}
+        rows={4}
+        columns={13}
+        restLabel="Weeks without a run"
+        format="integer"
+        aspect={2.6}
+      />,
+      text: "Each square is one week. Four of the six weeks without a run were in July.",
     },
     {
       kind: "chart",
@@ -183,6 +202,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 ```json
 {
   "type": "story-deck",
+  "theme": "dusk",
   "aspect": "4:5",
   "cards": [
     {
@@ -196,13 +216,32 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
     {
       "kind": "stat",
       "kicker": "Distance",
+      "variant": "with-trend",
+      "series": [1120, 1310, 1498, 1842],
       "value": 1842,
       "format": "integer",
       "label": "Kilometres run in 2024",
       "delta": 0.23,
       "deltaLabel": "vs 2023",
-      "context": "An average of 154 km a month",
-      "text": "You ran in 46 of the year's 52 weeks."
+      "context": "You ran 1,120 km in 2021 and 1,498 km in 2023."
+    },
+    {
+      "kind": "chart",
+      "kicker": "Weeks",
+      "title": "You ran in 46 of the year's 52 weeks",
+      "chart": {
+        "type": "waffle-chart",
+        "data": [{ "weeks": "Weeks with a run", "n": 46 }],
+        "name": "weeks",
+        "value": "n",
+        "total": 52,
+        "rows": 4,
+        "columns": 13,
+        "restLabel": "Weeks without a run",
+        "format": "integer",
+        "aspect": 2.6
+      },
+      "text": "Each square is one week. Four of the six weeks without a run were in July."
     },
     {
       "kind": "chart",
@@ -328,7 +367,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 
 | Prop | Type | Default | Description |
 |---|---|---|---|
-| `cards` (required) | `Card[]` |  | The cards in order. Each has a `kind`: `title` `{ title, deck?, byline? }`; `stat` `{ value, label, context?, delta?, deltaLabel?, upIsGood?, format?, text? }`; `chart` `{ title, chart, text? }`; `quote` `{ quote, attribution?, role? }`; `closing` `{ title, text?, points?, action?: { label, href } }`. Any card takes `kicker`, `tone: "surface" \| "inverse" \| "accent"` and `id`. |
+| `cards` (required) | `Card[]` |  | The cards in order. Each has a `kind`: `title` `{ title, deck?, byline? }`; `stat` `{ value, label, context?, delta?, deltaLabel?, upIsGood?, format?, text?, variant?, icon?, series?, target?, max? }`, where `variant` is any `big-number` display (`with-icon`, `with-ring`, `with-trend`, `filled`, `tinted`); `chart` `{ title, chart, text? }`; `quote` `{ quote, attribution?, role? }`; `closing` `{ title, text?, points?, action?: { label, href } }`. Any card takes `kicker`, `tone: "surface" \| "inverse" \| "accent"` and `id`. |
 | `label` | `string` |  | Accessible name of the deck. Defaults to the first card's title. |
 | `aspect` | `"auto" \| "9:16" \| "4:5" \| "1:1" \| "16:9"` | `"4:5"` | Shape of every card. `auto` lets cards take the height their content needs. `16:9` falls back to `4:5` in containers under 520px. |
 | `layout` | `"pager" \| "stack"` | `"pager"` | `pager` shows one card at a time (swipe, buttons, dots, arrow keys, Home/End). `stack` lists every card in a column. |
@@ -343,12 +382,12 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `note` | `string` |  | Caveats the reader should know, e.g. "Illustrative data". |
 | `credit` | `string` |  | Who made the piece. |
 | `level` | `1 \| 2 \| 3 \| 4 \| 5 \| 6` | `1` | Heading level of the title; section headings follow one level down. |
-| `theme` | `ThemeInput` |  | Theme override, passed on to everything inside. |
+| `theme` | `ThemeInput` |  | A built-in theme name (`"dusk"`, `"magenta"`, `"paper"`...) or a theme object, passed on to everything in the cards. A named theme with its own surface paints each card in that surface; the pager and the source note stay in the page's theme. |
 | `mode` | `"auto" \| "system" \| "light" \| "dark"` | `"auto"` | Colour mode, passed on to everything inside. |
 
 ## Composition
 
-- Composes: [big-number](https://insightcharts.dev/llms/big-number.md), [prose](https://insightcharts.dev/llms/prose.md), [pull-quote](https://insightcharts.dev/llms/pull-quote.md), [source-note](https://insightcharts.dev/llms/source-note.md), [bar-chart](https://insightcharts.dev/llms/bar-chart.md), [line-chart](https://insightcharts.dev/llms/line-chart.md), [radial-bar-chart](https://insightcharts.dev/llms/radial-bar-chart.md)
+- Composes: [big-number](https://insightcharts.dev/llms/big-number.md), [prose](https://insightcharts.dev/llms/prose.md), [pull-quote](https://insightcharts.dev/llms/pull-quote.md), [source-note](https://insightcharts.dev/llms/source-note.md), [bar-chart](https://insightcharts.dev/llms/bar-chart.md), [line-chart](https://insightcharts.dev/llms/line-chart.md), [radial-bar-chart](https://insightcharts.dev/llms/radial-bar-chart.md), [waffle-chart](https://insightcharts.dev/llms/waffle-chart.md)
 - Used by: no molecule or template yet
 
 ## More examples
@@ -359,13 +398,14 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 import { BarChart, LineChart, StoryDeck } from "insightcharts";
 
 <StoryDeck
+  theme="magenta"
   aspect="16:9"
   cards={[
     {
       kind: "title",
       kicker: "City libraries · 2024 in review",
-      title: "Digital loans were higher than print loans in 2024 for the first time",
-      deck: "The five branches had 908,000 visits. That is 91% of the 2019 total.",
+      title: "City libraries lent 1.33 million digital items in 2024",
+      deck: "They lent 1.24 million print items. The five branches had 908,000 visits.",
     },
     {
       kind: "chart",
@@ -381,21 +421,22 @@ import { BarChart, LineChart, StoryDeck } from "insightcharts";
         ]}
         x="year"
         y={["Digital", "Print"]}
-        highlight="Digital"
         format="{value}m"
         zero
-        height={220}
+        height={260}
       />,
     },
     {
       kind: "stat",
       kicker: "Visits",
+      variant: "with-ring",
+      target: 998000,
       value: 908000,
       format: "compact",
       label: "Visits to the five branches",
       delta: 0.07,
       deltaLabel: "vs 2023",
-      context: "91% of the 2019 total",
+      context: "91% of the 998,000 visits in 2019",
     },
     {
       kind: "chart",
@@ -433,27 +474,53 @@ import { BarChart, LineChart, StoryDeck } from "insightcharts";
 ### Stacked, auto height
 
 ```tsx
-import { StoryDeck } from "insightcharts";
+import { BarChart, StoryDeck } from "insightcharts";
 
 <StoryDeck
+  theme="paper"
   layout="stack"
   aspect="auto"
   cards={[
     {
       kind: "stat",
-      kicker: "Distance",
-      value: 1842,
+      kicker: "Harvest 2024",
+      variant: "with-icon",
+      icon: "carrot",
+      value: 412,
       format: "integer",
-      label: "Kilometres run in 2024",
-      delta: 0.23,
+      label: "Kilograms of vegetables grown on the 38 plots",
+      delta: 0.18,
       deltaLabel: "vs 2023",
+      context: "An average of 10.8 kg a plot",
+    },
+    {
+      kind: "chart",
+      kicker: "Crops",
+      title: "Tomatoes were 128 kg of the 412 kg",
+      chart: <BarChart
+        data={[
+          { crop: "Tomatoes", kg: 128 },
+          { crop: "Courgettes", kg: 96 },
+          { crop: "Potatoes", kg: 84 },
+          { crop: "Beans", kg: 61 },
+          { crop: "Salad leaves", kg: 43 },
+        ]}
+        x="crop"
+        y="kg"
+        orientation="horizontal"
+        sort="none"
+        highlight="Tomatoes"
+        format="{value} kg"
+      />,
     },
     {
       kind: "quote",
-      quote: "I started running before work in the spring.",
-      attribution: "Club member",
+      quote: "We watered every evening in August. The tomatoes kept coming until October.",
+      attribution: "Plot 14",
+      role: "Members' survey, November 2024",
     },
   ]}
+  sources="Allotment society harvest log"
   note="Illustrative data"
 />
 ```

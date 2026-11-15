@@ -324,6 +324,7 @@ export const OrbitChart = defineChart<OrbitChartProps>({
   ],
   example: {
     type: "orbit-chart",
+    theme: "noir",
     data: [
       { supplier: "Halden Cells", tier: "Tier 1", spend: 84 },
       { supplier: "Orrin Motors", tier: "Tier 1", spend: 61 },
@@ -540,7 +541,26 @@ export const examples = {
     subtitle: "Milestones of one public library by decade",
     note: "Illustrative history of an invented library",
   },
+  "Sized dots, a colour per ring": {
+    theme: "sunrise",
+    data: [
+      ["Canal Street", "Under 10 min", 4200], ["Market Hall", "Under 10 min", 3100], ["Old Bridge", "Under 10 min", 2600],
+      ["Riverside Park", "10 to 20 min", 1900], ["University", "10 to 20 min", 3800], ["Hospital", "10 to 20 min", 2400], ["Stadium", "10 to 20 min", 1200],
+      ["Airport", "Over 20 min", 2900], ["Northgate", "Over 20 min", 800], ["Lakeside", "Over 20 min", 600],
+    ].map(([stop, band, riders]) => ({ stop, band, riders })),
+    name: "stop",
+    ring: "band",
+    value: "riders",
+    format: "integer",
+    ringLabel: "Tram time from Central Station",
+    sizeLabel: "Riders boarding per weekday",
+    centerLabel: "Central",
+    title: "Canal Street had 4,200 tram boardings per weekday",
+    subtitle: "Weekday boardings at 10 tram stops by travel time from Central Station",
+    note: "Illustrative figures for an invented city",
+  },
   "Stress: 5 rings, 34 items, long names": {
+    theme: "dusk",
     data: [
       ["Household", 6], ["Street", 7], ["Neighbourhood", 8], ["District", 7], ["Region", 6],
     ].flatMap(([level, count], li) =>

@@ -35,7 +35,7 @@ The file lands at `components/insightcharts/molecules/linked-charts.tsx`. `@insi
 ## Usage
 
 ```tsx
-import { BarChart, LinkedCharts } from "insightcharts";
+import { BarChart, DonutChart, LinkedCharts } from "insightcharts";
 
 const data = [
   { region: "Asia", year: "2020", source: "Hydro", twh: 1810 },
@@ -101,11 +101,12 @@ const data = [
 ];
 
 <LinkedCharts
+  theme="science"
   title="Asia generated 46% of the renewable electricity in these four regions from 2020 to 2024"
   subtitle="Electricity generation from hydro, wind and solar, TWh, four regions, 2020 to 2024"
   data={data}
   labels={{ region: "Region", source: "Source", year: "Year" }}
-  hint="Click a bar to filter the other charts"
+  hint="Click a bar or a slice to filter the other charts"
   count
   charts={[
     <BarChart
@@ -118,12 +119,13 @@ const data = [
       title="By region"
       transform={{ type: "aggregate", groupBy: "region", measures: { twh: { op: "sum", field: "twh" } } }}
     />,
-    <BarChart
+    <DonutChart
       id="by-source"
-      x="source"
-      y="twh"
+      name="source"
+      value="twh"
       select
       format="compact"
+      centerLabel="TWh"
       height={200}
       title="By source"
       transform={{ type: "aggregate", groupBy: "source", measures: { twh: { op: "sum", field: "twh" } } }}
@@ -159,6 +161,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 ```json
 {
   "type": "linked-charts",
+  "theme": "science",
   "title": "Asia generated 46% of the renewable electricity in these four regions from 2020 to 2024",
   "subtitle": "Electricity generation from hydro, wind and solar, TWh, four regions, 2020 to 2024",
   "data": [
@@ -224,7 +227,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
     { "region": "Latin America", "year": "2024", "source": "Solar", "twh": 160 }
   ],
   "labels": { "region": "Region", "source": "Source", "year": "Year" },
-  "hint": "Click a bar to filter the other charts",
+  "hint": "Click a bar or a slice to filter the other charts",
   "count": true,
   "charts": [
     {
@@ -243,12 +246,13 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
       }
     },
     {
-      "type": "bar-chart",
+      "type": "donut-chart",
       "id": "by-source",
-      "x": "source",
-      "y": "twh",
+      "name": "source",
+      "value": "twh",
       "select": true,
       "format": "compact",
+      "centerLabel": "TWh",
       "height": 200,
       "title": "By source",
       "transform": {
@@ -306,7 +310,8 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `before` | `Slot \| Slot[]` |  | Content rendered inside the shared store above the grid: figures, text, a custom component that calls `useInsightData()`, or a spec that omits `data` (e.g. `stat-row`, `data-table`). It sees the same filtered rows as the charts. |
 | `after` | `Slot \| Slot[]` |  | Content rendered inside the shared store below the grid, e.g. a detail table of the filtered rows. |
 | `gap` | `number` | `24` | Space in px between the `before` slot, the grid and the `after` slot. |
-| `theme` | `ThemeInput` |  | Theme override, passed on to every chart. |
+| `theme` | `ThemeInput` |  | A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to every chart. A named theme with its own surface paints that surface behind the component. |
+| `frame` | `boolean` |  | Paint the theme's surface behind the component. Default: on for a named theme with its own surface. |
 | `mode` | `"auto" \| "system" \| "light" \| "dark"` | `"auto"` | Colour mode. |
 
 ## Composition
@@ -362,6 +367,138 @@ const data = [
       }}
     />,
   ]}
+/>
+```
+
+### Three views of museum visits, paper theme
+
+```tsx
+import { AreaChart, DonutChart, LinkedCharts, LollipopChart } from "insightcharts";
+
+const data = [
+  { museum: "Natural History", quarter: "Q1", visitor: "Local", visits: 120 },
+  { museum: "Natural History", quarter: "Q1", visitor: "Domestic", visits: 80 },
+  { museum: "Natural History", quarter: "Q1", visitor: "International", visits: 60 },
+  { museum: "Natural History", quarter: "Q2", visitor: "Local", visits: 130 },
+  { museum: "Natural History", quarter: "Q2", visitor: "Domestic", visits: 110 },
+  { museum: "Natural History", quarter: "Q2", visitor: "International", visits: 95 },
+  { museum: "Natural History", quarter: "Q3", visitor: "Local", visits: 125 },
+  { museum: "Natural History", quarter: "Q3", visitor: "Domestic", visits: 150 },
+  // ... 28 more rows
+];
+
+<LinkedCharts
+  theme="paper"
+  title="The Natural History Museum had 1.3 million of the 2.5 million visits in 2024"
+  subtitle="Visits to three city museums, thousands, by visitor origin and quarter, 2024"
+  data={data}
+  labels={{ museum: "Museum", visitor: "Visitor", quarter: "Quarter" }}
+  hint="Click a mark to filter the other charts"
+  unit="rows"
+  charts={[
+    <LollipopChart
+      id="v-museum"
+      x="museum"
+      y="visits"
+      select
+      format="integer"
+      height={180}
+      title="By museum"
+      transform={{ type: "aggregate", groupBy: "museum", measures: { visits: { op: "sum", field: "visits" } } }}
+    />,
+    <DonutChart
+      id="v-visitor"
+      name="visitor"
+      value="visits"
+      select
+      format="integer"
+      centerLabel="thousand visits"
+      height={200}
+      title="By visitor origin"
+      transform={{
+        type: "aggregate",
+        groupBy: "visitor",
+        measures: { visits: { op: "sum", field: "visits" } },
+      }}
+    />,
+    <AreaChart
+      id="v-quarter"
+      x="quarter"
+      y="visits"
+      series="visitor"
+      stack
+      format="integer"
+      height={240}
+      title="By quarter"
+      transform={{
+        type: "aggregate",
+        groupBy: ["quarter", "visitor"],
+        measures: { visits: { op: "sum", field: "visits" } },
+      }}
+    />,
+  ]}
+  source="City museums service"
+  note="Illustrative data"
+/>
+```
+
+### Bike-share trips, noir theme
+
+```tsx
+import { BarChart, LinkedCharts } from "insightcharts";
+
+const data = [
+  { area: "Centre", time: "Morning", rider: "Member", trips: 310 },
+  { area: "Centre", time: "Morning", rider: "Casual", trips: 40 },
+  { area: "Centre", time: "Midday", rider: "Member", trips: 180 },
+  { area: "Centre", time: "Midday", rider: "Casual", trips: 150 },
+  { area: "Centre", time: "Evening", rider: "Member", trips: 290 },
+  { area: "Centre", time: "Evening", rider: "Casual", trips: 120 },
+  { area: "Centre", time: "Night", rider: "Member", trips: 60 },
+  { area: "Centre", time: "Night", rider: "Casual", trips: 45 },
+  // ... 24 more rows
+];
+
+<LinkedCharts
+  theme="noir"
+  title="Members made 1.9 million of the 2.8 million bike-share trips in 2024"
+  subtitle="Bike-share trips, thousands, by area, rider type and time of day, 2024"
+  data={data}
+  labels={{ area: "Area", rider: "Rider", time: "Time of day" }}
+  hint="Click a bar to filter the other chart"
+  count
+  charts={[
+    <BarChart
+      id="t-area"
+      x="area"
+      y="trips"
+      select
+      format="integer"
+      height={220}
+      title="By area"
+      transform={{ type: "aggregate", groupBy: "area", measures: { trips: { op: "sum", field: "trips" } } }}
+    />,
+    <BarChart
+      id="t-time"
+      x="time"
+      y="trips"
+      series="rider"
+      stack
+      orientation="vertical"
+      sort="none"
+      select="time"
+      format="integer"
+      height={220}
+      title="By time of day and rider type"
+      transform={{
+        type: "aggregate",
+        groupBy: ["time", "rider"],
+        measures: { trips: { op: "sum", field: "trips" } },
+      }}
+    />,
+  ]}
+  source="City bike-share operator"
+  note="Illustrative data"
 />
 ```
 

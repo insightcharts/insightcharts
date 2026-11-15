@@ -30,6 +30,7 @@ const data = [
 export function RadialBarChartDemo() {
   return (
     <RadialBarChart
+      theme="dusk"
       data={data}
       x="hour"
       y="trips"

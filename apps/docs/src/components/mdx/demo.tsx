@@ -13,11 +13,11 @@ async function demoSource(name: string): Promise<string> {
  * A hand-written demo from src/demos with its real source under the Code tab: the file is
  * read at build time, so what you read is exactly what runs.
  */
-export async function Demo({ name, toolbar = true, code = true, props }: { name: string; toolbar?: boolean; code?: boolean; props?: Record<string, unknown> }) {
+export async function Demo({ name, toolbar = true, code = true, flush, props }: { name: string; toolbar?: boolean; code?: boolean; /** The demo paints its own background: give it the whole canvas, with no padding round it. */ flush?: boolean; props?: Record<string, unknown> }) {
   const Component = demos[name];
   if (!Component) throw new Error(`Unknown demo "${name}". Add it to src/demos/index.ts.`);
   return (
-    <PreviewFrame toolbar={toolbar} code={code ? <CodeBlock bare code={await demoSource(name)} lang="tsx" maxHeight={520} /> : undefined}>
+    <PreviewFrame toolbar={toolbar} flush={flush} code={code ? <CodeBlock bare code={await demoSource(name)} lang="tsx" maxHeight={520} /> : undefined}>
       <Component {...props} />
     </PreviewFrame>
   );

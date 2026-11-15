@@ -6,6 +6,7 @@ import { SegmentedBar } from "@/components/insightcharts/atoms/segmented-bar";
 export function ComparisonBriefDemo() {
   return (
     <ComparisonBrief
+      theme="earth"
       kicker="Home heating"
       title="With the £7,500 grant, a heat pump repays its extra £500 cost in 4 years"
       deck="After the grant a heat pump costs £3,500 to buy and fit. A gas boiler costs £3,000. The heat pump costs £855 a year to run. The boiler costs £980."
@@ -70,22 +71,22 @@ export function ComparisonBriefDemo() {
       heroText="Without the grant the heat pump costs £11,000 to buy and fit. That is £8,000 more than the boiler. A saving of £125 a year would take 64 years to repay it."
       pairs={[
         {
-          title: "The January energy bill is £142 for the heat pump and £158 for the boiler",
+          title: "The January energy bill is £120 for the heat pump and £139 for the boiler",
           text: "Estimated monthly energy cost for heating and hot water. Both charts use the same scale. The heat pump's bill is lower in all 12 months.",
           a: <BarChart
             data={[
-              { month: "Jan", cost: 142 },
-              { month: "Feb", cost: 128 },
-              { month: "Mar", cost: 102 },
-              { month: "Apr", cost: 68 },
-              { month: "May", cost: 40 },
-              { month: "Jun", cost: 28 },
-              { month: "Jul", cost: 25 },
-              { month: "Aug", cost: 26 },
-              { month: "Sep", cost: 38 },
-              { month: "Oct", cost: 66 },
-              { month: "Nov", cost: 98 },
-              { month: "Dec", cost: 134 },
+              { month: "Jan", cost: 120 },
+              { month: "Feb", cost: 108 },
+              { month: "Mar", cost: 86 },
+              { month: "Apr", cost: 57 },
+              { month: "May", cost: 34 },
+              { month: "Jun", cost: 24 },
+              { month: "Jul", cost: 21 },
+              { month: "Aug", cost: 22 },
+              { month: "Sep", cost: 32 },
+              { month: "Oct", cost: 56 },
+              { month: "Nov", cost: 83 },
+              { month: "Dec", cost: 112 },
             ]}
             x="month"
             y="cost"
@@ -94,22 +95,22 @@ export function ComparisonBriefDemo() {
             labels={false}
             format="currency:GBP"
             height={200}
-            option={{ yAxis: { max: 160 } }}
+            option={{ yAxis: { max: 140 } }}
           />,
           b: <BarChart
             data={[
-              { month: "Jan", cost: 158 },
-              { month: "Feb", cost: 141 },
-              { month: "Mar", cost: 115 },
-              { month: "Apr", cost: 78 },
-              { month: "May", cost: 49 },
-              { month: "Jun", cost: 37 },
-              { month: "Jul", cost: 34 },
-              { month: "Aug", cost: 35 },
-              { month: "Sep", cost: 46 },
-              { month: "Oct", cost: 74 },
-              { month: "Nov", cost: 107 },
-              { month: "Dec", cost: 146 },
+              { month: "Jan", cost: 139 },
+              { month: "Feb", cost: 124 },
+              { month: "Mar", cost: 101 },
+              { month: "Apr", cost: 69 },
+              { month: "May", cost: 43 },
+              { month: "Jun", cost: 33 },
+              { month: "Jul", cost: 30 },
+              { month: "Aug", cost: 31 },
+              { month: "Sep", cost: 41 },
+              { month: "Oct", cost: 65 },
+              { month: "Nov", cost: 94 },
+              { month: "Dec", cost: 130 },
             ]}
             x="month"
             y="cost"
@@ -119,16 +120,16 @@ export function ComparisonBriefDemo() {
             format="currency:GBP"
             height={200}
             highlight="none"
-            option={{ yAxis: { max: 160 } }}
+            option={{ yAxis: { max: 140 } }}
           />,
         },
         {
           title: "Cost over 15 years by part",
-          text: "Energy is £12,075 of the heat pump's cost. It is £13,500 of the boiler's.",
+          text: "Energy is £11,325 of the heat pump's £16,325. It is £13,500 of the boiler's £17,700.",
           a: <SegmentedBar
             data={[
               { part: "Purchase and fitting", gbp: 3500 },
-              { part: "Energy", gbp: 12075 },
+              { part: "Energy", gbp: 11325 },
               { part: "Servicing", gbp: 1500 },
             ]}
             name="part"

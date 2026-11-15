@@ -338,6 +338,7 @@ const streamRows = (() => {
 
 export const examples = {
   "Stacked, labelled in the bands": {
+    theme: "earth",
     data: mix,
     x: "year",
     y: ["Coal", "Gas", "Hydro", "Nuclear", "Wind and solar"],
@@ -349,6 +350,7 @@ export const examples = {
     note: "Figures are approximate, for illustration",
   },
   "100% stacked with highlight": {
+    theme: "ledger",
     data: mix,
     x: "year",
     y: ["Coal", "Gas", "Hydro", "Nuclear", "Wind and solar"],
@@ -360,6 +362,7 @@ export const examples = {
     note: "Figures are approximate, for illustration",
   },
   "Streamgraph, long format": {
+    theme: "science",
     data: streamRows,
     x: "month",
     y: "hours",
@@ -371,6 +374,7 @@ export const examples = {
     note: "Illustrative data",
   },
   "Overlapping washes": {
+    theme: "noir",
     data: [
       { month: "Jan", "2023": 41, "2024": 52 },
       { month: "Feb", "2023": 44, "2024": 55 },

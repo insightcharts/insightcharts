@@ -1,11 +1,12 @@
 import { TimelineStory } from "@/components/insightcharts/templates/timeline-story";
 import { LineChart } from "@/components/insightcharts/atoms/line-chart";
 import { BarChart } from "@/components/insightcharts/atoms/bar-chart";
-import { BigNumber } from "@/components/insightcharts/atoms/big-number";
+import { StatTile } from "@/components/insightcharts/atoms/stat-tile";
 
 export function TimelineStoryDemo() {
   return (
     <TimelineStory
+      theme="forest"
       kicker="Energy"
       title="Coal generated 39% of Britain's electricity in 2012 and 0.6% in 2024"
       deck="The first public coal power station opened in 1882. The last coal plant closed on 30 September 2024."
@@ -13,33 +14,33 @@ export function TimelineStoryDemo() {
       date="2024-10-01"
       timeline={<LineChart
         data={[
-          { year: "1990-01-01", share: 65 },
-          { year: "1994-01-01", share: 50 },
-          { year: "1998-01-01", share: 35 },
-          { year: "2002-01-01", share: 32 },
-          { year: "2006-01-01", share: 38 },
-          { year: "2010-01-01", share: 28 },
-          { year: "2012-01-01", share: 39 },
-          { year: "2013-01-01", share: 36 },
-          { year: "2014-01-01", share: 30 },
-          { year: "2015-01-01", share: 22 },
-          { year: "2016-01-01", share: 9 },
-          { year: "2017-01-01", share: 7 },
-          { year: "2018-01-01", share: 5 },
-          { year: "2019-01-01", share: 2 },
-          { year: "2020-01-01", share: 2 },
-          { year: "2021-01-01", share: 2 },
-          { year: "2022-01-01", share: 1.5 },
-          { year: "2023-01-01", share: 1 },
-          { year: "2024-01-01", share: 0.6 },
+          { year: "1990-01-01", share: 65, wind: 0 },
+          { year: "1994-01-01", share: 50, wind: 0 },
+          { year: "1998-01-01", share: 35, wind: 0.2 },
+          { year: "2002-01-01", share: 32, wind: 0.4 },
+          { year: "2006-01-01", share: 38, wind: 1 },
+          { year: "2010-01-01", share: 28, wind: 3 },
+          { year: "2012-01-01", share: 39, wind: 6 },
+          { year: "2013-01-01", share: 36, wind: 8 },
+          { year: "2014-01-01", share: 30, wind: 9 },
+          { year: "2015-01-01", share: 22, wind: 12 },
+          { year: "2016-01-01", share: 9, wind: 11 },
+          { year: "2017-01-01", share: 7, wind: 15 },
+          { year: "2018-01-01", share: 5, wind: 17 },
+          { year: "2019-01-01", share: 2, wind: 20 },
+          { year: "2020-01-01", share: 2, wind: 24 },
+          { year: "2021-01-01", share: 2, wind: 21 },
+          { year: "2022-01-01", share: 1.5, wind: 27 },
+          { year: "2023-01-01", share: 1, wind: 29 },
+          { year: "2024-01-01", share: 0.6, wind: 30 },
         ]}
         x="year"
-        y="share"
+        y={["share", "wind"]}
+        names={{ share: "Coal", wind: "Wind" }}
         format="{value}%"
         zero
-        area
         title="Coal's share of generation fell from 65% in 1990 to 0.6% in 2024"
-        subtitle="Share of Great Britain's electricity generated from coal, 1990 to 2024"
+        subtitle="Share of Great Britain's electricity generated from coal and from wind, 1990 to 2024"
         annotations={[
           {
             type: "band",
@@ -114,9 +115,16 @@ export function TimelineStoryDemo() {
           title: "Ratcliffe-on-Soar, the last coal plant, shuts down",
           emphasis: true,
           text: "The plant had run since 1968. In 2024 wind generated 30% of the country's electricity and gas generated 26%.",
-          exhibit: <BigNumber
-            value="0%"
-            label="Coal share of generation since October 2024"
+          exhibit: <StatTile
+            variant="comparison"
+            surface="borderless"
+            upIsGood={false}
+            value={0.6}
+            comparison={39}
+            valueLabel="2024"
+            comparisonLabel="2012"
+            format="{value}%"
+            label="Coal share of generation"
             context="Britain was the first G7 country to end coal power"
           />,
         },

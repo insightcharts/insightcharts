@@ -11,6 +11,19 @@ export function groundOfTheme(theme: unknown, mode: "light" | "dark" = "light"):
 }
 
 /**
+ * The ground an example paints behind itself in each mode, or undefined when it follows the
+ * page: no theme name, `frame: false`, or a theme with no surface of its own. An example that
+ * forces a `mode` paints that mode's ground whatever the page is in.
+ */
+export function authoredGround(spec: Record<string, unknown> | undefined): { light: string; dark: string } | undefined {
+  if (!spec || typeof spec.theme !== "string" || spec.frame === false) return undefined;
+  const forced = spec.mode === "dark" || spec.mode === "light" ? spec.mode : undefined;
+  const light = groundOfTheme(spec.theme, forced ?? "light");
+  const dark = groundOfTheme(spec.theme, forced ?? "dark");
+  return light && dark ? { light, dark } : undefined;
+}
+
+/**
  * The ground a poster spec will paint, worked out before it renders so its frame can reserve
  * the colour: the spec's `background`, else its theme's ground, else the ground of the theme
  * the component's props table gives as the default. The frame re-reads it from the DOM once

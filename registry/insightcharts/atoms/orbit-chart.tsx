@@ -321,6 +321,7 @@ export const OrbitChart = defineChart<OrbitChartProps>({
   ],
   example: {
     type: "orbit-chart",
+    theme: "noir",
     data: [
       { supplier: "Halden Cells", tier: "Tier 1", spend: 84 },
       { supplier: "Orrin Motors", tier: "Tier 1", spend: 61 },

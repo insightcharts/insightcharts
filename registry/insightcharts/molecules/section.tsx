@@ -90,7 +90,7 @@ export const Section = withMeta(SectionImpl, {
   description: "A story section: a numbered step marker or a headline, introductory prose, then one or more exhibits in a responsive one- to three-column grid.",
   whenToUse: "The building block of a longer piece. Each section states one fact with its number in the title, explains it in a paragraph and shows it in one to three exhibits. Use `step` when the sections are read in order.",
   avoid: "The opening of a piece (use `hero-figure`); a single chart with one callout (use `chart-callout` directly); more than three exhibits in one section (split it).",
-  composes: ["step-marker", "headline", "prose", "line-chart", "bar-chart", "stat-tile"],
+  composes: ["step-marker", "headline", "prose", "line-chart", "bar-chart", "area-chart", "stat-tile"],
   props: [
     { name: "title", type: "string", description: "The section's main fact, as one plain sentence with its number." },
     { name: "step", type: "number | string", description: 'Step number: turns the heading into a numbered chapter marker ("02 — ...").' },
@@ -106,11 +106,13 @@ export const Section = withMeta(SectionImpl, {
     { name: "id", type: "string", description: "Anchor id for deep links." },
     { name: "spacing", type: '"compact" | "comfortable"', default: '"comfortable"', description: "Vertical rhythm between heading, intro and body." },
     { name: "children", type: "ReactNode", description: "JSX alternative to `body`; each child becomes a grid item." },
-    { name: "theme", type: "ThemeInput", description: "Theme override, passed on to everything inside." },
+    { name: "theme", type: "ThemeInput", description: "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the component." },
+    { name: "frame", type: "boolean", description: "Paint the theme's surface behind the component. Default: on for a named theme with its own surface." },
     { name: "mode", type: '"auto" | "system" | "light" | "dark"', default: '"auto"', description: "Colour mode." },
   ],
   example: {
     type: "section",
+    theme: "ocean",
     step: 2,
     total: 4,
     title: "First-quarter churn was 2.0% for customers who joined after March",

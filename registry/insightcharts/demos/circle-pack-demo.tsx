@@ -19,6 +19,7 @@ const data = [
 export function CirclePackDemo() {
   return (
     <CirclePack
+      theme="magenta"
       data={data}
       name="crop"
       value="mt"

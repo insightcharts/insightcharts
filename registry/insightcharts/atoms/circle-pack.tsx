@@ -508,6 +508,7 @@ export const CirclePack = defineChart<CirclePackProps>({
   ],
   example: {
     type: "circle-pack",
+    theme: "magenta",
     data: [
       { crop: "Maize", group: "Cereals", mt: 1160 },
       { crop: "Wheat", group: "Cereals", mt: 780 },

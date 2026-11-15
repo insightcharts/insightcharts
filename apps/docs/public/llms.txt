@@ -74,7 +74,7 @@ Install with `npm install insightcharts echarts`, or copy component source with 
 - [Source note](https://insightcharts.dev/llms/source-note.md): A sourcing footer for a whole piece: sources with optional links, the period covered, method, caveats and credit.
 - [Sparkline](https://insightcharts.dev/llms/sparkline.md): A word-sized line or bar series without axes, with the latest point marked.
 - [Stat circles](https://insightcharts.dev/llms/stat-circles.md): Shows a few related magnitudes as plain circles sized by area, each with its number set large and a short label.
-- [Stat tile](https://insightcharts.dev/llms/stat-tile.md): A compact, bordered KPI tile: label, value, change against a baseline and an optional trend graphic.
+- [Stat tile](https://insightcharts.dev/llms/stat-tile.md): A compact KPI tile: label, value, change against a baseline and an optional graphic. Twenty variants display the same data as a card, a trend, progress toward a target, a comparison, a breakdown, a rank or a count of icons.
 - [Step marker](https://insightcharts.dev/llms/step-marker.md): A numbered chapter or step heading ("01 — Electricity sources in 2015") for sequencing the sections of a story.
 - [Strip plot](https://insightcharts.dev/llms/strip-plot.md): Shows every observation as a tick or dot along a value axis, one row per category.
 - [Timeline chart](https://insightcharts.dev/llms/timeline-chart.md): Places events and spans on a time axis in labelled lanes, with each item named directly.
@@ -85,13 +85,13 @@ Install with `npm install insightcharts echarts`, or copy component source with 
 ## Molecules
 
 - [Annotated timeline](https://insightcharts.dev/llms/annotated-timeline.md): A vertical sequence of dated events along a rail, each with a short explanation and, optionally, a small chart or figure.
-- [Before and after](https://insightcharts.dev/llms/before-after.md): Two states of one measure side by side, as figures or small charts, with the change between them stated in the middle.
+- [Before and after](https://insightcharts.dev/llms/before-after.md): Two states of one measure side by side, as figures, stat tiles of any variant or small charts, with the change between them stated in the middle.
 - [Chart with callout](https://insightcharts.dev/llms/chart-callout.md): A chart with a callout beside it that states the main fact. In narrow containers the callout goes underneath.
 - [Chart tabs](https://insightcharts.dev/llms/chart-tabs.md): One chart frame with a segmented control that switches between several views of the same data, morphing between views that share a chart type.
 - [Comparison table](https://insightcharts.dev/llms/comparison-table.md): A table whose rows carry inline sparklines, deltas and in-cell bars beside their exact values, from rows and a column config.
 - [Filter chips](https://insightcharts.dev/llms/filter-chips.md): The active crossfilter selections of the surrounding `InsightData`, shown as removable chips with a reset control.
 - [Hero figure](https://insightcharts.dev/llms/hero-figure.md): The opening exhibit of a piece: kicker, headline and deck above one large chart, with a source line underneath.
-- [KPI grid](https://insightcharts.dev/llms/kpi-grid.md): A responsive grid of trend cards drawn from one dataset: each metric shows its latest value, its change and a sparkline.
+- [KPI grid](https://insightcharts.dev/llms/kpi-grid.md): A responsive grid of trend cards drawn from one dataset: each metric shows its latest value, its change and a graphic, in one `stat-tile` variant or a deliberate mix of them.
 - [Linked charts](https://insightcharts.dev/llms/linked-charts.md): Two to four charts over one shared dataset in a responsive grid: clicking a mark in one filters the others, with the active filters shown as removable chips.
 - [Metric breakdown](https://insightcharts.dev/llms/metric-breakdown.md): A headline number with its composition underneath: one segmented bar and a key giving each part's value and share.
 - [Poster](https://insightcharts.dev/llms/poster.md): The sheet an infographic is composed on. It paints a full-bleed ground from a poster theme, forces one theme and colour mode on everything inside, and lays out a masthead, a grid of panels and a footer. It can save the whole sheet as one PNG.
@@ -101,8 +101,8 @@ Install with `npm install insightcharts echarts`, or copy component source with 
 - [Scrolly chart](https://insightcharts.dev/llms/scrolly-chart.md): A scroll-driven story from JSON: one base chart spec and a list of steps, each with narration and a patch of chart props applied while that step is active.
 - [Section](https://insightcharts.dev/llms/section.md): A story section: a numbered step marker or a headline, introductory prose, then one or more exhibits in a responsive one- to three-column grid.
 - [Small multiple grid](https://insightcharts.dev/llms/small-multiple-grid.md): Repeats any chart spec once per value of a facet field, each panel with its own filtered rows and a title, in a grid that follows the container width.
-- [Stat row](https://insightcharts.dev/llms/stat-row.md): Two to five key figures in one row separated by hairlines, collapsing to two columns and then one as the container narrows.
-- [Trend card](https://insightcharts.dev/llms/trend-card.md): A KPI card computed from a series: the latest value, its change against a baseline in the same data, and a sparkline of the series.
+- [Stat row](https://insightcharts.dev/llms/stat-row.md): Two to five key figures in one row, as open numbers separated by hairlines or as stat tiles of any variant, collapsing to two columns and then one as the container narrows.
+- [Trend card](https://insightcharts.dev/llms/trend-card.md): A KPI card computed from a series: the latest value, its change against a baseline in the same data, and a trend graphic, in any `stat-tile` variant.
 
 ## Templates
 

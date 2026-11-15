@@ -99,11 +99,13 @@ export const ProportionStatement = withMeta(ProportionStatementImpl, {
     { name: "detail", type: "string", description: "A second, quieter sentence under the statement." },
     { name: "source", type: "string", description: 'Shown under the statement as "Source: ...".' },
     { name: "note", type: "string", description: "Method note or caveat." },
-    { name: "theme", type: "ThemeInput", description: "Theme override, passed on to the visual." },
+    { name: "theme", type: "ThemeInput", description: "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the visual. A named theme with its own surface paints that surface behind the component." },
+    { name: "frame", type: "boolean", description: "Paint the theme's surface behind the component. Default: on for a named theme with its own surface." },
     { name: "mode", type: '"auto" | "system" | "light" | "dark"', default: '"auto"', description: "Colour mode." },
   ],
   example: {
     type: "proportion-statement",
+    theme: "sunrise",
     value: 33,
     total: 100,
     text: "people in the world have never used the internet.",
@@ -115,6 +117,6 @@ export const ProportionStatement = withMeta(ProportionStatementImpl, {
 
 export const examples = {
   "Icons, 1 in 4": { value: 1, total: 4, text: "households could not cover an unexpected bill of €500 without borrowing.", source: "Eurostat, EU-SILC 2023", note: "Figures are approximate, for illustration" },
-  "Icons on the right, custom figure": { value: 9, total: 10, figure: "Nine in ten", icon: "circle", side: "right", text: "new cars sold in Norway in 2024 were fully electric.", detail: "Battery-electric models were 89% of registrations in 2024. They were 82% in 2023.", source: "Norwegian Road Federation (OFV)", note: "Figures are approximate, for illustration" },
-  "Waffle with circles": { value: 12, total: 100, shape: "circle", text: "adults in the survey had changed jobs in the past year.", note: "Illustrative data" },
+  "Icons on the right, custom figure, ocean theme": { theme: "ocean", value: 9, total: 10, figure: "Nine in ten", icon: "circle", side: "right", text: "new cars sold in Norway in 2024 were fully electric.", detail: "Battery-electric models were 89% of registrations in 2024. They were 82% in 2023.", source: "Norwegian Road Federation (OFV)", note: "Figures are approximate, for illustration" },
+  "Waffle with circles, poster theme": { theme: "poster", value: 12, total: 100, shape: "circle", text: "adults in the survey had changed jobs in the past year.", note: "Illustrative data" },
 };

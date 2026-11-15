@@ -195,6 +195,7 @@ export const IconArrayGrid = defineChart<IconArrayGridProps>({
   ],
   example: {
     type: "icon-array-grid",
+    theme: "sunrise",
     data: [
       { district: "Ashby", cars: 118 },
       { district: "Brook End", cars: 104 },
@@ -292,7 +293,8 @@ export const IconArrayGrid = defineChart<IconArrayGridProps>({
       scaleX: k,
       scaleY: k,
       children: [
-        { type: "path", shape: { pathData: icon.d, x: 0, y: 1, width: kw, height: kh, layout: "center" }, style: { fill: t.inkSecondary }, ...keep },
+        // The key glyph wears the mark colour, so on a painted ground it reads as the same thing; neutral when a highlight splits the marks.
+        { type: "path", shape: { pathData: icon.d, x: 0, y: 1, width: kw, height: kh, layout: "center" }, style: { fill: ctx.highlight.length ? t.inkSecondary : ctx.color() }, ...keep },
         { type: "text", x: kw + 8, y: 1 + kh / 2, style: { text: truncateText(`= ${keyText}`, ctx.width / k - kw - 8, 12, t.fontFamily), fill: t.muted, fontSize: 12, fontFamily: t.fontFamily, verticalAlign: "middle" }, ...keep },
       ],
     });
@@ -355,6 +357,7 @@ export const examples = {
     note: "Invented figures for a fictional council",
   },
   "Squares, five per line, sorted": {
+    theme: "noir",
     data: [
       { club: "Harriers", medals: 23 },
       { club: "Lakeside", medals: 17 },
@@ -376,6 +379,7 @@ export const examples = {
     note: "Invented figures",
   },
   "Stress: 24 tiles, long names, uneven counts": {
+    theme: "blueprint",
     data: [
       ["Aldermoor and the northern villages", 142], ["Barrow", 3], ["Charnwood Forest", 87], ["Denby", 0], ["East Leake and Stanford", 61], ["Fosse", 118],
       ["Great Glen", 24], ["Hathern", 9], ["Ibstock", 45], ["Kegworth", 133], ["Loughborough Central and University", 150], ["Markfield", 12],

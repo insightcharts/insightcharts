@@ -403,12 +403,13 @@ const data = [
 ];
 
 <CalendarHeatmap
+  theme="forest"
   data={data}
   date="date"
   value="commits"
   title="Commits per day to the main repository, 2024"
   subtitle="Number of commits each day"
-  note="Illustrative data. Pale cells are days with no commits."
+  note="Illustrative data. Faint cells are days with no commits."
 />
 ```
 
@@ -419,6 +420,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 ```json
 {
   "type": "calendar-heatmap",
+  "theme": "forest",
   "data": [
     { "date": "2024-01-01", "commits": 16 },
     { "date": "2024-01-02", "commits": 9 },
@@ -787,7 +789,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
   "value": "commits",
   "title": "Commits per day to the main repository, 2024",
   "subtitle": "Number of commits each day",
-  "note": "Illustrative data. Pale cells are days with no commits."
+  "note": "Illustrative data. Faint cells are days with no commits."
 }
 ```
 
@@ -823,7 +825,8 @@ Every chart also accepts these (shared by all charts; also at https://insightcha
 | `select` | `boolean \| string` | Make marks clickable to filter. Inside `<InsightData>` the selection filters every other chart. Pass a field name, or `true` to use the chart's category field. |
 | `onSelect` | `(values: string[], field: string) => void` | Called with the selected values whenever the selection changes. |
 | `option` | `EChartsOption \| ((option: EChartsOption, ctx: BuildContext) => EChartsOption)` | Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers. |
-| `theme` | `ThemeInput` | A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme. |
+| `theme` | `ThemeInput` | A built-in theme name (`"editorial"`, `"ledger"`, `"noir"`...), or a theme object. A named theme paints its own background behind the chart. |
+| `frame` | `boolean` | Paint the theme's background behind the chart. Default: on for a named theme with its own surface. |
 | `mode` | `ModeInput` | `"auto"` (default) follows the page, `"system"` follows the OS, or force `"light"` / `"dark"`. |
 | `renderer` | `RendererInput` | `"auto"` (default) uses SVG for light charts and canvas for heavy ones. |
 | `animate` | `boolean` | Set false to disable animation for this chart. Reduced-motion preferences are always respected. |
@@ -891,6 +894,7 @@ const data = [
 ];
 
 <CalendarHeatmap
+  theme="earth"
   data={data}
   date="date"
   value="incidents"
@@ -919,6 +923,7 @@ const data = [
 ];
 
 <CalendarHeatmap
+  theme="magenta"
   data={data}
   date="date"
   value="commits"

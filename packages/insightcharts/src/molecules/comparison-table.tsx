@@ -287,6 +287,16 @@ const shares: [string, number[], number][] = [
 const wide = shares.map(([country, s, twh]) => ({ country, ...Object.fromEntries(YEARS.map((y, i) => [y, s[i]])), share: s[5], twh }));
 const long = shares.flatMap(([country, s]) => s.map((share, i) => ({ country, year: YEARS[i], share })));
 
+const basins: [string, number[], number][] = [
+  ["North Atlantic", [0.62, 0.71, 0.68, 0.74, 1.12, 1.21], 41],
+  ["North Pacific", [0.58, 0.66, 0.63, 0.72, 0.89, 0.94], 77],
+  ["Indian", [0.49, 0.52, 0.47, 0.5, 0.71, 0.83], 71],
+  ["South Atlantic", [0.31, 0.36, 0.34, 0.38, 0.55, 0.61], 40],
+  ["South Pacific", [0.28, 0.3, 0.25, 0.27, 0.52, 0.56], 85],
+  ["Southern", [0.05, 0.08, 0.02, 0.06, 0.14, 0.11], 22],
+];
+const oceans = basins.map(([basin, s, area]) => ({ basin, ...Object.fromEntries(YEARS.map((y, i) => [y, s[i]])), anomaly: s[5], area }));
+
 export const ComparisonTable = withMeta(ComparisonTableImpl, {
   name: "comparison-table",
   component: "ComparisonTable",
@@ -311,7 +321,8 @@ export const ComparisonTable = withMeta(ComparisonTableImpl, {
     { name: "subtitle", type: "string", description: "Units and period." },
     { name: "source", type: "string", description: 'Shown under the table as "Source: ...".' },
     { name: "note", type: "string", description: "Method note or caveat." },
-    { name: "theme", type: "ThemeInput", description: "Theme override, passed on to the sparklines and deltas." },
+    { name: "theme", type: "ThemeInput", description: "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the sparklines and deltas. A named theme with its own surface paints that surface behind the component." },
+    { name: "frame", type: "boolean", description: "Paint the theme's surface behind the component. Default: on for a named theme with its own surface." },
     { name: "mode", type: '"auto" | "system" | "light" | "dark"', default: '"auto"', description: "Colour mode." },
   ],
   example: {
@@ -334,7 +345,10 @@ export const ComparisonTable = withMeta(ComparisonTableImpl, {
 });
 
 export const examples = {
-  "Long data with groupBy, relative change, compact": {
+  "Long data with groupBy, relative change, compact, ledger theme": {
+    theme: "ledger",
+    title: "Germany's renewable share of electricity was 58.9% in 2024",
+    highlight: "Germany",
     data: long,
     groupBy: "country",
     density: "compact",
@@ -347,7 +361,9 @@ export const examples = {
     ],
     note: "Illustrative data",
   },
-  "Deltas given in the data, down is good": {
+  "Deltas given in the data, down is good, noir theme": {
+    theme: "noir",
+    highlight: "Billing",
     title: "Billing's first response time rose 19% over six weeks",
     data: [
       { team: "Onboarding", median: "1 h 05 min", weekly: [2.4, 2.1, 1.9, 1.6, 1.3, 1.1], change: -0.54 },
@@ -360,6 +376,22 @@ export const examples = {
       { key: "weekly", label: "Last six weeks" },
       { key: "change", label: "Change", kind: "delta", upIsGood: false },
     ],
+    note: "Illustrative data",
+  },
+  "Bars, sparklines and absolute change, science theme": {
+    theme: "science",
+    title: "The North Atlantic surface was 1.21°C above its 1991 to 2020 average in 2024",
+    subtitle: "Annual mean sea surface temperature anomaly by ocean basin, °C, 2019 to 2024",
+    data: oceans,
+    columns: [
+      { key: "basin", label: "Basin" },
+      { key: "area", label: "Area, million km²", kind: "bar", format: "integer", hideBelow: 560 },
+      { key: "anomaly", label: "Anomaly, 2024", format: "{value}°C" },
+      { key: "trend", label: "2019 to 2024", kind: "sparkline", fields: YEARS, format: "{value}°C" },
+      { key: "change", label: "Change", kind: "delta", fields: YEARS, change: "absolute", format: "{value}°C", upIsGood: false },
+    ],
+    sort: { key: "anomaly" },
+    highlight: "North Atlantic",
     note: "Illustrative data",
   },
 };

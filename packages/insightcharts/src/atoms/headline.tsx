@@ -4,7 +4,7 @@ import { useInsightStyles } from "../core/figure";
 import { formatDate } from "../core/format";
 import { withMeta } from "../core/meta";
 import { useColorMode, type ModeInput } from "../core/mode";
-import { useInsightConfig, useTheme } from "../core/provider";
+import { frameStyle, useInsightConfig, useTheme } from "../core/provider";
 import { chromeVars, type ThemeInput } from "../core/theme";
 
 export interface HeadlineProps {
@@ -25,7 +25,10 @@ export interface HeadlineProps {
   align?: "left" | "center";
   /** Extra content under the byline, e.g. share links. */
   children?: ReactNode;
+  /** A built-in theme name or a theme object. A named theme paints its own background behind the block. */
   theme?: ThemeInput;
+  /** Paint the named theme's background behind the block. Default: on for a named theme with its own surface. */
+  frame?: boolean;
   mode?: ModeInput;
   className?: string;
   style?: CSSProperties;
@@ -75,7 +78,7 @@ function HeadlineImpl({ title, kicker, deck, byline, date, size = "section", lev
   const dateText = date ? (iso ? formatDate(date.length === 10 ? `${date}T00:00:00` : date, config.locale, { year: "numeric", month: "long", day: "numeric" }) : date) : null;
 
   return (
-    <header ref={ref} data-slot="ic-headline" data-size={size} data-ic-mode={mode} className={className} style={{ ...(chromeVars(theme[mode]) as CSSProperties), fontFamily: "var(--_ic-font)", color: "var(--_ic-ink)", textAlign: align, minWidth: 0, ...style }}>
+    <header ref={ref} data-slot="ic-headline" data-size={size} data-ic-mode={mode} className={className} style={{ ...(chromeVars(theme[mode]) as CSSProperties), fontFamily: "var(--_ic-font)", color: "var(--_ic-ink)", textAlign: align, minWidth: 0, ...frameStyle(rest.theme, mode, rest.frame), ...style }}>
       {kicker ? (
         <p data-slot="ic-headline-kicker" style={{ margin: `0 0 ${size === "card" ? 4 : 8}px`, fontSize: size === "page" ? "0.875rem" : "0.8125rem", lineHeight: 1.4, fontWeight: 600, letterSpacing: "0.01em", color: "color-mix(in srgb, var(--_ic-accent) 82%, var(--_ic-ink))" }}>
           {kicker}
@@ -137,9 +140,11 @@ export const Headline = withMeta(HeadlineImpl, {
     { name: "level", type: "1 | 2 | 3 | 4 | 5 | 6", description: "Heading level. Defaults to 1 (page), 2 (section), 3 (card)." },
     { name: "align", type: '"left" | "center"', default: '"left"', description: "Text alignment." },
     { name: "children", type: "ReactNode", description: "Extra content under the byline." },
+    { name: "frame", type: "boolean", description: "Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off." },
   ],
   example: {
     type: "headline",
+    theme: "ledger",
     size: "page",
     kicker: "Energy transition",
     title: "Solar generated more electricity than coal in Europe in 2024",
@@ -156,8 +161,9 @@ export const examples = {
     title: "Germany and the Netherlands have more solar installations per person than Spain",
     deck: "Solar installations per person, by country.",
   },
-  Card: { size: "card", title: "Wholesale electricity prices by hour, summer 2024", deck: "Median day-ahead price for each hour of the day.", date: "Updated June 2024" },
+  Card: { theme: "paper", size: "card", title: "Wholesale electricity prices by hour, summer 2024", deck: "Median day-ahead price for each hour of the day.", date: "Updated June 2024" },
   "Centered page, long title": {
+    theme: "dusk",
     size: "page",
     align: "center",
     title: "Household energy bills in January 2025 were one third higher than before the price shock three years earlier",

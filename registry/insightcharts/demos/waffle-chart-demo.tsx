@@ -3,6 +3,7 @@ import { WaffleChart } from "@/components/insightcharts/atoms/waffle-chart";
 export function WaffleChartDemo() {
   return (
     <WaffleChart
+      theme="poster"
       data={[{ group: "Have never been online", share: 33 }]}
       name="group"
       value="share"

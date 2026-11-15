@@ -93,6 +93,7 @@ export const LollipopChart = defineChart<LollipopChartProps>({
   ],
   example: {
     type: "lollipop-chart",
+    theme: "mono",
     data: [
       { country: "Netherlands", share: 27 },
       { country: "Denmark", share: 19 },
@@ -289,6 +290,7 @@ export const examples = {
     note: "Figures are approximate, for illustration",
   },
   "Long format, three dots per row": {
+    theme: "earth",
     data: [
       ["Nurses", 82, 71, 64], ["Teachers", 74, 66, 58], ["Police officers", 61, 55, 49], ["Journalists", 34, 29, 31], ["Bankers", 28, 30, 33], ["Politicians", 14, 12, 11],
     ].flatMap(([job, a, b, c]) => [
@@ -306,6 +308,7 @@ export const examples = {
     note: "Illustrative figures.",
   },
   "Vertical, over time": {
+    theme: "blueprint",
     data: [
       { month: "2024-01", launches: 18 }, { month: "2024-02", launches: 15 }, { month: "2024-03", launches: 22 }, { month: "2024-04", launches: 21 }, { month: "2024-05", launches: 24 }, { month: "2024-06", launches: 19 },
       { month: "2024-07", launches: 17 }, { month: "2024-08", launches: 23 }, { month: "2024-09", launches: 20 }, { month: "2024-10", launches: 25 }, { month: "2024-11", launches: 27 }, { month: "2024-12", launches: 28 },
@@ -318,6 +321,7 @@ export const examples = {
     note: "Illustrative figures.",
   },
   "Stress: 26 rows with long names": {
+    theme: "poster",
     data: [
       "Community and social service occupations", "Healthcare practitioners and technical occupations", "Education, training and library occupations", "Computer and mathematical occupations", "Architecture and engineering occupations",
       "Life, physical and social science occupations", "Legal occupations", "Business and financial operations", "Management occupations", "Arts, design, entertainment, sports and media",

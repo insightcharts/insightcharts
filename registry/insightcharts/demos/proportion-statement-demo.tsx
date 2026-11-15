@@ -3,6 +3,7 @@ import { ProportionStatement } from "@/components/insightcharts/molecules/propor
 export function ProportionStatementDemo() {
   return (
     <ProportionStatement
+      theme="sunrise"
       value={33}
       total={100}
       text="people in the world have never used the internet."

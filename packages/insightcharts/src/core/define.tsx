@@ -46,7 +46,10 @@ export interface CommonChartProps {
   onSelect?: (values: string[], field: string) => void;
   /** Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers. */
   option?: EChartsOption | ((option: EChartsOption, ctx: BuildContext) => EChartsOption);
+  /** A built-in theme name (`"editorial"`, `"ledger"`, `"noir"`...), or a theme object. A named theme paints its own background behind the chart. */
   theme?: ThemeInput;
+  /** Paint the theme's background behind the chart. Default: on for a named theme with its own surface. */
+  frame?: boolean;
   /** `"auto"` (default) follows the page, `"system"` follows the OS, or force `"light"` / `"dark"`. */
   mode?: ModeInput;
   /** `"auto"` (default) uses SVG for light charts and canvas for heavy ones. */
@@ -309,6 +312,7 @@ export function defineChart<P extends object>(def: ChartDefinition<P>): ChartCom
         height={props.aspect ? undefined : height}
         theme={props.theme}
         mode={props.mode}
+        frame={props.frame}
         className={props.className}
         style={props.style}
       >

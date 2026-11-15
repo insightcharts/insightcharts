@@ -38,6 +38,7 @@ The file lands at `components/insightcharts/atoms/headline.tsx`. `@insightcharts
 import { Headline } from "insightcharts";
 
 <Headline
+  theme="ledger"
   size="page"
   kicker="Energy transition"
   title="Solar generated more electricity than coal in Europe in 2024"
@@ -54,6 +55,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 ```json
 {
   "type": "headline",
+  "theme": "ledger",
   "size": "page",
   "kicker": "Energy transition",
   "title": "Solar generated more electricity than coal in Europe in 2024",
@@ -76,6 +78,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `level` | `1 \| 2 \| 3 \| 4 \| 5 \| 6` |  | Heading level. Defaults to 1 (page), 2 (section), 3 (card). |
 | `align` | `"left" \| "center"` | `"left"` | Text alignment. |
 | `children` | `ReactNode` |  | Extra content under the byline. |
+| `frame` | `boolean` |  | Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off. |
 
 ## Composition
 
@@ -103,6 +106,7 @@ import { Headline } from "insightcharts";
 import { Headline } from "insightcharts";
 
 <Headline
+  theme="paper"
   size="card"
   title="Wholesale electricity prices by hour, summer 2024"
   deck="Median day-ahead price for each hour of the day."
@@ -116,6 +120,7 @@ import { Headline } from "insightcharts";
 import { Headline } from "insightcharts";
 
 <Headline
+  theme="dusk"
   size="page"
   align="center"
   title="Household energy bills in January 2025 were one third higher than before the price shock three years earlier"

@@ -120,7 +120,8 @@ const STORE = [
   [22.2, 2.97, 60.8, 10.5],
   [24.9, 3.1, 61.0, 11.4],
 ];
-const store = STORE.map(([orders, conversion, aov, returns], i) => ({ month: new Date(Date.UTC(2023, 10 + i, 1)).toISOString().slice(0, 10), orders: orders * 1000, conversion, aov, returns }));
+const OUTERWEAR_RETURNS = [13.0, 13.2, 13.6, 13.1, 12.9, 13.3, 13.0, 13.4, 13.2, 13.5, 16.1, 17.8, 19.2];
+const store = STORE.map(([orders, conversion, aov, returns], i) => ({ month: new Date(Date.UTC(2023, 10 + i, 1)).toISOString().slice(0, 10), orders: orders * 1000, conversion, aov, returns, outerwear: OUTERWEAR_RETURNS[i] }));
 const categories = [
   { category: "Outerwear", revenue: 412, change: 0.31, returns: 19.2 },
   { category: "Footwear", revenue: 371, change: 0.08, returns: 14.1 },
@@ -150,6 +151,38 @@ const THIS = [0, 1, 1, 4, 5, 8, 9, 12, 13, 16, 19, 20, 23, 26, 27, 30, 33, 33, 3
 const LAST = [1, 4, 4, 5, 6, 9, 9, 10, 13, 14, 14, 17, 18, 18, 21, 22, 22, 25, 26];
 const points = THIS.map((p, i) => ({ match: String(i + 1), "2024/25": p, "2023/24": LAST[i] }));
 
+const WEEKS = ["W31", "W32", "W33", "W34", "W35", "W36", "W37", "W38", "W39", "W40", "W41", "W42"];
+const DESK = [
+  [1840, 64, 71, 4.21],
+  [1795, 62, 72, 4.2],
+  [1910, 66, 70, 4.18],
+  [1880, 61, 73, 4.24],
+  [1960, 58, 74, 4.25],
+  [2010, 57, 74, 4.27],
+  [1985, 55, 76, 4.3],
+  [2090, 52, 77, 4.31],
+  [2140, 49, 79, 4.36],
+  [2075, 45, 81, 4.4],
+  [2180, 41, 83, 4.43],
+  [2230, 38, 84, 4.46],
+];
+const desk = DESK.map(([tickets, response, resolved, csat], i) => ({ week: WEEKS[i], tickets, response, resolved, csat }));
+const channels = [
+  [900, 735, 350],
+  [905, 840, 345],
+  [880, 920, 340],
+  [820, 925, 330],
+  [830, 1010, 340],
+  [870, 1025, 335],
+].map(([email, chat, phone], i) => ({ week: WEEKS[6 + i], email, chat, phone }));
+const queues = [
+  { queue: "Billing", tickets: 612, change: 0.09, resolved: 88, target: 80 },
+  { queue: "Login and access", tickets: 498, change: 0.21, resolved: 71, target: 80 },
+  { queue: "Shipping", tickets: 431, change: -0.05, resolved: 86, target: 80 },
+  { queue: "Returns", tickets: 356, change: 0.02, resolved: 90, target: 80 },
+  { queue: "Product questions", tickets: 333, change: -0.03, resolved: 85, target: 80 },
+];
+
 export const Scorecard = withMeta(ScorecardImpl, {
   name: "scorecard",
   component: "Scorecard",
@@ -159,7 +192,7 @@ export const Scorecard = withMeta(ScorecardImpl, {
   description: "A recurring report. It has a masthead with the report name and period, a headline that states the main change, a KPI grid with changes and sparklines, a ranked list beside one or two trend charts, an optional comparison table, short notes and a source note.",
   whenToUse: "Use it for weekly or monthly numbers. Keep the layout the same in every edition so readers know where each number is. Change the headline each edition to state the main change with its number. The headline and the KPI row should be enough for a reader who stops there. The ranking, trends and notes add detail. Highlight the one row or series the headline is about and leave the rest grey.",
   avoid: "A one-off finding (use `executive-brief`). Readers who need to filter the data themselves (use `data-explorer`). More than six KPIs.",
-  composes: ["headline", "kpi-grid", "ranked-list", "comparison-table", "prose", "source-note", "line-chart", "bar-chart"],
+  composes: ["headline", "kpi-grid", "ranked-list", "comparison-table", "prose", "source-note", "line-chart", "bar-chart", "bullet-chart"],
   props: [
     { name: "title", type: "string", required: true, description: "The main change this period, as one plain sentence with the number in it." },
     { name: "kicker", type: "string", description: 'The name of the report, e.g. "Store scorecard". Shown in the masthead.' },
@@ -178,6 +211,7 @@ export const Scorecard = withMeta(ScorecardImpl, {
   ],
   example: {
     type: "scorecard",
+    theme: "noir",
     kicker: "Online store scorecard",
     reportPeriod: "October 2024",
     title: "Orders rose 12% in October to 24,900",
@@ -187,15 +221,15 @@ export const Scorecard = withMeta(ScorecardImpl, {
       x: "month",
       compare: "previous",
       metrics: [
-        { y: "orders", label: "Orders", format: "compact", deltaLabel: "vs September" },
-        { y: "conversion", label: "Conversion rate", format: "{value}%", delta: "+0.13 pts", deltaLabel: "vs September" },
-        { y: "aov", label: "Average order value", format: "currency:EUR", deltaLabel: "vs September" },
-        { y: "returns", label: "Return rate", format: "{value}%", delta: "+0.9 pts", upIsGood: false, deltaLabel: "vs September" },
+        { variant: "area", y: "orders", label: "Orders", format: "compact", deltaLabel: "vs September" },
+        { variant: "area", y: "conversion", label: "Conversion rate", format: "{value}%", delta: "+0.13 pts", deltaLabel: "vs September" },
+        { variant: "area", y: "aov", label: "Average order value", format: "currency:EUR", deltaLabel: "vs September" },
+        { variant: "area", y: "returns", label: "Return rate", format: "{value}%", delta: "+0.9 pts", upIsGood: false, deltaLabel: "vs September" },
       ],
     },
     ranking: { data: categories, name: "category", value: "revenue", change: "change", format: "€{value}k", highlight: "Outerwear", title: "Outerwear revenue rose 31% to €412k in October", subtitle: "Revenue by category, October, with change on September" },
     trends: [
-      { type: "line-chart", data: store, x: "month", y: "returns", format: "{value}%", zero: true, title: "The return rate rose from 8.4% in July to 11.4% in October", subtitle: "Share of orders returned, by month of order", annotations: [{ type: "line", axis: "x", value: "2024-08-01", label: "Free returns" }] },
+      { type: "line-chart", data: store, x: "month", y: ["outerwear", "returns"], names: { outerwear: "Outerwear", returns: "All orders" }, format: "{value}%", zero: true, title: "The return rate rose from 8.4% in July to 11.4% in October", subtitle: "Share of orders returned by month of order, all orders and outerwear", annotations: [{ type: "line", axis: "x", value: "2024-08-01", label: "Free returns" }] },
       { type: "bar-chart", data: categories, x: "category", y: "returns", sort: "desc", orientation: "horizontal", format: "{value}%", highlight: "Outerwear", title: "19.2% of outerwear orders were returned in October", subtitle: "Return rate by category, October" },
     ],
     notes: [
@@ -212,6 +246,7 @@ export const Scorecard = withMeta(ScorecardImpl, {
 
 export const examples = {
   "Sport: a table instead of a ranking": {
+    theme: "blueprint",
     kicker: "Harbour City FC · first-team report",
     reportPeriod: "After 19 of 38 matches",
     title: "Harbour City are second with 36 points after 19 matches",
@@ -223,13 +258,13 @@ export const examples = {
       change: "absolute",
       columns: 4,
       metrics: [
-        { y: "ppg", label: "Points per match", format: "decimal:2", deltaLabel: "vs August" },
-        { y: "gf", label: "Goals scored per match", format: "decimal:2", deltaLabel: "vs August" },
-        { y: "ga", label: "Goals conceded per match", format: "decimal:2", upIsGood: false, deltaLabel: "vs August" },
-        { y: "xgd", label: "Expected goal difference per match", format: { signDisplay: "exceptZero", maximumFractionDigits: 2 }, deltaLabel: "vs August" },
+        { variant: "dots", y: "ppg", label: "Points per match", format: "decimal:2", deltaLabel: "vs August" },
+        { variant: "dots", y: "gf", label: "Goals scored per match", format: "decimal:2", deltaLabel: "vs August" },
+        { variant: "dots", y: "ga", label: "Goals conceded per match", format: "decimal:2", upIsGood: false, deltaLabel: "vs August" },
+        { variant: "dots", y: "xgd", label: "Expected goal difference per match", format: { signDisplay: "exceptZero", maximumFractionDigits: 2 }, deltaLabel: "vs August" },
       ],
     },
-    trends: [{ type: "line-chart", data: points, x: "match", y: ["2024/25", "2023/24"], highlight: "2024/25", zero: true, height: 280, title: "Harbour City have 36 points after 19 matches, against 26 last season", subtitle: "Cumulative league points by match played", annotations: [{ type: "line", axis: "x", value: "8", label: "Back three introduced" }] }],
+    trends: [{ type: "line-chart", data: points, x: "match", y: ["2024/25", "2023/24"], highlight: "2024/25", contextLabels: true, zero: true, height: 280, title: "Harbour City have 36 points after 19 matches, against 26 last season", subtitle: "Cumulative league points by match played", annotations: [{ type: "line", axis: "x", value: "8", label: "Back three introduced" }] }],
     table: {
       data: league,
       title: "Harbour City are 5 points behind Northfield",
@@ -246,5 +281,35 @@ export const examples = {
     notes: ["Harbour City took 13 points from the last five matches. Northfield took 10.", "Expected goal difference rose from −0.21 a match in August to +0.88 in December."],
     sources: "Club performance analysis",
     note: "Illustrative data. The clubs are fictional.",
+  },
+  "Support desk: weekly, stacked channels and targets": {
+    kicker: "Support desk scorecard",
+    reportPeriod: "Week 42, 2024",
+    title: "Median first response time fell to 38 minutes in week 42",
+    deck: "It was 64 minutes in week 31. Chat handled 46% of tickets in week 42.",
+    kpis: {
+      data: desk,
+      x: "week",
+      compare: "previous",
+      metrics: [
+        { variant: "bars", y: "response", label: "Median first response", format: "{value} min", upIsGood: false, deltaLabel: "vs week 41" },
+        { variant: "bars", y: "tickets", label: "Tickets opened", format: "integer", upIsGood: false, deltaLabel: "vs week 41" },
+        { variant: "bars", y: "resolved", label: "Resolved within 24 hours", format: "{value}%", delta: "+1 pt", deltaLabel: "vs week 41" },
+        { variant: "bars", y: "csat", label: "Satisfaction score out of 5", format: "decimal:2", change: "absolute", deltaLabel: "vs week 41" },
+      ],
+    },
+    ranking: { data: queues, name: "queue", value: "tickets", change: "change", upIsGood: false, highlight: "Login and access", title: "Login and access tickets rose 21% to 498 in week 42", subtitle: "Tickets by queue, week 42, with change on week 41" },
+    trends: [
+      { type: "bar-chart", data: channels, x: "week", y: ["email", "chat", "phone"], names: { email: "Email", chat: "Chat", phone: "Phone" }, stack: true, sort: "none", orientation: "vertical", height: 240, title: "Chat handled 1,025 of 2,230 tickets in week 42", subtitle: "Tickets opened by channel, weeks 37 to 42" },
+      { type: "bullet-chart", data: queues, category: "queue", value: "resolved", target: "target", names: { resolved: "Resolved within 24 hours", target: "Target" }, max: 100, format: "{value}%", highlight: "Login and access", title: "71% of login and access tickets were resolved within 24 hours", subtitle: "Share resolved within 24 hours by queue, week 42, against the 80% target" },
+    ],
+    notes: [
+      { title: "Chat staffing rose from 9 to 14 agents in week 39", text: "Median first response was 49 minutes in week 39 and 38 minutes in week 42." },
+      { title: "A password reset fault on 14 October produced 96 login tickets", text: "The fault was fixed the same day." },
+    ],
+    sources: "Help desk system",
+    period: "Weeks 31 to 42, 2024",
+    method: "First response is the time from ticket creation to the first reply by an agent, in working hours.",
+    note: "Illustrative data",
   },
 };

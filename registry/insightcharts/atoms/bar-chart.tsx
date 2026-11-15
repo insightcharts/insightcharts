@@ -108,7 +108,7 @@ export const BarChart = defineChart<BarChartProps>({
     { name: "labels", type: "boolean", description: "Value labels at bar ends. Default: on for one series of up to 12 bars." },
     { name: "names", type: "Record<string, string>", description: "Display names for series keys." },
   ],
-  example: { type: "bar-chart", data: [{ country: "Norway", share: 98 }, { country: "Brazil", share: 89 }, { country: "Canada", share: 68 }], x: "country", y: "share", format: "{value}%", title: "Renewables supplied 98% of Norway's electricity in 2023" },
+  example: { type: "bar-chart", data: [{ country: "Norway", share: 98 }, { country: "Brazil", share: 89 }, { country: "Canada", share: 68 }], x: "country", y: "share", format: "{value}%", title: "Renewables supplied 98% of Norway's electricity in 2023", theme: "ledger" },
   build(p, ctx) {
     const t = ctx.tokens;
     const shaped = shapeSeries(ctx.rows, p, p.names);

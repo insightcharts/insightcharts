@@ -3,6 +3,7 @@ import { Prose } from "../atoms/prose";
 import { withMeta } from "../core/meta";
 import { renderSlot, type Slot } from "../core/spec";
 import { Provide } from "../molecules/_shared";
+import { StatRow, type StatRowItem, type StatRowProps } from "../molecules/stat-row";
 import { asList, below, frame, FRAME_DOCS, Heading, Label, RULE, Sourcing, SOURCING_DOCS, useTemplate, withHeight, type TemplateProps, type TemplateSourcing } from "./_shared";
 
 export interface ReportFinding {
@@ -33,6 +34,8 @@ export interface ReportPageProps extends TemplateProps, Omit<TemplateSourcing, "
   summary?: string | string[];
   /** Heading of the summary. */
   summaryTitle?: string;
+  /** Two to four key figures under the summary: a list of figures, or the props of `stat-row` (`{ items, variant, ... }`) to choose how they are drawn. */
+  figures?: StatRowItem[] | StatRowProps;
   /** Numbered findings, each with one exhibit. */
   findings?: ReportFinding[];
   /** Label over each observation. */
@@ -66,9 +69,10 @@ function Confidence({ value }: { value: "high" | "medium" | "low" }) {
  * one exhibit, an observation and a separately labelled interpretation. Method and
  * limitations come last.
  */
-function ReportPageImpl({ title, kicker, deck, byline, date, summary, summaryTitle = "Summary", findings, observationLabel = "What the data shows", interpretationLabel = "What we think it means", method, limitations, sources, period, note, credit, level = 1, maxWidth = 920, className, style, ...rest }: ReportPageProps) {
+function ReportPageImpl({ title, kicker, deck, byline, date, summary, summaryTitle = "Summary", figures, findings, observationLabel = "What the data shows", interpretationLabel = "What we think it means", method, limitations, sources, period, note, credit, level = 1, maxWidth = 920, className, style, ...rest }: ReportPageProps) {
   const { ref, width, mode, root, phone, gap } = useTemplate(rest);
   const list = findings ?? [];
+  const keyFigures: StatRowProps | null = Array.isArray(figures) ? (figures.length ? { items: figures } : null) : figures?.items?.length ? figures : null;
   const sub = below(level);
   const wide = width >= 760;
   const methodText = asList(method);
@@ -83,6 +87,11 @@ function ReportPageImpl({ title, kicker, deck, byline, date, summary, summaryTit
               {summaryTitle}
             </Heading>
             <Prose text={summary} size={phone ? "md" : "lg"} measure={70} />
+          </section>
+        ) : null}
+        {keyFigures ? (
+          <section data-slot="ic-report-page-figures" aria-label="Key figures" style={{ minWidth: 0, marginTop: summary ? -gap / 2 : 0 }}>
+            <StatRow {...keyFigures} />
           </section>
         ) : null}
         {list.map((finding, i) => (
@@ -179,6 +188,21 @@ const planMix = [
   { arm: "Annual-first", Monthly: 48, Annual: 52 },
 ];
 
+const heating = [
+  { home: "Detached", gas: 18400, pump: 7300 },
+  { home: "Semi-detached", gas: 14200, pump: 5500 },
+  { home: "Terraced", gas: 11600, pump: 4500 },
+  { home: "Flat", gas: 7900, pump: 3200 },
+];
+const SPF = [2.1, 2.2, 2.2, 2.2, 2.3, 2.3, 2.4, 2.4, 2.5, 2.5, 2.5, 2.6, 2.6, 2.6, 2.6, 2.7, 2.7, 2.7, 2.7, 2.7, 2.7, 2.7, 2.8, 2.8, 2.8, 2.8, 2.8, 2.8, 2.9, 2.9, 2.9, 2.9, 2.9, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.1, 3.1, 3.1, 3.1, 3.1, 3.1, 3.1, 3.1, 3.1, 3.1, 3.2, 3.2, 3.2, 3.2, 3.3, 3.3, 3.3, 3.4, 3.4, 3.4, 3.4, 3.5, 3.5, 3.6];
+const spf = SPF.map((factor) => ({ factor }));
+const bills = [
+  { tariff: "Heat pump tariff", change: -310 },
+  { tariff: "Standard variable", change: -45 },
+  { tariff: "Fixed before 2023", change: 120 },
+  { tariff: "Prepayment meter", change: 185 },
+];
+
 export const ReportPage = withMeta(ReportPageImpl, {
   name: "report-page",
   component: "ReportPage",
@@ -188,7 +212,7 @@ export const ReportPage = withMeta(ReportPageImpl, {
   description: "A section of an analytical report laid out as a document. It has a title block, a summary, numbered findings, then method, limitations and sources. Each finding has one exhibit, an observation and a separately labelled interpretation with a confidence rating and a caveat.",
   whenToUse: "Use it for readers who will check the reasoning, as in evaluations, research notes, audits and experiment write-ups. State the main finding with its number in the title. Put all the main findings and the recommendation in the summary. Write each finding title as one fact with its number, and give it an exhibit that shows that fact. Put what the data shows in `observation` and what you infer from it in `interpretation`. End with method, limitations and sources.",
   avoid: "A decision-maker who wants only the result (use `executive-brief`). A general audience (use `explainer` or `visual-essay`). Findings without an exhibit. Put those in the summary.",
-  composes: ["headline", "prose", "source-note", "bar-chart", "progress-meter", "line-chart"],
+  composes: ["headline", "prose", "stat-row", "source-note", "bar-chart", "progress-meter", "line-chart", "dumbbell-chart", "histogram", "diverging-bar-chart"],
   props: [
     { name: "title", type: "string", required: true, description: "The report's main finding, as one plain sentence with the number in it." },
     { name: "kicker", type: "string", description: 'The report series or section, e.g. "Evaluation report · Section 3".' },
@@ -197,6 +221,7 @@ export const ReportPage = withMeta(ReportPageImpl, {
     { name: "date", type: "string", description: "Publication date." },
     { name: "summary", type: "string | string[]", description: "One paragraph with the main findings, their numbers and the recommendation. Supports `**bold**`." },
     { name: "summaryTitle", type: "string", default: '"Summary"', description: "Heading of the summary." },
+    { name: "figures", type: "StatRowItem[] | StatRowProps", description: "Two to four key figures shown under the summary. A list of `{ value, label, context?, delta?, ... }`, or the props of `stat-row` (`{ items, variant, ... }`) to choose how they are drawn." },
     { name: "findings", type: "{ title, exhibit?, observation?, interpretation?, confidence?: \"high\" | \"medium\" | \"low\", caveat?, id? }[]", description: "Numbered findings. `observation` is what the data shows; `interpretation` is what the authors infer, with an optional confidence rating and caveat." },
     { name: "observationLabel", type: "string", default: '"What the data shows"', description: "Label over each observation." },
     { name: "interpretationLabel", type: "string", default: '"What we think it means"', description: "Label over each interpretation." },
@@ -207,6 +232,7 @@ export const ReportPage = withMeta(ReportPageImpl, {
   ],
   example: {
     type: "report-page",
+    theme: "paper",
     kicker: "Small-group tutoring programme · Year 1 evaluation",
     title: "Tutored pupils gained 2.9 more scaled-score points in maths than matched pupils",
     deck: "The difference in reading was 0.5 points. 31% of tutored pupils were eligible for free school meals against a funding target of 50%.",
@@ -214,10 +240,18 @@ export const ReportPage = withMeta(ReportPageImpl, {
     date: "2025-02-20",
     summary:
       "Pupils offered tutoring gained **2.9 more scaled-score points in maths** over the year than matched pupils who were not. That is about three months of additional learning. The difference in reading was 0.5 points and could be chance. Pupils who attended fewer than 12 sessions gained less than 1 point over their matches. 58% of pupils attended 12 or more. We recommend continuing the maths strand. Attendance should be the main delivery target. The way pupils are selected should change.",
+    figures: {
+      variant: "tiles",
+      items: [
+        { variant: "comparison", value: 8.1, comparison: 5.2, valueLabel: "Tutored", comparisonLabel: "Comparison", delta: "+2.9 points", format: "decimal:1", label: "Mean gain in maths, scaled-score points" },
+        { variant: "ring", value: 0.58, max: 1, format: "percent", label: "Tutored pupils attending 12 or more sessions", context: "20 sessions were offered" },
+        { variant: "progress", value: 0.31, max: 1, target: 0.5, targetLabel: "Funding target", format: "percent", label: "Tutored pupils eligible for free school meals" },
+      ],
+    },
     findings: [
       {
         title: "Tutored pupils gained 8.1 points in maths against 5.2 for comparison pupils",
-        exhibit: { type: "bar-chart", data: gains, x: "subject", y: ["Tutored", "Comparison"], orientation: "horizontal", sort: "none", highlight: "Tutored", format: "decimal:1", subtitle: "Mean gain in scaled score, autumn 2023 to summer 2024", source: "Standardised assessments, 42 schools" },
+        exhibit: { type: "bar-chart", data: gains, x: "subject", y: ["Tutored", "Comparison"], orientation: "horizontal", sort: "none", format: "decimal:1", subtitle: "Mean gain in scaled score, autumn 2023 to summer 2024", source: "Standardised assessments, 42 schools" },
         observation: "The difference in maths was 2.9 points (95% interval 1.6 to 4.2). In reading tutored pupils gained 5.9 points and comparison pupils 5.4. That difference was 0.5 points (−0.7 to 1.7).",
         interpretation: "The maths difference is unlikely to be chance. Trials of similar programmes found effects of about the same size. We do not conclude that reading tutoring failed, because half the reading tutors were recruited after January.",
         confidence: "medium",
@@ -248,6 +282,7 @@ export const ReportPage = withMeta(ReportPageImpl, {
 
 export const examples = {
   "Product analytics: an experiment write-up": {
+    theme: "mono",
     kicker: "Experiment PRC-114 · pricing page",
     title: "The annual-first pricing page converted 3.4% of visitors against 3.1% for the control",
     byline: "Growth analytics",
@@ -273,6 +308,48 @@ export const examples = {
     method: "Visitors were assigned at random by account cookie, 50/50, from 17 March to 27 April 2025. The primary metric, paid conversion within seven days, was registered before launch.",
     limitations: ["Enterprise leads, who do not use the pricing page, are excluded.", "The test ran outside the January budget season, when annual plans usually sell better."],
     sources: ["Experiment platform", "Billing system"],
+    note: "Illustrative data",
+  },
+  "Energy: a field study with a distribution": {
+    kicker: "Heat pump field study · Winter 2023/24",
+    title: "Heating energy use fell 61% in 412 homes after a heat pump replaced a gas boiler",
+    deck: "Mean use fell from 13,400 to 5,230 kWh a year. Annual bills rose £185 for homes on prepayment meters.",
+    byline: "Buildings research group",
+    date: "2025-03-11",
+    summary: "Mean heating energy use in 412 homes fell from **13,400 to 5,230 kWh a year** after a heat pump replaced a gas boiler. The median seasonal performance factor in 64 homes with heat meters was 2.9. Bills fell £310 a year on a heat pump tariff and rose £185 on prepayment meters. We recommend that installers move every household to a heat pump tariff at installation.",
+    figures: [
+      { value: "−61%", label: "Change in mean heating energy use", context: "From 13,400 to 5,230 kWh a year" },
+      { value: "2.9", label: "Median seasonal performance factor", context: "64 homes with heat meters" },
+      { value: "−£310", label: "Change in annual bill on a heat pump tariff", context: "+£185 on prepayment meters" },
+    ],
+    findings: [
+      {
+        title: "Heating energy use in semi-detached homes fell from 14,200 to 5,500 kWh a year",
+        exhibit: { type: "dumbbell-chart", data: heating, category: "home", from: "gas", to: "pump", names: { gas: "Gas boiler", pump: "Heat pump" }, sort: "none", zero: true, format: "integer", subtitle: "Mean energy used for heating, kWh a year, by type of home, before and after installation", source: "Smart meter readings, 412 homes" },
+        observation: "Use fell in all four types of home. Detached homes fell from 18,400 to 7,300 kWh. Flats fell from 7,900 to 3,200 kWh.",
+        interpretation: "The fall is close to 60% in every type of home. We think the heat pump accounts for it, because the homes had no other work done in the period.",
+        confidence: "high",
+      },
+      {
+        title: "The median seasonal performance factor was 2.9 in 64 metered homes",
+        exhibit: { type: "histogram", data: spf, value: "factor", step: 0.2, median: true, format: "decimal:1", countLabel: "homes", height: 260, subtitle: "Homes by seasonal performance factor, units of heat delivered per unit of electricity, 64 homes with heat meters" },
+        observation: "The factor ranged from 2.1 to 3.6. 8 of the 64 homes were below 2.5. 3 homes were at 3.5 or above.",
+        interpretation: "Manufacturers quote a factor of 3.5 or more. Most homes in the study were below it. Installers set flow temperatures above 50°C in 5 of the 8 homes below 2.5.",
+        confidence: "medium",
+        caveat: "Homes with heat meters volunteered for them. They may be better run than the other 348 homes.",
+      },
+      {
+        title: "Annual bills rose £185 for homes on prepayment meters",
+        exhibit: { type: "diverging-bar-chart", data: bills, x: "tariff", y: "change", sort: "none", format: { style: "currency", currency: "GBP", maximumFractionDigits: 0, signDisplay: "exceptZero" }, subtitle: "Mean change in annual energy bill after installation, by electricity tariff, pounds" },
+        observation: "Bills fell £310 a year for homes on a heat pump tariff and £45 on a standard variable tariff. They rose £120 on older fixed tariffs and £185 on prepayment meters.",
+        interpretation: "Energy use fell by a similar share on every tariff. The bill depends on the price of electricity relative to gas. 71 of the 412 homes were on prepayment meters.",
+        confidence: "high",
+      },
+    ],
+    method: "We compared smart meter readings for the 12 months before and the 12 months after installation in 412 homes. Readings are adjusted for outdoor temperature using degree days. 64 homes also had heat meters, which measure the heat delivered.",
+    limitations: ["There is no comparison group of homes that kept a gas boiler.", "One winter of data does not show how performance changes as equipment ages.", "Bills use the tariffs in force in March 2024."],
+    sources: ["Smart meter readings", "Heat meter readings", "Installer commissioning records"],
+    period: "October 2022 to March 2024",
     note: "Illustrative data",
   },
 };

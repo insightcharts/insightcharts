@@ -1,7 +1,7 @@
 "use client";
 
 import { CustomChart } from "echarts/charts";
-import { alpha, inkOn, defineChart, makeFormatter, type Formatter, dodge, measureText, truncateText, morph, tooltipHtml } from "insightcharts/core";
+import { alpha, inkOn, luminance, defineChart, makeFormatter, type Formatter, dodge, measureText, truncateText, morph, tooltipHtml } from "insightcharts/core";
 import { toNumber } from "insightcharts/data";
 
 export interface NestedSharesProps {
@@ -123,6 +123,7 @@ export const NestedShares = defineChart<NestedSharesProps>({
   ],
   example: {
     type: "nested-shares",
+    theme: "ocean",
     data: [
       { year: "2005", share: 4 },
       { year: "2010", share: 7 },
@@ -142,6 +143,8 @@ export const NestedShares = defineChart<NestedSharesProps>({
   },
   build(p, ctx) {
     const t = ctx.tokens;
+    // Judged by the surface, not the page mode: a poster theme paints a dark ground on a light page.
+    const onDark = /^(#|rgb)/.test(t.surface) ? luminance(t.surface) < 0.2 : ctx.mode === "dark";
     const { items, total, last } = prepare(p, ctx.rows, ctx.fmt);
     const fonts: Seen = { font: t.fontFamily, display: t.displayFamily };
     const L = layoutShares(p, items, ctx.width, fonts);
@@ -162,7 +165,7 @@ export const NestedShares = defineChart<NestedSharesProps>({
       scaleX: k,
       scaleY: k,
       children: [
-        { type: "rect", shape: { x: 0, y: 0, width: S, height: S, r: R }, style: { fill: alpha(t.ink, ctx.mode === "dark" ? 0.12 : 0.07) } },
+        { type: "rect", shape: { x: 0, y: 0, width: S, height: S, r: R }, style: { fill: alpha(t.ink, onDark ? 0.12 : 0.07) } },
         ...(p.wholeLabel ? [{ type: "text", x: 1, y: S + 10, style: { text: truncateText(`${p.wholeLabel} = ${pct(1)}`, S, 12, t.fontFamily), fill: t.muted, fontSize: 12, fontFamily: t.fontFamily, verticalAlign: "top" } }] : []),
       ],
     });

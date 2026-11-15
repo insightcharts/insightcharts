@@ -7,17 +7,47 @@ description: Scrolly keeps one graphic in place and changes its state as the rea
 
 ## Scroll mode
 
-The graphic pins while the steps scroll past. Scroll this page slowly.
+The graphic pins while the steps scroll past. Scroll this page slowly. The line chart gains three series, then a highlight, then two annotations, then a shorter time axis.
 
-<StickyDemo name="scroll-story" props={{ stickyTop: 56, stepHeight: "60vh" }} />
+<StickyDemo name="story-line" props={{ stickyTop: 56, stepHeight: "60vh" }} />
 
-The step crossing the middle of the viewport is the active one. In a container narrower than 768 pixels, like this column, the text cards pass over the graphic instead of sitting beside it; the [home page](/#story) shows the side-by-side layout. The source of this demo:
+The step crossing the middle of the viewport is the active one. In a container narrower than 768 pixels, like this column, the text cards pass over the graphic instead of sitting beside it. The [stories gallery](/stories) shows the side-by-side layout. The source of this demo:
 
-<DemoSource name="scroll-story" />
+<DemoSource name="story-line" />
+
+`StoryFrame` in that source is a small wrapper used by the stories on this site. It paints the theme's background behind the story and adds previous and next buttons that scroll to the neighbouring step.
 
 <Callout type="warning" title="Ancestors must not clip overflow">
 The pinned graphic uses `position: sticky`, so no ancestor between it and the page may set `overflow: hidden`, `auto` or `scroll`.
 </Callout>
+
+## Examples
+
+Four more stories, each in a different theme and chart form. They are shown here in `mode="steps"`, with their source under the Code tab. The [stories gallery](/stories) shows all five in scroll mode.
+
+### Regroup and recolour dots
+
+A beeswarm chart in the `dusk` theme. The steps add a median line, split the dots into three rows, give each row a colour and highlight one row.
+
+<Demo name="story-dots" toolbar={false} flush props={{ mode: "steps" }} />
+
+### Re-sort and restack bars
+
+A bar chart in the `editorial` theme. The steps sort the bars, split them into stacked series, switch to shares of 100% and highlight one series.
+
+<Demo name="story-bars" toolbar={false} flush props={{ mode: "steps" }} />
+
+### Resize and refocus a treemap
+
+A treemap in the `forest` theme. The steps switch to a later year's values, highlight one group and then highlight one block.
+
+<Demo name="story-treemap" toolbar={false} flush props={{ mode: "steps" }} />
+
+### Grow a ribbon chart by period
+
+A ribbon chart in the `magenta` theme. Each step adds one period.
+
+<Demo name="story-ribbon" toolbar={false} flush props={{ mode: "steps" }} />
 
 ## Steps and swipe modes
 
@@ -50,6 +80,7 @@ const steps = [
 - `content` is one or two plain sentences that state what the chart shows at that step, with the number from the data. It follows the same rules as a title; see [writing titles](/docs/highlighting-and-annotations#writing-titles). It accepts any React node.
 - `id` is rendered as the step's element id, so `#solar` deep-links to it.
 - Return **the same component** from the render function at every step where you want a morph. Swapping to a different component remounts the chart.
+- Some changes redraw instead of animating. A treemap that gains or loses its `group` is one. Check each step in the browser and choose a different change when a step does not animate.
 
 The render function receives `step`, `index`, `count` and `progress`, a number from 0 to 1 through the active step. `progress` updates in scroll mode only and is 0 elsewhere.
 

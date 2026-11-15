@@ -4,7 +4,7 @@ import { useInsightStyles } from "../core/figure";
 import { icons, type IconName } from "../core/icons";
 import { withMeta } from "../core/meta";
 import { useColorMode, type ModeInput } from "../core/mode";
-import { useInsightConfig, useTheme } from "../core/provider";
+import { frameStyle, useInsightConfig, useTheme } from "../core/provider";
 import { chromeVars, type ThemeInput } from "../core/theme";
 
 export interface IconStatProps {
@@ -27,7 +27,10 @@ export interface IconStatProps {
   /** Fill colour by meaning. Default `"accent"`. */
   tone?: "accent" | "positive" | "negative" | "neutral";
   align?: "left" | "center";
+  /** A built-in theme name or a theme object. A named theme paints its own background behind the block. */
   theme?: ThemeInput;
+  /** Paint the named theme's background behind the block. Default: on for a named theme with its own surface. */
+  frame?: boolean;
   mode?: ModeInput;
   className?: string;
   style?: CSSProperties;
@@ -103,7 +106,7 @@ function IconStatImpl({ count, total = 10, text, children, value, icon = "circle
   const center = align === "center";
 
   return (
-    <div ref={ref} data-slot="ic-icon-stat" data-ic-mode={mode} className={className} style={{ ...(chromeVars(theme[mode]) as CSSProperties), fontFamily: "var(--_ic-font)", color: "var(--_ic-ink)", textAlign: align, minWidth: 0, ...style }}>
+    <div ref={ref} data-slot="ic-icon-stat" data-ic-mode={mode} className={className} style={{ ...(chromeVars(theme[mode]) as CSSProperties), fontFamily: "var(--_ic-font)", color: "var(--_ic-ink)", textAlign: align, minWidth: 0, ...frameStyle(rest.theme, mode, rest.frame), ...style }}>
       <div data-slot="ic-icon-stat-glyphs" role="img" aria-label={`${k} of ${n} highlighted`} style={{ display: "grid", gridTemplateColumns: `repeat(${cols}, ${h * aspectOf(icon)}px)`, gap: `${icon === "person" ? Math.round(gap * 1.4) : gap}px ${gap}px`, justifyContent: center ? "center" : "start" }}>
         {Array.from({ length: n }, (_, i) => (
           <Glyph key={i} icon={icon} on={i < k} height={h} color={FILL[tone]} off="color-mix(in srgb, var(--_ic-muted) 60%, var(--_ic-surface))" />
@@ -144,12 +147,13 @@ export const IconStat = withMeta(IconStatImpl, {
     { name: "size", type: "number", description: "Glyph height in px; shrinks to fit narrow containers." },
     { name: "tone", type: '"accent" | "positive" | "negative" | "neutral"', default: '"accent"', description: "Fill colour by meaning." },
     { name: "align", type: '"left" | "center"', default: '"left"', description: "Alignment." },
+    { name: "frame", type: "boolean", description: "Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off." },
   ],
   example: { type: "icon-stat", icon: "person", count: 1, total: 4, text: "households could not cover an unexpected bill of €500 without borrowing." },
 });
 
 export const examples = {
-  "Circles, 3 in 10": { count: 3, total: 10, text: "new cars sold in Europe in 2024 had a plug." },
-  "Grid of 100": { count: 37, total: 100, icon: "square", value: "37%", text: "of the national grid's transmission lines are more than 40 years old.", tone: "negative" },
-  "People, centered, custom value": { icon: "person", count: 7, total: 10, align: "center", value: "Seven in ten", text: "renters say they have delayed switching the heating on.", tone: "neutral" },
+  "Circles, 3 in 10": { theme: "forest", count: 3, total: 10, text: "new cars sold in Europe in 2024 had a plug." },
+  "Grid of 100": { theme: "poster", count: 37, total: 100, icon: "square", value: "37%", text: "of the national grid's transmission lines are more than 40 years old.", tone: "negative" },
+  "People, centered, custom value": { theme: "paper", icon: "person", count: 7, total: 10, align: "center", value: "Seven in ten", text: "renters say they have delayed switching the heating on.", tone: "neutral" },
 };

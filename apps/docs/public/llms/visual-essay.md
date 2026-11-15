@@ -38,6 +38,7 @@ The file lands at `components/insightcharts/templates/visual-essay.tsx`. `@insig
 import { BarChart, LineChart, VisualEssay } from "insightcharts";
 
 <VisualEssay
+  theme="editorial"
   kicker="Energy transition"
   title="Solar supplied 11.1% of EU electricity in 2024, more than coal's 9.8%"
   deck="Solar's share was 2.9% in 2015. Coal's share was 24.6% in 2015."
@@ -66,15 +67,11 @@ import { BarChart, LineChart, VisualEssay } from "insightcharts";
         ]}
         x="year"
         y={["Solar", "Coal"]}
-        highlight="Solar"
         format="{value}%"
         zero
         title="Solar's share rose from 2.9% to 11.1% between 2015 and 2024"
         subtitle="Share of EU electricity generation, 2015 to 2024"
-        annotations={[
-          { type: "band", axis: "x", from: "2021", to: "2022", label: "Gas price crisis" },
-          { type: "point", x: "2016", y: 22, label: "Coal", position: "top", dot: false },
-        ]}
+        annotations={[{ type: "band", axis: "x", from: "2021", to: "2022", label: "Gas price crisis" }]}
         source="Ember, European Electricity Review 2025"
       />,
     },
@@ -117,16 +114,33 @@ import { BarChart, LineChart, VisualEssay } from "insightcharts";
     },
     {
       kind: "stats",
+      variant: "tiles",
+      subtitle: "Bars show 2020 to 2024",
       items: [
         {
-          value: "338 GW",
+          variant: "bars",
+          series: [137, 165, 205, 272, 338],
+          value: 338,
+          format: "{value} GW",
           label: "Solar capacity installed in the EU, end of 2024",
           delta: "+66 GW",
           deltaLabel: "in 2024",
         },
-        { value: "304 TWh", label: "Solar generation, 2024", delta: 0.22, deltaLabel: "vs 2023" },
         {
-          value: "269 TWh",
+          variant: "bars",
+          series: [145, 165, 210, 249, 304],
+          value: 304,
+          format: "{value} TWh",
+          label: "Solar generation, 2024",
+          delta: 0.22,
+          deltaLabel: "vs 2023",
+        },
+        {
+          variant: "bars",
+          tone: 1,
+          series: [350, 400, 430, 320, 269],
+          value: 269,
+          format: "{value} TWh",
           label: "Coal generation, 2024",
           delta: -0.16,
           deltaLabel: "vs 2023",
@@ -269,6 +283,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 ```json
 {
   "type": "visual-essay",
+  "theme": "editorial",
   "kicker": "Energy transition",
   "title": "Solar supplied 11.1% of EU electricity in 2024, more than coal's 9.8%",
   "deck": "Solar's share was 2.9% in 2015. Coal's share was 24.6% in 2015.",
@@ -298,22 +313,11 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
         ],
         "x": "year",
         "y": ["Solar", "Coal"],
-        "highlight": "Solar",
         "format": "{value}%",
         "zero": true,
         "title": "Solar's share rose from 2.9% to 11.1% between 2015 and 2024",
         "subtitle": "Share of EU electricity generation, 2015 to 2024",
-        "annotations": [
-          { "type": "band", "axis": "x", "from": "2021", "to": "2022", "label": "Gas price crisis" },
-          {
-            "type": "point",
-            "x": "2016",
-            "y": 22,
-            "label": "Coal",
-            "position": "top",
-            "dot": false
-          }
-        ],
+        "annotations": [{ "type": "band", "axis": "x", "from": "2021", "to": "2022", "label": "Gas price crisis" }],
         "source": "Ember, European Electricity Review 2025"
       }
     },
@@ -357,21 +361,33 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
     },
     {
       "kind": "stats",
+      "variant": "tiles",
+      "subtitle": "Bars show 2020 to 2024",
       "items": [
         {
-          "value": "338 GW",
+          "variant": "bars",
+          "series": [137, 165, 205, 272, 338],
+          "value": 338,
+          "format": "{value} GW",
           "label": "Solar capacity installed in the EU, end of 2024",
           "delta": "+66 GW",
           "deltaLabel": "in 2024"
         },
         {
-          "value": "304 TWh",
+          "variant": "bars",
+          "series": [145, 165, 210, 249, 304],
+          "value": 304,
+          "format": "{value} TWh",
           "label": "Solar generation, 2024",
           "delta": 0.22,
           "deltaLabel": "vs 2023"
         },
         {
-          "value": "269 TWh",
+          "variant": "bars",
+          "tone": 1,
+          "series": [350, 400, 430, 320, 269],
+          "value": 269,
+          "format": "{value} TWh",
           "label": "Coal generation, 2024",
           "delta": -0.16,
           "deltaLabel": "vs 2023",
@@ -517,7 +533,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `deck` | `string` |  | One-sentence standfirst. |
 | `byline` | `string` |  | Author line. |
 | `date` | `string` |  | Publication date. ISO dates are formatted for the locale. |
-| `blocks` (required) | `(Block \| Slot)[]` |  | The story in reading order. Each block has a `kind`: `prose` `{ text, lead? }`; `figure` `{ chart, caption? }`; `callout` `{ chart, lead, body, label?, tone?, side? }`; `scrolly` `{ chart, steps, cumulative?, scrollMode?, side?, stepHeight? }` (the props of `scrolly-chart`); `quote` `{ quote, attribution?, role? }`; `stats` `{ items, title? }`; `multiples` `{ facet, ... }` (props of `small-multiples`, or of `small-multiple-grid` when it has a `chart`); `break` `{ title, step?, total?, text? }`. Any block takes `width: "text" \| "wide" \| "full"` and an `id`. A bare chart spec is treated as a wide figure. |
+| `blocks` (required) | `(Block \| Slot)[]` |  | The story in reading order. Each block has a `kind`: `prose` `{ text, lead? }`; `figure` `{ chart, caption? }`; `callout` `{ chart, lead, body, label?, tone?, side? }`; `scrolly` `{ chart, steps, cumulative?, scrollMode?, side?, stepHeight? }` (the props of `scrolly-chart`); `quote` `{ quote, attribution?, role? }`; `stats` `{ items, variant?, title? }` (the props of `stat-row`); `multiples` `{ facet, ... }` (props of `small-multiples`, or of `small-multiple-grid` when it has a `chart`); `break` `{ title, step?, total?, text? }`. Any block takes `width: "text" \| "wide" \| "full"` and an `id`. A bare chart spec is treated as a wide figure. |
 | `measure` | `number` | `680` | Width of the reading column in px. |
 | `textSize` | `"md" \| "lg"` |  | Body text size. Default 18px, 16px in narrow containers. |
 | `sources` | `string \| { name, url? } \| (string \| { name, url? })[]` |  | Where the data comes from, shown in the closing source note. Entries with a `url` are linked. |
@@ -527,12 +543,13 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `credit` | `string` |  | Who made the piece. |
 | `level` | `1 \| 2 \| 3 \| 4 \| 5 \| 6` | `1` | Heading level of the title; section headings follow one level down. |
 | `maxWidth` | `number \| string` |  | Widest the piece may get. It is centred in wider containers. |
-| `theme` | `ThemeInput` |  | Theme override, passed on to everything inside. |
+| `theme` | `ThemeInput` |  | A built-in theme name (`"editorial"`, `"ledger"`, `"noir"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece. |
+| `frame` | `boolean` |  | Paint the theme's surface behind the piece, with page padding. Default: on when `theme` is a named theme with its own surface. Set false when the host already paints it. |
 | `mode` | `"auto" \| "system" \| "light" \| "dark"` | `"auto"` | Colour mode, passed on to everything inside. |
 
 ## Composition
 
-- Composes: [headline](https://insightcharts.dev/llms/headline.md), [prose](https://insightcharts.dev/llms/prose.md), [pull-quote](https://insightcharts.dev/llms/pull-quote.md), [step-marker](https://insightcharts.dev/llms/step-marker.md), [small-multiples](https://insightcharts.dev/llms/small-multiples.md), [chart-callout](https://insightcharts.dev/llms/chart-callout.md), [scrolly-chart](https://insightcharts.dev/llms/scrolly-chart.md), [small-multiple-grid](https://insightcharts.dev/llms/small-multiple-grid.md), [stat-row](https://insightcharts.dev/llms/stat-row.md), [source-note](https://insightcharts.dev/llms/source-note.md), [line-chart](https://insightcharts.dev/llms/line-chart.md), [bar-chart](https://insightcharts.dev/llms/bar-chart.md)
+- Composes: [headline](https://insightcharts.dev/llms/headline.md), [prose](https://insightcharts.dev/llms/prose.md), [pull-quote](https://insightcharts.dev/llms/pull-quote.md), [step-marker](https://insightcharts.dev/llms/step-marker.md), [small-multiples](https://insightcharts.dev/llms/small-multiples.md), [chart-callout](https://insightcharts.dev/llms/chart-callout.md), [scrolly-chart](https://insightcharts.dev/llms/scrolly-chart.md), [small-multiple-grid](https://insightcharts.dev/llms/small-multiple-grid.md), [stat-row](https://insightcharts.dev/llms/stat-row.md), [source-note](https://insightcharts.dev/llms/source-note.md), [line-chart](https://insightcharts.dev/llms/line-chart.md), [bar-chart](https://insightcharts.dev/llms/bar-chart.md), [waffle-chart](https://insightcharts.dev/llms/waffle-chart.md), [dumbbell-chart](https://insightcharts.dev/llms/dumbbell-chart.md), [heatmap](https://insightcharts.dev/llms/heatmap.md)
 - Used by: no molecule or template yet
 
 ## More examples
@@ -540,9 +557,10 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 ### Transport: a shorter essay without a scrolly
 
 ```tsx
-import { BarChart, LineChart, VisualEssay } from "insightcharts";
+import { LineChart, VisualEssay, WaffleChart } from "insightcharts";
 
 <VisualEssay
+  theme="earth"
   kicker="Cities"
   title="Cycling accounts for 11.2% of trips in Paris and cars for 4.3%"
   deck="Bicycle counts in 2024 were 3.2 times the 2015 level. The city made 50 km of temporary pandemic cycle lanes permanent."
@@ -593,7 +611,7 @@ import { BarChart, LineChart, VisualEssay } from "insightcharts";
     },
     {
       kind: "callout",
-      chart: <BarChart
+      chart: <WaffleChart
         data={[
           { mode: "Walking", share: 53.5 },
           { mode: "Public transport", share: 30 },
@@ -601,12 +619,10 @@ import { BarChart, LineChart, VisualEssay } from "insightcharts";
           { mode: "Car", share: 4.3 },
           { mode: "Other", share: 1 },
         ]}
-        x="mode"
-        y="share"
-        sort="none"
-        orientation="horizontal"
+        name="mode"
+        value="share"
+        total={100}
         format="{value}%"
-        highlight="Cycling"
         title="Cycling's share of trips within Paris is 2.6 times the car's"
         subtitle="Share of trips within Paris by main mode, 2023"
         source="Institut Paris Region mobility survey"
@@ -623,6 +639,152 @@ import { BarChart, LineChart, VisualEssay } from "insightcharts";
   sources={["City of Paris open data", "Institut Paris Region"]}
   period="2015 to 2024"
   note="Counter index is illustrative. Mode shares are approximate, for illustration."
+/>
+```
+
+### Health: sleep survey on a poster ground
+
+```tsx
+import { BarChart, DumbbellChart, Heatmap, VisualEssay } from "insightcharts";
+
+<VisualEssay
+  theme="dusk"
+  kicker="Sleep survey 2024"
+  title="Adults slept 6 hours 48 minutes on weeknights in 2024"
+  deck="They slept 7 hours 52 minutes at weekends. 31% slept less than 6 hours on weeknights."
+  byline="By the health desk"
+  date="2025-02-18"
+  textSize="md"
+  blocks={[
+    {
+      kind: "prose",
+      lead: true,
+      text: "The survey asked 12,400 adults when they fell asleep and woke up on each of 14 nights. The average weeknight was **6 hours 48 minutes**. Health guidance recommends at least 7 hours.",
+    },
+    {
+      kind: "figure",
+      chart: <BarChart
+        data={[
+          { band: "Under 5 hours", share: 9 },
+          { band: "5 to 6 hours", share: 22 },
+          { band: "6 to 7 hours", share: 34 },
+          { band: "7 to 8 hours", share: 24 },
+          { band: "8 to 9 hours", share: 8 },
+          { band: "9 hours or more", share: 3 },
+        ]}
+        x="band"
+        y="share"
+        sort="none"
+        orientation="vertical"
+        format="{value}%"
+        highlight={["Under 5 hours", "5 to 6 hours"]}
+        title="31% of adults slept less than 6 hours on weeknights"
+        subtitle="Share of adults by average weeknight sleep, 2024"
+        source="National sleep survey 2024"
+      />,
+    },
+    {
+      kind: "prose",
+      text: "9% of adults slept less than 5 hours on weeknights. 35% slept 7 hours or more.",
+    },
+    {
+      kind: "callout",
+      chart: <DumbbellChart
+        data={[
+          { age: "18 to 29", weeknight: 6.5, weekend: 8.3 },
+          { age: "30 to 44", weeknight: 6.6, weekend: 7.9 },
+          { age: "45 to 59", weeknight: 6.8, weekend: 7.7 },
+          { age: "60 and over", weeknight: 7.3, weekend: 7.6 },
+        ]}
+        category="age"
+        from="weeknight"
+        to="weekend"
+        names={{ weeknight: "Weeknights", weekend: "Weekends" }}
+        format="{value} h"
+        sort="none"
+        highlight="18 to 29"
+        title="Adults aged 18 to 29 slept 1.8 hours longer at weekends"
+        subtitle="Average hours of sleep by age group, weeknights and weekends, 2024"
+        source="National sleep survey 2024"
+      />,
+      label: "By age",
+      lead: "Adults aged 60 and over slept 0.3 hours longer at weekends",
+      body: "They slept 7.3 hours on weeknights. That is the longest of the four age groups.",
+      tone: "neutral",
+    },
+    {
+      kind: "stats",
+      items: [
+        {
+          value: "6h 48m",
+          label: "Average sleep on weeknights",
+          delta: "−9 min",
+          deltaLabel: "vs 2019",
+        },
+        { value: "7h 52m", label: "Average sleep at weekends" },
+        {
+          value: "31%",
+          label: "Adults sleeping less than 6 hours on weeknights",
+          delta: "+4 pts",
+          deltaLabel: "vs 2019",
+          upIsGood: false,
+        },
+      ],
+    },
+    {
+      kind: "figure",
+      chart: <Heatmap
+        data={[
+          { night: "Weeknights", hour: "9pm", share: 6 },
+          { night: "Weeknights", hour: "10pm", share: 24 },
+          { night: "Weeknights", hour: "11pm", share: 52 },
+          { night: "Weeknights", hour: "12am", share: 78 },
+          { night: "Weeknights", hour: "1am", share: 91 },
+          { night: "Weeknights", hour: "2am", share: 95 },
+          { night: "Weeknights", hour: "3am", share: 96 },
+          { night: "Weeknights", hour: "4am", share: 94 },
+          { night: "Weeknights", hour: "5am", share: 85 },
+          { night: "Weeknights", hour: "6am", share: 58 },
+          { night: "Weeknights", hour: "7am", share: 23 },
+          { night: "Weeknights", hour: "8am", share: 8 },
+          { night: "Weekends", hour: "9pm", share: 3 },
+          { night: "Weekends", hour: "10pm", share: 13 },
+          { night: "Weekends", hour: "11pm", share: 34 },
+          { night: "Weekends", hour: "12am", share: 61 },
+          { night: "Weekends", hour: "1am", share: 82 },
+          { night: "Weekends", hour: "2am", share: 92 },
+          { night: "Weekends", hour: "3am", share: 95 },
+          { night: "Weekends", hour: "4am", share: 95 },
+          { night: "Weekends", hour: "5am", share: 93 },
+          { night: "Weekends", hour: "6am", share: 84 },
+          { night: "Weekends", hour: "7am", share: 63 },
+          { night: "Weekends", hour: "8am", share: 37 },
+        ]}
+        x="hour"
+        y="night"
+        value="share"
+        format="{value}%"
+        labels
+        title="52% of adults were asleep at 11pm on weeknights"
+        subtitle="Share of adults asleep at each clock hour, weeknights and weekends, 2024"
+        source="National sleep survey 2024"
+      />,
+      caption: "At 7am, 23% of adults were asleep on weeknights and 63% at weekends.",
+    },
+    {
+      kind: "quote",
+      quote: "I go to bed at the same time on Saturday as on Tuesday. I get up two hours later.",
+      attribution: "Survey respondent, aged 27",
+    },
+    {
+      kind: "prose",
+      text: "Average weeknight sleep was 6 hours 57 minutes in the 2019 survey. The share sleeping less than 6 hours was 27% in 2019.",
+    },
+  ]}
+  sources="National sleep survey 2024"
+  period="14 nights per respondent, March to May 2024"
+  method="Sleep is the time between self-reported falling asleep and waking. Weeknights are Sunday to Thursday nights."
+  note="Illustrative data. The quotation is illustrative."
 />
 ```
 

@@ -48,6 +48,7 @@ export const BumpChart = defineChart<BumpChartProps>({
   ],
   example: {
     type: "bump-chart",
+    theme: "poster",
     data: [
       { year: "2019", Tesla: 0.37, BYD: 0.23, SAIC: 0.16, Volkswagen: 0.14, Hyundai: 0.13, Geely: 0.12 },
       { year: "2020", Tesla: 0.5, BYD: 0.18, SAIC: 0.27, Volkswagen: 0.42, Hyundai: 0.2, Geely: 0.1 },
@@ -196,6 +197,7 @@ export const BumpChart = defineChart<BumpChartProps>({
 
 export const examples = {
   "Every line coloured": {
+    theme: "editorial",
     data: [
       { season: "2020", Arsenal: 8, Liverpool: 1, "Manchester City": 2, Chelsea: 4, Tottenham: 6 },
       { season: "2021", Arsenal: 8, Liverpool: 3, "Manchester City": 1, Chelsea: 4, Tottenham: 7 },
@@ -213,6 +215,7 @@ export const examples = {
     note: "Figures are approximate, for illustration",
   },
   "Long format with a late entrant": {
+    theme: "noir",
     data: [
       ["2021", "Python", 30], ["2021", "JavaScript", 34], ["2021", "Java", 22], ["2021", "Go", 6],
       ["2022", "Python", 33], ["2022", "JavaScript", 32], ["2022", "Java", 20], ["2022", "Go", 8], ["2022", "Rust", 3],

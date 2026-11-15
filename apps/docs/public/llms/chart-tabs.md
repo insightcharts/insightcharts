@@ -41,6 +41,7 @@ import { BarChart, ChartTabs, registerComponents } from "insightcharts";
 registerComponents({ BarChart });
 
 <ChartTabs
+  theme="mono"
   title="CO2 emissions of six large emitters, 2023"
   tabsPosition="below"
   chart={{
@@ -97,6 +98,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 ```json
 {
   "type": "chart-tabs",
+  "theme": "mono",
   "title": "CO2 emissions of six large emitters, 2023",
   "tabsPosition": "below",
   "chart": {
@@ -162,7 +164,8 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `source` | `string` |  | Shown under the chart as "Source: ...". |
 | `note` | `string` |  | Method note or caveat. |
 | `children` | `ReactNode` |  | Extra content under the chart. |
-| `theme` | `ThemeInput` |  | Theme override, passed on to the chart. |
+| `theme` | `ThemeInput` |  | A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the chart. A named theme with its own surface paints that surface behind the component. |
+| `frame` | `boolean` |  | Paint the theme's surface behind the component. Default: on for a named theme with its own surface. |
 | `mode` | `"auto" \| "system" \| "light" \| "dark"` | `"auto"` | Colour mode. |
 
 ## Composition
@@ -214,6 +217,135 @@ import { BarChart, ChartTabs, LineChart } from "insightcharts";
   ]}
   source="Ember"
   note="Figures are approximate, for illustration"
+/>
+```
+
+### Three chart forms, editorial theme
+
+```tsx
+import { BarChart, ChartTabs, DumbbellChart, LineChart } from "insightcharts";
+
+<ChartTabs
+  theme="editorial"
+  title="Median rent in Lisbon was €16.20 per square metre in 2024"
+  views={[
+    {
+      label: "Trend",
+      chart: <LineChart
+        data={[
+          { year: "2019", Lisbon: 11.2, Porto: 8.1, Braga: 5 },
+          { year: "2020", Lisbon: 11.6, Porto: 8.5, Braga: 5.3 },
+          { year: "2021", Lisbon: 11.4, Porto: 8.4, Braga: 5.5 },
+          { year: "2022", Lisbon: 12.9, Porto: 9.6, Braga: 6.2 },
+          { year: "2023", Lisbon: 14.8, Porto: 11, Braga: 7.1 },
+          { year: "2024", Lisbon: 16.2, Porto: 12.1, Braga: 7.8 },
+        ]}
+        x="year"
+        y={["Lisbon", "Porto", "Braga"]}
+        highlight="Lisbon"
+        contextLabels
+        format="€{value}"
+        zero
+        height={280}
+        subtitle="Median monthly rent of new leases, € per square metre, 2019 to 2024"
+      />,
+    },
+    {
+      label: "2019 and 2024",
+      chart: <DumbbellChart
+        data={[
+          { city: "Lisbon", y2019: 11.2, y2024: 16.2, burden: 46 },
+          { city: "Porto", y2019: 8.1, y2024: 12.1, burden: 39 },
+          { city: "Braga", y2019: 5, y2024: 7.8, burden: 31 },
+        ]}
+        category="city"
+        from="y2019"
+        to="y2024"
+        names={{ y2019: "2019", y2024: "2024" }}
+        format="€{value}"
+        sort="to"
+        highlight="Lisbon"
+        subtitle="Median monthly rent of new leases, € per square metre, 2019 and 2024"
+      />,
+    },
+    {
+      label: "Share of income",
+      chart: <BarChart
+        data={[
+          { city: "Lisbon", y2019: 11.2, y2024: 16.2, burden: 46 },
+          { city: "Porto", y2019: 8.1, y2024: 12.1, burden: 39 },
+          { city: "Braga", y2019: 5, y2024: 7.8, burden: 31 },
+        ]}
+        x="city"
+        y="burden"
+        sort="desc"
+        orientation="horizontal"
+        format="{value}%"
+        highlight="Lisbon"
+        subtitle="Median rent for 70 square metres as a share of median household income, 2024"
+      />,
+    },
+  ]}
+  source="National statistics office"
+  note="Illustrative data"
+/>
+```
+
+### One chart, three measures, dusk theme
+
+```tsx
+import { BarChart, ChartTabs, registerComponents } from "insightcharts";
+
+// Specs passed as data are resolved by name when rendered.
+registerComponents({ BarChart });
+
+<ChartTabs
+  theme="dusk"
+  title="Viewing by genre on one streaming service, 2024"
+  tabsPosition="below"
+  chart={{
+    type: "bar-chart",
+    data: [
+      { genre: "Drama", hours: 412, titles: 1840, perTitle: 224 },
+      { genre: "Comedy", hours: 268, titles: 1310, perTitle: 205 },
+      { genre: "Reality", hours: 231, titles: 620, perTitle: 373 },
+      { genre: "Animation", hours: 198, titles: 540, perTitle: 367 },
+      { genre: "Crime", hours: 176, titles: 465, perTitle: 378 },
+      { genre: "Documentary", hours: 142, titles: 1105, perTitle: 129 },
+    ],
+    x: "genre",
+    y: "hours",
+    sort: "desc",
+    orientation: "horizontal",
+    height: 280,
+    highlight: "Drama",
+    format: "{value}m",
+    subtitle: "Hours viewed, millions, 2024. Drama had 412 million.",
+  }}
+  views={[
+    { label: "Hours", id: "hours" },
+    {
+      label: "Titles",
+      id: "titles",
+      props: {
+        y: "titles",
+        highlight: "Drama",
+        format: "integer",
+        subtitle: "Titles available, 2024. Drama had 1,840.",
+      },
+    },
+    {
+      label: "Hours per title",
+      id: "per-title",
+      props: {
+        y: "perTitle",
+        highlight: "Crime",
+        format: "{value}k",
+        subtitle: "Hours viewed per title, thousands, 2024. Crime had 378,000.",
+      },
+    },
+  ]}
+  note="Illustrative data"
 />
 ```
 

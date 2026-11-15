@@ -53,6 +53,7 @@ export const Heatmap = defineChart<HeatmapProps>({
   ],
   example: {
     type: "heatmap",
+    theme: "dusk",
     data: [
       ["Mon", [12, 48, 61, 55, 38, 14]],
       ["Tue", [11, 52, 66, 58, 41, 15]],
@@ -312,6 +313,7 @@ const hourly = (() => {
 
 export const examples = {
   "Missing cells (cohort triangle)": {
+    theme: "forest",
     data: cohorts,
     x: "month",
     y: "cohort",
@@ -322,6 +324,7 @@ export const examples = {
     note: "Illustrative data. Hatched cells have not happened yet.",
   },
   "Diverging around zero": {
+    theme: "science",
     data: anomalies,
     x: "decade",
     y: "region",

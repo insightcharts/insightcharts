@@ -16,6 +16,7 @@ const data = [
 export function TimelineChartDemo() {
   return (
     <TimelineChart
+      theme="editorial"
       data={data}
       name="mission"
       start="from"

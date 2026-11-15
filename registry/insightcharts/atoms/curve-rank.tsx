@@ -71,6 +71,7 @@ export const CurveRank = defineChart<CurveRankProps>({
   ],
   example: {
     type: "curve-rank",
+    theme: "blueprint",
     data: [
       { drink: "Filter coffee", price: 2.4, cups: 310 },
       { drink: "Espresso", price: 2.6, cups: 145 },

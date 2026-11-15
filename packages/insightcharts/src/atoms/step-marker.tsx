@@ -3,7 +3,7 @@ import { createElement, useEffect, useRef, useState } from "react";
 import { useInsightStyles } from "../core/figure";
 import { withMeta } from "../core/meta";
 import { useColorMode, type ModeInput } from "../core/mode";
-import { useInsightConfig, useTheme } from "../core/provider";
+import { frameStyle, useInsightConfig, useTheme } from "../core/provider";
 import { chromeVars, type ThemeInput } from "../core/theme";
 
 export interface StepMarkerProps {
@@ -25,7 +25,10 @@ export interface StepMarkerProps {
   layout?: "inline" | "stacked";
   /** Draw a hairline above, separating this chapter from the last. */
   rule?: boolean;
+  /** A built-in theme name or a theme object. A named theme paints its own background behind the block. */
   theme?: ThemeInput;
+  /** Paint the named theme's background behind the block. Default: on for a named theme with its own surface. */
+  frame?: boolean;
   mode?: ModeInput;
   className?: string;
   style?: CSSProperties;
@@ -71,8 +74,11 @@ function StepMarkerImpl({ step, title, total, text, children, level = 2, size = 
       <span style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clipPath: "inset(50%)", whiteSpace: "nowrap" }}>: </span>
     </span>
   );
+  const framed = frameStyle(rest.theme, mode, rest.frame);
   return (
-    <div ref={ref} data-slot="ic-step-marker" data-ic-mode={mode} className={className} style={{ ...(chromeVars(theme[mode]) as CSSProperties), position: "relative", fontFamily: "var(--_ic-font)", color: "var(--_ic-ink)", minWidth: 0, ...(rule ? { borderTop: "1px solid var(--_ic-grid)", paddingTop: size === "lg" ? 20 : 16 } : null), ...style }}>
+    <div ref={ref} data-slot="ic-step-marker" data-ic-mode={mode} className={className} style={{ ...(chromeVars(theme[mode]) as CSSProperties), position: "relative", fontFamily: "var(--_ic-font)", color: "var(--_ic-ink)", minWidth: 0, ...(framed ?? (rule ? { borderTop: "1px solid var(--_ic-grid)", paddingTop: size === "lg" ? 20 : 16 } : null)), ...style }}>
+      {/* On a painted ground the hairline is drawn inside the padding, not as a border on the rounded box. */}
+      {framed && rule ? <div data-slot="ic-step-marker-rule" aria-hidden style={{ height: 1, background: "var(--_ic-axis)", marginBottom: size === "lg" ? 20 : 16 }} /> : null}
       {createElement(
         `h${level}`,
         { "data-slot": "ic-step-marker-heading", style: { margin: 0, fontFamily: "var(--_ic-font-display)", fontSize: px, lineHeight: 1.22, fontWeight: 660, letterSpacing: "-0.018em", textWrap: "balance" } as CSSProperties },
@@ -117,12 +123,14 @@ export const StepMarker = withMeta(StepMarkerImpl, {
     { name: "size", type: '"md" | "lg"', default: '"md"', description: "`lg` for chapter openers." },
     { name: "layout", type: '"inline" | "stacked"', default: '"inline"', description: "Number beside or above the title. Narrow containers always stack." },
     { name: "rule", type: "boolean", default: "false", description: "Hairline above the marker." },
+    { name: "frame", type: "boolean", description: "Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off." },
   ],
-  example: { type: "step-marker", step: 1, title: "Electricity sources in 2015", text: "Europe's electricity generation by source in 2015.", size: "lg" },
+  example: { type: "step-marker", theme: "mono", step: 1, title: "Electricity sources in 2015", text: "Europe's electricity generation by source in 2015.", size: "lg" },
 });
 
 export const examples = {
   "With total and rule": { step: 2, total: 5, title: "Solar module costs fell 82% in eight years", text: "Average module cost per watt in each year.", rule: true },
-  Stacked: { step: 3, title: "Hours in which midday solar generation exceeded demand on the grid, by month and country", layout: "stacked", size: "lg" },
-  "Letter step, title only": { step: "B", title: "Factors excluded from the forecast", level: 3 },
+  Stacked: { theme: "poster", step: 3, title: "Hours in which midday solar generation exceeded demand on the grid, by month and country", layout: "stacked", size: "lg" },
+  "Rule on a painted ground": { theme: "sunrise", step: 4, total: 5, title: "Wind supplied 17% of Europe's electricity in 2024", text: "Share of electricity generation by source, 2024.", rule: true },
+  "Letter step, title only": { theme: "forest", step: "B", title: "Factors excluded from the forecast", level: 3 },
 };

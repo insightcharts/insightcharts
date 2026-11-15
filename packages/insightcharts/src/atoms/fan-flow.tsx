@@ -107,6 +107,7 @@ export const FanFlow = defineChart<FanFlowProps>({
   ],
   example: {
     type: "fan-flow",
+    theme: "forest",
     data: [
       { use: "Shower", litres: 128 },
       { use: "Toilet", litres: 97 },
@@ -361,6 +362,7 @@ export const examples = {
     note: "Illustrative figures for an invented city.",
   },
   "One colour": {
+    theme: "dusk",
     data: [
       { item: "Rent", amount: 1180 },
       { item: "Food", amount: 520 },
@@ -379,6 +381,7 @@ export const examples = {
     note: "Illustrative figures.",
   },
   "Ten destinations, one colour each": {
+    theme: "paper",
     data: [
       { service: "Schools", spend: 212 },
       { service: "Social care", spend: 164 },
@@ -401,6 +404,7 @@ export const examples = {
     note: "Illustrative figures for an invented city.",
   },
   "Stress: 18 destinations, long names, very uneven values": {
+    theme: "magenta",
     data: [
       ["Salaries and employer contributions for teaching staff", 48200],
       ["Building maintenance, heating and electricity", 9100],

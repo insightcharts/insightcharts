@@ -3,7 +3,7 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import { useInsightStyles } from "../core/figure";
 import { withMeta } from "../core/meta";
 import { useColorMode, type ModeInput } from "../core/mode";
-import { useInsightConfig, useTheme } from "../core/provider";
+import { frameStyle, useInsightConfig, useTheme } from "../core/provider";
 import { chromeVars, type ThemeInput } from "../core/theme";
 
 export interface SourceRef {
@@ -28,7 +28,10 @@ export interface SourceNoteProps {
   layout?: "list" | "inline";
   /** Draw a hairline above, separating the footer from the piece. Default true. */
   rule?: boolean;
+  /** A built-in theme name or a theme object. A named theme paints its own background behind the block. */
   theme?: ThemeInput;
+  /** Paint the named theme's background behind the block. Default: on for a named theme with its own surface. */
+  frame?: boolean;
   mode?: ModeInput;
   className?: string;
   style?: CSSProperties;
@@ -83,6 +86,7 @@ function SourceNoteImpl({ sources, period, method, note, credit, children, layou
   if (credit) rows.push(["credit", "Credit", credit]);
 
   const label: CSSProperties = { fontWeight: 600, color: "var(--_ic-ink-2)" };
+  const framed = frameStyle(rest.theme, mode, rest.frame);
   return (
     <footer
       ref={ref}
@@ -96,10 +100,12 @@ function SourceNoteImpl({ sources, period, method, note, credit, children, layou
         lineHeight: 1.55,
         color: "var(--_ic-ink-2)",
         minWidth: 0,
-        ...(rule ? { borderTop: "1px solid var(--_ic-grid)", paddingTop: 14 } : null),
+        // On a painted ground the hairline is drawn inside the padding, not as a border on the rounded box.
+        ...(framed ?? (rule ? { borderTop: "1px solid var(--_ic-grid)", paddingTop: 14 } : null)),
         ...style,
       }}
     >
+      {framed && rule ? <div data-slot="ic-source-note-rule" aria-hidden style={{ height: 1, background: "var(--_ic-axis)", marginBottom: 14 }} /> : null}
       {layout === "inline" ? (
         <p data-slot="ic-source-note-text" style={{ margin: 0, maxWidth: "80ch", textWrap: "pretty" }}>
           {rows.map(([key, name, value], i) => (
@@ -151,9 +157,11 @@ export const SourceNote = withMeta(SourceNoteImpl, {
     { name: "layout", type: '"list" | "inline"', default: '"list"', description: "Labelled list, or one running paragraph." },
     { name: "rule", type: "boolean", default: "true", description: "Hairline above the note." },
     { name: "children", type: "ReactNode", description: "Extra content after the rows." },
+    { name: "frame", type: "boolean", description: "Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off." },
   ],
   example: {
     type: "source-note",
+    theme: "earth",
     sources: [
       { name: "Ember, European Electricity Review 2025", url: "https://ember-energy.org" },
       { name: "ENTSO-E Transparency Platform", url: "https://transparency.entsoe.eu" },
@@ -174,5 +182,5 @@ export const examples = {
     method: "Bills are for a typical dual-fuel household paying by direct debit, in 2024 prices",
     credit: "Chart design: A. Ruiz",
   },
-  "Single source, no rule": { rule: false, sources: "World Bank, World Development Indicators", note: "Illustrative data for the gallery." },
+  "Single source, no rule": { theme: "noir", rule: false, sources: "World Bank, World Development Indicators", note: "Illustrative data for the gallery." },
 };

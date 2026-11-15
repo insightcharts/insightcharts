@@ -11,6 +11,7 @@ const data = [
 export function UnitBlocksDemo() {
   return (
     <UnitBlocks
+      theme="noir"
       data={data}
       name="age"
       value="finishers"

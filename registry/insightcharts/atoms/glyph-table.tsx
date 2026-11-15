@@ -1,7 +1,7 @@
 "use client";
 
 import { type CSSProperties, type ReactNode, useMemo, useState } from "react";
-import { measureText, cssFallback, useInsightStyles, makeFormatter, type FormatSpec, resolveIcon, type IconInput, withMeta, useColorMode, type ModeInput, useInsightConfig, useTheme, chromeVars, type ThemeInput, useContainerWidth } from "insightcharts/core";
+import { measureText, cssFallback, useInsightStyles, makeFormatter, type FormatSpec, resolveIcon, type IconInput, withMeta, useColorMode, type ModeInput, frameStyle, useInsightConfig, useTheme, chromeVars, type ThemeInput, useContainerWidth } from "insightcharts/core";
 import { niceStep, toNumber, type Row } from "insightcharts/data";
 import { _posterPalette } from "@/components/insightcharts/atoms/_poster-colors";
 
@@ -53,7 +53,10 @@ export interface GlyphTableProps {
   onSelect?: (values: string[]) => void;
   /** Controlled selection: the entity names currently selected. When given, the table shows exactly this selection and a click only calls `onSelect`; omit it to let the table keep its own. */
   selected?: string[];
+  /** A built-in theme name or a theme object. A named theme paints its own background behind the block. */
   theme?: ThemeInput;
+  /** Paint the named theme's background behind the block. Default: on for a named theme with its own surface. */
+  frame?: boolean;
   mode?: ModeInput;
   className?: string;
   style?: CSSProperties;
@@ -289,7 +292,7 @@ function GlyphTableImpl({ rows, name, nameLabel, columns, order, highlight, colo
   // cell shows its own column heading, with explicit roles so the table semantics survive `display`.
   const block: CSSProperties | undefined = stacked ? { display: "block" } : undefined;
   return (
-    <div ref={ref} data-slot="ic-glyph-table" data-ic-mode={mode} data-layout={stacked ? "cards" : "table"} className={className} style={{ ...(chromeVars(tokens) as CSSProperties), fontFamily: "var(--_ic-font)", color: "var(--_ic-ink)", minWidth: 0, ...style }}>
+    <div ref={ref} data-slot="ic-glyph-table" data-ic-mode={mode} data-layout={stacked ? "cards" : "table"} className={className} style={{ ...(chromeVars(tokens) as CSSProperties), fontFamily: "var(--_ic-font)", color: "var(--_ic-ink)", minWidth: 0, ...frameStyle(rest.theme, mode, rest.frame), ...style }}>
       <table role="table" data-slot="ic-glyph-table-table" style={{ ...block, width: "100%", borderCollapse: "collapse", tableLayout: "fixed" }}>
         {captionNode}
         <thead role="rowgroup" data-slot="ic-glyph-table-head" style={stacked ? hidden : undefined}>
@@ -381,9 +384,11 @@ export const GlyphTable = withMeta(GlyphTableImpl, {
     { name: "select", type: "boolean", description: "Let readers click a row (or press Enter on it) to select it; the other rows fade." },
     { name: "onSelect", type: "(values: string[]) => void", description: "Called with the selected entity names whenever the selection changes." },
     { name: "selected", type: "string[]", description: "Controlled selection: the entity names currently selected. When given, the table shows exactly this list and a click only calls `onSelect`. Omit it and the table keeps its own selection." },
+    { name: "frame", type: "boolean", description: "Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off." },
   ],
   example: {
     type: "glyph-table",
+    theme: "noir",
     caption: "Filter coffee sold 310 cups a day at £2.40 a cup",
     subtitle: "Six drinks at one café: price, cups sold per day, share ordered with oat milk, seconds to prepare and caffeine",
     note: "Illustrative figures.",

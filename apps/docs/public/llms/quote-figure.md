@@ -38,6 +38,7 @@ The file lands at `components/insightcharts/molecules/quote-figure.tsx`. `@insig
 import { QuoteFigure, Sparkline } from "insightcharts";
 
 <QuoteFigure
+  theme="magenta"
   quote="Solar met more than half of demand on 41% of summer afternoons in 2024. We do not have enough storage for the midday surplus yet."
   attribution="Marta Keller"
   role="Grid planner, quoted in the 2024 system adequacy review"
@@ -73,6 +74,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 ```json
 {
   "type": "quote-figure",
+  "theme": "magenta",
   "quote": "Solar met more than half of demand on 41% of summer afternoons in 2024. We do not have enough storage for the midday surplus yet.",
   "attribution": "Marta Keller",
   "role": "Grid planner, quoted in the 2024 system adequacy review",
@@ -115,12 +117,13 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `side` | `"left" \| "right"` | `"right"` | Side the evidence sits on; under 640px it goes underneath. |
 | `source` | `string` |  | Shown underneath as "Source: ...". |
 | `note` | `string` |  | Method note or caveat. |
-| `theme` | `ThemeInput` |  | Theme override, passed on to the quote and the figure. |
+| `theme` | `ThemeInput` |  | A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the quote and the figure. A named theme with its own surface paints that surface behind the component. |
+| `frame` | `boolean` |  | Paint the theme's surface behind the component. Default: on for a named theme with its own surface. |
 | `mode` | `"auto" \| "system" \| "light" \| "dark"` | `"auto"` | Colour mode. |
 
 ## Composition
 
-- Composes: [pull-quote](https://insightcharts.dev/llms/pull-quote.md), [big-number](https://insightcharts.dev/llms/big-number.md), [sparkline](https://insightcharts.dev/llms/sparkline.md)
+- Composes: [pull-quote](https://insightcharts.dev/llms/pull-quote.md), [big-number](https://insightcharts.dev/llms/big-number.md), [sparkline](https://insightcharts.dev/llms/sparkline.md), [progress-meter](https://insightcharts.dev/llms/progress-meter.md)
 - Used by: no molecule or template yet
 
 ## More examples
@@ -143,6 +146,63 @@ import { QuoteFigure } from "insightcharts";
     deltaLabel: "after the redesign",
     upIsGood: false,
   }}
+/>
+```
+
+### A meter as the evidence, editorial theme
+
+```tsx
+import { ProgressMeter, QuoteFigure } from "insightcharts";
+
+<QuoteFigure
+  theme="editorial"
+  quote="Only 14 of our 92 bus routes have been redesigned since 2015. The other 78 follow maps drawn before the tram opened."
+  attribution="Ines Carvalho"
+  role="Director of transport planning"
+  figure={<ProgressMeter
+    value={14}
+    max={92}
+    label="Bus routes redesigned since 2015"
+    format="integer"
+    context="78 routes have not been redesigned"
+  />}
+  source="City transport authority, network review 2024"
+  note="Illustrative data"
+/>
+```
+
+### Evidence on the left with yearly bars, earth theme
+
+```tsx
+import { QuoteFigure, Sparkline } from "insightcharts";
+
+<QuoteFigure
+  theme="earth"
+  side="left"
+  quote="In the 2023 drought we harvested 2.1 tonnes of wheat per hectare. The five years before that averaged 3.4."
+  attribution="Tomás Ferreira"
+  role="Wheat farmer, Alentejo"
+  stat={{
+    value: "2.1 t/ha",
+    label: "Wheat yield, 2023",
+    delta: "−38%",
+    deltaLabel: "vs the 2018 to 2022 average",
+  }}
+  figure={<Sparkline
+    data={[
+      { year: "2018", tonnes: 3.5 },
+      { year: "2019", tonnes: 3.3 },
+      { year: "2020", tonnes: 3.6 },
+      { year: "2021", tonnes: 3.2 },
+      { year: "2022", tonnes: 3.4 },
+      { year: "2023", tonnes: 2.1 },
+    ]}
+    x="year"
+    y="tonnes"
+    mark="bar"
+    format="{value} t/ha"
+  />}
+  note="Illustrative data"
 />
 ```
 

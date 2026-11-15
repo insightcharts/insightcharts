@@ -99,6 +99,7 @@ export const ArcDiagram = defineChart<ArcDiagramProps>({
   ],
   example: {
     type: "arc-diagram",
+    theme: "dusk",
     data: [
       ["Harbour", "Market", 4200], ["Harbour", "Quay", 900], ["Quay", "Market", 1300], ["Market", "Town Hall", 2600], ["Market", "University", 3100],
       ["Town Hall", "University", 1500], ["Town Hall", "Hospital", 1100], ["University", "Park", 800], ["University", "Airport", 1900], ["Park", "Hospital", 600],

@@ -61,6 +61,7 @@ export const PictogramChart = defineChart<PictogramChartProps>({
   ],
   example: {
     type: "pictogram-chart",
+    theme: "magenta",
     data: [
       { city: "Tokyo", people: 37.1 },
       { city: "Delhi", people: 33.8 },

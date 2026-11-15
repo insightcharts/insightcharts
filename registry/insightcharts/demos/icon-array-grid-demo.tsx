@@ -18,6 +18,7 @@ const data = [
 export function IconArrayGridDemo() {
   return (
     <IconArrayGrid
+      theme="sunrise"
       data={data}
       name="district"
       value="cars"

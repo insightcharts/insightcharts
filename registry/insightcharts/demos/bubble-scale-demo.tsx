@@ -18,6 +18,7 @@ const data = [
 export function BubbleScaleDemo() {
   return (
     <BubbleScale
+      theme="sunrise"
       data={data}
       name="material"
       value="imported"

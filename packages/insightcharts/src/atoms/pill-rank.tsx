@@ -1,5 +1,5 @@
 import { CustomChart } from "echarts/charts";
-import { alpha, inkOn, mix } from "../core/color";
+import { alpha, inkOn, luminance, mix } from "../core/color";
 import { defineChart } from "../core/define";
 import { measureText, truncateText } from "../core/layout";
 import { morph, tooltipHtml } from "../core/parts";
@@ -57,6 +57,7 @@ export const PillRank = defineChart<PillRankProps>({
   ],
   example: {
     type: "pill-rank",
+    theme: "paper",
     data: [
       { river: "Nile", km: 6650 },
       { river: "Amazon", km: 6400 },
@@ -82,6 +83,8 @@ export const PillRank = defineChart<PillRankProps>({
   },
   build(p, ctx) {
     const t = ctx.tokens;
+    // Judged by the surface, not the page mode: a poster theme paints a dark ground on a light page.
+    const onDark = /^(#|rgb)/.test(t.surface) ? luminance(t.surface) < 0.2 : ctx.mode === "dark";
     const W = ctx.width;
     type Row = { key: string; value: number; rank: number | null };
     const all: Row[] = [];
@@ -127,7 +130,7 @@ export const PillRank = defineChart<PillRankProps>({
     const anyHighlight = ctx.highlight.length > 0;
     const baseOf = (r: Row) => (cmp.has(r.key) && !(anyHighlight && !ctx.dimmed(r.key)) ? t.context : ctx.color(r.key));
     const fillOf = (r: Row) => (ctx.selected(r.key) ? baseOf(r) : mix(t.surface, baseOf(r), 0.3));
-    const track = alpha(t.ink, ctx.mode === "dark" ? 0.09 : 0.055);
+    const track = alpha(t.ink, onDark ? 0.09 : 0.055);
 
     const renderItem = (params: any) => {
       const i = params.dataIndex;
@@ -234,6 +237,7 @@ export const examples = {
     note: "Illustrative survey figures",
   },
   "Stress: 16 rows, long names, values from 3 to 2,140": {
+    theme: "blueprint",
     data: [
       ["Port of Saint-Hilaire-du-Rosier", 2140], ["Kessel Deepwater", 1730], ["Marrow Bay", 1205], ["New Alderney Container Terminal", 980], ["Tolland", 760], ["Vasque", 512], ["Great Northern Free Harbour and Dry Dock", 430], ["Orm", 298],
       ["Halvard Sound", 190], ["Pike's Landing", 122], ["Sable", 75], ["Little Wexcombe-on-the-Estuary", 41], ["Ruddock", 22], ["Cay", 11], ["Fenwater Marina", 6], ["Ix", 3],
@@ -247,6 +251,7 @@ export const examples = {
     note: "Illustrative figures for invented ports",
   },
   "Data order, no ranks": {
+    theme: "dusk",
     data: [
       ["Monday", 312], ["Tuesday", 344], ["Wednesday", 371], ["Thursday", 366], ["Friday", 428], ["Saturday", 502], ["Sunday", 287],
     ].map(([day, visits]) => ({ day, visits })),

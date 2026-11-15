@@ -1,11 +1,12 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { hrefOf, isPoster, isPosterPrimitive, sectionOf, type CatalogEntry } from "@/lib/catalog";
-import { posterGround, posterWidth } from "@/lib/posters";
+import { authoredGround, posterGround, posterWidth } from "@/lib/posters";
 import { cn } from "@/lib/utils";
 import { LazyMount } from "./lazy";
 import { Render } from "./render";
 import { PosterThumb } from "./poster-thumb";
+import { groundClass, groundVars } from "@/lib/ground";
 import { Scaled } from "./scaled";
 
 // Virtual width each level is laid out at before being scaled into a card. Components measure
@@ -28,13 +29,17 @@ export function Thumbnail({ entry, aspect, eager, className }: { entry: CatalogE
   // A poster primitive sets its own height from its layout, so the card does not force one.
   // No props are passed: the client reads the example from the component's own meta, so a
   // page of cards does not carry every spec in its payload.
+  // An example with a named theme paints that theme's ground, with its own padding. The card
+  // takes the same ground and adds little padding, so the thumbnail is one painted tile. A
+  // gradient gets none: two gradients side by side would show a seam.
+  const ground = authoredGround(entry.example);
   const body = (
-    <Scaled virtualWidth={VIRTUAL[entry.level]} aspect={ratio} padding={entry.level === "atom" ? 20 : 28} center={!entry.chart && entry.level !== "template"}>
+    <Scaled virtualWidth={VIRTUAL[entry.level]} aspect={ratio} padding={ground ? (ground.light.includes("gradient") ? 0 : entry.level === "atom" ? 8 : 12) : entry.level === "atom" ? 20 : 28} center={!entry.chart && entry.level !== "template"} fade={!ground}>
       <Render name={entry.name} overrides={entry.chart ? (isPosterPrimitive(entry) ? QUIET : THUMB) : undefined} />
     </Scaled>
   );
   return (
-    <div className={cn("w-full", className)} style={{ aspectRatio: String(ratio) }}>
+    <div className={cn("w-full", groundClass(ground), className)} style={{ aspectRatio: String(ratio), ...groundVars(ground) }}>
       {eager ? body : <LazyMount className="size-full">{body}</LazyMount>}
     </div>
   );
@@ -66,6 +71,7 @@ export function ComponentCard({ entry, size = "default", showLevel, aspect, meta
               {entry.title}
             </Link>
           </h3>
+          {!showLevel && entry.examples.length > 6 ? <span className="shrink-0 rounded-full border px-1.5 py-px text-[10.5px] leading-4 tabular-nums text-muted-foreground">{entry.examples.length} examples</span> : null}
           {showLevel ? <span className="shrink-0 rounded-full border px-1.5 py-px text-[10.5px] leading-4 text-muted-foreground">{sectionOf(entry).singular}</span> : null}
         </div>
         <p className={cn("text-muted-foreground", sm ? "line-clamp-2 text-xs leading-[1.45]" : "line-clamp-2 text-[13px] leading-5")}>{entry.description.replace(/`/g, "")}</p>

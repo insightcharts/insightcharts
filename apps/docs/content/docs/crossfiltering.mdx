@@ -9,7 +9,7 @@ description: InsightData shares one dataset between charts. A click on a selecta
 
 Click a region, then a source. The stacked chart follows both; each selectable chart keeps showing its full set of bars while the other one filters it.
 
-## How it works
+## Shared data and selections
 
 1. `InsightData` resolves `data` (any [accepted shape](/docs/data)) and optionally applies a `transform` to everything.
 2. A chart inside with no `data` prop receives the shared rows, filtered by every active selection **except its own**. Because of that exception, the bars in a selectable chart do not disappear when you click one of them.

@@ -172,6 +172,7 @@ export const ShapeFill = defineChart<ShapeFillProps>({
     { name: "iconSize", type: "number", description: "Silhouette height in px. Default: sized to the width, or grown to fill the box when the `height` prop or `aspect` is given, so one silhouette can be the main figure of a poster." },
   ],
   example: {
+    theme: "blueprint",
     type: "shape-fill",
     data: [
       { reservoir: "Carrow", level: 63 },
@@ -197,7 +198,7 @@ export const ShapeFill = defineChart<ShapeFillProps>({
     // Width was the limit, not height: the drawing sits in the middle of the box.
     const dy = (p.height != null || p.aspect != null) && L.height < ctx.height ? (ctx.height - L.height) / 2 : 0;
     const pct = ctx.formatter({ style: "percent", maximumFractionDigits: 1 });
-    const colours = items.map((it, i) => (ctx.highlight.length ? ctx.color(it.key) : p.colorBy === "item" ? ctx.color(it.key, i) : ctx.color()));
+    const colours = items.map((it, i) => (ctx.highlight.length ? ctx.color(it.key) : p.colorBy === "item" ? (i < t.categorical.length ? ctx.color(it.key, i) : t.context) : ctx.color()));
     const dotted = { stroke: t.inkSecondary, lineWidth: 1.25, lineDash: [0.1, 4], lineCap: "round" as const, fill: "none" };
 
     const renderItem = (params: any) => {
@@ -292,6 +293,7 @@ export const examples = {
     note: "Invented figure for a fictional town",
   },
   "One silhouette sized by the height prop": {
+    theme: "ocean",
     data: [{ what: "of the battery fleet was charged at 6am", share: 0.72 }],
     name: "what",
     value: "share",
@@ -304,6 +306,7 @@ export const examples = {
     note: "Invented figure for a fictional operator",
   },
   "Highlight, click to select": {
+    theme: "dusk",
     data: [
       { district: "Northbank", cover: 34 },
       { district: "Old Town", cover: 9 },
@@ -322,6 +325,7 @@ export const examples = {
     note: "Invented figures for a fictional city",
   },
   "Stress: six items, mixed icons, long labels": {
+    theme: "poster",
     data: [
       { item: "Electric buses charged and ready at 6am", ready: 92 },
       { item: "Households on a time-of-use electricity tariff", ready: 27 },

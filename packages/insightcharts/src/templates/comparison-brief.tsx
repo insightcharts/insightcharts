@@ -194,8 +194,8 @@ function ComparisonBriefImpl({ title, kicker, deck, byline, date, a, b, subject 
 // Cumulative cost of ownership: purchase (after grant) plus running costs, per year.
 const ownership = Array.from({ length: 16 }, (_, year) => ({ year: String(year), saving: 3000 + 980 * year - (3500 + 855 * year) }));
 const MONTH = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-const pumpBill = [142, 128, 102, 68, 40, 28, 25, 26, 38, 66, 98, 134].map((cost, i) => ({ month: MONTH[i], cost }));
-const boilerBill = [158, 141, 115, 78, 49, 37, 34, 35, 46, 74, 107, 146].map((cost, i) => ({ month: MONTH[i], cost }));
+const pumpBill = [120, 108, 86, 57, 34, 24, 21, 22, 32, 56, 83, 112].map((cost, i) => ({ month: MONTH[i], cost }));
+const boilerBill = [139, 124, 101, 69, 43, 33, 30, 31, 41, 65, 94, 130].map((cost, i) => ({ month: MONTH[i], cost }));
 const lifetime = (purchase: number, energy: number, service: number) => [
   { part: "Purchase and fitting", gbp: purchase },
   { part: "Energy", gbp: energy },
@@ -207,6 +207,10 @@ const journey = [
   { mode: "Plane", "Getting there": 55, "Waiting and boarding": 95, "In transit": 80, Onward: 45 },
 ];
 
+// Buying against renting the same flat: cumulative net cost (payments minus wealth gained) by year.
+const tenure = Array.from({ length: 11 }, (_, year) => ({ year: String(year), Buying: (year ? 11000 : 0) + 9970 * year, Renting: 16680 * year }));
+const outgoings = (parts: [string, number][]) => parts.map(([part, gbp]) => ({ part, gbp }));
+
 export const ComparisonBrief = withMeta(ComparisonBriefImpl, {
   name: "comparison-brief",
   component: "ComparisonBrief",
@@ -216,7 +220,7 @@ export const ComparisonBrief = withMeta(ComparisonBriefImpl, {
   description: "A compared with B on one page. It has a headline that states the result, the headline figures mirrored either side of their labels, one hero exhibit that shows both sides, paired exhibits on a shared scale, a verdict callout and a source note.",
   whenToUse: "Use it for two things a reader has to choose between or compare, such as two countries, two products or a before and an after. Write the result with its number in the headline. Put the four or five most important measures in `figures`. Use a two-series line, dumbbell, slope or `before-after` as the hero. In each pair, use the same chart form and the same scale for both sides. The `subject` side takes the accent colour everywhere and the other side stays grey.",
   avoid: "Three or more things (use a `comparison-table` or `small-multiple-grid` inside a `report-page`). One thing over time with nothing to compare it with (use `timeline-story`). Paired charts on different scales, because readers compare bar lengths across the pair.",
-  composes: ["headline", "prose", "callout", "source-note", "line-chart", "bar-chart", "segmented-bar"],
+  composes: ["headline", "prose", "callout", "source-note", "line-chart", "bar-chart", "segmented-bar", "waffle-chart"],
   props: [
     { name: "title", type: "string", required: true, description: "The result of the comparison, as one plain sentence with the number in it." },
     { name: "kicker", type: "string", description: "Small label above the title." },
@@ -236,6 +240,7 @@ export const ComparisonBrief = withMeta(ComparisonBriefImpl, {
   ],
   example: {
     type: "comparison-brief",
+    theme: "earth",
     kicker: "Home heating",
     title: "With the £7,500 grant, a heat pump repays its extra £500 cost in 4 years",
     deck: "After the grant a heat pump costs £3,500 to buy and fit. A gas boiler costs £3,000. The heat pump costs £855 a year to run. The boiler costs £980.",
@@ -265,15 +270,15 @@ export const ComparisonBrief = withMeta(ComparisonBriefImpl, {
     heroText: "Without the grant the heat pump costs £11,000 to buy and fit. That is £8,000 more than the boiler. A saving of £125 a year would take 64 years to repay it.",
     pairs: [
       {
-        title: "The January energy bill is £142 for the heat pump and £158 for the boiler",
+        title: "The January energy bill is £120 for the heat pump and £139 for the boiler",
         text: "Estimated monthly energy cost for heating and hot water. Both charts use the same scale. The heat pump's bill is lower in all 12 months.",
-        a: { type: "bar-chart", data: pumpBill, x: "month", y: "cost", orientation: "vertical", sort: "none", labels: false, format: "currency:GBP", height: 200, option: { yAxis: { max: 160 } } },
-        b: { type: "bar-chart", data: boilerBill, x: "month", y: "cost", orientation: "vertical", sort: "none", labels: false, format: "currency:GBP", height: 200, highlight: "none", option: { yAxis: { max: 160 } } },
+        a: { type: "bar-chart", data: pumpBill, x: "month", y: "cost", orientation: "vertical", sort: "none", labels: false, format: "currency:GBP", height: 200, option: { yAxis: { max: 140 } } },
+        b: { type: "bar-chart", data: boilerBill, x: "month", y: "cost", orientation: "vertical", sort: "none", labels: false, format: "currency:GBP", height: 200, highlight: "none", option: { yAxis: { max: 140 } } },
       },
       {
         title: "Cost over 15 years by part",
-        text: "Energy is £12,075 of the heat pump's cost. It is £13,500 of the boiler's.",
-        a: { type: "segmented-bar", data: lifetime(3500, 12075, 1500), name: "part", value: "gbp", format: "currency:GBP" },
+        text: "Energy is £11,325 of the heat pump's £16,325. It is £13,500 of the boiler's £17,700.",
+        a: { type: "segmented-bar", data: lifetime(3500, 11325, 1500), name: "part", value: "gbp", format: "currency:GBP" },
         b: { type: "segmented-bar", data: lifetime(3000, 13500, 1200), name: "part", value: "gbp", format: "currency:GBP" },
       },
     ],
@@ -285,7 +290,8 @@ export const ComparisonBrief = withMeta(ComparisonBriefImpl, {
 });
 
 export const examples = {
-  "Transport: a stacked hero, no pairs": {
+  "Transport: a stacked hero and a pair of waffles": {
+    theme: "poster",
     kicker: "London to Edinburgh",
     title: "Flying from London to Edinburgh is 35 minutes faster than the train, door to door",
     deck: "The plane takes 275 minutes and the train 310. The flight itself lasts 80 minutes. The plane emits 140 kg of CO2 per passenger. The train emits 13 kg.",
@@ -310,8 +316,62 @@ export const examples = {
       subtitle: "Minutes per stage, city centre to city centre",
       source: "Timetables and airport guidance, weekday morning departures",
     },
+    pairs: [
+      {
+        title: "240 of the train's 310 minutes can be spent working",
+        text: "On the plane it is 50 of 275 minutes. Each square is 1% of the journey.",
+        a: { type: "waffle-chart", data: [{ part: "Working time", minutes: 240 }], name: "part", value: "minutes", total: 310, restLabel: "Other time", format: "{value} min", aspect: 1.6 },
+        b: { type: "waffle-chart", data: [{ part: "Working time", minutes: 50 }], name: "part", value: "minutes", total: 275, restLabel: "Other time", format: "{value} min", aspect: 1.6, highlight: "none" },
+      },
+    ],
     verdict: { lead: "Take the train unless you need the 35 minutes", body: "The train fare is £78 and the plane fare is £92. The train gives 240 minutes of working time. The plane gives 50.", tone: "positive" },
     sources: ["Operator timetables", "Government greenhouse gas conversion factors"],
     note: "Illustrative fares and times",
+  },
+  "Housing: buying against renting, two pairs": {
+    theme: "ledger",
+    kicker: "Housing costs",
+    title: "Buying a £300,000 flat costs £56,100 less than renting it over 10 years",
+    deck: "The buyer pays out £218,000 and gains £107,300 in wealth. The renter pays out £185,700 and gains £18,900.",
+    a: { name: "Buying", detail: "£30,000 deposit, 4% mortgage" },
+    b: { name: "Renting", detail: "£1,350 a month, rising 2.5% a year" },
+    figures: [
+      { label: "Net cost over 10 years", a: 110700, b: 166800, format: { style: "currency", currency: "GBP", maximumFractionDigits: 0 }, better: "lower" },
+      { label: "Paid out over 10 years", a: 218000, b: 185700, format: { style: "currency", currency: "GBP", maximumFractionDigits: 0 }, better: "lower" },
+      { label: "Wealth gained over 10 years", a: 107300, b: 18900, format: { style: "currency", currency: "GBP", maximumFractionDigits: 0 }, better: "higher" },
+      { label: "Monthly outgoing in year 1", a: 1725, b: 1385, format: { style: "currency", currency: "GBP", maximumFractionDigits: 0 }, better: "lower" },
+      { label: "Cash needed at the start", a: 41000, b: 1950, format: { style: "currency", currency: "GBP", maximumFractionDigits: 0 }, better: "lower" },
+    ],
+    hero: {
+      type: "line-chart",
+      data: tenure,
+      x: "year",
+      y: ["Buying", "Renting"],
+      highlight: "Buying",
+      contextLabels: true,
+      zero: true,
+      format: { style: "currency", currency: "GBP", maximumFractionDigits: 0 },
+      title: "Buying has a lower net cost than renting from year 2",
+      subtitle: "Cumulative net cost in pounds by years since moving in. Net cost is payments minus wealth gained",
+    },
+    heroText: "The buyer pays £11,000 in tax and fees in year 1. After 2 years buying has a net cost of £30,940 and renting £33,360.",
+    pairs: [
+      {
+        title: "Mortgage interest is £93,700 of the buyer's £218,000",
+        text: "Payments over 10 years by part. Rent is £181,500 of the renter's £185,700.",
+        a: { type: "segmented-bar", data: outgoings([["Mortgage interest", 93700], ["Capital repaid", 77300], ["Upkeep and insurance", 36000], ["Tax and fees", 11000]]), name: "part", value: "gbp", format: "currency:GBP" },
+        b: { type: "segmented-bar", data: outgoings([["Rent", 181500], ["Fees and insurance", 4200]]), name: "part", value: "gbp", format: "currency:GBP" },
+      },
+      {
+        title: "The buyer gains £107,300 in wealth and the renter £18,900",
+        text: "Wealth gained over 10 years by source. Both charts use the same scale.",
+        a: { type: "bar-chart", data: outgoings([["Capital repaid", 77300], ["Rise in the flat's price", 30000]]), x: "part", y: "gbp", sort: "none", orientation: "horizontal", format: "currency:GBP", option: { xAxis: { max: 90000 } } },
+        b: { type: "bar-chart", data: outgoings([["Growth on the invested deposit", 18900]]), x: "part", y: "gbp", sort: "none", orientation: "horizontal", format: "currency:GBP", highlight: "none", option: { xAxis: { max: 90000 } } },
+      },
+    ],
+    verdict: { lead: "Buy if you will stay 2 years or more", body: "The figures assume a 4% mortgage rate, a flat price that rises 1% a year and a 5% annual return on the renter's invested deposit.", tone: "positive" },
+    sources: ["Lender mortgage calculator", "Letting agent listings collected by the author"],
+    method: "A £270,000 repayment mortgage over 25 years at 4%. The renter invests the £30,000 deposit. Net cost is payments minus capital repaid and growth.",
+    note: "Illustrative data",
   },
 };

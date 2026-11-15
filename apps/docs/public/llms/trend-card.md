@@ -1,6 +1,6 @@
 # Trend card (`trend-card`)
 
-> A KPI card computed from a series: the latest value, its change against a baseline in the same data, and a sparkline of the series.
+> A KPI card computed from a series: the latest value, its change against a baseline in the same data, and a trend graphic, in any `stat-tile` variant.
 
 - Component: `TrendCard` (import from `insightcharts`)
 - Spec type: `"trend-card"`
@@ -112,7 +112,24 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `kind` | `"line" \| "bar"` | `"line"` | Sparkline form: a line for a trend, bars for discrete counts. |
 | `area` | `boolean` | `false` | Light fill under the line; the scale then includes zero. |
 | `trendPosition` | `"bottom" \| "right"` | `"bottom"` | Where the sparkline sits; `right` falls back to `bottom` in narrow cards. |
-| `theme` | `ThemeInput` |  | Theme override, passed on to the tile and sparkline. |
+| `variant` | `StatTileVariant` |  | The tile display: any `stat-tile` variant (`sparkline`, `area`, `bars`, `dots`, `split`, `compact`, `progress`, `ring`, `comparison`, `delta-first`, `icon`, `breakdown`, `rank`, `unit`, `hero`, `filled`, `tinted`, `borderless`, `outline-accent`, `plain`). The series is passed as the tile's `series`; `comparison` takes the baseline value and both period names from the rows. Omit for the original card with an interactive `sparkline` atom (tooltip on hover). |
+| `showTrend` | `boolean` | `true` | With a `variant` that does not draw the series itself (`filled`, `icon`, `hero`, `delta-first`...), a line is drawn at the bottom; set false to leave it off. |
+| `surface` | `"plain" \| "borderless" \| "filled" \| "tinted" \| "outline-accent"` |  | The tile's ground, with any `variant`. |
+| `tone` | `"neutral" \| "accent" \| "positive" \| "negative" \| number` |  | Colour of the tile's graphic or ground; a number picks a categorical colour, 0-based. |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Tile scale. |
+| `align` | `"left" \| "center" \| "right"` |  | Text alignment. |
+| `orientation` | `"vertical" \| "horizontal"` |  | Graphic under or beside the figure, as in `stat-tile`. |
+| `icon` | `IconInput` |  | Icon for the `icon` and `unit` variants. |
+| `target` | `number` |  | Goal for the `progress` and `ring` variants. |
+| `targetLabel` | `string` | `"Target"` | Name for the target. |
+| `max` | `number` |  | End of the scale for `progress` and `ring`; total count for `unit`. |
+| `parts` | `{ label: string; value: number }[]` |  | Composition of the latest value, for `breakdown`. |
+| `rank` | `number` |  | Position for the `rank` variant. |
+| `rankOf` | `number` |  | Entries ranked. |
+| `unitValue` | `number` |  | What one icon stands for in `unit`. |
+| `edge` | `"left" \| "top"` |  | Edge of the rule on an `outline-accent` surface. |
+| `frame` | `boolean` |  | Set false to stop a named theme painting its ground. |
+| `theme` | `ThemeInput` |  | A theme name such as `"ledger"`, or token overrides, passed on to the tile. A named theme paints its own ground. |
 | `mode` | `"auto" \| "system" \| "light" \| "dark"` | `"auto"` | Colour mode. |
 
 ## Composition
@@ -121,6 +138,324 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 - Used by: [kpi-grid](https://insightcharts.dev/llms/kpi-grid.md)
 
 ## More examples
+
+### Area along the bottom edge
+
+```tsx
+import { TrendCard } from "insightcharts";
+
+const data = [
+  { month: "2024-01-01", users: 21400 },
+  { month: "2024-02-01", users: 23900 },
+  { month: "2024-03-01", users: 25100 },
+  { month: "2024-04-01", users: 28800 },
+  { month: "2024-05-01", users: 31600 },
+  { month: "2024-06-01", users: 33200 },
+  { month: "2024-07-01", users: 36900 },
+  { month: "2024-08-01", users: 39800 },
+  // ... 4 more rows
+];
+
+<TrendCard
+  label="Monthly active users"
+  data={data}
+  x="month"
+  y="users"
+  format="integer"
+  variant="area"
+  style={{ maxWidth: 300 }}
+/>
+```
+
+### Split, figure left and line right, ledger
+
+```tsx
+import { TrendCard } from "insightcharts";
+
+const data = [
+  { month: "2024-01-01", users: 21400 },
+  { month: "2024-02-01", users: 23900 },
+  { month: "2024-03-01", users: 25100 },
+  { month: "2024-04-01", users: 28800 },
+  { month: "2024-05-01", users: 31600 },
+  { month: "2024-06-01", users: 33200 },
+  { month: "2024-07-01", users: 36900 },
+  { month: "2024-08-01", users: 39800 },
+  // ... 4 more rows
+];
+
+<TrendCard
+  label="Monthly active users"
+  data={data}
+  x="month"
+  y="users"
+  format="integer"
+  theme="ledger"
+  variant="split"
+  style={{ maxWidth: 440 }}
+/>
+```
+
+### Filled ground with a line
+
+```tsx
+import { TrendCard } from "insightcharts";
+
+const data = [
+  { month: "2024-01-01", users: 21400 },
+  { month: "2024-02-01", users: 23900 },
+  { month: "2024-03-01", users: 25100 },
+  { month: "2024-04-01", users: 28800 },
+  { month: "2024-05-01", users: 31600 },
+  { month: "2024-06-01", users: 33200 },
+  { month: "2024-07-01", users: 36900 },
+  { month: "2024-08-01", users: 39800 },
+  // ... 4 more rows
+];
+
+<TrendCard
+  label="Monthly active users"
+  data={data}
+  x="month"
+  y="users"
+  format="integer"
+  variant="filled"
+  tone={4}
+  style={{ maxWidth: 300 }}
+/>
+```
+
+### Comparison with the first period, editorial
+
+```tsx
+import { TrendCard } from "insightcharts";
+
+const data = [
+  { month: "2024-01-01", users: 21400 },
+  { month: "2024-02-01", users: 23900 },
+  { month: "2024-03-01", users: 25100 },
+  { month: "2024-04-01", users: 28800 },
+  { month: "2024-05-01", users: 31600 },
+  { month: "2024-06-01", users: 33200 },
+  { month: "2024-07-01", users: 36900 },
+  { month: "2024-08-01", users: 39800 },
+  // ... 4 more rows
+];
+
+<TrendCard
+  label="Monthly active users"
+  data={data}
+  x="month"
+  y="users"
+  format="integer"
+  theme="editorial"
+  variant="comparison"
+  style={{ maxWidth: 320 }}
+/>
+```
+
+### Progress toward a target, science
+
+```tsx
+import { TrendCard } from "insightcharts";
+
+const data = [
+  { month: "2024-01-01", users: 21400 },
+  { month: "2024-02-01", users: 23900 },
+  { month: "2024-03-01", users: 25100 },
+  { month: "2024-04-01", users: 28800 },
+  { month: "2024-05-01", users: 31600 },
+  { month: "2024-06-01", users: 33200 },
+  { month: "2024-07-01", users: 36900 },
+  { month: "2024-08-01", users: 39800 },
+  // ... 4 more rows
+];
+
+<TrendCard
+  label="Monthly active users"
+  data={data}
+  x="month"
+  y="users"
+  format="integer"
+  theme="science"
+  variant="progress"
+  target={50000}
+  targetLabel="Q4 target"
+  compare={3}
+  style={{ maxWidth: 320 }}
+/>
+```
+
+### Ring, forest
+
+```tsx
+import { TrendCard } from "insightcharts";
+
+const data = [
+  { year: "2019", ha: 80 },
+  { year: "2020", ha: 190 },
+  { year: "2021", ha: 330 },
+  { year: "2022", ha: 480 },
+  { year: "2023", ha: 620 },
+  { year: "2024", ha: 1240 },
+];
+
+<TrendCard
+  theme="forest"
+  label="Native woodland replanted, hectares"
+  data={data}
+  x="year"
+  y="ha"
+  format="integer"
+  variant="ring"
+  max={2000}
+  context="The 2026 goal is 2,000 hectares."
+  compare="previous"
+  style={{ maxWidth: 360 }}
+/>
+```
+
+### Bars for weekly counts, blueprint
+
+```tsx
+import { TrendCard } from "insightcharts";
+
+const data = [
+  { week: "week 1", units: 212 },
+  { week: "week 2", units: 240 },
+  { week: "week 3", units: 198 },
+  { week: "week 4", units: 265 },
+  { week: "week 5", units: 281 },
+  { week: "week 6", units: 254 },
+  { week: "week 7", units: 302 },
+  { week: "week 8", units: 318 },
+];
+
+<TrendCard
+  theme="blueprint"
+  label="Units assembled per shift"
+  data={data}
+  x="week"
+  y="units"
+  variant="bars"
+  style={{ maxWidth: 300 }}
+/>
+```
+
+### Change first on a tinted ground, sunrise
+
+```tsx
+import { TrendCard } from "insightcharts";
+
+const data = [
+  { week: "week 44", visits: 15400 },
+  { week: "week 45", visits: 15900 },
+  { week: "week 46", visits: 16200 },
+  { week: "week 47", visits: 16000 },
+  { week: "week 48", visits: 17100 },
+  { week: "week 49", visits: 17800 },
+  { week: "week 50", visits: 18640 },
+];
+
+<TrendCard
+  theme="sunrise"
+  label="Store visits per week"
+  data={data}
+  x="week"
+  y="visits"
+  format="integer"
+  variant="delta-first"
+  surface="tinted"
+  tone={1}
+  style={{ maxWidth: 300 }}
+/>
+```
+
+### Dots, large, noir
+
+```tsx
+import { TrendCard } from "insightcharts";
+
+const data = [
+  { matchday: "matchday 5", points: 9 },
+  { matchday: "matchday 10", points: 19 },
+  { matchday: "matchday 15", points: 28 },
+  { matchday: "matchday 20", points: 40 },
+  { matchday: "matchday 25", points: 49 },
+  { matchday: "matchday 30", points: 61 },
+];
+
+<TrendCard
+  theme="noir"
+  label="Points after each block of five matches"
+  data={data}
+  x="matchday"
+  y="points"
+  variant="dots"
+  size="lg"
+  compare="previous"
+  style={{ maxWidth: 360 }}
+/>
+```
+
+### Compact row, mono
+
+```tsx
+import { TrendCard } from "insightcharts";
+
+const data = [
+  { month: "2024-01-01", users: 21400 },
+  { month: "2024-02-01", users: 23900 },
+  { month: "2024-03-01", users: 25100 },
+  { month: "2024-04-01", users: 28800 },
+  { month: "2024-05-01", users: 31600 },
+  { month: "2024-06-01", users: 33200 },
+  { month: "2024-07-01", users: 36900 },
+  { month: "2024-08-01", users: 39800 },
+  // ... 4 more rows
+];
+
+<TrendCard
+  label="Monthly active users"
+  data={data}
+  x="month"
+  y="users"
+  format="integer"
+  theme="mono"
+  variant="compact"
+  compare="previous"
+  style={{ maxWidth: 440 }}
+/>
+```
+
+### Hero with an outline rule, paper
+
+```tsx
+import { TrendCard } from "insightcharts";
+
+const data = [
+  { year: "2019", bill: 1138 },
+  { year: "2020", bill: 1042 },
+  { year: "2021", bill: 1277 },
+  { year: "2022", bill: 2100 },
+  { year: "2023", bill: 1960 },
+  { year: "2024", bill: 1717 },
+];
+
+<TrendCard
+  theme="paper"
+  label="Average annual energy bill"
+  data={data}
+  x="year"
+  y="bill"
+  format="currency:GBP"
+  compare="previous"
+  upIsGood={false}
+  variant="hero"
+  surface="outline-accent"
+  style={{ maxWidth: 420 }}
+/>
+```
 
 ### Down is good, trend on the right
 

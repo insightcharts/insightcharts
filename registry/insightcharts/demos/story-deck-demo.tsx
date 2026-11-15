@@ -1,4 +1,5 @@
 import { StoryDeck } from "@/components/insightcharts/templates/story-deck";
+import { WaffleChart } from "@/components/insightcharts/atoms/waffle-chart";
 import { BarChart } from "@/components/insightcharts/atoms/bar-chart";
 import { LineChart } from "@/components/insightcharts/atoms/line-chart";
 import { RadialBarChart } from "@/components/insightcharts/atoms/radial-bar-chart";
@@ -6,6 +7,7 @@ import { RadialBarChart } from "@/components/insightcharts/atoms/radial-bar-char
 export function StoryDeckDemo() {
   return (
     <StoryDeck
+      theme="dusk"
       aspect="4:5"
       cards={[
         {
@@ -19,13 +21,31 @@ export function StoryDeckDemo() {
         {
           kind: "stat",
           kicker: "Distance",
+          variant: "with-trend",
+          series: [1120, 1310, 1498, 1842],
           value: 1842,
           format: "integer",
           label: "Kilometres run in 2024",
           delta: 0.23,
           deltaLabel: "vs 2023",
-          context: "An average of 154 km a month",
-          text: "You ran in 46 of the year's 52 weeks.",
+          context: "You ran 1,120 km in 2021 and 1,498 km in 2023.",
+        },
+        {
+          kind: "chart",
+          kicker: "Weeks",
+          title: "You ran in 46 of the year's 52 weeks",
+          chart: <WaffleChart
+            data={[{ weeks: "Weeks with a run", n: 46 }]}
+            name="weeks"
+            value="n"
+            total={52}
+            rows={4}
+            columns={13}
+            restLabel="Weeks without a run"
+            format="integer"
+            aspect={2.6}
+          />,
+          text: "Each square is one week. Four of the six weeks without a run were in July.",
         },
         {
           kind: "chart",

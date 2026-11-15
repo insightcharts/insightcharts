@@ -7,6 +7,7 @@ registerComponents({ BarChart });
 export function ChartTabsDemo() {
   return (
     <ChartTabs
+      theme="mono"
       title="CO2 emissions of six large emitters, 2023"
       tabsPosition="below"
       chart={{

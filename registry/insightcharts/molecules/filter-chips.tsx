@@ -124,7 +124,8 @@ export const FilterChips = withMeta(FilterChipsImpl, {
     { name: "resetLabel", type: "string", default: '"Reset"', description: "Text of the clear-all control." },
     { name: "count", type: "boolean", default: "false", description: 'Show "1,204 of 5,000 rows" at the end of the line.' },
     { name: "unit", type: "string", default: '"rows"', description: 'Noun for the count, e.g. "orders".' },
-    { name: "theme", type: "ThemeInput", description: "Theme override." },
+    { name: "theme", type: "ThemeInput", description: "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object. A named theme with its own surface paints that surface behind the component." },
+    { name: "frame", type: "boolean", description: "Paint the theme's surface behind the component. Default: on for a named theme with its own surface." },
     { name: "mode", type: '"auto" | "system" | "light" | "dark"', default: '"auto"', description: "Colour mode." },
   ],
   example: {

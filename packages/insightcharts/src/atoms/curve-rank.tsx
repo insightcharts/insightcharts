@@ -73,6 +73,7 @@ export const CurveRank = defineChart<CurveRankProps>({
   ],
   example: {
     type: "curve-rank",
+    theme: "blueprint",
     data: [
       { drink: "Filter coffee", price: 2.4, cups: 310 },
       { drink: "Espresso", price: 2.6, cups: 145 },
@@ -328,6 +329,7 @@ export const examples = {
     note: "Illustrative figures.",
   },
   "Ten entities, one colour each": {
+    theme: "ledger",
     data: districts.map(([district, rent, commute]) => ({ district, rent, commute })),
     name: "district",
     left: "rent",
@@ -343,6 +345,7 @@ export const examples = {
     note: "Illustrative figures for an invented city.",
   },
   "Stress: 14 entities, close values, long names": {
+    theme: "noir",
     data: [
       ["Northern Line Extension to the Harbour", 41, 12.4], ["Ring Road Bus Rapid Transit", 39, 11.9], ["Airport Express", 38, 31.0], ["Old Town Tram", 37, 9.8],
       ["University Shuttle", 22, 3.1], ["Riverside Ferry", 21, 6.4], ["Hillcrest Funicular", 20, 6.2], ["Night Bus Network", 19, 6.0],

@@ -4,6 +4,7 @@ import { Headline } from "@/components/insightcharts/atoms/headline";
 import { Prose } from "@/components/insightcharts/atoms/prose";
 import { withMeta, renderSlot, type Slot } from "insightcharts/core";
 import { Provide } from "@/components/insightcharts/molecules/_shared";
+import { StatRow, type StatRowItem, type StatRowProps } from "@/components/insightcharts/molecules/stat-row";
 import { asList, below, frame, FRAME_DOCS, Heading, Label, RULE, Sourcing, SOURCING_DOCS, useTemplate, withHeight, type TemplateProps, type TemplateSourcing } from "@/components/insightcharts/templates/_shared";
 
 export interface ReportFinding {
@@ -34,6 +35,8 @@ export interface ReportPageProps extends TemplateProps, Omit<TemplateSourcing, "
   summary?: string | string[];
   /** Heading of the summary. */
   summaryTitle?: string;
+  /** Two to four key figures under the summary: a list of figures, or the props of `stat-row` (`{ items, variant, ... }`) to choose how they are drawn. */
+  figures?: StatRowItem[] | StatRowProps;
   /** Numbered findings, each with one exhibit. */
   findings?: ReportFinding[];
   /** Label over each observation. */
@@ -67,9 +70,10 @@ function Confidence({ value }: { value: "high" | "medium" | "low" }) {
  * one exhibit, an observation and a separately labelled interpretation. Method and
  * limitations come last.
  */
-function ReportPageImpl({ title, kicker, deck, byline, date, summary, summaryTitle = "Summary", findings, observationLabel = "What the data shows", interpretationLabel = "What we think it means", method, limitations, sources, period, note, credit, level = 1, maxWidth = 920, className, style, ...rest }: ReportPageProps) {
+function ReportPageImpl({ title, kicker, deck, byline, date, summary, summaryTitle = "Summary", figures, findings, observationLabel = "What the data shows", interpretationLabel = "What we think it means", method, limitations, sources, period, note, credit, level = 1, maxWidth = 920, className, style, ...rest }: ReportPageProps) {
   const { ref, width, mode, root, phone, gap } = useTemplate(rest);
   const list = findings ?? [];
+  const keyFigures: StatRowProps | null = Array.isArray(figures) ? (figures.length ? { items: figures } : null) : figures?.items?.length ? figures : null;
   const sub = below(level);
   const wide = width >= 760;
   const methodText = asList(method);
@@ -84,6 +88,11 @@ function ReportPageImpl({ title, kicker, deck, byline, date, summary, summaryTit
               {summaryTitle}
             </Heading>
             <Prose text={summary} size={phone ? "md" : "lg"} measure={70} />
+          </section>
+        ) : null}
+        {keyFigures ? (
+          <section data-slot="ic-report-page-figures" aria-label="Key figures" style={{ minWidth: 0, marginTop: summary ? -gap / 2 : 0 }}>
+            <StatRow {...keyFigures} />
           </section>
         ) : null}
         {list.map((finding, i) => (
@@ -175,7 +184,7 @@ export const ReportPage = withMeta(ReportPageImpl, {
   description: "A section of an analytical report laid out as a document. It has a title block, a summary, numbered findings, then method, limitations and sources. Each finding has one exhibit, an observation and a separately labelled interpretation with a confidence rating and a caveat.",
   whenToUse: "Use it for readers who will check the reasoning, as in evaluations, research notes, audits and experiment write-ups. State the main finding with its number in the title. Put all the main findings and the recommendation in the summary. Write each finding title as one fact with its number, and give it an exhibit that shows that fact. Put what the data shows in `observation` and what you infer from it in `interpretation`. End with method, limitations and sources.",
   avoid: "A decision-maker who wants only the result (use `executive-brief`). A general audience (use `explainer` or `visual-essay`). Findings without an exhibit. Put those in the summary.",
-  composes: ["headline", "prose", "source-note", "bar-chart", "progress-meter", "line-chart"],
+  composes: ["headline", "prose", "stat-row", "source-note", "bar-chart", "progress-meter", "line-chart", "dumbbell-chart", "histogram", "diverging-bar-chart"],
   props: [
     { name: "title", type: "string", required: true, description: "The report's main finding, as one plain sentence with the number in it." },
     { name: "kicker", type: "string", description: 'The report series or section, e.g. "Evaluation report · Section 3".' },
@@ -184,6 +193,7 @@ export const ReportPage = withMeta(ReportPageImpl, {
     { name: "date", type: "string", description: "Publication date." },
     { name: "summary", type: "string | string[]", description: "One paragraph with the main findings, their numbers and the recommendation. Supports `**bold**`." },
     { name: "summaryTitle", type: "string", default: '"Summary"', description: "Heading of the summary." },
+    { name: "figures", type: "StatRowItem[] | StatRowProps", description: "Two to four key figures shown under the summary. A list of `{ value, label, context?, delta?, ... }`, or the props of `stat-row` (`{ items, variant, ... }`) to choose how they are drawn." },
     { name: "findings", type: "{ title, exhibit?, observation?, interpretation?, confidence?: \"high\" | \"medium\" | \"low\", caveat?, id? }[]", description: "Numbered findings. `observation` is what the data shows; `interpretation` is what the authors infer, with an optional confidence rating and caveat." },
     { name: "observationLabel", type: "string", default: '"What the data shows"', description: "Label over each observation." },
     { name: "interpretationLabel", type: "string", default: '"What we think it means"', description: "Label over each interpretation." },
@@ -194,6 +204,7 @@ export const ReportPage = withMeta(ReportPageImpl, {
   ],
   example: {
     type: "report-page",
+    theme: "paper",
     kicker: "Small-group tutoring programme · Year 1 evaluation",
     title: "Tutored pupils gained 2.9 more scaled-score points in maths than matched pupils",
     deck: "The difference in reading was 0.5 points. 31% of tutored pupils were eligible for free school meals against a funding target of 50%.",
@@ -201,10 +212,18 @@ export const ReportPage = withMeta(ReportPageImpl, {
     date: "2025-02-20",
     summary:
       "Pupils offered tutoring gained **2.9 more scaled-score points in maths** over the year than matched pupils who were not. That is about three months of additional learning. The difference in reading was 0.5 points and could be chance. Pupils who attended fewer than 12 sessions gained less than 1 point over their matches. 58% of pupils attended 12 or more. We recommend continuing the maths strand. Attendance should be the main delivery target. The way pupils are selected should change.",
+    figures: {
+      variant: "tiles",
+      items: [
+        { variant: "comparison", value: 8.1, comparison: 5.2, valueLabel: "Tutored", comparisonLabel: "Comparison", delta: "+2.9 points", format: "decimal:1", label: "Mean gain in maths, scaled-score points" },
+        { variant: "ring", value: 0.58, max: 1, format: "percent", label: "Tutored pupils attending 12 or more sessions", context: "20 sessions were offered" },
+        { variant: "progress", value: 0.31, max: 1, target: 0.5, targetLabel: "Funding target", format: "percent", label: "Tutored pupils eligible for free school meals" },
+      ],
+    },
     findings: [
       {
         title: "Tutored pupils gained 8.1 points in maths against 5.2 for comparison pupils",
-        exhibit: { type: "bar-chart", data: gains, x: "subject", y: ["Tutored", "Comparison"], orientation: "horizontal", sort: "none", highlight: "Tutored", format: "decimal:1", subtitle: "Mean gain in scaled score, autumn 2023 to summer 2024", source: "Standardised assessments, 42 schools" },
+        exhibit: { type: "bar-chart", data: gains, x: "subject", y: ["Tutored", "Comparison"], orientation: "horizontal", sort: "none", format: "decimal:1", subtitle: "Mean gain in scaled score, autumn 2023 to summer 2024", source: "Standardised assessments, 42 schools" },
         observation: "The difference in maths was 2.9 points (95% interval 1.6 to 4.2). In reading tutored pupils gained 5.9 points and comparison pupils 5.4. That difference was 0.5 points (−0.7 to 1.7).",
         interpretation: "The maths difference is unlikely to be chance. Trials of similar programmes found effects of about the same size. We do not conclude that reading tutoring failed, because half the reading tutors were recruited after January.",
         confidence: "medium",

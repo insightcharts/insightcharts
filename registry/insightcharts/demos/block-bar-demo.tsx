@@ -12,6 +12,7 @@ const data = [
 export function BlockBarDemo() {
   return (
     <BlockBar
+      theme="noir"
       data={data}
       name="year"
       value="tickets"

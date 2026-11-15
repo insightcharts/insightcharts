@@ -5,7 +5,7 @@ import { useInsightStyles } from "../core/figure";
 import { makeFormatter, type FormatSpec } from "../core/format";
 import { withMeta } from "../core/meta";
 import { useColorMode, type ModeInput } from "../core/mode";
-import { useInsightConfig, useTheme } from "../core/provider";
+import { frameStyle, useInsightConfig, useTheme } from "../core/provider";
 import { chromeVars, type ThemeInput } from "../core/theme";
 
 export interface DataTableColumn {
@@ -48,7 +48,10 @@ export interface DataTableProps {
   maxHeight?: number | string;
   /** Row padding. */
   density?: "comfortable" | "compact";
+  /** A built-in theme name or a theme object. A named theme paints its own background behind the table. */
   theme?: ThemeInput;
+  /** Paint the named theme's background behind the table. Default: on for a named theme with its own surface. */
+  frame?: boolean;
   mode?: ModeInput;
   className?: string;
   style?: CSSProperties;
@@ -147,7 +150,7 @@ function DataTableImpl({ rows, columns, caption, subtitle, source, highlight, hi
   const scrolls = maxHeight != null;
 
   return (
-    <div ref={ref} data-slot="ic-data-table" data-ic-mode={mode} className={className} style={{ ...(chromeVars(tokens) as CSSProperties), fontFamily: "var(--_ic-font)", color: "var(--_ic-ink)", minWidth: 0, ...style }}>
+    <div ref={ref} data-slot="ic-data-table" data-ic-mode={mode} className={className} style={{ ...(chromeVars(tokens) as CSSProperties), fontFamily: "var(--_ic-font)", color: "var(--_ic-ink)", minWidth: 0, ...frameStyle(rest.theme, mode, rest.frame), ...style }}>
       <div
         data-slot="ic-data-table-scroll"
         // A scrolling region must be reachable from the keyboard.
@@ -326,9 +329,11 @@ export const DataTable = withMeta(DataTableImpl, {
     { name: "sortable", type: "boolean", default: "true", description: "Click or press Enter on a header to sort; a third press restores the original order." },
     { name: "maxHeight", type: "number | string", description: "Height before the body scrolls under the sticky header." },
     { name: "density", type: '"comfortable" | "compact"', default: '"comfortable"', description: "Row padding." },
+    { name: "frame", type: "boolean", description: "Paint a named theme's background behind the table, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off." },
   ],
   example: {
     type: "data-table",
+    theme: "editorial",
     caption: "Wind and solar supplied 67% of Denmark's electricity in 2024",
     subtitle: "Electricity generation by country, 2024",
     source: "Ember (illustrative figures)",
@@ -378,6 +383,7 @@ export const examples = {
     source: "Illustrative data for the gallery",
   },
   "Default columns, no sorting": {
+    theme: "ledger",
     sortable: false,
     rows: [
       { Plan: "Starter", Seats: 5, "Price per seat": "$8", "Annual discount": "None" },
@@ -386,6 +392,7 @@ export const examples = {
     ],
   },
   "Two highlighted rows, negative values": {
+    theme: "forest",
     caption: "Revenue grew in 2 of 5 regions in the fourth quarter",
     highlight: ["North", "Islands"],
     columns: [{ key: "region", label: "Region" }, { key: "revenue", label: "Revenue", format: "currency:EUR" }, { key: "growth", label: "Quarterly growth", format: { style: "percent", signDisplay: "exceptZero", maximumFractionDigits: 1 }, bar: true, width: "40%" }],

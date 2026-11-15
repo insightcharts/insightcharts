@@ -41,6 +41,7 @@ import { BarChart, ScrollyChart, registerComponents } from "insightcharts";
 registerComponents({ BarChart });
 
 <ScrollyChart
+  theme="earth"
   chart={{
     type: "bar-chart",
     data: [
@@ -101,6 +102,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 ```json
 {
   "type": "scrolly-chart",
+  "theme": "earth",
   "chart": {
     "type": "bar-chart",
     "data": [
@@ -170,17 +172,18 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `subtitle` | `string` |  | Line under the heading. |
 | `source` | `string` |  | Shown after the last step as "Source: ...". Prefer the chart's own `source`, which stays visible. |
 | `note` | `string` |  | Method note or caveat. |
-| `theme` | `ThemeInput` |  | Theme override, passed on to the chart and the step cards. |
+| `theme` | `ThemeInput` |  | A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the chart and the step cards. A named theme with its own surface paints that surface behind the component. |
+| `frame` | `boolean` |  | Paint the theme's surface behind the component. Default: on for a named theme with its own surface. |
 | `mode` | `"auto" \| "system" \| "light" \| "dark"` | `"auto"` | Colour mode. |
 
 ## Composition
 
-- Composes: [prose](https://insightcharts.dev/llms/prose.md), [bar-chart](https://insightcharts.dev/llms/bar-chart.md)
+- Composes: [prose](https://insightcharts.dev/llms/prose.md), [bar-chart](https://insightcharts.dev/llms/bar-chart.md), [line-chart](https://insightcharts.dev/llms/line-chart.md)
 - Used by: [visual-essay](https://insightcharts.dev/llms/visual-essay.md)
 
 ## More examples
 
-### Steps mode (buttons), cumulative patches
+### Steps mode (buttons), cumulative patches, noir theme
 
 ```tsx
 import { BarChart, ScrollyChart, registerComponents } from "insightcharts";
@@ -189,6 +192,7 @@ import { BarChart, ScrollyChart, registerComponents } from "insightcharts";
 registerComponents({ BarChart });
 
 <ScrollyChart
+  theme="noir"
   scrollMode="steps"
   cumulative
   chart={{
@@ -285,6 +289,69 @@ registerComponents({ BarChart });
       highlight: "Solar",
       y: "y2024",
       title: "Solar supplied 11.1% of EU electricity in 2024",
+    },
+  ]}
+/>
+```
+
+### Three lines, one highlighted per step, ledger theme
+
+```tsx
+import { LineChart, ScrollyChart, registerComponents } from "insightcharts";
+
+// Specs passed as data are resolved by name when rendered.
+registerComponents({ LineChart });
+
+<ScrollyChart
+  theme="ledger"
+  scrollMode="steps"
+  title="The average two-year fixed mortgage rate was 5.4% in the last quarter of 2024"
+  chart={{
+    type: "line-chart",
+    data: [
+      { quarter: "Q1 2022", "Bank rate": 0.5, "Two-year fixed": 2.2, "Five-year fixed": 2.4 },
+      { quarter: "Q2 2022", "Bank rate": 1, "Two-year fixed": 3, "Five-year fixed": 3.1 },
+      { quarter: "Q3 2022", "Bank rate": 1.75, "Two-year fixed": 4.2, "Five-year fixed": 4.1 },
+      { quarter: "Q4 2022", "Bank rate": 3, "Two-year fixed": 6, "Five-year fixed": 5.7 },
+      { quarter: "Q1 2023", "Bank rate": 4, "Two-year fixed": 5.4, "Five-year fixed": 5 },
+      { quarter: "Q2 2023", "Bank rate": 4.75, "Two-year fixed": 5.8, "Five-year fixed": 5.3 },
+      { quarter: "Q3 2023", "Bank rate": 5.25, "Two-year fixed": 6.6, "Five-year fixed": 6.1 },
+      { quarter: "Q4 2023", "Bank rate": 5.25, "Two-year fixed": 6, "Five-year fixed": 5.6 },
+      { quarter: "Q1 2024", "Bank rate": 5.25, "Two-year fixed": 5.8, "Five-year fixed": 5.3 },
+      { quarter: "Q2 2024", "Bank rate": 5.25, "Two-year fixed": 5.9, "Five-year fixed": 5.5 },
+      { quarter: "Q3 2024", "Bank rate": 5, "Two-year fixed": 5.5, "Five-year fixed": 5.2 },
+      { quarter: "Q4 2024", "Bank rate": 4.75, "Two-year fixed": 5.4, "Five-year fixed": 5.1 },
+    ],
+    x: "quarter",
+    y: ["Bank rate", "Two-year fixed", "Five-year fixed"],
+    format: "{value}%",
+    zero: true,
+    height: 300,
+    subtitle: "Bank rate and average fixed mortgage rates, quarterly, 2022 to 2024",
+    note: "Illustrative data",
+  }}
+  steps={[
+    {
+      label: "All three rates",
+      content: "The chart shows the central bank rate and the average rates of two-year and five-year fixed mortgages.",
+    },
+    {
+      label: "Bank rate",
+      content: "The **bank rate** rose from 0.5% in the first quarter of 2022 to 5.25% in the third quarter of 2023.",
+      highlight: "Bank rate",
+      contextLabels: true,
+    },
+    {
+      label: "Two-year fixed",
+      content: "The average **two-year fixed rate** was 6.6% in the third quarter of 2023. It was 5.4% in the last quarter of 2024.",
+      highlight: "Two-year fixed",
+      contextLabels: true,
+    },
+    {
+      label: "Five-year fixed",
+      content: "The average **five-year fixed rate** was 5.1% in the last quarter of 2024. The two-year rate was 0.3 points higher.",
+      highlight: "Five-year fixed",
+      contextLabels: true,
     },
   ]}
 />

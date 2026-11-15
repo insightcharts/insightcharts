@@ -1,12 +1,21 @@
 "use client";
 
-import { makeFormatter, type FormatSpec, withMeta } from "insightcharts/core";
+import { makeFormatter, type FormatSpec, withMeta, frameStyle } from "insightcharts/core";
 import { toNumber, type DataInput, type Transform } from "insightcharts/data";
 import { Sparkline } from "@/components/insightcharts/atoms/sparkline";
-import { StatTile } from "@/components/insightcharts/atoms/stat-tile";
+import { StatTile, type StatTileProps, type StatTileVariant } from "@/components/insightcharts/atoms/stat-tile";
 import { dataState, periodLabel, Provide, useMolecule, useRows, type MoleculeProps } from "@/components/insightcharts/molecules/_shared";
 
-export interface TrendCardProps extends MoleculeProps {
+export interface TrendCardProps extends MoleculeProps, Partial<Pick<StatTileProps, "surface" | "tone" | "size" | "align" | "orientation" | "edge" | "icon" | "target" | "targetLabel" | "max" | "parts" | "rank" | "rankOf" | "unitValue">> {
+  /**
+   * The tile display: any `stat-tile` variant. The series, the comparison value and its labels are
+   * filled in from the rows. Omit for the original card with an interactive `sparkline`.
+   */
+  variant?: StatTileVariant;
+  /** Set false to leave the trend line off variants that do not draw the series themselves. Default true. */
+  showTrend?: boolean;
+  /** Paint a named theme's own background behind the card. Default true when `theme` is a theme name. */
+  frame?: boolean;
   /** What the figure measures, sentence case. */
   label: string;
   /** Rows in time order, one per period. Omit inside `<InsightData>`. */
@@ -69,7 +78,7 @@ function absoluteChange(diff: number, format: FormatSpec | undefined, deltaForma
  * A KPI card derived from a series: the latest value, its change against a baseline in
  * the same series, and a sparkline of the whole run. One dataset, no hand-computed numbers.
  */
-function TrendCardImpl({ label, data, transform, x, y, value, delta, compare = "first", change = "percent", deltaFormat, deltaLabel, upIsGood = true, context, format, kind = "line", area, trendPosition = "bottom", className, style, ...rest }: TrendCardProps) {
+function TrendCardImpl({ label, data, transform, x, y, value, delta, compare = "first", change = "percent", deltaFormat, deltaLabel, upIsGood = true, context, format, kind = "line", area, trendPosition = "bottom", variant, showTrend = true, surface, tone, size, align, orientation, edge, icon, target, targetLabel, max, parts, rank, rankOf, unitValue, frame, className, style, ...rest }: TrendCardProps) {
   const { ref, mode, root, locale } = useMolecule(rest);
   const state = useRows(data, transform);
   const points = state.rows.filter((r) => !Number.isNaN(toNumber(r[y])));
@@ -85,9 +94,15 @@ function TrendCardImpl({ label, data, transform, x, y, value, delta, compare = "
   }
   const against = deltaLabel ?? (delta === undefined && x && n > 1 ? `${compare === "first" ? "since" : "vs"} ${periodLabel(points[baseIndex][x], locale)}` : undefined);
   const placeholder = dataState(state, 132);
+  const values = points.map((r) => toNumber(r[y]));
+  // Variants with their own graphic (a meter, a ring, a key) do not also get a trend line.
+  const ownGraphic = variant != null && ["sparkline", "area", "bars", "dots", "split", "compact", "progress", "ring", "comparison", "breakdown", "rank", "unit"].includes(variant);
+  // The card is one tile, so a named theme's ground is painted by the tile itself rather than
+  // as a second panel around it. A placeholder has no tile and takes the frame directly.
+  const painter = placeholder ? frameStyle(rest.theme, mode, frame) : undefined;
 
   return (
-    <div ref={ref} data-slot="ic-trend-card" data-ic-mode={mode} className={className} style={{ ...root, display: "grid", ...style }}>
+    <div ref={ref} data-slot="ic-trend-card" data-ic-mode={mode} className={className} style={{ ...root, display: "grid", ...painter, ...style }}>
       <Provide theme={rest.theme} mode={rest.mode}>
         {placeholder ?? (
           <StatTile
@@ -99,7 +114,28 @@ function TrendCardImpl({ label, data, transform, x, y, value, delta, compare = "
             upIsGood={upIsGood}
             context={context}
             trendPosition={trendPosition}
-            trend={n > 1 ? <Sparkline data={points} x={x} y={y} mark={kind} area={area} format={format} height={trendPosition === "right" ? 44 : 36} lazy={false} /> : undefined}
+            theme={typeof rest.theme === "string" ? rest.theme : undefined}
+            frame={frame}
+            variant={variant}
+            surface={surface}
+            tone={tone}
+            size={size}
+            align={align}
+            orientation={orientation}
+            edge={edge}
+            icon={icon}
+            target={target}
+            targetLabel={targetLabel}
+            max={max}
+            parts={parts}
+            rank={rank}
+            rankOf={rankOf}
+            unitValue={unitValue}
+            series={variant != null && n > 1 ? values : undefined}
+            comparison={variant === "comparison" ? base : undefined}
+            comparisonLabel={variant === "comparison" && x && n > 1 ? periodLabel(points[baseIndex][x], locale) : undefined}
+            valueLabel={variant === "comparison" && x && n > 1 ? periodLabel(points[n - 1][x], locale) : undefined}
+            trend={variant != null ? (n > 1 && showTrend && !ownGraphic ? values : undefined) : n > 1 ? <Sparkline data={points} x={x} y={y} mark={kind} area={area} format={format} height={trendPosition === "right" ? 44 : 36} lazy={false} /> : undefined}
           />
         )}
       </Provide>
@@ -118,7 +154,7 @@ export const TrendCard = withMeta(TrendCardImpl, {
   title: "Trend card",
   level: "molecule",
   category: "layout",
-  description: "A KPI card computed from a series: the latest value, its change against a baseline in the same data, and a sparkline of the series.",
+  description: "A KPI card computed from a series: the latest value, its change against a baseline in the same data, and a trend graphic, in any `stat-tile` variant.",
   whenToUse: "A metric whose recent history matters as much as its level: users, revenue, response time. Pass the series and field names; the figure, the change and the sparkline all come from the same rows, so they cannot disagree.",
   avoid: "A number with no history (use `big-number` or `stat-tile`); several metrics from one dataset (use `kpi-grid`); a series the reader must read values from (use `line-chart`).",
   composes: ["stat-tile", "sparkline"],
@@ -140,7 +176,24 @@ export const TrendCard = withMeta(TrendCardImpl, {
     { name: "kind", type: '"line" | "bar"', default: '"line"', description: "Sparkline form: a line for a trend, bars for discrete counts." },
     { name: "area", type: "boolean", default: "false", description: "Light fill under the line; the scale then includes zero." },
     { name: "trendPosition", type: '"bottom" | "right"', default: '"bottom"', description: "Where the sparkline sits; `right` falls back to `bottom` in narrow cards." },
-    { name: "theme", type: "ThemeInput", description: "Theme override, passed on to the tile and sparkline." },
+    { name: "variant", type: "StatTileVariant", description: "The tile display: any `stat-tile` variant (`sparkline`, `area`, `bars`, `dots`, `split`, `compact`, `progress`, `ring`, `comparison`, `delta-first`, `icon`, `breakdown`, `rank`, `unit`, `hero`, `filled`, `tinted`, `borderless`, `outline-accent`, `plain`). The series is passed as the tile's `series`; `comparison` takes the baseline value and both period names from the rows. Omit for the original card with an interactive `sparkline` atom (tooltip on hover)." },
+    { name: "showTrend", type: "boolean", default: "true", description: "With a `variant` that does not draw the series itself (`filled`, `icon`, `hero`, `delta-first`...), a line is drawn at the bottom; set false to leave it off." },
+    { name: "surface", type: '"plain" | "borderless" | "filled" | "tinted" | "outline-accent"', description: "The tile's ground, with any `variant`." },
+    { name: "tone", type: '"neutral" | "accent" | "positive" | "negative" | number', description: "Colour of the tile's graphic or ground; a number picks a categorical colour, 0-based." },
+    { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "Tile scale." },
+    { name: "align", type: '"left" | "center" | "right"', description: "Text alignment." },
+    { name: "orientation", type: '"vertical" | "horizontal"', description: "Graphic under or beside the figure, as in `stat-tile`." },
+    { name: "icon", type: "IconInput", description: "Icon for the `icon` and `unit` variants." },
+    { name: "target", type: "number", description: "Goal for the `progress` and `ring` variants." },
+    { name: "targetLabel", type: "string", default: '"Target"', description: "Name for the target." },
+    { name: "max", type: "number", description: "End of the scale for `progress` and `ring`; total count for `unit`." },
+    { name: "parts", type: "{ label: string; value: number }[]", description: "Composition of the latest value, for `breakdown`." },
+    { name: "rank", type: "number", description: "Position for the `rank` variant." },
+    { name: "rankOf", type: "number", description: "Entries ranked." },
+    { name: "unitValue", type: "number", description: "What one icon stands for in `unit`." },
+    { name: "edge", type: '"left" | "top"', description: "Edge of the rule on an `outline-accent` surface." },
+    { name: "frame", type: "boolean", description: "Set false to stop a named theme painting its ground." },
+    { name: "theme", type: "ThemeInput", description: 'A theme name such as `"ledger"`, or token overrides, passed on to the tile. A named theme paints its own ground.' },
     { name: "mode", type: '"auto" | "system" | "light" | "dark"', default: '"auto"', description: "Colour mode." },
   ],
   example: {

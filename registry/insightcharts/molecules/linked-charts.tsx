@@ -100,8 +100,7 @@ const REGIONS: Record<string, number[][]> = {
   "Latin America": [[720, 120, 40], [690, 140, 60], [740, 170, 90], [760, 200, 120], [730, 230, 160]],
 };
 const energy = Object.entries(REGIONS).flatMap(([region, years]) => years.flatMap((row, y) => row.map((twh, s) => ({ region, year: String(2020 + y), source: SOURCES[s], twh }))));
-const sum = (groupBy: string | string[]) => ({ type: "aggregate", groupBy, measures: { twh: { op: "sum", field: "twh" } } });
-
+const sum = (groupBy: string | string[], field = "twh") => ({ type: "aggregate", groupBy, measures: { [field]: { op: "sum", field } } });
 export const LinkedCharts = withMeta(LinkedChartsImpl, {
   name: "linked-charts",
   component: "LinkedCharts",
@@ -133,20 +132,22 @@ export const LinkedCharts = withMeta(LinkedChartsImpl, {
     { name: "before", type: "Slot | Slot[]", description: "Content rendered inside the shared store above the grid: figures, text, a custom component that calls `useInsightData()`, or a spec that omits `data` (e.g. `stat-row`, `data-table`). It sees the same filtered rows as the charts." },
     { name: "after", type: "Slot | Slot[]", description: "Content rendered inside the shared store below the grid, e.g. a detail table of the filtered rows." },
     { name: "gap", type: "number", default: "24", description: "Space in px between the `before` slot, the grid and the `after` slot." },
-    { name: "theme", type: "ThemeInput", description: "Theme override, passed on to every chart." },
+    { name: "theme", type: "ThemeInput", description: "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to every chart. A named theme with its own surface paints that surface behind the component." },
+    { name: "frame", type: "boolean", description: "Paint the theme's surface behind the component. Default: on for a named theme with its own surface." },
     { name: "mode", type: '"auto" | "system" | "light" | "dark"', default: '"auto"', description: "Colour mode." },
   ],
   example: {
     type: "linked-charts",
+    theme: "science",
     title: "Asia generated 46% of the renewable electricity in these four regions from 2020 to 2024",
     subtitle: "Electricity generation from hydro, wind and solar, TWh, four regions, 2020 to 2024",
     data: energy,
     labels: { region: "Region", source: "Source", year: "Year" },
-    hint: "Click a bar to filter the other charts",
+    hint: "Click a bar or a slice to filter the other charts",
     count: true,
     charts: [
       { type: "bar-chart", id: "by-region", x: "region", y: "twh", select: true, format: "compact", height: 200, title: "By region", transform: sum("region") },
-      { type: "bar-chart", id: "by-source", x: "source", y: "twh", select: true, format: "compact", height: 200, title: "By source", transform: sum("source") },
+      { type: "donut-chart", id: "by-source", name: "source", value: "twh", select: true, format: "compact", centerLabel: "TWh", height: 200, title: "By source", transform: sum("source") },
       { type: "bar-chart", id: "by-year", x: "year", y: "twh", series: "source", stack: true, orientation: "vertical", sort: "none", select: "year", format: "compact", height: 240, title: "By year", transform: sum(["year", "source"]) },
     ],
     source: "Ember, Global Electricity Review 2025",

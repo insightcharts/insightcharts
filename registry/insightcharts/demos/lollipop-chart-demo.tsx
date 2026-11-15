@@ -14,6 +14,7 @@ const data = [
 export function LollipopChartDemo() {
   return (
     <LollipopChart
+      theme="mono"
       data={data}
       x="country"
       y="share"

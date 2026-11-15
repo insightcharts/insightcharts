@@ -12,6 +12,7 @@ const data = [
 export function CurveRankDemo() {
   return (
     <CurveRank
+      theme="blueprint"
       data={data}
       name="drink"
       left="price"

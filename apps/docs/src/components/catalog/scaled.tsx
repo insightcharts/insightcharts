@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
  * live thumbnail. The box has a fixed aspect ratio, so it reserves its space before the
  * scale is measured. Decorative only: inert and hidden from assistive tech.
  */
-export function Scaled({ children, virtualWidth, aspect = 16 / 10, padding = 24, center, className }: { children: ReactNode; virtualWidth: number; aspect?: number; padding?: number; center?: boolean; className?: string }) {
+export function Scaled({ children, virtualWidth, aspect = 16 / 10, padding = 24, center, fade = true, className }: { children: ReactNode; virtualWidth: number; aspect?: number; padding?: number; center?: boolean; /** Fade the bottom edge into the page. Off when the content paints its own ground. */ fade?: boolean; className?: string }) {
   const box = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState<number | null>(null);
   const [height, setHeight] = useState(0);
@@ -29,7 +29,7 @@ export function Scaled({ children, virtualWidth, aspect = 16 / 10, padding = 24,
       <div className="absolute left-0 top-0 origin-top-left transition-opacity duration-200" style={{ width: scale != null && scale >= 1 ? "100%" : virtualWidth, padding, transform: `scale(${scale ?? 1})`, opacity: scale == null ? 0 : 1, ...(center && scale ? { minHeight: height / scale, display: "flex", flexDirection: "column", justifyContent: "center" } : null) }}>
         {children}
       </div>
-      <div className="absolute inset-x-0 bottom-0 h-10 bg-linear-to-t from-background to-transparent" />
+      {fade ? <div className="absolute inset-x-0 bottom-0 h-10 bg-linear-to-t from-background to-transparent" /> : null}
     </div>
   );
 }

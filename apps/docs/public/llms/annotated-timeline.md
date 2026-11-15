@@ -38,6 +38,7 @@ The file lands at `components/insightcharts/molecules/annotated-timeline.tsx`. `
 import { AnnotatedTimeline, BigNumber, Sparkline } from "insightcharts";
 
 <AnnotatedTimeline
+  theme="paper"
   title="The ECB raised its deposit rate from −0.5% to 4% between July 2022 and September 2023"
   subtitle="Euro area deposit facility rate and annual inflation, 2021 to 2024"
   events={[
@@ -104,6 +105,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 ```json
 {
   "type": "annotated-timeline",
+  "theme": "paper",
   "title": "The ECB raised its deposit rate from −0.5% to 4% between July 2022 and September 2023",
   "subtitle": "Euro area deposit facility rate and annual inflation, 2021 to 2024",
   "events": [
@@ -180,7 +182,8 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `subtitle` | `string` |  | Scope and period. |
 | `source` | `string` |  | Shown under the timeline as "Source: ...". |
 | `note` | `string` |  | Method note or caveat. |
-| `theme` | `ThemeInput` |  | Theme override, passed on to every event. |
+| `theme` | `ThemeInput` |  | A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to every event. A named theme with its own surface paints that surface behind the component. |
+| `frame` | `boolean` |  | Paint the theme's surface behind the component. Default: on for a named theme with its own surface. |
 | `mode` | `"auto" \| "system" \| "light" \| "dark"` | `"auto"` | Colour mode. |
 
 ## Composition
@@ -230,6 +233,122 @@ import { AnnotatedTimeline, BigNumber } from "insightcharts";
   ]}
   source="Ember; SolarPower Europe"
   note="Figures are approximate, for illustration"
+/>
+```
+
+### Sea ice minimums, ocean theme
+
+```tsx
+import { AnnotatedTimeline, BigNumber, Sparkline } from "insightcharts";
+
+<AnnotatedTimeline
+  theme="ocean"
+  title="Arctic sea ice reached a record low of 3.4 million km² in September 2012"
+  subtitle="Annual minimum extent of Arctic sea ice, million km², 1979 to 2024"
+  events={[
+    {
+      date: "1979",
+      title: "The satellite record begins",
+      text: "The September minimum was 6.9 million km².",
+      figure: <BigNumber value="6.9m km²" label="Minimum sea ice extent, 1979" />,
+    },
+    {
+      date: "2007",
+      title: "The minimum falls to 4.2 million km²",
+      text: "It was 5.8 million km² in 2006.",
+    },
+    {
+      date: "2012",
+      title: "The minimum reaches 3.4 million km²",
+      emphasis: true,
+      text: "This is the lowest minimum in the satellite record.",
+      figure: <Sparkline
+        data={[
+          { year: "2003", extent: 6.1 },
+          { year: "2004", extent: 6 },
+          { year: "2005", extent: 5.5 },
+          { year: "2006", extent: 5.8 },
+          { year: "2007", extent: 4.2 },
+          { year: "2008", extent: 4.7 },
+          { year: "2009", extent: 5.1 },
+          { year: "2010", extent: 4.9 },
+          { year: "2011", extent: 4.6 },
+          { year: "2012", extent: 3.4 },
+        ]}
+        x="year"
+        y="extent"
+        format="{value}m km²"
+        extremes
+        showValue
+        style={{ maxWidth: 260 }}
+      />,
+    },
+    {
+      date: "2020",
+      title: "The minimum is 3.8 million km²",
+      text: "This is the second lowest minimum in the record.",
+    },
+    {
+      date: "2024",
+      title: "The minimum is 4.3 million km²",
+      emphasis: true,
+      text: "The 2024 minimum was 38% below the 1979 minimum.",
+      figure: <BigNumber
+        value="4.3m km²"
+        label="Minimum sea ice extent, 2024"
+        delta={-0.38}
+        deltaLabel="vs 1979"
+      />,
+    },
+  ]}
+  source="National Snow and Ice Data Center"
+  note="Figures are approximate, for illustration"
+/>
+```
+
+### Wage rises with figures at the side, editorial theme
+
+```tsx
+import { AnnotatedTimeline, BigNumber } from "insightcharts";
+
+<AnnotatedTimeline
+  theme="editorial"
+  figurePosition="side"
+  title="The UK National Living Wage rose from £7.20 in 2016 to £12.21 in 2025"
+  subtitle="Hourly National Living Wage, selected April upratings, 2016 to 2025"
+  events={[
+    {
+      date: "April 2016",
+      title: "The National Living Wage starts at £7.20",
+      text: "It applied to workers aged 25 and over.",
+      figure: <BigNumber value="£7.20" label="Hourly rate, April 2016" />,
+    },
+    { date: "April 2021", title: "The age threshold falls to 23", text: "The rate was £8.91." },
+    {
+      date: "April 2024",
+      title: "The rate rises to £11.44",
+      emphasis: true,
+      text: "The age threshold fell to 21. The rate was £10.42 in 2023.",
+      figure: <BigNumber
+        value="£11.44"
+        label="Hourly rate, April 2024"
+        delta="+9.8%"
+        deltaLabel="vs 2023"
+      />,
+    },
+    {
+      date: "April 2025",
+      title: "The rate rises to £12.21",
+      text: "The rise was 6.7%.",
+      figure: <BigNumber
+        value="£12.21"
+        label="Hourly rate, April 2025"
+        delta="+6.7%"
+        deltaLabel="vs 2024"
+      />,
+    },
+  ]}
+  source="Low Pay Commission"
 />
 ```
 

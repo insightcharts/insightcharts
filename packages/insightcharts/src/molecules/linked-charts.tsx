@@ -100,7 +100,36 @@ const REGIONS: Record<string, number[][]> = {
   "Latin America": [[720, 120, 40], [690, 140, 60], [740, 170, 90], [760, 200, 120], [730, 230, 160]],
 };
 const energy = Object.entries(REGIONS).flatMap(([region, years]) => years.flatMap((row, y) => row.map((twh, s) => ({ region, year: String(2020 + y), source: SOURCES[s], twh }))));
-const sum = (groupBy: string | string[]) => ({ type: "aggregate", groupBy, measures: { twh: { op: "sum", field: "twh" } } });
+const sum = (groupBy: string | string[], field = "twh") => ({ type: "aggregate", groupBy, measures: { [field]: { op: "sum", field } } });
+
+const cube = (rows: Record<string, number[][]>, a: string, b: string, bs: string[], c: string, cs: string[], field: string) => Object.entries(rows).flatMap(([key, groups]) => groups.flatMap((row, i) => row.map((v, j) => ({ [a]: key, [b]: bs[i], [c]: cs[j], [field]: v }))));
+const visits = cube(
+  {
+    "Natural History": [[120, 80, 60], [130, 110, 95], [125, 150, 160], [115, 90, 70]],
+    "Modern Art": [[70, 45, 50], [75, 60, 70], [70, 80, 110], [80, 55, 60]],
+    Maritime: [[40, 25, 10], [45, 40, 20], [50, 60, 35], [38, 28, 12]],
+  },
+  "museum",
+  "quarter",
+  ["Q1", "Q2", "Q3", "Q4"],
+  "visitor",
+  ["Local", "Domestic", "International"],
+  "visits",
+);
+const trips = cube(
+  {
+    Centre: [[310, 40], [180, 150], [290, 120], [60, 45]],
+    University: [[220, 20], [160, 40], [190, 35], [45, 20]],
+    Harbour: [[90, 30], [70, 160], [100, 140], [25, 40]],
+    Suburbs: [[80, 10], [40, 25], [75, 20], [10, 5]],
+  },
+  "area",
+  "time",
+  ["Morning", "Midday", "Evening", "Night"],
+  "rider",
+  ["Member", "Casual"],
+  "trips",
+);
 
 export const LinkedCharts = withMeta(LinkedChartsImpl, {
   name: "linked-charts",
@@ -133,20 +162,22 @@ export const LinkedCharts = withMeta(LinkedChartsImpl, {
     { name: "before", type: "Slot | Slot[]", description: "Content rendered inside the shared store above the grid: figures, text, a custom component that calls `useInsightData()`, or a spec that omits `data` (e.g. `stat-row`, `data-table`). It sees the same filtered rows as the charts." },
     { name: "after", type: "Slot | Slot[]", description: "Content rendered inside the shared store below the grid, e.g. a detail table of the filtered rows." },
     { name: "gap", type: "number", default: "24", description: "Space in px between the `before` slot, the grid and the `after` slot." },
-    { name: "theme", type: "ThemeInput", description: "Theme override, passed on to every chart." },
+    { name: "theme", type: "ThemeInput", description: "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to every chart. A named theme with its own surface paints that surface behind the component." },
+    { name: "frame", type: "boolean", description: "Paint the theme's surface behind the component. Default: on for a named theme with its own surface." },
     { name: "mode", type: '"auto" | "system" | "light" | "dark"', default: '"auto"', description: "Colour mode." },
   ],
   example: {
     type: "linked-charts",
+    theme: "science",
     title: "Asia generated 46% of the renewable electricity in these four regions from 2020 to 2024",
     subtitle: "Electricity generation from hydro, wind and solar, TWh, four regions, 2020 to 2024",
     data: energy,
     labels: { region: "Region", source: "Source", year: "Year" },
-    hint: "Click a bar to filter the other charts",
+    hint: "Click a bar or a slice to filter the other charts",
     count: true,
     charts: [
       { type: "bar-chart", id: "by-region", x: "region", y: "twh", select: true, format: "compact", height: 200, title: "By region", transform: sum("region") },
-      { type: "bar-chart", id: "by-source", x: "source", y: "twh", select: true, format: "compact", height: 200, title: "By source", transform: sum("source") },
+      { type: "donut-chart", id: "by-source", name: "source", value: "twh", select: true, format: "compact", centerLabel: "TWh", height: 200, title: "By source", transform: sum("source") },
       { type: "bar-chart", id: "by-year", x: "year", y: "twh", series: "source", stack: true, orientation: "vertical", sort: "none", select: "year", format: "compact", height: 240, title: "By year", transform: sum(["year", "source"]) },
     ],
     source: "Ember, Global Electricity Review 2025",
@@ -162,5 +193,36 @@ export const examples = {
       { type: "bar-chart", id: "pair-region", x: "region", y: "twh", select: true, format: "compact", height: 200, title: "Generation by region", transform: sum("region") },
       { type: "line-chart", id: "pair-year", x: "year", y: "twh", series: "source", format: "compact", height: 200, title: "Generation by source over time", transform: sum(["year", "source"]) },
     ],
+  },
+  "Three views of museum visits, paper theme": {
+    theme: "paper",
+    title: "The Natural History Museum had 1.3 million of the 2.5 million visits in 2024",
+    subtitle: "Visits to three city museums, thousands, by visitor origin and quarter, 2024",
+    data: visits,
+    labels: { museum: "Museum", visitor: "Visitor", quarter: "Quarter" },
+    hint: "Click a mark to filter the other charts",
+    unit: "rows",
+    charts: [
+      { type: "lollipop-chart", id: "v-museum", x: "museum", y: "visits", select: true, format: "integer", height: 180, title: "By museum", transform: sum("museum", "visits") },
+      { type: "donut-chart", id: "v-visitor", name: "visitor", value: "visits", select: true, format: "integer", centerLabel: "thousand visits", height: 200, title: "By visitor origin", transform: sum("visitor", "visits") },
+      { type: "area-chart", id: "v-quarter", x: "quarter", y: "visits", series: "visitor", stack: true, format: "integer", height: 240, title: "By quarter", transform: sum(["quarter", "visitor"], "visits") },
+    ],
+    source: "City museums service",
+    note: "Illustrative data",
+  },
+  "Bike-share trips, noir theme": {
+    theme: "noir",
+    title: "Members made 1.9 million of the 2.8 million bike-share trips in 2024",
+    subtitle: "Bike-share trips, thousands, by area, rider type and time of day, 2024",
+    data: trips,
+    labels: { area: "Area", rider: "Rider", time: "Time of day" },
+    hint: "Click a bar to filter the other chart",
+    count: true,
+    charts: [
+      { type: "bar-chart", id: "t-area", x: "area", y: "trips", select: true, format: "integer", height: 220, title: "By area", transform: sum("area", "trips") },
+      { type: "bar-chart", id: "t-time", x: "time", y: "trips", series: "rider", stack: true, orientation: "vertical", sort: "none", select: "time", format: "integer", height: 220, title: "By time of day and rider type", transform: sum(["time", "rider"], "trips") },
+    ],
+    source: "City bike-share operator",
+    note: "Illustrative data",
   },
 };

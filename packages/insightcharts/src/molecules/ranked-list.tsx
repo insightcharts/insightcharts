@@ -156,7 +156,8 @@ export const RankedList = withMeta(RankedListImpl, {
     { name: "subtitle", type: "string", description: "Measure, population and period." },
     { name: "source", type: "string", description: 'Shown under the list as "Source: ...".' },
     { name: "note", type: "string", description: "Method note or caveat." },
-    { name: "theme", type: "ThemeInput", description: "Theme override." },
+    { name: "theme", type: "ThemeInput", description: "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object. A named theme with its own surface paints that surface behind the component." },
+    { name: "frame", type: "boolean", description: "Paint the theme's surface behind the component. Default: on for a named theme with its own surface." },
     { name: "mode", type: '"auto" | "system" | "light" | "dark"', default: '"auto"', description: "Colour mode." },
   ],
   example: {
@@ -176,8 +177,26 @@ export const RankedList = withMeta(RankedListImpl, {
 });
 
 export const examples = {
-  "Top five, no highlight": { data: cities, name: "city", value: "share", format: "{value}%", limit: 5, title: "49% of commuting trips in Copenhagen are made by bicycle" },
-  "Places moved, long names, no bar": {
+  "Top five with change, forest theme": {
+    theme: "forest",
+    title: "Brazil had 497 million hectares of forest in 2020",
+    subtitle: "Forest area, million hectares, five largest countries, 2020, with change since 2010",
+    data: [
+      { country: "Russia", area: 815, change: 0.0 },
+      { country: "Brazil", area: 497, change: -0.03 },
+      { country: "Canada", area: 347, change: 0.0 },
+      { country: "United States", area: 310, change: 0.01 },
+      { country: "China", area: 220, change: 0.1 },
+    ],
+    name: "country",
+    value: "area",
+    change: "change",
+    highlight: "Brazil",
+    source: "FAO, Global Forest Resources Assessment 2020",
+    note: "Figures are approximate, for illustration",
+  },
+  "Places moved, long names, no bar, mono theme": {
+    theme: "mono",
     title: "Three of the top five hospitals are in the Netherlands",
     data: [
       { name: "Erasmus University Medical Center Rotterdam", score: 94.1, moved: 2 },
@@ -193,4 +212,25 @@ export const examples = {
     bar: false,
     note: "Illustrative data",
   },
+  "Two rows highlighted, magenta theme": {
+    theme: "magenta",
+    title: "Romance loans rose 21% to 388,000 in 2024",
+    subtitle: "Loans by genre, thousands, city libraries, 2024, with change on 2023",
+    data: [
+      { genre: "Crime", loans: 412, change: 0.06 },
+      { genre: "Romance", loans: 388, change: 0.21 },
+      { genre: "Picture books", loans: 351, change: 0.02 },
+      { genre: "Fantasy", loans: 274, change: 0.14 },
+      { genre: "Biography", loans: 163, change: -0.05 },
+      { genre: "Cookery", loans: 121, change: -0.08 },
+    ],
+    name: "genre",
+    value: "loans",
+    format: "{value}k",
+    change: "change",
+    highlight: ["Romance", "Fantasy"],
+    source: "City library service",
+    note: "Illustrative data",
+  },
+  "Top five, no highlight": { data: cities, name: "city", value: "share", format: "{value}%", limit: 5, title: "49% of commuting trips in Copenhagen are made by bicycle" },
 };

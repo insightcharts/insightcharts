@@ -368,12 +368,13 @@ const data = [
 export function CalendarHeatmapDemo() {
   return (
     <CalendarHeatmap
+      theme="forest"
       data={data}
       date="date"
       value="commits"
       title="Commits per day to the main repository, 2024"
       subtitle="Number of commits each day"
-      note="Illustrative data. Pale cells are days with no commits."
+      note="Illustrative data. Faint cells are days with no commits."
     />
   );
 }

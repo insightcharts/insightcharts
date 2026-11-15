@@ -3,7 +3,7 @@
 import { forwardRef, useEffect, useRef, useState } from "react";
 import { HeatmapChart } from "echarts/charts";
 import { CalendarComponent, VisualMapComponent } from "echarts/components";
-import { type ChartHandle, alpha, ramp, defineChart, type ChartComponent, type CommonChartProps, formatDate, morph, tooltipHtml } from "insightcharts/core";
+import { type ChartHandle, alpha, luminance, ramp, defineChart, type ChartComponent, type CommonChartProps, formatDate, morph, tooltipHtml } from "insightcharts/core";
 import { toNumber } from "insightcharts/data";
 
 export interface CalendarHeatmapProps {
@@ -74,16 +74,19 @@ const Calendar = defineChart<CalendarHeatmapProps>({
   ],
   example: {
     type: "calendar-heatmap",
+    theme: "forest",
     data: commits(2024, 4),
     date: "date",
     value: "commits",
     title: "Commits per day to the main repository, 2024",
     subtitle: "Number of commits each day",
-    note: "Illustrative data. Pale cells are days with no commits.",
+    note: "Illustrative data. Faint cells are days with no commits.",
   },
   markCount: (rows) => rows.length,
   build(p, ctx) {
     const t = ctx.tokens;
+    // Judged by the surface, not the page mode: a poster theme paints a dark ground on a light page.
+    const onDark = /^(#|rgb)/.test(t.surface) ? luminance(t.surface) < 0.2 : ctx.mode === "dark";
     const fmt = ctx.fmt;
     const days = new Map<string, number>();
     for (const r of ctx.rows) {
@@ -129,7 +132,7 @@ const Calendar = defineChart<CalendarHeatmapProps>({
       left: vertical ? i * (colW + GAP) + SIDE_V : SIDE,
       top: vertical ? TOP + (Y > 1 ? YEAR_H : 0) + MONTH_H : TOP + i * (blockH + GAP) + (Y > 1 ? YEAR_H : 0) + MONTH_H,
       // Days without data keep a pale cell, so a gap in the record is visible as a gap.
-      itemStyle: { color: alpha(t.muted, ctx.mode === "dark" ? 0.16 : 0.1), borderColor: t.surface, borderWidth: gap },
+      itemStyle: { color: alpha(t.muted, onDark ? 0.2 : 0.1), borderColor: t.surface, borderWidth: gap },
       splitLine: { show: false },
       yearLabel: { show: false },
       dayLabel: { firstDay: p.weekStart === "sunday" ? 0 : 1, nameMap: cell >= 9 ? initials : initials.map((d, k) => (k % 2 ? d : "")), margin: 6, ...small },

@@ -5,30 +5,122 @@ import { BarChart } from "@/components/insightcharts/atoms/bar-chart";
 export function ScorecardDemo() {
   return (
     <Scorecard
+      theme="noir"
       kicker="Online store scorecard"
       reportPeriod="October 2024"
       title="Orders rose 12% in October to 24,900"
       deck="The return rate was 11.4%. It was 8.4% in July, the month before free returns launched. Outerwear had the highest return rate at 19.2%."
       kpis={{
         data: [
-          { month: "2023-11-01", orders: 18200, conversion: 2.61, aov: 64.1, returns: 8.1 },
-          { month: "2023-12-01", orders: 26900, conversion: 3.02, aov: 66.8, returns: 8.4 },
-          { month: "2024-01-01", orders: 17100, conversion: 2.55, aov: 63, returns: 9 },
-          { month: "2024-02-01", orders: 16400, conversion: 2.58, aov: 62.4, returns: 8.2 },
-          { month: "2024-03-01", orders: 17900, conversion: 2.66, aov: 62.9, returns: 8 },
-          { month: "2024-04-01", orders: 18800, conversion: 2.71, aov: 62.2, returns: 7.9 },
-          { month: "2024-05-01", orders: 19600, conversion: 2.74, aov: 61.8, returns: 8.3 },
-          { month: "2024-06-01", orders: 19900, conversion: 2.78, aov: 61.5, returns: 8.1 },
-          { month: "2024-07-01", orders: 20400, conversion: 2.83, aov: 61.9, returns: 8.4 },
-          { month: "2024-08-01", orders: 21300, conversion: 2.9, aov: 61.2, returns: 9.6 },
-          { month: "2024-09-01", orders: 22200, conversion: 2.97, aov: 60.8, returns: 10.5 },
-          { month: "2024-10-01", orders: 24900, conversion: 3.1, aov: 61, returns: 11.4 },
+          {
+            month: "2023-11-01",
+            orders: 18200,
+            conversion: 2.61,
+            aov: 64.1,
+            returns: 8.1,
+            outerwear: 13,
+          },
+          {
+            month: "2023-12-01",
+            orders: 26900,
+            conversion: 3.02,
+            aov: 66.8,
+            returns: 8.4,
+            outerwear: 13.2,
+          },
+          {
+            month: "2024-01-01",
+            orders: 17100,
+            conversion: 2.55,
+            aov: 63,
+            returns: 9,
+            outerwear: 13.6,
+          },
+          {
+            month: "2024-02-01",
+            orders: 16400,
+            conversion: 2.58,
+            aov: 62.4,
+            returns: 8.2,
+            outerwear: 13.1,
+          },
+          {
+            month: "2024-03-01",
+            orders: 17900,
+            conversion: 2.66,
+            aov: 62.9,
+            returns: 8,
+            outerwear: 12.9,
+          },
+          {
+            month: "2024-04-01",
+            orders: 18800,
+            conversion: 2.71,
+            aov: 62.2,
+            returns: 7.9,
+            outerwear: 13.3,
+          },
+          {
+            month: "2024-05-01",
+            orders: 19600,
+            conversion: 2.74,
+            aov: 61.8,
+            returns: 8.3,
+            outerwear: 13,
+          },
+          {
+            month: "2024-06-01",
+            orders: 19900,
+            conversion: 2.78,
+            aov: 61.5,
+            returns: 8.1,
+            outerwear: 13.4,
+          },
+          {
+            month: "2024-07-01",
+            orders: 20400,
+            conversion: 2.83,
+            aov: 61.9,
+            returns: 8.4,
+            outerwear: 13.2,
+          },
+          {
+            month: "2024-08-01",
+            orders: 21300,
+            conversion: 2.9,
+            aov: 61.2,
+            returns: 9.6,
+            outerwear: 13.5,
+          },
+          {
+            month: "2024-09-01",
+            orders: 22200,
+            conversion: 2.97,
+            aov: 60.8,
+            returns: 10.5,
+            outerwear: 16.1,
+          },
+          {
+            month: "2024-10-01",
+            orders: 24900,
+            conversion: 3.1,
+            aov: 61,
+            returns: 11.4,
+            outerwear: 17.8,
+          },
         ],
         x: "month",
         compare: "previous",
         metrics: [
-          { y: "orders", label: "Orders", format: "compact", deltaLabel: "vs September" },
           {
+            variant: "area",
+            y: "orders",
+            label: "Orders",
+            format: "compact",
+            deltaLabel: "vs September",
+          },
+          {
+            variant: "area",
             y: "conversion",
             label: "Conversion rate",
             format: "{value}%",
@@ -36,12 +128,14 @@ export function ScorecardDemo() {
             deltaLabel: "vs September",
           },
           {
+            variant: "area",
             y: "aov",
             label: "Average order value",
             format: "currency:EUR",
             deltaLabel: "vs September",
           },
           {
+            variant: "area",
             y: "returns",
             label: "Return rate",
             format: "{value}%",
@@ -71,25 +165,110 @@ export function ScorecardDemo() {
       trends={[
         <LineChart
           data={[
-            { month: "2023-11-01", orders: 18200, conversion: 2.61, aov: 64.1, returns: 8.1 },
-            { month: "2023-12-01", orders: 26900, conversion: 3.02, aov: 66.8, returns: 8.4 },
-            { month: "2024-01-01", orders: 17100, conversion: 2.55, aov: 63, returns: 9 },
-            { month: "2024-02-01", orders: 16400, conversion: 2.58, aov: 62.4, returns: 8.2 },
-            { month: "2024-03-01", orders: 17900, conversion: 2.66, aov: 62.9, returns: 8 },
-            { month: "2024-04-01", orders: 18800, conversion: 2.71, aov: 62.2, returns: 7.9 },
-            { month: "2024-05-01", orders: 19600, conversion: 2.74, aov: 61.8, returns: 8.3 },
-            { month: "2024-06-01", orders: 19900, conversion: 2.78, aov: 61.5, returns: 8.1 },
-            { month: "2024-07-01", orders: 20400, conversion: 2.83, aov: 61.9, returns: 8.4 },
-            { month: "2024-08-01", orders: 21300, conversion: 2.9, aov: 61.2, returns: 9.6 },
-            { month: "2024-09-01", orders: 22200, conversion: 2.97, aov: 60.8, returns: 10.5 },
-            { month: "2024-10-01", orders: 24900, conversion: 3.1, aov: 61, returns: 11.4 },
+            {
+              month: "2023-11-01",
+              orders: 18200,
+              conversion: 2.61,
+              aov: 64.1,
+              returns: 8.1,
+              outerwear: 13,
+            },
+            {
+              month: "2023-12-01",
+              orders: 26900,
+              conversion: 3.02,
+              aov: 66.8,
+              returns: 8.4,
+              outerwear: 13.2,
+            },
+            {
+              month: "2024-01-01",
+              orders: 17100,
+              conversion: 2.55,
+              aov: 63,
+              returns: 9,
+              outerwear: 13.6,
+            },
+            {
+              month: "2024-02-01",
+              orders: 16400,
+              conversion: 2.58,
+              aov: 62.4,
+              returns: 8.2,
+              outerwear: 13.1,
+            },
+            {
+              month: "2024-03-01",
+              orders: 17900,
+              conversion: 2.66,
+              aov: 62.9,
+              returns: 8,
+              outerwear: 12.9,
+            },
+            {
+              month: "2024-04-01",
+              orders: 18800,
+              conversion: 2.71,
+              aov: 62.2,
+              returns: 7.9,
+              outerwear: 13.3,
+            },
+            {
+              month: "2024-05-01",
+              orders: 19600,
+              conversion: 2.74,
+              aov: 61.8,
+              returns: 8.3,
+              outerwear: 13,
+            },
+            {
+              month: "2024-06-01",
+              orders: 19900,
+              conversion: 2.78,
+              aov: 61.5,
+              returns: 8.1,
+              outerwear: 13.4,
+            },
+            {
+              month: "2024-07-01",
+              orders: 20400,
+              conversion: 2.83,
+              aov: 61.9,
+              returns: 8.4,
+              outerwear: 13.2,
+            },
+            {
+              month: "2024-08-01",
+              orders: 21300,
+              conversion: 2.9,
+              aov: 61.2,
+              returns: 9.6,
+              outerwear: 13.5,
+            },
+            {
+              month: "2024-09-01",
+              orders: 22200,
+              conversion: 2.97,
+              aov: 60.8,
+              returns: 10.5,
+              outerwear: 16.1,
+            },
+            {
+              month: "2024-10-01",
+              orders: 24900,
+              conversion: 3.1,
+              aov: 61,
+              returns: 11.4,
+              outerwear: 17.8,
+            },
           ]}
           x="month"
-          y="returns"
+          y={["outerwear", "returns"]}
+          names={{ outerwear: "Outerwear", returns: "All orders" }}
           format="{value}%"
           zero
           title="The return rate rose from 8.4% in July to 11.4% in October"
-          subtitle="Share of orders returned, by month of order"
+          subtitle="Share of orders returned by month of order, all orders and outerwear"
           annotations={[{ type: "line", axis: "x", value: "2024-08-01", label: "Free returns" }]}
         />,
         <BarChart

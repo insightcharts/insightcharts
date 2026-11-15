@@ -44,6 +44,7 @@ const data = [
 ];
 
 <ShapeFill
+  theme="blueprint"
   data={data}
   name="reservoir"
   value="level"
@@ -62,6 +63,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 
 ```json
 {
+  "theme": "blueprint",
   "type": "shape-fill",
   "data": [
     { "reservoir": "Carrow", "level": 63 },
@@ -113,7 +115,8 @@ Every chart also accepts these (shared by all charts; also at https://insightcha
 | `select` | `boolean \| string` | Make marks clickable to filter. Inside `<InsightData>` the selection filters every other chart. Pass a field name, or `true` to use the chart's category field. |
 | `onSelect` | `(values: string[], field: string) => void` | Called with the selected values whenever the selection changes. |
 | `option` | `EChartsOption \| ((option: EChartsOption, ctx: BuildContext) => EChartsOption)` | Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers. |
-| `theme` | `ThemeInput` | A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme. |
+| `theme` | `ThemeInput` | A built-in theme name (`"editorial"`, `"ledger"`, `"noir"`...), or a theme object. A named theme paints its own background behind the chart. |
+| `frame` | `boolean` | Paint the theme's background behind the chart. Default: on for a named theme with its own surface. |
 | `mode` | `ModeInput` | `"auto"` (default) follows the page, `"system"` follows the OS, or force `"light"` / `"dark"`. |
 | `renderer` | `RendererInput` | `"auto"` (default) uses SVG for light charts and canvas for heavy ones. |
 | `animate` | `boolean` | Set false to disable animation for this chart. Reduced-motion preferences are always respected. |
@@ -163,6 +166,7 @@ import { ShapeFill } from "insightcharts";
 const data = [{ what: "of the battery fleet was charged at 6am", share: 0.72 }];
 
 <ShapeFill
+  theme="ocean"
   data={data}
   name="what"
   value="share"
@@ -189,6 +193,7 @@ const data = [
 ];
 
 <ShapeFill
+  theme="dusk"
   data={data}
   name="district"
   value="cover"
@@ -218,6 +223,7 @@ const data = [
 ];
 
 <ShapeFill
+  theme="poster"
   data={data}
   name="item"
   value="ready"

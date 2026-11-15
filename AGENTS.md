@@ -87,6 +87,7 @@ Already registered in core, do not re-`use`: both renderers, Grid, Tooltip, Data
 | `ctx.selected(value)` | False when a click selection is active and excludes this value. Fade those marks (`alpha(color, 0.25)`). |
 | `ctx.fmt` / `ctx.formatter(spec)` | Value formatter from the `format` prop / from any spec. |
 | `ctx.width height compact mode animate locale` | `compact` is true under 480px: simplify. |
+| `ctx.onDark` | True when the surface is dark. Use this rather than `mode` for overlay strengths and fades: a poster theme can paint a dark ground in light mode. |
 
 Helpers (import from `../core/...`): `shapeSeries` (wide/long rows to aligned series; use it for every x/y/series chart), `categoryAxis valueAxis timeAxis hiddenAxis tooltipHtml labelStyle morph escapeHtml` (parts), `alpha mix ramp inkOn luminance` (color), `distinct extent groupRows toNumber niceStep` (data/transform), `describeExtremes` (shape), `formatDate isTemporal` (format), `measureText truncateText wrapText dodge` (layout: measure labels instead of estimating from character counts; `dodge` spreads converging end labels).
 
@@ -144,6 +145,16 @@ No component may have a prop named `type`: in a JSON spec, `type` is the compone
 Use `useContainerWidth()` from `../core/use-container-width` for width-driven layout.
 
 Slots that take content accept `Slot` (`ReactNode | InsightSpec`) and render through `renderSlot(slot)`, so the component works from JSX and from JSON. Layouts use CSS grid/flex with `minWidth: 0` on children and container-width-driven breakpoints (measure with `ResizeObserver`; do not use viewport media queries, components live inside arbitrary columns).
+
+## Themes and colour in examples
+
+The examples are the showcase, and they should show range. A page of forty charts in the same blue reads as one chart forty times.
+
+- **Every component accepts a theme by name.** `theme="ledger"` (or any name in `themes` from `insightcharts/themes`: `insight`, `shadcn`, `editorial`, `ledger`, `mono`, `earth`, `science`, `poster`, and the poster themes `noir`, `magenta`, `dusk`, `ocean`, `forest`, `blueprint`, `sunrise`, `paper`). A named theme with its own surface paints that surface behind the component (padding and rounded corners included); `frame={false}` turns that off. Charts get this from `defineChart`. HTML components must apply `frameStyle(props.theme, mode, props.frame)` from `../core/provider` to their root element, after the chrome variables.
+- **Vary the theme across a component's examples**: the main `meta.example` and each entry of `examples` should not all look alike. Across a level, spread the themes so neighbouring components on an index page differ. Leave some examples on the default theme, which follows the host page; that is how most people will first use the library.
+- **Vary colour within a theme too**: `highlight` different entities, use multi-series examples so the categorical palette shows, use sequential and diverging ramps where the data has magnitude or polarity, and override single tokens with an object (`theme={{ accent: "#b4237a" }}`) to show that it is possible.
+- **Colour still has a job.** Variety comes from choosing different themes, subjects and forms, never from decorating marks or assigning colours that carry no meaning. Every rule in "Rules that make it look and behave like InsightCharts" still applies.
+- A theme name in an example must be spelt exactly; an unknown name falls back to the surrounding theme without an error.
 
 ## Infographics: the poster style
 

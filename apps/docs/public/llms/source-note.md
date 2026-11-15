@@ -38,6 +38,7 @@ The file lands at `components/insightcharts/atoms/source-note.tsx`. `@insightcha
 import { SourceNote } from "insightcharts";
 
 <SourceNote
+  theme="earth"
   sources={[
     { name: "Ember, European Electricity Review 2025", url: "https://ember-energy.org" },
     { name: "ENTSO-E Transparency Platform", url: "https://transparency.entsoe.eu" },
@@ -56,6 +57,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 ```json
 {
   "type": "source-note",
+  "theme": "earth",
   "sources": [
     { "name": "Ember, European Electricity Review 2025", "url": "https://ember-energy.org" },
     { "name": "ENTSO-E Transparency Platform", "url": "https://transparency.entsoe.eu" }
@@ -79,6 +81,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `layout` | `"list" \| "inline"` | `"list"` | Labelled list, or one running paragraph. |
 | `rule` | `boolean` | `true` | Hairline above the note. |
 | `children` | `ReactNode` |  | Extra content after the rows. |
+| `frame` | `boolean` |  | Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off. |
 
 ## Composition
 
@@ -108,6 +111,7 @@ import { SourceNote } from "insightcharts";
 import { SourceNote } from "insightcharts";
 
 <SourceNote
+  theme="noir"
   rule={false}
   sources="World Bank, World Development Indicators"
   note="Illustrative data for the gallery."

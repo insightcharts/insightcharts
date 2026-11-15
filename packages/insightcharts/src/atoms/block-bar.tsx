@@ -201,6 +201,7 @@ export const BlockBar = defineChart<BlockBarProps>({
   ],
   example: {
     type: "block-bar",
+    theme: "noir",
     data: [
       { year: "2020", tickets: 18400, seats: "41% of seats" },
       { year: "2021", tickets: 22900, seats: "49% of seats" },
@@ -325,6 +326,7 @@ export const BlockBar = defineChart<BlockBarProps>({
 
 export const examples = {
   "Paired series": {
+    theme: "magenta",
     data: [
       { line: "Coast line", weekday: 41200, weekend: 26800 },
       { line: "Valley line", weekday: 33500, weekend: 12900 },
@@ -359,6 +361,7 @@ export const examples = {
     note: "Rounded, invented for illustration",
   },
   "Stress: twelve bars, long labels, uneven values": {
+    theme: "sunrise",
     data: [
       { port: "Greater Northern Container Terminal", teu: 9400, d: "31% of total" },
       { port: "Southport", teu: 6100, d: "20%" },

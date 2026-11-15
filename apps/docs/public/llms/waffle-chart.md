@@ -38,6 +38,7 @@ The file lands at `components/insightcharts/atoms/waffle-chart.tsx`. `@insightch
 import { WaffleChart } from "insightcharts";
 
 <WaffleChart
+  theme="poster"
   data={[{ group: "Have never been online", share: 33 }]}
   name="group"
   value="share"
@@ -56,6 +57,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 
 ```json
 {
+  "theme": "poster",
   "type": "waffle-chart",
   "data": [{ "group": "Have never been online", "share": 33 }],
   "name": "group",
@@ -103,7 +105,8 @@ Every chart also accepts these (shared by all charts; also at https://insightcha
 | `select` | `boolean \| string` | Make marks clickable to filter. Inside `<InsightData>` the selection filters every other chart. Pass a field name, or `true` to use the chart's category field. |
 | `onSelect` | `(values: string[], field: string) => void` | Called with the selected values whenever the selection changes. |
 | `option` | `EChartsOption \| ((option: EChartsOption, ctx: BuildContext) => EChartsOption)` | Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers. |
-| `theme` | `ThemeInput` | A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme. |
+| `theme` | `ThemeInput` | A built-in theme name (`"editorial"`, `"ledger"`, `"noir"`...), or a theme object. A named theme paints its own background behind the chart. |
+| `frame` | `boolean` | Paint the theme's background behind the chart. Default: on for a named theme with its own surface. |
 | `mode` | `ModeInput` | `"auto"` (default) follows the page, `"system"` follows the OS, or force `"light"` / `"dark"`. |
 | `renderer` | `RendererInput` | `"auto"` (default) uses SVG for light charts and canvas for heavy ones. |
 | `animate` | `boolean` | Set false to disable animation for this chart. Reduced-motion preferences are always respected. |
@@ -121,7 +124,7 @@ Every chart also accepts these (shared by all charts; also at https://insightcha
 ## Composition
 
 - Composes: nothing (it is a primitive)
-- Used by: [poster](https://insightcharts.dev/llms/poster.md), [proportion-statement](https://insightcharts.dev/llms/proportion-statement.md), [small-multiple-grid](https://insightcharts.dev/llms/small-multiple-grid.md), [social-card](https://insightcharts.dev/llms/social-card.md)
+- Used by: [hero-figure](https://insightcharts.dev/llms/hero-figure.md), [poster](https://insightcharts.dev/llms/poster.md), [proportion-statement](https://insightcharts.dev/llms/proportion-statement.md), [small-multiple-grid](https://insightcharts.dev/llms/small-multiple-grid.md), [comparison-brief](https://insightcharts.dev/llms/comparison-brief.md), [social-card](https://insightcharts.dev/llms/social-card.md), [story-deck](https://insightcharts.dev/llms/story-deck.md), [timeline-story](https://insightcharts.dev/llms/timeline-story.md), [visual-essay](https://insightcharts.dev/llms/visual-essay.md)
 
 ## More examples
 
@@ -168,6 +171,7 @@ const data = [
 ];
 
 <WaffleChart
+  theme="ocean"
   data={data}
   name="source"
   value="twh"
@@ -194,6 +198,7 @@ const data = [
 ];
 
 <WaffleChart
+  theme="earth"
   data={data}
   name="answer"
   value="n"

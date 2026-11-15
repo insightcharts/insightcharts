@@ -136,6 +136,7 @@ export const TimelineChart = defineChart<TimelineChartProps>({
     { name: "precision", type: '"year" | "month" | "day"', description: "Date precision in tooltips. Default: chosen from the span of the data." },
   ],
   example: {
+    theme: "editorial",
     type: "timeline-chart",
     data: [
       { mission: "Mercury", programme: "Crewed programmes", from: "1958-10", to: "1963-05" },

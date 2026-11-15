@@ -8,8 +8,12 @@ import SelectLocal from "./select-local";
 import Crossfilter from "./crossfilter";
 import Export from "./export";
 import JsonLive from "./json-live";
-import ScrollStory from "./scroll-story";
+import StoryBars from "./story-bars";
+import StoryDots from "./story-dots";
+import StoryLine from "./story-line";
 import StoryModes from "./story-modes";
+import StoryRibbon from "./story-ribbon";
+import StoryTreemap from "./story-treemap";
 import ThemeSurfaces from "./theme-surfaces";
 import Theming from "./theming";
 
@@ -24,8 +28,12 @@ export const demos: Record<string, ComponentType<any>> = {
   crossfilter: Crossfilter,
   export: Export,
   "json-live": JsonLive,
-  "scroll-story": ScrollStory,
+  "story-bars": StoryBars,
+  "story-dots": StoryDots,
+  "story-line": StoryLine,
   "story-modes": StoryModes,
+  "story-ribbon": StoryRibbon,
+  "story-treemap": StoryTreemap,
   "theme-surfaces": ThemeSurfaces,
   theming: Theming,
 };

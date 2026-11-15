@@ -106,6 +106,7 @@ export const FanFlow = defineChart<FanFlowProps>({
   ],
   example: {
     type: "fan-flow",
+    theme: "forest",
     data: [
       { use: "Shower", litres: 128 },
       { use: "Toilet", litres: 97 },

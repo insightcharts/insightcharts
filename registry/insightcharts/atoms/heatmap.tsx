@@ -51,6 +51,7 @@ export const Heatmap = defineChart<HeatmapProps>({
   ],
   example: {
     type: "heatmap",
+    theme: "dusk",
     data: [
       ["Mon", [12, 48, 61, 55, 38, 14]],
       ["Tue", [11, 52, 66, 58, 41, 15]],

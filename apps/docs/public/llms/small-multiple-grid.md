@@ -71,6 +71,7 @@ const data = [
 ];
 
 <SmallMultipleGrid
+  theme="poster"
   title="65% of Dutch workers aged 25 to 34 worked from home usually or sometimes in 2023"
   subtitle="Share of employed people working from home usually or sometimes, by age group, six EU countries, 2023. All panels run from 0 to 70%"
   data={data}
@@ -101,6 +102,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 ```json
 {
   "type": "small-multiple-grid",
+  "theme": "poster",
   "title": "65% of Dutch workers aged 25 to 34 worked from home usually or sometimes in 2023",
   "subtitle": "Share of employed people working from home usually or sometimes, by age group, six EU countries, 2023. All panels run from 0 to 70%",
   "data": [
@@ -177,12 +179,13 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `subtitle` | `string` |  | Measure, population, period, and whether the panels share a scale. |
 | `source` | `string` |  | Shown under the grid as "Source: ...". |
 | `note` | `string` |  | Method note or caveat. |
-| `theme` | `ThemeInput` |  | Theme override, passed on to every panel. |
+| `theme` | `ThemeInput` |  | A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to every panel. A named theme with its own surface paints that surface behind the component. |
+| `frame` | `boolean` |  | Paint the theme's surface behind the component. Default: on for a named theme with its own surface. |
 | `mode` | `"auto" \| "system" \| "light" \| "dark"` | `"auto"` | Colour mode. |
 
 ## Composition
 
-- Composes: [legend-key](https://insightcharts.dev/llms/legend-key.md), [bar-chart](https://insightcharts.dev/llms/bar-chart.md), [waffle-chart](https://insightcharts.dev/llms/waffle-chart.md)
+- Composes: [legend-key](https://insightcharts.dev/llms/legend-key.md), [bar-chart](https://insightcharts.dev/llms/bar-chart.md), [waffle-chart](https://insightcharts.dev/llms/waffle-chart.md), [dumbbell-chart](https://insightcharts.dev/llms/dumbbell-chart.md)
 - Used by: [visual-essay](https://insightcharts.dev/llms/visual-essay.md)
 
 ## More examples
@@ -217,7 +220,7 @@ const data = [
 />
 ```
 
-### A waffle chart in each panel
+### A waffle chart in each panel, science theme
 
 ```tsx
 import { SmallMultipleGrid, WaffleChart } from "insightcharts";
@@ -230,6 +233,7 @@ const data = [
 ];
 
 <SmallMultipleGrid
+  theme="science"
   data={data}
   facet="region"
   panelHeight={150}
@@ -238,6 +242,46 @@ const data = [
   subtitle="Share of the population using the internet, by region, 2023"
   source="ITU Facts and Figures 2023"
   note="Figures are approximate, for illustration"
+/>
+```
+
+### A dumbbell chart in each panel, forest theme
+
+```tsx
+import { DumbbellChart, SmallMultipleGrid } from "insightcharts";
+
+const data = [
+  { reserve: "Alder Marsh", species: "Osprey", y2014: 4, y2024: 11 },
+  { reserve: "Alder Marsh", species: "Kingfisher", y2014: 18, y2024: 22 },
+  { reserve: "Alder Marsh", species: "Lapwing", y2014: 41, y2024: 27 },
+  { reserve: "Birch Fen", species: "Osprey", y2014: 2, y2024: 5 },
+  { reserve: "Birch Fen", species: "Kingfisher", y2014: 12, y2024: 15 },
+  { reserve: "Birch Fen", species: "Lapwing", y2014: 36, y2024: 19 },
+  { reserve: "Cedar Lake", species: "Osprey", y2014: 6, y2024: 9 },
+  { reserve: "Cedar Lake", species: "Kingfisher", y2014: 25, y2024: 24 },
+  // ... 4 more rows
+];
+
+<SmallMultipleGrid
+  theme="forest"
+  title="Osprey pairs at Alder Marsh rose from 4 to 11 between 2014 and 2024"
+  subtitle="Breeding pairs counted in four wetland reserves. The paler dot is 2014. The brighter dot is 2024. Panels are on their own scales"
+  data={data}
+  facet="reserve"
+  columns={2}
+  highlight="Osprey"
+  emphasis="Alder Marsh"
+  chart={<DumbbellChart
+    category="species"
+    from="y2014"
+    to="y2024"
+    names={{ y2014: "2014", y2024: "2024" }}
+    sort="none"
+    format="integer"
+    legend={false}
+  />}
+  source="Reserve breeding surveys"
+  note="Illustrative data for fictional reserves"
 />
 ```
 

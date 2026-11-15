@@ -10,6 +10,7 @@ const data = [
 export function StatCirclesDemo() {
   return (
     <StatCircles
+      theme="dusk"
       data={data}
       name="who"
       value="kg"

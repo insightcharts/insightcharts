@@ -67,6 +67,7 @@ export const BulletChart = defineChart<BulletChartProps>({
   ],
   example: {
     type: "bullet-chart",
+    theme: "mono",
     data: [
       { region: "North America", sales: 94, target: 80 },
       { region: "Europe", sales: 71, target: 85 },

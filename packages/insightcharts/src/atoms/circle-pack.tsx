@@ -513,6 +513,7 @@ export const CirclePack = defineChart<CirclePackProps>({
   ],
   example: {
     type: "circle-pack",
+    theme: "magenta",
     data: [
       { crop: "Maize", group: "Cereals", mt: 1160 },
       { crop: "Wheat", group: "Cereals", mt: 780 },
@@ -744,6 +745,7 @@ export const examples = {
     note: "Illustrative figures for an invented city",
   },
   "Shaded by value inside one ring": {
+    theme: "paper",
     data: budget.slice(0, 9),
     name: "service",
     value: "m",
@@ -755,6 +757,7 @@ export const examples = {
     note: "Illustrative figures for an invented city",
   },
   "Stress: 27 circles in 5 groups, long names, values from 2 to 1,280": {
+    theme: "dusk",
     data: apps,
     name: "app",
     value: "users",

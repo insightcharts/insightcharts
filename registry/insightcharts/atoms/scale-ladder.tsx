@@ -88,6 +88,7 @@ export const ScaleLadder = defineChart<ScaleLadderProps>({
     { name: "bandWidth", type: "number", description: "Width of the band in px, at most 40% of the plot width. Default 60, or 46 on narrow screens." },
   ],
   example: {
+    theme: "magenta",
     type: "scale-ladder",
     data: [
       { thing: "Fridge", c: 4 },

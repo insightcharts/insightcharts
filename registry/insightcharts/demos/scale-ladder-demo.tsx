@@ -15,6 +15,7 @@ const data = [
 export function ScaleLadderDemo() {
   return (
     <ScaleLadder
+      theme="magenta"
       data={data}
       name="thing"
       value="c"

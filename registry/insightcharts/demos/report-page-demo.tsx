@@ -5,12 +5,45 @@ import { ProgressMeter } from "@/components/insightcharts/atoms/progress-meter";
 export function ReportPageDemo() {
   return (
     <ReportPage
+      theme="paper"
       kicker="Small-group tutoring programme · Year 1 evaluation"
       title="Tutored pupils gained 2.9 more scaled-score points in maths than matched pupils"
       deck="The difference in reading was 0.5 points. 31% of tutored pupils were eligible for free school meals against a funding target of 50%."
       byline="Evaluation team"
       date="2025-02-20"
       summary="Pupils offered tutoring gained **2.9 more scaled-score points in maths** over the year than matched pupils who were not. That is about three months of additional learning. The difference in reading was 0.5 points and could be chance. Pupils who attended fewer than 12 sessions gained less than 1 point over their matches. 58% of pupils attended 12 or more. We recommend continuing the maths strand. Attendance should be the main delivery target. The way pupils are selected should change."
+      figures={{
+        variant: "tiles",
+        items: [
+          {
+            variant: "comparison",
+            value: 8.1,
+            comparison: 5.2,
+            valueLabel: "Tutored",
+            comparisonLabel: "Comparison",
+            delta: "+2.9 points",
+            format: "decimal:1",
+            label: "Mean gain in maths, scaled-score points",
+          },
+          {
+            variant: "ring",
+            value: 0.58,
+            max: 1,
+            format: "percent",
+            label: "Tutored pupils attending 12 or more sessions",
+            context: "20 sessions were offered",
+          },
+          {
+            variant: "progress",
+            value: 0.31,
+            max: 1,
+            target: 0.5,
+            targetLabel: "Funding target",
+            format: "percent",
+            label: "Tutored pupils eligible for free school meals",
+          },
+        ],
+      }}
       findings={[
         {
           title: "Tutored pupils gained 8.1 points in maths against 5.2 for comparison pupils",
@@ -23,7 +56,6 @@ export function ReportPageDemo() {
             y={["Tutored", "Comparison"]}
             orientation="horizontal"
             sort="none"
-            highlight="Tutored"
             format="decimal:1"
             subtitle="Mean gain in scaled score, autumn 2023 to summer 2024"
             source="Standardised assessments, 42 schools"

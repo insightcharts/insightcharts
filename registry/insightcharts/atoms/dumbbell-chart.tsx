@@ -69,6 +69,7 @@ export const DumbbellChart = defineChart<DumbbellChartProps>({
   ],
   example: {
     type: "dumbbell-chart",
+    theme: "science",
     data: [
       { country: "South Korea", y2000: 76.0, y2023: 83.6 },
       { country: "Turkey", y2000: 71.1, y2023: 77.3 },

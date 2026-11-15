@@ -61,7 +61,7 @@ export default async function LevelIndex({ params }: { params: Promise<{ level: 
               {INFOGRAPHICS.title} <span className="ml-1 font-normal tabular-nums text-muted-foreground">{posters.length}</span>
             </span>
             <span className="mt-0.5 block text-[13px] leading-5 text-muted-foreground">
-              {posters.length === 1 ? "1 more template draws a poster" : `${posters.length} more templates draw posters`}. They are listed on the Infographics page.
+              {posters.length === 1 ? "1 more template is an infographic poster" : `${posters.length} more templates are infographic posters`}. They are listed on the Infographics page.
             </span>
           </span>
           <ArrowRight className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" aria-hidden />
@@ -75,7 +75,7 @@ export default async function LevelIndex({ params }: { params: Promise<{ level: 
             <span className="ml-2 text-sm font-normal tabular-nums text-muted-foreground">{group.items.length}</span>
           </Heading>
           {GROUP_NOTE[info.level]?.[group.category] ? <p className="-mt-1 mb-5 max-w-[66ch] text-sm leading-6 text-muted-foreground">{GROUP_NOTE[info.level][group.category]}</p> : null}
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className={`grid gap-4 sm:grid-cols-2 ${info.level === "atom" ? "2xl:grid-cols-3" : ""}`}>
             {group.items.map((entry) => (
               <ComponentCard key={entry.name} entry={entry} />
             ))}

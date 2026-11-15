@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { useInsightStyles } from "../core/figure";
 import { withMeta } from "../core/meta";
 import { useColorMode, type ModeInput } from "../core/mode";
-import { useInsightConfig, useTheme } from "../core/provider";
+import { frameStyle, useInsightConfig, useTheme } from "../core/provider";
 import { chromeVars, type ThemeInput } from "../core/theme";
 
 export type CalloutTone = "neutral" | "positive" | "negative" | "accent";
@@ -21,7 +21,10 @@ export interface CalloutProps {
   label?: string;
   /** `"soft"` is a tinted box, `"outline"` a bordered one, `"plain"` has no box (for beside a chart). */
   variant?: "soft" | "outline" | "plain";
+  /** A built-in theme name or a theme object. A named theme paints its own background behind the callout. */
   theme?: ThemeInput;
+  /** Paint the named theme's background behind the callout. Default: on for a named theme with its own surface. */
+  frame?: boolean;
   mode?: ModeInput;
   className?: string;
   style?: CSSProperties;
@@ -72,17 +75,21 @@ function CalloutImpl({ lead, text, children, tone = "neutral", label, variant = 
   const theme = useTheme(rest.theme);
   const { mode } = useColorMode(ref, rest.mode ?? config.mode);
   const color = TONE[tone].color;
+  const frame = frameStyle(rest.theme, mode, rest.frame);
+  // On a painted ground the gridline colour sits too close to the surface to draw a box with.
+  const framed = frame !== undefined;
   const box: CSSProperties =
     variant === "plain"
       ? {}
       : {
           padding: "14px 16px",
           borderRadius: 10,
-          border: `1px solid ${variant === "soft" ? `color-mix(in srgb, ${color} 22%, var(--_ic-grid))` : "var(--_ic-grid)"}`,
+          border: `1px solid ${variant === "soft" ? `color-mix(in srgb, ${color} 22%, var(--_ic-grid))` : framed ? "var(--_ic-axis)" : "var(--_ic-grid)"}`,
           background: variant === "soft" ? `color-mix(in srgb, ${color} ${tone === "neutral" ? 5 : 7}%, transparent)` : undefined,
         };
-  return (
-    <div ref={ref} role="note" data-slot="ic-callout" data-tone={tone} data-ic-mode={mode} className={className} style={{ ...(chromeVars(theme[mode]) as CSSProperties), fontFamily: "var(--_ic-font)", color: "var(--_ic-ink)", display: "flex", alignItems: "flex-start", gap: 12, minWidth: 0, ...box, ...style }}>
+  const row: CSSProperties = { display: "flex", alignItems: "flex-start", gap: 12, minWidth: 0, ...box };
+  const content = (
+    <>
       <Glyph tone={tone} />
       <div data-slot="ic-callout-body" style={{ minWidth: 0, flex: 1 }}>
         {label ? (
@@ -106,6 +113,19 @@ function CalloutImpl({ lead, text, children, tone = "neutral", label, variant = 
           </div>
         ) : null}
       </div>
+    
+    </>
+  );
+  // The callout already draws a box of its own, so a theme's ground goes on a wrapper around it.
+  return (
+    <div ref={ref} role="note" data-slot="ic-callout" data-tone={tone} data-ic-mode={mode} className={className} style={{ ...(chromeVars(theme[mode]) as CSSProperties), fontFamily: "var(--_ic-font)", color: "var(--_ic-ink)", minWidth: 0, ...(frame ?? row), ...style }}>
+      {frame ? (
+        <div data-slot="ic-callout-box" style={row}>
+          {content}
+        </div>
+      ) : (
+        content
+      )}
     </div>
   );
 }
@@ -126,6 +146,7 @@ export const Callout = withMeta(CalloutImpl, {
     { name: "tone", type: '"neutral" | "positive" | "negative" | "accent"', default: '"neutral"', description: "Sets the icon shape and the tint together." },
     { name: "label", type: "string", description: 'Small label above the lead, e.g. "Summary".' },
     { name: "variant", type: '"soft" | "outline" | "plain"', default: '"soft"', description: "Tinted box, bordered box, or no box." },
+    { name: "frame", type: "boolean", description: "Paint a named theme's background behind the callout, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off." },
   ],
   example: {
     type: "callout",
@@ -137,7 +158,9 @@ export const Callout = withMeta(CalloutImpl, {
 });
 
 export const examples = {
-  Positive: { tone: "positive", lead: "Monthly churn fell from 4.2% to 2.1% between January and June", text: "It has stayed at 2.1% for two quarters since." },
-  "Negative caveat, outline": { tone: "negative", variant: "outline", label: "Caveat", lead: "2020 figures are not comparable", text: "The survey moved online during lockdown. Response rates among over-75s fell by a third. Treat 2020 as a break in the series." },
-  "Neutral, plain": { tone: "neutral", variant: "plain", text: "Figures are provisional until the statistical office publishes its annual revision in September." },
+  Positive: { theme: "editorial", tone: "positive", lead: "Monthly churn fell from 4.2% to 2.1% between January and June", text: "It has stayed at 2.1% for two quarters since." },
+  "Negative caveat, outline": { theme: "ledger", tone: "negative", variant: "outline", label: "Caveat", lead: "2020 figures are not comparable", text: "The survey moved online during lockdown. Response rates among over-75s fell by a third. Treat 2020 as a break in the series." },
+  "Neutral, plain": { theme: "blueprint", tone: "neutral", variant: "plain", text: "Figures are provisional until the statistical office publishes its annual revision in September." },
+  "One token overridden": { theme: { accent: "#b4237a" }, tone: "accent", label: "Key point", lead: "Night buses carried 18% of all weekend journeys in 2024", text: "The share was 11% in 2019. Illustrative figures." },
+  "Accent on a painted ground": { theme: "forest", tone: "accent", variant: "outline", lead: "Tree cover in the city rose from 14% to 19% between 2010 and 2024", text: "The target for 2030 is 25%. Illustrative figures." },
 };

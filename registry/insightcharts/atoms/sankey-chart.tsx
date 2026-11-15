@@ -56,6 +56,7 @@ export const SankeyChart = defineChart<SankeyChartProps>({
     { name: "names", type: "Record<string, string>", description: "Display names for node keys." },
   ],
   example: {
+    theme: "noir",
     type: "sankey-chart",
     data: [
       { from: "Coal", to: "Electricity", twh: 290 },
@@ -130,10 +131,12 @@ export const SankeyChart = defineChart<SankeyChartProps>({
     const display = (k: string) => p.names?.[k] ?? k;
 
     // Identity colour for every node when there are few; otherwise only the origins carry colour and the rest stay neutral.
-    const few = keys.length <= MAX_COLOURS;
+    // A theme with a short palette (poster themes have four or five colours) lowers the limit, so no two nodes share a colour.
+    const maxColours = Math.min(MAX_COLOURS, t.categorical.length);
+    const few = keys.length <= maxColours;
     const baseOf = (k: string) => {
       const i = few ? keys.indexOf(k) : roots.indexOf(k);
-      if (i === -1 || i >= MAX_COLOURS) return ctx.dimmed(k) ? t.context : ctx.color(k) === t.accent ? t.context : ctx.color(k);
+      if (i === -1 || i >= maxColours) return ctx.dimmed(k) ? t.context : ctx.color(k) === t.accent ? t.context : ctx.color(k);
       return ctx.color(k, i);
     };
     // With a selection, the chosen origins and the nodes they feed directly stay saturated.

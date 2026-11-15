@@ -4,6 +4,7 @@ import { BarChart } from "@/components/insightcharts/atoms/bar-chart";
 export function SocialCardDemo() {
   return (
     <SocialCard
+      theme="magenta"
       aspect="1:1"
       kicker="Climate"
       title="The world was 1.6°C warmer in 2024 than in 1850 to 1900"

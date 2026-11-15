@@ -6,6 +6,7 @@ import { makeFormatter, type Formatter } from "../core/format";
 import { dodge, measureText, truncateText, wrapText } from "../core/layout";
 import { morph, tooltipHtml } from "../core/parts";
 import { toNumber } from "../data/transform";
+import { _posterPalette } from "./_poster-colors";
 
 export interface ProportionalAreaProps {
   /** Category field: one shape per row. */
@@ -428,6 +429,7 @@ export const ProportionalArea = defineChart<ProportionalAreaProps>({
   ],
   example: {
     type: "proportional-area",
+    theme: "blueprint",
     data: [
       { lake: "Superior", area: 82100 },
       { lake: "Victoria", area: 68900 },
@@ -453,8 +455,10 @@ export const ProportionalArea = defineChart<ProportionalAreaProps>({
     const nested = p.layout === "nested";
     // A layout taller than an explicit `height`: scale the whole drawing down rather than clip it.
     const k = L.height > ctx.height + 1 ? ctx.height / L.height : 1;
+    // A poster palette may hold only 4 colours: past its size take steps derived from the theme rather than repeat one.
+    const derived = !ctx.highlight.length && items.length > t.categorical.length ? _posterPalette(t, items.length) : null;
     const colours = items.map((it, i) => {
-      const base = ctx.color(it.key, i);
+      const base = derived ? derived[i] : ctx.color(it.key, i);
       // Faded by mixing towards the surface, not by transparency: nested shapes sit on each other, and the printed label needs a readable ink.
       return ctx.selected(it.key) ? base : mix(t.surface, base, 0.3);
     });
@@ -593,6 +597,7 @@ export const examples = {
     note: "Invented figures",
   },
   "Circles in a row": {
+    theme: "sunrise",
     data: [
       { reactor: "Harlow A", output: 1650 },
       { reactor: "Brant Point", output: 1100 },
@@ -610,6 +615,7 @@ export const examples = {
     note: "Invented figures",
   },
   "Nested circles": {
+    theme: "noir",
     data: [
       { body: "Whole catchment", area: 5200 },
       { body: "Farmland", area: 2900 },
@@ -627,6 +633,7 @@ export const examples = {
     note: "Invented figures",
   },
   "Stress: eight packed circles, very uneven, long names": {
+    theme: "forest",
     data: [
       { fund: "State pension and retirement benefits", spend: 124 },
       { fund: "Health services", spend: 88 },
@@ -649,6 +656,7 @@ export const examples = {
     note: "Invented figures for a fictional country",
   },
   "Packed squares": {
+    theme: "earth",
     data: [
       { fund: "Pensions", spend: 124 },
       { fund: "Health", spend: 88 },

@@ -53,6 +53,7 @@ const data = [
 ];
 
 <OrbitChart
+  theme="noir"
   data={data}
   name="supplier"
   ring="tier"
@@ -75,6 +76,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 ```json
 {
   "type": "orbit-chart",
+  "theme": "noir",
   "data": [
     { "supplier": "Halden Cells", "tier": "Tier 1", "spend": 84 },
     { "supplier": "Orrin Motors", "tier": "Tier 1", "spend": 61 },
@@ -142,7 +144,8 @@ Every chart also accepts these (shared by all charts; also at https://insightcha
 | `select` | `boolean \| string` | Make marks clickable to filter. Inside `<InsightData>` the selection filters every other chart. Pass a field name, or `true` to use the chart's category field. |
 | `onSelect` | `(values: string[], field: string) => void` | Called with the selected values whenever the selection changes. |
 | `option` | `EChartsOption \| ((option: EChartsOption, ctx: BuildContext) => EChartsOption)` | Deep-merged over the generated ECharts option, or a function that receives and returns it. Use it for ECharts settings no prop covers. |
-| `theme` | `ThemeInput` | A full theme, `{ light, dark }` partial tokens, or flat tokens applied to both modes. Merged over the surrounding `InsightProvider` theme. |
+| `theme` | `ThemeInput` | A built-in theme name (`"editorial"`, `"ledger"`, `"noir"`...), or a theme object. A named theme paints its own background behind the chart. |
+| `frame` | `boolean` | Paint the theme's background behind the chart. Default: on for a named theme with its own surface. |
 | `mode` | `ModeInput` | `"auto"` (default) follows the page, `"system"` follows the OS, or force `"light"` / `"dark"`. |
 | `renderer` | `RendererInput` | `"auto"` (default) uses SVG for light charts and canvas for heavy ones. |
 | `animate` | `boolean` | Set false to disable animation for this chart. Reduced-motion preferences are always respected. |
@@ -199,6 +202,39 @@ const data = [
 />
 ```
 
+### Sized dots, a colour per ring
+
+```tsx
+import { OrbitChart } from "insightcharts";
+
+const data = [
+  { stop: "Canal Street", band: "Under 10 min", riders: 4200 },
+  { stop: "Market Hall", band: "Under 10 min", riders: 3100 },
+  { stop: "Old Bridge", band: "Under 10 min", riders: 2600 },
+  { stop: "Riverside Park", band: "10 to 20 min", riders: 1900 },
+  { stop: "University", band: "10 to 20 min", riders: 3800 },
+  { stop: "Hospital", band: "10 to 20 min", riders: 2400 },
+  { stop: "Stadium", band: "10 to 20 min", riders: 1200 },
+  { stop: "Airport", band: "Over 20 min", riders: 2900 },
+  // ... 2 more rows
+];
+
+<OrbitChart
+  theme="sunrise"
+  data={data}
+  name="stop"
+  ring="band"
+  value="riders"
+  format="integer"
+  ringLabel="Tram time from Central Station"
+  sizeLabel="Riders boarding per weekday"
+  centerLabel="Central"
+  title="Canal Street had 4,200 tram boardings per weekday"
+  subtitle="Weekday boardings at 10 tram stops by travel time from Central Station"
+  note="Illustrative figures for an invented city"
+/>
+```
+
 ### Stress: 5 rings, 34 items, long names
 
 ```tsx
@@ -217,6 +253,7 @@ const data = [
 ];
 
 <OrbitChart
+  theme="dusk"
   data={data}
   name="body"
   ring="level"

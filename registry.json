@@ -1116,6 +1116,11 @@
           "path": "registry/insightcharts/atoms/proportional-area.tsx",
           "type": "registry:component",
           "target": "components/insightcharts/atoms/proportional-area.tsx"
+        },
+        {
+          "path": "registry/insightcharts/atoms/_poster-colors.ts",
+          "type": "registry:component",
+          "target": "components/insightcharts/atoms/_poster-colors.ts"
         }
       ],
       "docs": "Proportional area: https://insightcharts.dev/llms/proportional-area.md",
@@ -1564,7 +1569,7 @@
       "name": "stat-tile",
       "type": "registry:component",
       "title": "Stat tile",
-      "description": "A compact, bordered KPI tile: label, value, change against a baseline and an optional trend graphic.",
+      "description": "A compact KPI tile: label, value, change against a baseline and an optional graphic. Twenty variants display the same data as a card, a trend, progress toward a target, a comparison, a breakdown, a rank or a count of icons.",
       "dependencies": [
         "insightcharts",
         "echarts"
@@ -1802,14 +1807,15 @@
       "name": "before-after",
       "type": "registry:component",
       "title": "Before and after",
-      "description": "Two states of one measure side by side, as figures or small charts, with the change between them stated in the middle.",
+      "description": "Two states of one measure side by side, as figures, stat tiles of any variant or small charts, with the change between them stated in the middle.",
       "dependencies": [
         "insightcharts",
         "echarts"
       ],
       "registryDependencies": [
         "@insightcharts/big-number",
-        "@insightcharts/delta"
+        "@insightcharts/delta",
+        "@insightcharts/stat-tile"
       ],
       "files": [
         {
@@ -1834,6 +1840,7 @@
         "component": "BeforeAfter",
         "composes": [
           "big-number",
+          "stat-tile",
           "delta",
           "bar-chart",
           "sparkline"
@@ -1876,7 +1883,9 @@
         "composes": [
           "callout",
           "line-chart",
-          "bar-chart"
+          "bar-chart",
+          "dumbbell-chart",
+          "slope-chart"
         ]
       }
     },
@@ -2027,7 +2036,9 @@
           "headline",
           "source-note",
           "line-chart",
-          "big-number"
+          "big-number",
+          "dumbbell-chart",
+          "waffle-chart"
         ]
       }
     },
@@ -2035,12 +2046,13 @@
       "name": "kpi-grid",
       "type": "registry:component",
       "title": "KPI grid",
-      "description": "A responsive grid of trend cards drawn from one dataset: each metric shows its latest value, its change and a sparkline.",
+      "description": "A responsive grid of trend cards drawn from one dataset: each metric shows its latest value, its change and a graphic, in one `stat-tile` variant or a deliberate mix of them.",
       "dependencies": [
         "insightcharts",
         "echarts"
       ],
       "registryDependencies": [
+        "@insightcharts/stat-tile",
         "@insightcharts/trend-card"
       ],
       "files": [
@@ -2065,7 +2077,8 @@
         "category": "layout",
         "component": "KpiGrid",
         "composes": [
-          "trend-card"
+          "trend-card",
+          "stat-tile"
         ]
       }
     },
@@ -2120,6 +2133,8 @@
       ],
       "registryDependencies": [
         "@insightcharts/big-number",
+        "@insightcharts/progress-meter",
+        "@insightcharts/stat-tile",
         "@insightcharts/segmented-bar"
       ],
       "files": [
@@ -2145,7 +2160,9 @@
         "component": "MetricBreakdown",
         "composes": [
           "big-number",
-          "segmented-bar"
+          "segmented-bar",
+          "progress-meter",
+          "stat-tile"
         ]
       }
     },
@@ -2263,7 +2280,8 @@
         "composes": [
           "pull-quote",
           "big-number",
-          "sparkline"
+          "sparkline",
+          "progress-meter"
         ]
       }
     },
@@ -2340,7 +2358,8 @@
         "component": "ScrollyChart",
         "composes": [
           "prose",
-          "bar-chart"
+          "bar-chart",
+          "line-chart"
         ]
       }
     },
@@ -2385,6 +2404,7 @@
           "prose",
           "line-chart",
           "bar-chart",
+          "area-chart",
           "stat-tile"
         ]
       }
@@ -2425,7 +2445,8 @@
         "composes": [
           "legend-key",
           "bar-chart",
-          "waffle-chart"
+          "waffle-chart",
+          "dumbbell-chart"
         ]
       }
     },
@@ -2433,7 +2454,7 @@
       "name": "stat-row",
       "type": "registry:component",
       "title": "Stat row",
-      "description": "Two to five key figures in one row separated by hairlines, collapsing to two columns and then one as the container narrows.",
+      "description": "Two to five key figures in one row, as open numbers separated by hairlines or as stat tiles of any variant, collapsing to two columns and then one as the container narrows.",
       "dependencies": [
         "insightcharts",
         "echarts"
@@ -2473,7 +2494,7 @@
       "name": "trend-card",
       "type": "registry:component",
       "title": "Trend card",
-      "description": "A KPI card computed from a series: the latest value, its change against a baseline in the same data, and a sparkline of the series.",
+      "description": "A KPI card computed from a series: the latest value, its change against a baseline in the same data, and a trend graphic, in any `stat-tile` variant.",
       "dependencies": [
         "insightcharts",
         "echarts"
@@ -2605,7 +2626,8 @@
           "source-note",
           "line-chart",
           "bar-chart",
-          "segmented-bar"
+          "segmented-bar",
+          "waffle-chart"
         ]
       }
     },
@@ -2704,7 +2726,10 @@
           "linked-charts",
           "data-table",
           "source-note",
-          "bar-chart"
+          "bar-chart",
+          "donut-chart",
+          "lollipop-chart",
+          "segmented-bar"
         ]
       }
     },
@@ -2758,7 +2783,10 @@
           "source-note",
           "line-chart",
           "dumbbell-chart",
-          "bar-chart"
+          "slope-chart",
+          "bar-chart",
+          "heatmap",
+          "diverging-bar-chart"
         ]
       }
     },
@@ -2815,9 +2843,13 @@
           "callout",
           "source-note",
           "bar-chart",
+          "donut-chart",
+          "pictogram-chart",
           "icon-stat",
           "line-chart",
-          "segmented-bar"
+          "segmented-bar",
+          "treemap",
+          "lollipop-chart"
         ]
       }
     },
@@ -3104,6 +3136,7 @@
       "registryDependencies": [
         "@insightcharts/headline",
         "@insightcharts/prose",
+        "@insightcharts/stat-row",
         "@insightcharts/source-note"
       ],
       "files": [
@@ -3135,10 +3168,14 @@
         "composes": [
           "headline",
           "prose",
+          "stat-row",
           "source-note",
           "bar-chart",
           "progress-meter",
-          "line-chart"
+          "line-chart",
+          "dumbbell-chart",
+          "histogram",
+          "diverging-bar-chart"
         ]
       }
     },
@@ -3235,7 +3272,8 @@
           "prose",
           "source-note",
           "line-chart",
-          "bar-chart"
+          "bar-chart",
+          "bullet-chart"
         ]
       }
     },
@@ -3281,6 +3319,7 @@
           "bar-chart",
           "big-number",
           "waffle-chart",
+          "area-chart",
           "source-note"
         ]
       }
@@ -3333,7 +3372,8 @@
           "source-note",
           "bar-chart",
           "line-chart",
-          "radial-bar-chart"
+          "radial-bar-chart",
+          "waffle-chart"
         ]
       }
     },
@@ -3435,7 +3475,9 @@
           "line-chart",
           "timeline-chart",
           "bar-chart",
-          "big-number"
+          "big-number",
+          "stat-tile",
+          "waffle-chart"
         ]
       }
     },
@@ -3498,7 +3540,10 @@
           "stat-row",
           "source-note",
           "line-chart",
-          "bar-chart"
+          "bar-chart",
+          "waffle-chart",
+          "dumbbell-chart",
+          "heatmap"
         ]
       }
     },
@@ -5032,7 +5077,8 @@
       "description": "Linked charts rendered with its example data, ready to paste into a page.",
       "registryDependencies": [
         "@insightcharts/linked-charts",
-        "@insightcharts/bar-chart"
+        "@insightcharts/bar-chart",
+        "@insightcharts/donut-chart"
       ],
       "files": [
         {
@@ -5353,7 +5399,9 @@
       "description": "Data explorer rendered with its example data, ready to paste into a page.",
       "registryDependencies": [
         "@insightcharts/data-explorer",
-        "@insightcharts/bar-chart"
+        "@insightcharts/donut-chart",
+        "@insightcharts/bar-chart",
+        "@insightcharts/lollipop-chart"
       ],
       "files": [
         {
@@ -5378,7 +5426,7 @@
         "@insightcharts/executive-brief",
         "@insightcharts/line-chart",
         "@insightcharts/dumbbell-chart",
-        "@insightcharts/bar-chart"
+        "@insightcharts/slope-chart"
       ],
       "files": [
         {
@@ -5401,6 +5449,8 @@
       "description": "Explainer rendered with its example data, ready to paste into a page.",
       "registryDependencies": [
         "@insightcharts/explainer",
+        "@insightcharts/donut-chart",
+        "@insightcharts/pictogram-chart",
         "@insightcharts/bar-chart",
         "@insightcharts/icon-stat"
       ],
@@ -5650,6 +5700,7 @@
       "description": "Story deck rendered with its example data, ready to paste into a page.",
       "registryDependencies": [
         "@insightcharts/story-deck",
+        "@insightcharts/waffle-chart",
         "@insightcharts/bar-chart",
         "@insightcharts/line-chart",
         "@insightcharts/radial-bar-chart"
@@ -5699,7 +5750,7 @@
         "@insightcharts/timeline-story",
         "@insightcharts/line-chart",
         "@insightcharts/bar-chart",
-        "@insightcharts/big-number"
+        "@insightcharts/stat-tile"
       ],
       "files": [
         {

@@ -11,6 +11,7 @@ const data = [
 export function NestedSharesDemo() {
   return (
     <NestedShares
+      theme="ocean"
       data={data}
       name="year"
       value="share"

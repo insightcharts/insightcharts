@@ -16,6 +16,7 @@ const data = [
 export function PillRankDemo() {
   return (
     <PillRank
+      theme="paper"
       data={data}
       name="river"
       value="km"

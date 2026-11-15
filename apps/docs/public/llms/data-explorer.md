@@ -35,7 +35,7 @@ The file lands at `components/insightcharts/templates/data-explorer.tsx`. `@insi
 ## Usage
 
 ```tsx
-import { BarChart, DataExplorer } from "insightcharts";
+import { BarChart, DataExplorer, DonutChart, LollipopChart } from "insightcharts";
 
 const data = [
   {
@@ -525,6 +525,7 @@ const data = [
 ];
 
 <DataExplorer
+  theme="science"
   kicker="City bike share · June"
   title="Casual riders' trips averaged 24.6 minutes in June, against 12.0 for members"
   deck="70% of casual trips were at weekends. 40% started in Riverside. The view below is filtered to casual riders."
@@ -535,6 +536,7 @@ const data = [
   }}
   data={data}
   unit="trips"
+  figuresVariant="outline-accent"
   labels={{ rider: "Rider", daypart: "Time of day", district: "District", day: "Day" }}
   initialSelections={{ "by-rider": { field: "rider", values: ["Casual"] } }}
   figures={[
@@ -556,14 +558,13 @@ const data = [
     },
   ]}
   charts={[
-    <BarChart
+    <DonutChart
       id="by-rider"
-      x="rider"
-      y="trips"
+      name="rider"
+      value="trips"
       select
-      sort="none"
-      orientation="horizontal"
       format="integer"
+      height={220}
       title="Rider"
       subtitle="Trips, thousands"
       transform={{ type: "aggregate", groupBy: "rider", measures: { trips: { op: "sum", field: "trips" } } }}
@@ -593,13 +594,12 @@ const data = [
       subtitle="Trips, thousands"
       transform={{ type: "aggregate", groupBy: "daypart", measures: { trips: { op: "sum", field: "trips" } } }}
     />,
-    <BarChart
+    <LollipopChart
       id="by-district"
       x="district"
       y="trips"
       select
       sort="desc"
-      orientation="horizontal"
       format="integer"
       title="Start district"
       subtitle="Trips, thousands"
@@ -639,6 +639,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 ```json
 {
   "type": "data-explorer",
+  "theme": "science",
   "kicker": "City bike share · June",
   "title": "Casual riders' trips averaged 24.6 minutes in June, against 12.0 for members",
   "deck": "70% of casual trips were at weekends. 40% started in Riverside. The view below is filtered to casual riders.",
@@ -1162,6 +1163,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
     }
   ],
   "unit": "trips",
+  "figuresVariant": "outline-accent",
   "labels": { "rider": "Rider", "daypart": "Time of day", "district": "District", "day": "Day" },
   "initialSelections": { "by-rider": { "field": "rider", "values": ["Casual"] } },
   "figures": [
@@ -1189,14 +1191,13 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
   ],
   "charts": [
     {
-      "type": "bar-chart",
+      "type": "donut-chart",
       "id": "by-rider",
-      "x": "rider",
-      "y": "trips",
+      "name": "rider",
+      "value": "trips",
       "select": true,
-      "sort": "none",
-      "orientation": "horizontal",
       "format": "integer",
+      "height": 220,
       "title": "Rider",
       "subtitle": "Trips, thousands",
       "transform": {
@@ -1241,13 +1242,12 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
       }
     },
     {
-      "type": "bar-chart",
+      "type": "lollipop-chart",
       "id": "by-district",
       "x": "district",
       "y": "trips",
       "select": true,
       "sort": "desc",
-      "orientation": "horizontal",
       "format": "integer",
       "title": "Start district",
       "subtitle": "Trips, thousands",
@@ -1309,6 +1309,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `charts` (required) | `Slot[]` |  | Two to four chart specs. Give each a stable `id`, `select: true` (or a field name) and its own aggregating `transform`; leave out `data`. |
 | `initialSelections` | `Record<string, { field, values?, range? }>` |  | Selections the piece opens with, keyed by chart `id`. A button restores them after the reader changes the filter. |
 | `figures` | `{ label, field?, op?, where?: { field, value }, per?, format?, context? }[]` |  | Figures recomputed from the filtered rows: `op` over `field` (default sum; count without a field), optionally restricted by `where` and divided by the sum of `per` for a rate or share. While a filter is active each shows the all-rows value as context. |
+| `figuresVariant` | `StatRowProps["variant"]` | `"plain"` | How the figures are displayed: any `variant` of `stat-row`, e.g. `tiles`, `tinted` or `outline-accent`. Extra fields on a figure (`tone`, `surface`, `icon`...) are passed to its `stat-row` item. |
 | `table` | `{ transform?, columns?, caption?, sort?, highlight?, ... }` |  | A detail table of the filtered rows: the props of `data-table` without `rows`, plus a `transform` applied first. |
 | `labels` | `Record<string, string>` |  | Display names for fields in the filter chips. |
 | `unit` | `string` | `"rows"` | Noun for what the figures total, used in figure context ("3,650 across all trips"). |
@@ -1323,12 +1324,13 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `credit` | `string` |  | Who made the piece. |
 | `level` | `1 \| 2 \| 3 \| 4 \| 5 \| 6` | `1` | Heading level of the title; section headings follow one level down. |
 | `maxWidth` | `number \| string` |  | Widest the piece may get. It is centred in wider containers. |
-| `theme` | `ThemeInput` |  | Theme override, passed on to everything inside. |
+| `theme` | `ThemeInput` |  | A built-in theme name (`"editorial"`, `"ledger"`, `"noir"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece. |
+| `frame` | `boolean` |  | Paint the theme's surface behind the piece, with page padding. Default: on when `theme` is a named theme with its own surface. Set false when the host already paints it. |
 | `mode` | `"auto" \| "system" \| "light" \| "dark"` | `"auto"` | Colour mode, passed on to everything inside. |
 
 ## Composition
 
-- Composes: [headline](https://insightcharts.dev/llms/headline.md), [callout](https://insightcharts.dev/llms/callout.md), [filter-chips](https://insightcharts.dev/llms/filter-chips.md), [stat-row](https://insightcharts.dev/llms/stat-row.md), [linked-charts](https://insightcharts.dev/llms/linked-charts.md), [data-table](https://insightcharts.dev/llms/data-table.md), [source-note](https://insightcharts.dev/llms/source-note.md), [bar-chart](https://insightcharts.dev/llms/bar-chart.md)
+- Composes: [headline](https://insightcharts.dev/llms/headline.md), [callout](https://insightcharts.dev/llms/callout.md), [filter-chips](https://insightcharts.dev/llms/filter-chips.md), [stat-row](https://insightcharts.dev/llms/stat-row.md), [linked-charts](https://insightcharts.dev/llms/linked-charts.md), [data-table](https://insightcharts.dev/llms/data-table.md), [source-note](https://insightcharts.dev/llms/source-note.md), [bar-chart](https://insightcharts.dev/llms/bar-chart.md), [donut-chart](https://insightcharts.dev/llms/donut-chart.md), [lollipop-chart](https://insightcharts.dev/llms/lollipop-chart.md), [segmented-bar](https://insightcharts.dev/llms/segmented-bar.md)
 - Used by: no molecule or template yet
 
 ## More examples
@@ -1336,7 +1338,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 ### Education: rates rather than totals, two starting filters
 
 ```tsx
-import { BarChart, DataExplorer } from "insightcharts";
+import { BarChart, DataExplorer, LollipopChart } from "insightcharts";
 
 const data = [
   { phase: "Primary", meals: "Eligible", term: "Autumn", sessions: 410, missed: 31.16 },
@@ -1351,12 +1353,14 @@ const data = [
 ];
 
 <DataExplorer
+  theme="ocean"
   kicker="School attendance · 2023/24"
   title="Secondary pupils on free school meals missed 14.5% of sessions in 2023/24"
   deck="The rate for all pupils was 7.2%. For secondary pupils on free school meals it was 13.1% in the autumn term and 15.8% in the summer term."
   instructions="Click a bar to filter the other charts and the figures. The bars show absence rates, not totals."
   data={data}
   unit="pupil groups"
+  figuresVariant="tiles"
   labels={{ phase: "School type", meals: "Free school meals", term: "Term" }}
   initialSelections={{
     "by-phase": { field: "phase", values: ["Secondary"] },
@@ -1411,15 +1415,13 @@ const data = [
         { type: "derive", as: "rate", op: "divide", fields: ["missed", "sessions"] },
       ]}
     />,
-    <BarChart
+    <LollipopChart
       id="by-term"
       x="term"
       y="rate"
       select
       sort="none"
-      orientation="vertical"
       format={{ style: "percent", maximumFractionDigits: 1 }}
-      height={200}
       title="Term"
       subtitle="Absence rate"
       transform={[
@@ -1435,6 +1437,119 @@ const data = [
   sources="Local authority attendance returns"
   period="School year 2023/24"
   method="A session is half a school day. The absence rate is sessions missed, authorised or not, as a share of sessions possible."
+  note="Illustrative data"
+/>
+```
+
+### Customer support: default theme, three chart forms and a table
+
+```tsx
+import { BarChart, DataExplorer, DonutChart, SegmentedBar } from "insightcharts";
+
+const data = [
+  { channel: "Email", plan: "Free", area: "Billing", tickets: 310, hours: 4340 },
+  { channel: "Email", plan: "Free", area: "Login", tickets: 420, hours: 5880 },
+  { channel: "Email", plan: "Free", area: "Sync", tickets: 150, hours: 3150 },
+  { channel: "Email", plan: "Free", area: "Reports", tickets: 60, hours: 840 },
+  { channel: "Email", plan: "Paid", area: "Billing", tickets: 260, hours: 3640 },
+  { channel: "Email", plan: "Paid", area: "Login", tickets: 140, hours: 1960 },
+  { channel: "Email", plan: "Paid", area: "Sync", tickets: 330, hours: 6930 },
+  { channel: "Email", plan: "Paid", area: "Reports", tickets: 170, hours: 2380 },
+  // ... 12 more rows
+];
+
+<DataExplorer
+  kicker="Support desk · Q3 2024"
+  title="Sync tickets took 12.2 hours to resolve on average in Q3, against 9.9 for all tickets"
+  deck="78% of sync tickets came from paid plans. Sync tickets sent by email took 21.0 hours. The view below is filtered to sync tickets."
+  instructions="Click a mark to filter the other charts, the figures and the table. Click it again to clear."
+  finding={{
+    lead: "Sync was 1,110 of the 3,690 tickets in Q3",
+    body: "480 of them arrived by email and took 21.0 hours on average. The 500 that arrived by chat took 4.5 hours.",
+  }}
+  data={data}
+  unit="tickets"
+  figuresVariant="tinted"
+  labels={{ area: "Product area", channel: "Channel", plan: "Plan" }}
+  initialSelections={{ "by-area": { field: "area", values: ["Sync"] } }}
+  figures={[
+    { label: "Tickets", field: "tickets", format: "integer" },
+    { label: "Average hours to resolve", field: "hours", per: "tickets", format: "decimal:1" },
+    {
+      label: "Share from paid plans",
+      field: "tickets",
+      where: { field: "plan", value: "Paid" },
+      per: "tickets",
+      format: "percent",
+    },
+    {
+      label: "Share sent by email",
+      field: "tickets",
+      where: { field: "channel", value: "Email" },
+      per: "tickets",
+      format: "percent",
+    },
+  ]}
+  charts={[
+    <BarChart
+      id="by-area"
+      x="area"
+      y="tickets"
+      select
+      sort="desc"
+      orientation="horizontal"
+      format="integer"
+      title="Product area"
+      subtitle="Tickets"
+      transform={{ type: "aggregate", groupBy: "area", measures: { tickets: { op: "sum", field: "tickets" } } }}
+    />,
+    <DonutChart
+      id="by-channel"
+      name="channel"
+      value="tickets"
+      select
+      format="integer"
+      height={220}
+      title="Channel"
+      subtitle="Tickets"
+      transform={{
+        type: "aggregate",
+        groupBy: "channel",
+        measures: { tickets: { op: "sum", field: "tickets" } },
+      }}
+    />,
+    <SegmentedBar
+      id="by-plan"
+      name="plan"
+      value="tickets"
+      select
+      format="integer"
+      title="Plan"
+      subtitle="Tickets"
+      transform={{ type: "aggregate", groupBy: "plan", measures: { tickets: { op: "sum", field: "tickets" } } }}
+    />,
+  ]}
+  table={{
+    caption: "Selected tickets by channel and plan",
+    transform: [
+      {
+        type: "aggregate",
+        groupBy: ["channel", "plan"],
+        measures: { tickets: { op: "sum", field: "tickets" }, hours: { op: "sum", field: "hours" } },
+      },
+      { type: "derive", as: "each", op: "divide", fields: ["hours", "tickets"] },
+      { type: "sort", by: "tickets", order: "desc" },
+    ],
+    columns: [
+      { key: "channel", label: "Channel" },
+      { key: "plan", label: "Plan" },
+      { key: "tickets", label: "Tickets", format: "integer", bar: true, width: "34%" },
+      { key: "each", label: "Average hours", format: "decimal:1" },
+    ],
+  }}
+  sources="Support desk ticket export"
+  period="July to September 2024"
+  method="Hours to resolve run from the first message to the ticket being closed, including nights and weekends."
   note="Illustrative data"
 />
 ```

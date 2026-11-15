@@ -52,6 +52,7 @@ export const RadialBarChart = defineChart<RadialBarChartProps>({
     { name: "names", type: "Record<string, string>", description: "Display names for series keys." },
   ],
   example: {
+    theme: "dusk",
     type: "radial-bar-chart",
     data: [2.1, 1.2, 0.8, 0.6, 0.7, 1.4, 3.6, 6.9, 8.8, 6.4, 5.1, 5.3, 5.9, 5.6, 5.4, 6.0, 7.4, 9.2, 8.1, 6.0, 4.6, 3.9, 3.3, 2.7].map((trips, h) => ({ hour: `${String(h).padStart(2, "0")}:00`, trips })),
     x: "hour",
@@ -161,6 +162,7 @@ const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "
 
 export const examples = {
   "Months": {
+    theme: { accent: "#0f766e" },
     data: [48, 41, 38, 52, 71, 96, 118, 112, 84, 63, 55, 51].map((mm, i) => ({ month: MONTHS[i], mm })),
     x: "month",
     y: "mm",
@@ -172,6 +174,7 @@ export const examples = {
     note: "Rounded, approximate figures for illustration",
   },
   "Stacked series": {
+    theme: "earth",
     data: [38, 26, 18, 14, 17, 34, 82, 141, 163, 128, 117, 124, 133, 126, 121, 132, 151, 172, 149, 118, 96, 81, 66, 51].map((weekday, h) => ({ hour: String(h), weekday, weekend: Math.round(18 + 70 * Math.exp(-((h - 14) ** 2) / 22)) })),
     x: "hour",
     y: ["weekday", "weekend"],
@@ -182,6 +185,7 @@ export const examples = {
     source: "Illustrative data",
   },
   "Stress: long labels, compass": {
+    theme: "science",
     data: [
       ["North", 6], ["North-north-east", 4], ["North-east", 5], ["East-north-east", 3], ["East", 4], ["East-south-east", 3], ["South-east", 5], ["South-south-east", 6],
       ["South", 9], ["South-south-west", 13], ["South-west", 16], ["West-south-west", 11], ["West", 7], ["West-north-west", 4], ["North-west", 2], ["North-north-west", 2],

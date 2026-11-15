@@ -248,6 +248,7 @@ export const UnitBlocks = defineChart<UnitBlocksProps>({
     { name: "sort", type: '"none" | "asc" | "desc"', default: '"none"', description: "Order of the blocks." },
   ],
   example: {
+    theme: "noir",
     type: "unit-blocks",
     data: [
       { age: "Under 30", finishers: 4180 },
@@ -278,7 +279,8 @@ export const UnitBlocks = defineChart<UnitBlocksProps>({
     const L = natural.height > ctx.height + 1 && !pinned ? layoutBlocks(p, groups, ctx.width, fonts, icon.aspect, ctx.height) : natural;
 
     const seriesKeys = p.series ? [...new Set(groups.map((g) => g.series ?? ""))] : [];
-    const byGroup = !p.series && groups.length <= Math.max(MAX_COLOURS, 0);
+    // One colour per group only while the theme has enough colours (poster themes have four or five); past that every group takes the accent.
+    const byGroup = !p.series && groups.length <= Math.min(MAX_COLOURS, t.categorical.length);
     const colours = groups.map((g, i) => {
       const base = p.series ? ctx.color(g.series, seriesKeys.indexOf(g.series ?? "")) : byGroup || ctx.highlight.length ? ctx.color(g.key, i) : ctx.color();
       return ctx.selected(g.key) ? base : alpha(base, 0.25);

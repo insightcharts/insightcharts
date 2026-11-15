@@ -113,7 +113,7 @@ export const BarChart = defineChart<BarChartProps>({
     { name: "labels", type: "boolean", description: "Value labels at bar ends. Default: on for one series of up to 12 bars." },
     { name: "names", type: "Record<string, string>", description: "Display names for series keys." },
   ],
-  example: { type: "bar-chart", data: [{ country: "Norway", share: 98 }, { country: "Brazil", share: 89 }, { country: "Canada", share: 68 }], x: "country", y: "share", format: "{value}%", title: "Renewables supplied 98% of Norway's electricity in 2023" },
+  example: { type: "bar-chart", data: [{ country: "Norway", share: 98 }, { country: "Brazil", share: 89 }, { country: "Canada", share: 68 }], x: "country", y: "share", format: "{value}%", title: "Renewables supplied 98% of Norway's electricity in 2023", theme: "ledger" },
   build(p, ctx) {
     const t = ctx.tokens;
     const shaped = shapeSeries(ctx.rows, p, p.names);
@@ -255,6 +255,7 @@ export const examples = {
     note: "Illustrative figures.",
   },
   "Vertical over time with a target line": {
+    theme: { accent: "#b4237a" },
     data: [{ year: "2019", gw: 98 }, { year: "2020", gw: 127 }, { year: "2021", gw: 168 }, { year: "2022", gw: 239 }, { year: "2023", gw: 407 }, { year: "2024", gw: 452 }],
     x: "year",
     y: "gw",
@@ -267,6 +268,7 @@ export const examples = {
     note: "Illustrative figures.",
   },
   "Grouped, horizontal, highlighted": {
+    theme: "editorial",
     data: [
       { region: "Sub-Saharan Africa", y2000: 26, y2023: 51 },
       { region: "South Asia", y2000: 58, y2023: 99 },
@@ -284,6 +286,7 @@ export const examples = {
     note: "Figures are approximate, for illustration",
   },
   "Stacked to 100%": {
+    theme: "sunrise",
     data: [
       { age: "18 to 29", Daily: 71, Weekly: 19, Rarely: 10 },
       { age: "30 to 49", Daily: 58, Weekly: 25, Rarely: 17 },
@@ -299,6 +302,7 @@ export const examples = {
     note: "Illustrative figures.",
   },
   "Forced vertical with names too long for their bands": {
+    theme: "earth",
     data: [{ mode: "Private car", share: 46 }, { mode: "Public transport", share: 24 }, { mode: "Walking", share: 15 }, { mode: "Cycling and scooters", share: 9 }, { mode: "Taxi and ride-hailing", share: 4 }, { mode: "Other", share: 2 }],
     x: "mode",
     y: "share",
@@ -310,6 +314,7 @@ export const examples = {
     note: "Illustrative figures. Long category labels wrap, then rotate.",
   },
   "Stress: 18 long category names": {
+    theme: "mono",
     data: [
       "Professional, scientific and technical services", "Information and communication", "Financial and insurance activities", "Public administration and defence", "Education", "Real estate activities",
       "Administrative and support services", "Arts, entertainment and recreation", "Wholesale and retail trade", "Manufacturing", "Electricity, gas, steam and air conditioning supply", "Construction",

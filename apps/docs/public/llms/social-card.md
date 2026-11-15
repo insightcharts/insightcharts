@@ -38,6 +38,7 @@ The file lands at `components/insightcharts/templates/social-card.tsx`. `@insigh
 import { BarChart, SocialCard } from "insightcharts";
 
 <SocialCard
+  theme="magenta"
   aspect="1:1"
   kicker="Climate"
   title="The world was 1.6°C warmer in 2024 than in 1850 to 1900"
@@ -77,6 +78,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 ```json
 {
   "type": "social-card",
+  "theme": "magenta",
   "aspect": "1:1",
   "kicker": "Climate",
   "title": "The world was 1.6°C warmer in 2024 than in 1850 to 1900",
@@ -130,24 +132,24 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `maxWidth` | `number` |  | Widest the card is drawn on screen, in px. Default 540 (520 for 4:5, 720 for 16:9, 400 for 9:16). In narrower containers the whole card is scaled down, like an image, so its composition never changes. |
 | `onExport` | `(blob: Blob) => void` |  | Called with the PNG after a download. |
 | `level` | `1 \| 2 \| 3 \| 4 \| 5 \| 6` | `2` | Heading level of the title. |
-| `theme` | `ThemeInput` |  | Theme override, passed on to the exhibit. |
+| `theme` | `ThemeInput` |  | A built-in theme name (`"magenta"`, `"noir"`, `"editorial"`...) or a theme object, passed on to the exhibit. A named theme with its own surface paints the card in that surface; the download button stays in the page's theme. |
 | `mode` | `"auto" \| "system" \| "light" \| "dark"` | `"auto"` | Colour mode. |
 
 ## Composition
 
-- Composes: [bar-chart](https://insightcharts.dev/llms/bar-chart.md), [big-number](https://insightcharts.dev/llms/big-number.md), [waffle-chart](https://insightcharts.dev/llms/waffle-chart.md), [source-note](https://insightcharts.dev/llms/source-note.md)
+- Composes: [bar-chart](https://insightcharts.dev/llms/bar-chart.md), [big-number](https://insightcharts.dev/llms/big-number.md), [waffle-chart](https://insightcharts.dev/llms/waffle-chart.md), [area-chart](https://insightcharts.dev/llms/area-chart.md), [source-note](https://insightcharts.dev/llms/source-note.md)
 - Used by: no molecule or template yet
 
 ## More examples
 
-### 16:9, public health, inverse tone
+### 16:9, public health, noir theme
 
 ```tsx
 import { BarChart, SocialCard } from "insightcharts";
 
 <SocialCard
+  theme="noir"
   aspect="16:9"
-  tone="inverse"
   kicker="Public health"
   title="Reported measles cases in Europe rose from 61,000 in 2023 to 127,000 in 2024"
   exhibit={<BarChart
@@ -179,6 +181,7 @@ import { BarChart, SocialCard } from "insightcharts";
 import { SocialCard, WaffleChart } from "insightcharts";
 
 <SocialCard
+  theme="ocean"
   aspect="9:16"
   kicker="Transport"
   title="58% of car journeys in England are under five miles"
@@ -198,17 +201,54 @@ import { SocialCard, WaffleChart } from "insightcharts";
 />
 ```
 
-### 4:5, personal finance, a single number
+### 1:1, energy, two stacked series
+
+```tsx
+import { AreaChart, SocialCard } from "insightcharts";
+
+<SocialCard
+  theme="forest"
+  aspect="1:1"
+  kicker="Energy"
+  title="Wind and solar generated 15% of the world's electricity in 2024"
+  exhibit={<AreaChart
+    data={[
+      { year: "2015", Wind: 3.5, Solar: 1.1 },
+      { year: "2016", Wind: 3.8, Solar: 1.4 },
+      { year: "2017", Wind: 4.4, Solar: 1.8 },
+      { year: "2018", Wind: 4.8, Solar: 2.2 },
+      { year: "2019", Wind: 5.3, Solar: 2.7 },
+      { year: "2020", Wind: 5.9, Solar: 3.2 },
+      { year: "2021", Wind: 6.5, Solar: 3.7 },
+      { year: "2022", Wind: 7.3, Solar: 4.6 },
+      { year: "2023", Wind: 7.8, Solar: 5.5 },
+      { year: "2024", Wind: 8.1, Solar: 6.9 },
+    ]}
+    x="year"
+    y={["Wind", "Solar"]}
+    stack
+    format="{value}%"
+    subtitle="Share of global electricity generation, %"
+  />}
+  source="Ember, Global Electricity Review (rounded)"
+  note="Figures are approximate, for illustration"
+  credit="InsightCharts"
+/>
+```
+
+### 4:5, personal finance, a single number, inverse tone
 
 ```tsx
 import { BigNumber, SocialCard } from "insightcharts";
 
 <SocialCard
   aspect="4:5"
+  tone="inverse"
   kicker="Money"
   title="Starting to save at 35 instead of 25 leaves $296,000 less at 65"
   exhibit={<BigNumber
     size="hero"
+    variant="tinted"
     value="$296,000"
     label="Less at 65 if you start at 35 instead of 25"
     context="Saving $300 a month at a 6% real return"

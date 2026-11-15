@@ -59,6 +59,7 @@
       ],
       "example": {
         "type": "arc-diagram",
+        "theme": "dusk",
         "data": [
           {
             "a": "Harbour",
@@ -351,6 +352,7 @@
       ],
       "example": {
         "type": "arrow-chart",
+        "theme": "editorial",
         "data": [
           {
             "group": "Under 30",
@@ -463,7 +465,8 @@
         "x": "country",
         "y": "share",
         "format": "{value}%",
-        "title": "Renewables supplied 98% of Norway's electricity in 2023"
+        "title": "Renewables supplied 98% of Norway's electricity in 2023",
+        "theme": "ledger"
       }
     },
     {
@@ -516,6 +519,7 @@
       ],
       "example": {
         "type": "beeswarm-chart",
+        "theme": "science",
         "data": [
           {
             "country": "Qatar",
@@ -927,6 +931,48 @@
           "type": "\"left\" | \"center\"",
           "default": "\"left\"",
           "description": "Text alignment."
+        },
+        {
+          "name": "variant",
+          "type": "\"plain\" | \"filled\" | \"tinted\" | \"with-icon\" | \"with-ring\" | \"with-trend\"",
+          "default": "\"plain\"",
+          "description": "The display: `filled` (a solid ground in the tone with contrasting ink), `tinted` (a 10% wash), `with-icon` (needs `icon`: a tinted badge above the label), `with-ring` (needs `target` or `max`, or a share from 0 to 1: a progress ring beside the figure), `with-trend` (needs `series`: a line under the figure). A variant whose data is missing renders as `plain`."
+        },
+        {
+          "name": "tone",
+          "type": "\"neutral\" | \"accent\" | \"positive\" | \"negative\" | number",
+          "default": "\"accent\"",
+          "description": "Colour of the ground or graphic. A number picks from the theme's categorical palette, 0-based."
+        },
+        {
+          "name": "icon",
+          "type": "IconInput",
+          "description": "A built-in icon name or `path://...`, for `with-icon`."
+        },
+        {
+          "name": "series",
+          "type": "number[]",
+          "description": "Past values in time order, oldest first, ending with the current value, for `with-trend`."
+        },
+        {
+          "name": "target",
+          "type": "number",
+          "description": "The goal for `value`, for `with-ring`."
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "description": "End of the ring's scale. Default: the target, or 1 for a share."
+        },
+        {
+          "name": "theme",
+          "type": "ThemeInput",
+          "description": "A theme name such as `\"editorial\"`, or token overrides. A named theme paints its own ground."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Set false to stop a named theme painting its ground."
         }
       ],
       "example": {
@@ -990,6 +1036,7 @@
       ],
       "example": {
         "type": "block-bar",
+        "theme": "noir",
         "data": [
           {
             "year": "2020",
@@ -1494,6 +1541,7 @@
       ],
       "example": {
         "type": "bubble-network",
+        "theme": "ocean",
         "data": [
           {
             "airport": "Lisbon",
@@ -1645,6 +1693,7 @@
       ],
       "example": {
         "type": "bubble-scale",
+        "theme": "sunrise",
         "data": [
           {
             "material": "Lithium",
@@ -1791,6 +1840,7 @@
       ],
       "example": {
         "type": "bullet-chart",
+        "theme": "mono",
         "data": [
           {
             "region": "North America",
@@ -1890,6 +1940,7 @@
       ],
       "example": {
         "type": "bump-chart",
+        "theme": "poster",
         "data": [
           {
             "year": "2019",
@@ -2011,6 +2062,7 @@
       ],
       "example": {
         "type": "calendar-heatmap",
+        "theme": "forest",
         "data": [
           {
             "date": "2024-01-01",
@@ -3465,7 +3517,7 @@
         "value": "commits",
         "title": "Commits per day to the main repository, 2024",
         "subtitle": "Number of commits each day",
-        "note": "Illustrative data. Pale cells are days with no commits."
+        "note": "Illustrative data. Faint cells are days with no commits."
       }
     },
     {
@@ -3509,6 +3561,11 @@
           "type": "\"soft\" | \"outline\" | \"plain\"",
           "default": "\"soft\"",
           "description": "Tinted box, bordered box, or no box."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint a named theme's background behind the callout, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off."
         }
       ],
       "example": {
@@ -3596,6 +3653,7 @@
       ],
       "example": {
         "type": "choropleth-map",
+        "theme": "earth",
         "geo": {
           "type": "FeatureCollection",
           "features": [
@@ -4020,6 +4078,7 @@
       ],
       "example": {
         "type": "circle-pack",
+        "theme": "magenta",
         "data": [
           {
             "crop": "Maize",
@@ -4187,6 +4246,7 @@
       ],
       "example": {
         "type": "curve-rank",
+        "theme": "blueprint",
         "data": [
           {
             "drink": "Filter coffee",
@@ -4301,10 +4361,16 @@
           "type": "\"comfortable\" | \"compact\"",
           "default": "\"comfortable\"",
           "description": "Row padding."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint a named theme's background behind the table, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off."
         }
       ],
       "example": {
         "type": "data-table",
+        "theme": "editorial",
         "caption": "Wind and solar supplied 67% of Denmark's electricity in 2024",
         "subtitle": "Electricity generation by country, 2024",
         "source": "Ember (illustrative figures)",
@@ -4426,14 +4492,30 @@
         },
         {
           "name": "size",
-          "type": "\"sm\" | \"md\" | \"lg\"",
-          "description": "12, 14 or 16px. Inherits the surrounding size when omitted."
+          "type": "\"sm\" | \"md\" | \"lg\" | \"xl\"",
+          "description": "12, 14, 16 or 20px. Inherits the surrounding size when omitted."
         },
         {
           "name": "variant",
-          "type": "\"text\" | \"pill\"",
+          "type": "\"text\" | \"pill\" | \"solid\"",
           "default": "\"text\"",
-          "description": "`pill` adds a tinted capsule behind the value."
+          "description": "`pill` adds a tinted capsule behind the value; `solid` fills the capsule and sets the value in the surface colour."
+        },
+        {
+          "name": "tone",
+          "type": "\"auto\" | \"neutral\" | \"accent\" | \"positive\" | \"negative\" | \"inherit\"",
+          "default": "\"auto\"",
+          "description": "Colour of the value. `auto` follows the direction and `upIsGood`; `inherit` takes the surrounding text colour, for a coloured ground."
+        },
+        {
+          "name": "theme",
+          "type": "ThemeInput",
+          "description": "A theme name such as `\"ledger\"`, or token overrides. A named theme paints its own ground."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Set false to stop a named theme painting its ground."
         }
       ],
       "example": {
@@ -4598,6 +4680,7 @@
       ],
       "example": {
         "type": "donut-chart",
+        "theme": "paper",
         "data": [
           {
             "tenure": "Own outright",
@@ -4709,6 +4792,7 @@
       ],
       "example": {
         "type": "dumbbell-chart",
+        "theme": "science",
         "data": [
           {
             "country": "South Korea",
@@ -4832,6 +4916,7 @@
       ],
       "example": {
         "type": "fan-flow",
+        "theme": "forest",
         "data": [
           {
             "use": "Shower",
@@ -5029,10 +5114,16 @@
           "name": "selected",
           "type": "string[]",
           "description": "Controlled selection: the entity names currently selected. When given, the table shows exactly this list and a click only calls `onSelect`. Omit it and the table keeps its own selection."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off."
         }
       ],
       "example": {
         "type": "glyph-table",
+        "theme": "noir",
         "caption": "Filter coffee sold 310 cups a day at £2.40 a cup",
         "subtitle": "Six drinks at one café: price, cups sold per day, share ordered with oat milk, seconds to prepare and caffeine",
         "note": "Illustrative figures.",
@@ -5182,10 +5273,16 @@
           "name": "children",
           "type": "ReactNode",
           "description": "Extra content under the byline."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off."
         }
       ],
       "example": {
         "type": "headline",
+        "theme": "ledger",
         "size": "page",
         "kicker": "Energy transition",
         "title": "Solar generated more electricity than coal in Europe in 2024",
@@ -5253,6 +5350,7 @@
       ],
       "example": {
         "type": "heatmap",
+        "theme": "dusk",
         "data": [
           {
             "day": "Mon",
@@ -5525,6 +5623,7 @@
       ],
       "example": {
         "type": "histogram",
+        "theme": "earth",
         "data": [
           {
             "minutes": 14
@@ -5871,6 +5970,7 @@
       ],
       "example": {
         "type": "icon-array-grid",
+        "theme": "sunrise",
         "data": [
           {
             "district": "Ashby",
@@ -5996,6 +6096,11 @@
           "type": "\"left\" | \"center\"",
           "default": "\"left\"",
           "description": "Alignment."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off."
         }
       ],
       "example": {
@@ -6070,10 +6175,16 @@
           "type": "\"left\" | \"center\"",
           "default": "\"left\"",
           "description": "Alignment within the container."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off."
         }
       ],
       "example": {
         "type": "legend-key",
+        "theme": "poster",
         "title": "Source of electricity",
         "items": [
           "Solar",
@@ -6255,6 +6366,7 @@
       ],
       "example": {
         "type": "lollipop-chart",
+        "theme": "mono",
         "data": [
           {
             "country": "Netherlands",
@@ -6340,6 +6452,7 @@
       ],
       "example": {
         "type": "nested-shares",
+        "theme": "ocean",
         "data": [
           {
             "year": "2005",
@@ -6456,6 +6569,7 @@
       ],
       "example": {
         "type": "orbit-chart",
+        "theme": "noir",
         "data": [
           {
             "supplier": "Halden Cells",
@@ -6594,6 +6708,7 @@
       ],
       "example": {
         "type": "pictogram-chart",
+        "theme": "magenta",
         "data": [
           {
             "city": "Tokyo",
@@ -6680,6 +6795,7 @@
       ],
       "example": {
         "type": "pill-rank",
+        "theme": "paper",
         "data": [
           {
             "river": "Nile",
@@ -6798,15 +6914,30 @@
         },
         {
           "name": "tone",
-          "type": "\"accent\" | \"positive\" | \"negative\" | \"neutral\"",
+          "type": "\"accent\" | \"positive\" | \"negative\" | \"neutral\" | number",
           "default": "\"accent\"",
-          "description": "Fill colour by meaning."
+          "description": "Fill colour by meaning. A number picks from the theme's categorical palette, 0-based, for a stack of meters that name different entities."
         },
         {
           "name": "size",
-          "type": "\"sm\" | \"md\"",
+          "type": "\"sm\" | \"md\" | \"lg\"",
           "default": "\"md\"",
-          "description": "`sm` for dense stacks."
+          "description": "Track of 6, 8 or 12px. `sm` for dense stacks, `lg` for a single featured meter."
+        },
+        {
+          "name": "detail",
+          "type": "string",
+          "description": "A short muted note after the value, e.g. a share of the total (\"26%\")."
+        },
+        {
+          "name": "theme",
+          "type": "ThemeInput",
+          "description": "A theme name such as `\"science\"`, or token overrides. A named theme paints its own ground."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Set false to stop a named theme painting its ground."
         }
       ],
       "example": {
@@ -6868,6 +6999,7 @@
       ],
       "example": {
         "type": "proportional-area",
+        "theme": "blueprint",
         "data": [
           {
             "lake": "Superior",
@@ -6949,6 +7081,11 @@
           "type": "\"left\" | \"center\"",
           "default": "\"left\"",
           "description": "Centres the block (text stays left-aligned)."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off."
         }
       ],
       "example": {
@@ -7002,10 +7139,16 @@
           "type": "\"left\" | \"center\"",
           "default": "\"left\"",
           "description": "Left-aligned quotes carry a side rule; centred ones do not."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off."
         }
       ],
       "example": {
         "type": "pull-quote",
+        "theme": "editorial",
         "quote": "Solar set the midday wholesale price on most days in 2023. Our plans had assumed that would happen in the 2030s.",
         "attribution": "Marit de Vries",
         "role": "Head of system operations, Dutch grid operator"
@@ -7066,6 +7209,7 @@
         }
       ],
       "example": {
+        "theme": "dusk",
         "type": "radial-bar-chart",
         "data": [
           {
@@ -7247,6 +7391,7 @@
         }
       ],
       "example": {
+        "theme": "forest",
         "type": "radial-spokes",
         "data": [
           {
@@ -7343,6 +7488,7 @@
         }
       ],
       "example": {
+        "theme": "sunrise",
         "type": "ribbon-chart",
         "data": [
           {
@@ -7455,6 +7601,7 @@
         }
       ],
       "example": {
+        "theme": "noir",
         "type": "sankey-chart",
         "data": [
           {
@@ -7613,6 +7760,7 @@
         }
       ],
       "example": {
+        "theme": "magenta",
         "type": "scale-ladder",
         "data": [
           {
@@ -7930,6 +8078,7 @@
         }
       ],
       "example": {
+        "theme": "ledger",
         "type": "segmented-bar",
         "data": [
           {
@@ -8017,6 +8166,7 @@
         }
       ],
       "example": {
+        "theme": "blueprint",
         "type": "shape-fill",
         "data": [
           {
@@ -8516,10 +8666,16 @@
           "name": "children",
           "type": "ReactNode",
           "description": "Extra content after the rows."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off."
         }
       ],
       "example": {
         "type": "source-note",
+        "theme": "earth",
         "sources": [
           {
             "name": "Ember, European Electricity Review 2025",
@@ -8717,6 +8873,7 @@
         }
       ],
       "example": {
+        "theme": "dusk",
         "type": "stat-circles",
         "data": [
           {
@@ -8751,9 +8908,9 @@
       "title": "Stat tile",
       "level": "atom",
       "category": "figure",
-      "description": "A compact, bordered KPI tile: label, value, change against a baseline and an optional trend graphic.",
-      "whenToUse": "Dashboard grids and KPI rows of three to six figures, each needing its own change indicator or sparkline. Give every tile a delta or a context line.",
-      "avoid": "The single number a story leads with (use `big-number` with `size: \"hero\"`). Do not put a full chart with axes in the trend slot.",
+      "description": "A compact KPI tile: label, value, change against a baseline and an optional graphic. Twenty variants display the same data as a card, a trend, progress toward a target, a comparison, a breakdown, a rank or a count of icons.",
+      "whenToUse": "Dashboard grids and KPI rows of three to six figures. Pass the data once (`value`, `delta`, `series`, `target`, `parts`, `icon`) and choose the display with `variant`; change `surface`, `tone` and `size` to set emphasis. Give every tile a delta or a context line.",
+      "avoid": "The single number a story leads with (use `big-number` with `size: \"hero\"`). Do not put a full chart with axes in the trend slot. Use `unit` only for counts up to 60 icons.",
       "props": [
         {
           "name": "label",
@@ -8765,12 +8922,12 @@
           "name": "value",
           "type": "number | string",
           "required": true,
-          "description": "The figure. Numbers are formatted with `format`."
+          "description": "The figure. Numbers are formatted with `format`. `progress`, `ring` and `unit` need a number."
         },
         {
           "name": "delta",
           "type": "number | string",
-          "description": "Change against a baseline. Numbers render as signed percentages (0.12 is +12%)."
+          "description": "Change against a baseline. Numbers render as signed percentages (0.12 is +12%). `comparison` computes it from `value` and `comparison` when omitted."
         },
         {
           "name": "deltaLabel",
@@ -8781,7 +8938,7 @@
           "name": "upIsGood",
           "type": "boolean",
           "default": "true",
-          "description": "Whether an increase is an improvement. Sets the delta colour."
+          "description": "Whether an increase is an improvement. Sets the delta colour; the arrow and sign always show the direction."
         },
         {
           "name": "context",
@@ -8789,21 +8946,135 @@
           "description": "A line that states a comparison or reference for the number."
         },
         {
+          "name": "variant",
+          "type": "\"plain\" | \"borderless\" | \"filled\" | \"tinted\" | \"outline-accent\" | \"sparkline\" | \"area\" | \"bars\" | \"dots\" | \"progress\" | \"ring\" | \"comparison\" | \"delta-first\" | \"icon\" | \"unit\" | \"breakdown\" | \"rank\" | \"split\" | \"compact\" | \"hero\"",
+          "default": "\"plain\"",
+          "description": "The display. Grounds: `plain` (bordered card), `borderless`, `filled` (solid tone with contrasting ink), `tinted` (10% wash), `outline-accent` (a 2px rule on one edge). Trends, from `series`: `sparkline` (line), `area` (filled, edge to edge along the bottom, zero-based), `bars` (columns, zero-based), `dots`, `split` (figure left, line in a tinted panel right), `compact` (one line: label, small line, value, change). Goals, from `target` or `max`: `progress` (bar with the target marked), `ring`. Others: `comparison` (needs `comparison`: two labelled bars), `delta-first` (the change is the large figure), `icon` (needs `icon`: a tinted badge), `unit` (the count as repeated icons, up to 60), `breakdown` (needs `parts`: a segmented bar with a key), `rank` (needs `rank`: \"3rd of 12\" with a position strip), `hero` (a numeral of 40 to 96px). A variant whose data is missing renders as `plain`."
+        },
+        {
+          "name": "surface",
+          "type": "\"plain\" | \"borderless\" | \"filled\" | \"tinted\" | \"outline-accent\"",
+          "description": "The ground, independent of the display, so any variant can sit on any ground: `variant: \"sparkline\", surface: \"filled\"`. Default: the variant's own, otherwise `plain`."
+        },
+        {
+          "name": "tone",
+          "type": "\"neutral\" | \"accent\" | \"positive\" | \"negative\" | number",
+          "default": "\"accent\"",
+          "description": "Colour of the graphic and of a filled or tinted ground. A number picks from the theme's categorical palette, 0-based. `neutral` is ink."
+        },
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\" | \"lg\"",
+          "default": "\"md\"",
+          "description": "Type and padding scale: 22, 28 or 36px numerals with 12, 16 or 20px padding. The numeral shrinks to fit a narrow tile."
+        },
+        {
+          "name": "align",
+          "type": "\"left\" | \"center\" | \"right\"",
+          "default": "\"left\"",
+          "description": "Text alignment."
+        },
+        {
+          "name": "orientation",
+          "type": "\"vertical\" | \"horizontal\"",
+          "description": "Graphic under the figure or beside it, for `sparkline`, `bars`, `dots`, `ring` and `icon`. Default `vertical`, `horizontal` for `ring`. Falls back to vertical under about 250px (180px for `ring` and `icon`)."
+        },
+        {
+          "name": "series",
+          "type": "number[]",
+          "description": "Past values in time order, oldest first, ending with the current value, in the units of `value`. A numeric `trend` array is used when `series` is omitted."
+        },
+        {
+          "name": "target",
+          "type": "number",
+          "description": "The goal for `value`, marked on `progress` and `ring`."
+        },
+        {
+          "name": "targetLabel",
+          "type": "string",
+          "default": "\"Target\"",
+          "description": "Name for the target."
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "description": "End of the scale for `progress` and `ring`, and the total count drawn by `unit`. Default: the target, or 1 for a share."
+        },
+        {
+          "name": "comparison",
+          "type": "number | string",
+          "description": "The value compared with, for `comparison`: a previous period or a peer."
+        },
+        {
+          "name": "comparisonLabel",
+          "type": "string",
+          "default": "\"Before\"",
+          "description": "Names the comparison value, e.g. \"September\"."
+        },
+        {
+          "name": "valueLabel",
+          "type": "string",
+          "default": "\"Now\"",
+          "description": "Names the current value in `comparison`, e.g. \"December\"."
+        },
+        {
+          "name": "parts",
+          "type": "{ label: string; value: number }[]",
+          "description": "What the value is made of, for `breakdown`. Should sum to `value`. Past six parts the smallest fold into Other."
+        },
+        {
+          "name": "icon",
+          "type": "IconInput",
+          "description": "A built-in icon name or `path://...`, for `icon` and `unit`. `unit` defaults to `circle`."
+        },
+        {
+          "name": "unitValue",
+          "type": "number",
+          "default": "1",
+          "description": "What one icon stands for in `unit`. A caption states it when it is not 1."
+        },
+        {
+          "name": "rank",
+          "type": "number",
+          "description": "Position in a ranking, 1 is first, for `rank`."
+        },
+        {
+          "name": "rankOf",
+          "type": "number",
+          "description": "Number of entries ranked. Up to 32 are drawn as one segment each."
+        },
+        {
+          "name": "edge",
+          "type": "\"left\" | \"top\"",
+          "default": "\"left\"",
+          "description": "Which edge carries the rule on an `outline-accent` surface."
+        },
+        {
           "name": "trend",
           "type": "Slot | number[]",
-          "description": "A chart spec, a React element, or an array of numbers drawn as a sparkline."
+          "description": "A chart spec, a React element, or an array of numbers drawn as a sparkline. Works in every variant that does not draw `series` itself."
         },
         {
           "name": "trendPosition",
           "type": "\"bottom\" | \"right\"",
           "default": "\"bottom\"",
-          "description": "Where the trend sits; `right` falls back to `bottom` under 280px."
+          "description": "Where the trend slot sits; `right` falls back to `bottom` in narrow tiles."
         },
         {
           "name": "format",
           "type": "FormatSpec",
           "default": "\"auto\"",
-          "description": "Number format for `value`."
+          "description": "Number format for `value`, `target`, `max`, `comparison` and `series`."
+        },
+        {
+          "name": "theme",
+          "type": "ThemeInput",
+          "description": "A theme name such as `\"ledger\"`, or token overrides. A named theme paints its own ground behind the tile."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Set false to stop a named theme painting its ground."
         },
         {
           "name": "children",
@@ -8897,10 +9168,16 @@
           "type": "boolean",
           "default": "false",
           "description": "Hairline above the marker."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off."
         }
       ],
       "example": {
         "type": "step-marker",
+        "theme": "mono",
         "step": 1,
         "title": "Electricity sources in 2015",
         "text": "Europe's electricity generation by source in 2015.",
@@ -9252,6 +9529,7 @@
         }
       ],
       "example": {
+        "theme": "editorial",
         "type": "timeline-chart",
         "data": [
           {
@@ -9369,6 +9647,7 @@
         }
       ],
       "example": {
+        "theme": "paper",
         "type": "treemap",
         "data": [
           {
@@ -9504,6 +9783,7 @@
         }
       ],
       "example": {
+        "theme": "noir",
         "type": "unit-blocks",
         "data": [
           {
@@ -9594,6 +9874,7 @@
         }
       ],
       "example": {
+        "theme": "poster",
         "type": "waffle-chart",
         "data": [
           {
@@ -9668,7 +9949,12 @@
         {
           "name": "theme",
           "type": "ThemeInput",
-          "description": "Theme override, passed on to every event."
+          "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to every event. A named theme with its own surface paints that surface behind the component."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint the theme's surface behind the component. Default: on for a named theme with its own surface."
         },
         {
           "name": "mode",
@@ -9679,6 +9965,7 @@
       ],
       "example": {
         "type": "annotated-timeline",
+        "theme": "paper",
         "title": "The ECB raised its deposit rate from −0.5% to 4% between July 2022 and September 2023",
         "subtitle": "Euro area deposit facility rate and annual inflation, 2021 to 2024",
         "events": [
@@ -9787,11 +10074,12 @@
       "title": "Before and after",
       "level": "molecule",
       "category": "layout",
-      "description": "Two states of one measure side by side, as figures or small charts, with the change between them stated in the middle.",
+      "description": "Two states of one measure side by side, as figures, stat tiles of any variant or small charts, with the change between them stated in the middle.",
       "whenToUse": "A single measure at two moments or under two conditions: before and after a policy, control and treatment, last year and this. The change is computed from the two values unless you state it.",
       "avoid": "More than two states (use `line-chart` or `slope-chart`); many entities each with a before and after (use `dumbbell-chart` or `arrow-chart`); two unrelated figures (use `stat-row`).",
       "composes": [
         "big-number",
+        "stat-tile",
         "delta",
         "bar-chart",
         "sparkline"
@@ -9799,15 +10087,61 @@
       "props": [
         {
           "name": "before",
-          "type": "{ heading?, value?, label?, context?, format?, chart? }",
+          "type": "{ heading?, value?, label?, context?, format?, chart?, variant?, surface?, tone?, series?, target?, targetLabel?, max?, parts?, icon?, unitValue?, rank?, rankOf?, orientation? }",
           "required": true,
-          "description": "The first state: a figure, a chart slot, or both."
+          "description": "The first state: a figure, a chart slot, or both. The fields after `chart` apply when the states are tiles and are passed to `stat-tile`."
         },
         {
           "name": "after",
-          "type": "{ heading?, value?, label?, context?, format?, chart? }",
+          "type": "{ heading?, value?, label?, context?, format?, chart?, variant?, surface?, tone?, series?, target?, targetLabel?, max?, parts?, icon?, unitValue?, rank?, rankOf?, orientation? }",
           "required": true,
           "description": "The second state."
+        },
+        {
+          "name": "variant",
+          "type": "\"plain\" | \"tiles\" | StatTileVariant",
+          "default": "\"plain\"",
+          "description": "`plain`: open `big-number` figures under a ruled heading. `tiles`: bordered `stat-tile` cards. Any `stat-tile` variant (`progress`, `ring`, `sparkline`, `area`, `bars`, `unit`, `breakdown`, `rank`, `icon`, `filled`, `tinted`, `hero`...) draws both states as that tile; a state's own `variant` overrides it."
+        },
+        {
+          "name": "surface",
+          "type": "\"plain\" | \"borderless\" | \"filled\" | \"tinted\" | \"outline-accent\"",
+          "description": "Tiles only: the ground of both tiles."
+        },
+        {
+          "name": "emphasis",
+          "type": "\"after\" | \"none\"",
+          "default": "\"after\"",
+          "description": "Tiles only: `after` draws the first state in neutral ink and the second in the accent; `none` draws both in the accent. A state's own `tone` overrides it."
+        },
+        {
+          "name": "layout",
+          "type": "\"auto\" | \"side\" | \"stacked\"",
+          "default": "\"auto\"",
+          "description": "Side by side from 520px, or force one arrangement."
+        },
+        {
+          "name": "deltaVariant",
+          "type": "\"text\" | \"pill\" | \"solid\"",
+          "default": "\"pill\"",
+          "description": "How the change between the states is set: passed to `delta`."
+        },
+        {
+          "name": "arrow",
+          "type": "boolean",
+          "default": "true",
+          "description": "The arrow between the states."
+        },
+        {
+          "name": "density",
+          "type": "\"dense\" | \"default\" | \"roomy\"",
+          "default": "\"default\"",
+          "description": "Spacing and tile scale (`sm`, `md`, `lg`)."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Set false to stop a named theme painting its ground."
         },
         {
           "name": "delta",
@@ -9860,7 +10194,7 @@
         {
           "name": "theme",
           "type": "ThemeInput",
-          "description": "Theme override, passed on to both states."
+          "description": "A theme name such as `\"editorial\"`, or token overrides, passed on to both states. A named theme paints its own ground."
         },
         {
           "name": "mode",
@@ -9907,7 +10241,9 @@
       "composes": [
         "callout",
         "line-chart",
-        "bar-chart"
+        "bar-chart",
+        "dumbbell-chart",
+        "slope-chart"
       ],
       "props": [
         {
@@ -9963,7 +10299,12 @@
         {
           "name": "theme",
           "type": "ThemeInput",
-          "description": "Theme override, passed on to the chart and callout."
+          "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the chart and callout. A named theme with its own surface paints that surface behind the component."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint the theme's surface behind the component. Default: on for a named theme with its own surface."
         },
         {
           "name": "mode",
@@ -9974,79 +10315,97 @@
       ],
       "example": {
         "type": "chart-callout",
+        "theme": "ledger",
         "chart": {
           "type": "line-chart",
           "data": [
             {
-              "month": "2024-01-01",
-              "rate": 4.2
+              "2023": 4.4,
+              "2024": 4.2,
+              "month": "Jan"
             },
             {
-              "month": "2024-02-01",
-              "rate": 4.3
+              "2023": 4.3,
+              "2024": 4.3,
+              "month": "Feb"
             },
             {
-              "month": "2024-03-01",
-              "rate": 4.1
+              "2023": 4.4,
+              "2024": 4.1,
+              "month": "Mar"
             },
             {
-              "month": "2024-04-01",
-              "rate": 3.6
+              "2023": 4.2,
+              "2024": 3.6,
+              "month": "Apr"
             },
             {
-              "month": "2024-05-01",
-              "rate": 3.1
+              "2023": 4.3,
+              "2024": 3.1,
+              "month": "May"
             },
             {
-              "month": "2024-06-01",
-              "rate": 2.9
+              "2023": 4.1,
+              "2024": 2.9,
+              "month": "Jun"
             },
             {
-              "month": "2024-07-01",
-              "rate": 2.6
+              "2023": 4.2,
+              "2024": 2.6,
+              "month": "Jul"
             },
             {
-              "month": "2024-08-01",
-              "rate": 2.4
+              "2023": 4.3,
+              "2024": 2.4,
+              "month": "Aug"
             },
             {
-              "month": "2024-09-01",
-              "rate": 2.3
+              "2023": 4.1,
+              "2024": 2.3,
+              "month": "Sep"
             },
             {
-              "month": "2024-10-01",
-              "rate": 2.2
+              "2023": 4.2,
+              "2024": 2.2,
+              "month": "Oct"
             },
             {
-              "month": "2024-11-01",
-              "rate": 2.1
+              "2023": 4.3,
+              "2024": 2.1,
+              "month": "Nov"
             },
             {
-              "month": "2024-12-01",
-              "rate": 2.1
+              "2023": 4.2,
+              "2024": 2.1,
+              "month": "Dec"
             }
           ],
           "x": "month",
-          "y": "rate",
+          "y": [
+            "2024",
+            "2023"
+          ],
+          "highlight": "2024",
+          "contextLabels": true,
           "format": "{value}%",
           "zero": true,
           "height": 280,
           "title": "Monthly churn fell from 4.2% to 2.1% in 2024",
-          "subtitle": "Monthly customer churn, 2024",
+          "subtitle": "Monthly customer churn, 2024 and 2023",
           "source": "Internal analytics",
           "note": "Illustrative data",
           "annotations": [
             {
               "type": "line",
               "axis": "x",
-              "value": "2024-03-01",
+              "value": "Mar",
               "label": "New onboarding"
             }
           ]
         },
         "label": "Takeaway",
         "lead": "Churn fell 2 points after March",
-        "body": "Churn was 4.1% in March, when the new onboarding launched. It fell every month from April to November. It was 2.1% in December."
+        "body": "Churn was 4.1% in March 2024, when the new onboarding launched. It was 2.1% in December 2024. It was 4.2% in December 2023."
       }
     },
     {
@@ -10129,7 +10488,12 @@
         {
           "name": "theme",
           "type": "ThemeInput",
-          "description": "Theme override, passed on to the chart."
+          "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the chart. A named theme with its own surface paints that surface behind the component."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint the theme's surface behind the component. Default: on for a named theme with its own surface."
         },
         {
           "name": "mode",
@@ -10140,6 +10504,7 @@
       ],
       "example": {
         "type": "chart-tabs",
+        "theme": "mono",
         "title": "CO2 emissions of six large emitters, 2023",
         "tabsPosition": "below",
         "chart": {
@@ -10306,7 +10671,12 @@
         {
           "name": "theme",
           "type": "ThemeInput",
-          "description": "Theme override, passed on to the sparklines and deltas."
+          "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the sparklines and deltas. A named theme with its own surface paints that surface behind the component."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint the theme's surface behind the component. Default: on for a named theme with its own surface."
         },
         {
           "name": "mode",
@@ -10494,7 +10864,12 @@
         {
           "name": "theme",
           "type": "ThemeInput",
-          "description": "Theme override."
+          "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object. A named theme with its own surface paints that surface behind the component."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint the theme's surface behind the component. Default: on for a named theme with its own surface."
         },
         {
           "name": "mode",
@@ -10547,7 +10922,9 @@
         "headline",
         "source-note",
         "line-chart",
-        "big-number"
+        "big-number",
+        "dumbbell-chart",
+        "waffle-chart"
       ],
       "props": [
         {
@@ -10617,7 +10994,12 @@
         {
           "name": "theme",
           "type": "ThemeInput",
-          "description": "Theme override, passed on to the headline, chart and source note."
+          "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the headline, chart and source note. A named theme with its own surface paints that surface behind the component."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint the theme's surface behind the component. Default: on for a named theme with its own surface."
         },
         {
           "name": "mode",
@@ -10628,6 +11010,7 @@
       ],
       "example": {
         "type": "hero-figure",
+        "theme": "editorial",
         "kicker": "Energy transition",
         "title": "Solar supplied 11.1% of EU electricity in 2024",
         "deck": "Coal's share fell from 24.6% in 2015 to 9.8% in 2024.",
@@ -10639,72 +11022,90 @@
             {
               "year": "2015",
               "Solar": 2.9,
-              "Coal": 24.6
+              "Coal": 24.6,
+              "Wind": 9.2,
+              "Gas": 15.6
             },
             {
               "year": "2016",
               "Solar": 3,
-              "Coal": 22
+              "Coal": 22,
+              "Wind": 9.5,
+              "Gas": 18.4
             },
             {
               "year": "2017",
               "Solar": 3.4,
-              "Coal": 20.6
+              "Coal": 20.6,
+              "Wind": 11,
+              "Gas": 19.7
             },
             {
               "year": "2018",
               "Solar": 3.7,
-              "Coal": 19.2
+              "Coal": 19.2,
+              "Wind": 11.4,
+              "Gas": 18.3
             },
             {
               "year": "2019",
               "Solar": 4.2,
-              "Coal": 15
+              "Coal": 15,
+              "Wind": 13,
+              "Gas": 21
             },
             {
               "year": "2020",
               "Solar": 5,
-              "Coal": 13
+              "Coal": 13,
+              "Wind": 14.4,
+              "Gas": 20.1
             },
             {
               "year": "2021",
               "Solar": 5.4,
-              "Coal": 14.7
+              "Coal": 14.7,
+              "Wind": 13.3,
+              "Gas": 18.8
             },
             {
               "year": "2022",
               "Solar": 7,
-              "Coal": 15.8
+              "Coal": 15.8,
+              "Wind": 15.1,
+              "Gas": 19.6
             },
             {
               "year": "2023",
               "Solar": 9.1,
-              "Coal": 12.3
+              "Coal": 12.3,
+              "Wind": 17.5,
+              "Gas": 16.8
             },
             {
               "year": "2024",
               "Solar": 11.1,
-              "Coal": 9.8
+              "Coal": 9.8,
+              "Wind": 17.4,
+              "Gas": 15.7
             }
           ],
           "x": "year",
           "y": [
             "Solar",
+            "Coal",
+            "Wind",
+            "Gas"
+          ],
+          "highlight": [
+            "Solar",
             "Coal"
           ],
+          "contextLabels": true,
           "format": "{value}%",
           "zero": true,
           "height": 380,
-          "subtitle": "Solar and coal share of EU electricity generation, 2015 to 2024",
-          "annotations": [
-            {
-              "type": "point",
-              "x": "2024",
-              "y": 11.1,
-              "label": "Solar 11.1%",
-              "position": "left"
-            }
-          ]
+          "subtitle": "Share of EU electricity generation by source, 2015 to 2024"
         },
         "source": {
           "name": "Ember, European Electricity Review 2025",
@@ -10720,11 +11121,12 @@
       "title": "KPI grid",
       "level": "molecule",
       "category": "layout",
-      "description": "A responsive grid of trend cards drawn from one dataset: each metric shows its latest value, its change and a sparkline.",
+      "description": "A responsive grid of trend cards drawn from one dataset: each metric shows its latest value, its change and a graphic, in one `stat-tile` variant or a deliberate mix of them.",
       "whenToUse": "The top of a dashboard or a monthly report: three to eight metrics tracked over the same periods. Pass one table with a column per metric.",
       "avoid": "Figures without a series behind them (use `stat-row`); comparing the metrics with each other on one scale (use `line-chart` or `small-multiples`); more than eight cards.",
       "composes": [
-        "trend-card"
+        "trend-card",
+        "stat-tile"
       ],
       "props": [
         {
@@ -10744,9 +11146,52 @@
         },
         {
           "name": "metrics",
-          "type": "{ y, label, format?, upIsGood?, compare?, change?, deltaFormat?, deltaLabel?, context?, value?, delta?, kind? }[]",
+          "type": "{ y, label, format?, upIsGood?, compare?, change?, deltaFormat?, deltaLabel?, context?, value?, delta?, kind?, variant?, surface?, tone?, size?, align?, orientation?, icon?, target?, targetLabel?, max?, parts?, rank?, rankOf?, unitValue?, showTrend? }[]",
           "required": true,
-          "description": "One card per metric; each takes the props of `trend-card`."
+          "description": "One card per metric; each takes the props of `trend-card`, including its own `variant`, `surface`, `tone` and `size`."
+        },
+        {
+          "name": "variant",
+          "type": "StatTileVariant",
+          "description": "The display of every card: any `stat-tile` variant (`sparkline`, `area`, `bars`, `dots`, `split`, `compact`, `progress`, `ring`, `comparison`, `delta-first`, `icon`, `breakdown`, `rank`, `hero`, `filled`, `tinted`, `borderless`, `outline-accent`). Omit for the original cards with an interactive sparkline."
+        },
+        {
+          "name": "variants",
+          "type": "StatTileVariant[]",
+          "description": "A display per card, by position, so one grid mixes them on purpose: `[\"split\", \"area\", \"bars\", \"progress\"]`. A metric's own `variant` wins; cards past the end use `variant`."
+        },
+        {
+          "name": "surface",
+          "type": "\"plain\" | \"borderless\" | \"filled\" | \"tinted\" | \"outline-accent\"",
+          "description": "The ground of every card."
+        },
+        {
+          "name": "tone",
+          "type": "\"neutral\" | \"accent\" | \"positive\" | \"negative\" | number | \"series\"",
+          "description": "Tone of every card. `series` gives each card the next categorical colour."
+        },
+        {
+          "name": "layout",
+          "type": "\"cards\" | \"dividers\"",
+          "default": "\"cards\"",
+          "description": "Separate cards, or open tiles with hairlines between them."
+        },
+        {
+          "name": "featured",
+          "type": "boolean",
+          "default": "false",
+          "description": "The first card spans two columns and is set one size larger."
+        },
+        {
+          "name": "density",
+          "type": "\"dense\" | \"default\" | \"roomy\"",
+          "default": "\"default\"",
+          "description": "Spacing and type scale: cards are `sm`, `md` or `lg`, with 8, 12 or 16px between them."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Set false to stop a named theme painting its ground."
         },
         {
           "name": "compare",
@@ -10793,7 +11238,7 @@
         {
           "name": "theme",
           "type": "ThemeInput",
-          "description": "Theme override, passed on to every card."
+          "description": "A theme name such as `\"ledger\"`, or token overrides, passed on to every card. A named theme paints its own ground."
         },
         {
           "name": "mode",
@@ -11047,7 +11492,12 @@
         {
           "name": "theme",
           "type": "ThemeInput",
-          "description": "Theme override, passed on to every chart."
+          "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to every chart. A named theme with its own surface paints that surface behind the component."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint the theme's surface behind the component. Default: on for a named theme with its own surface."
         },
         {
           "name": "mode",
@@ -11058,6 +11508,7 @@
       ],
       "example": {
         "type": "linked-charts",
+        "theme": "science",
         "title": "Asia generated 46% of the renewable electricity in these four regions from 2020 to 2024",
         "subtitle": "Electricity generation from hydro, wind and solar, TWh, four regions, 2020 to 2024",
         "data": [
@@ -11427,7 +11878,7 @@
           "source": "Source",
           "year": "Year"
         },
-        "hint": "Click a bar to filter the other charts",
+        "hint": "Click a bar or a slice to filter the other charts",
         "count": true,
         "charts": [
           {
@@ -11451,12 +11902,13 @@
             }
           },
           {
-            "type": "bar-chart",
+            "type": "donut-chart",
             "id": "by-source",
-            "x": "source",
-            "y": "twh",
+            "name": "source",
+            "value": "twh",
             "select": true,
             "format": "compact",
+            "centerLabel": "TWh",
             "height": 200,
             "title": "By source",
             "transform": {
@@ -11513,7 +11965,9 @@
       "avoid": "Parts that do not sum to the headline; more than about six parts (use `bar-chart`); composition compared across groups or over time (use `bar-chart` with `stack: \"percent\"` or `area-chart`).",
       "composes": [
         "big-number",
-        "segmented-bar"
+        "segmented-bar",
+        "progress-meter",
+        "stat-tile"
       ],
       "props": [
         {
@@ -11610,9 +12064,76 @@
           "description": "Method note or caveat."
         },
         {
+          "name": "variant",
+          "type": "\"plain\" | \"filled\" | \"tinted\" | \"with-icon\" | \"with-ring\" | \"with-trend\"",
+          "default": "\"plain\"",
+          "description": "How the headline number is dressed: passed to `big-number`."
+        },
+        {
+          "name": "icon",
+          "type": "IconInput",
+          "description": "Icon for the headline when `variant` is `with-icon`."
+        },
+        {
+          "name": "tone",
+          "type": "\"neutral\" | \"accent\" | \"positive\" | \"negative\" | number",
+          "description": "Tone of a filled or tinted headline."
+        },
+        {
+          "name": "display",
+          "type": "\"key\" | \"inline\" | \"meters\" | \"tiles\"",
+          "default": "\"key\"",
+          "description": "How the parts are shown: a list with values and shares, one wrapped line, a `progress-meter` per part scaled to the total, or a `stat-tile` per part."
+        },
+        {
+          "name": "tileVariant",
+          "type": "StatTileVariant",
+          "default": "\"progress\"",
+          "description": "The tile display when `display` is `tiles`: `progress`, `ring`, `filled`, `tinted`, `plain`... Each tile gets the part's value, the total as `max` and the part's categorical colour."
+        },
+        {
+          "name": "tileSurface",
+          "type": "\"plain\" | \"borderless\" | \"filled\" | \"tinted\" | \"outline-accent\"",
+          "description": "The ground of each tile when `display` is `tiles`."
+        },
+        {
+          "name": "layout",
+          "type": "\"stacked\" | \"side\"",
+          "default": "\"stacked\"",
+          "description": "`side` puts the headline left and the parts right from 600px."
+        },
+        {
+          "name": "columns",
+          "type": "number",
+          "description": "Columns for the key, meters or tiles. Default: by width."
+        },
+        {
+          "name": "bar",
+          "type": "boolean",
+          "default": "true",
+          "description": "Set false to leave out the segmented bar, e.g. with `meters` or `tiles`."
+        },
+        {
+          "name": "dividers",
+          "type": "boolean",
+          "default": "true",
+          "description": "Hairlines between key rows."
+        },
+        {
+          "name": "density",
+          "type": "\"dense\" | \"default\" | \"roomy\"",
+          "default": "\"default\"",
+          "description": "Spacing between the bar, the key rows and the tiles."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Set false to stop a named theme painting its ground."
+        },
+        {
           "name": "theme",
           "type": "ThemeInput",
-          "description": "Theme override, passed on to the number and the bar."
+          "description": "A theme name such as `\"earth\"`, or token overrides, passed on to the number and the bar. A named theme paints its own ground."
         },
         {
           "name": "mode",
@@ -12019,7 +12540,12 @@
         {
           "name": "theme",
           "type": "ThemeInput",
-          "description": "Theme override, passed on to the visual."
+          "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the visual. A named theme with its own surface paints that surface behind the component."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint the theme's surface behind the component. Default: on for a named theme with its own surface."
         },
         {
           "name": "mode",
@@ -12030,6 +12556,7 @@
       ],
       "example": {
         "type": "proportion-statement",
+        "theme": "sunrise",
         "value": 33,
         "total": 100,
         "text": "people in the world have never used the internet.",
@@ -12050,7 +12577,8 @@
       "composes": [
         "pull-quote",
         "big-number",
-        "sparkline"
+        "sparkline",
+        "progress-meter"
       ],
       "props": [
         {
@@ -12103,7 +12631,12 @@
         {
           "name": "theme",
           "type": "ThemeInput",
-          "description": "Theme override, passed on to the quote and the figure."
+          "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the quote and the figure. A named theme with its own surface paints that surface behind the component."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint the theme's surface behind the component. Default: on for a named theme with its own surface."
         },
         {
           "name": "mode",
@@ -12114,6 +12647,7 @@
       ],
       "example": {
         "type": "quote-figure",
+        "theme": "magenta",
         "quote": "Solar met more than half of demand on 41% of summer afternoons in 2024. We do not have enough storage for the midday surplus yet.",
         "attribution": "Marta Keller",
         "role": "Grid planner, quoted in the 2024 system adequacy review",
@@ -12273,7 +12807,12 @@
         {
           "name": "theme",
           "type": "ThemeInput",
-          "description": "Theme override."
+          "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object. A named theme with its own surface paints that surface behind the component."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint the theme's surface behind the component. Default: on for a named theme with its own surface."
         },
         {
           "name": "mode",
@@ -12357,7 +12896,8 @@
       "avoid": "Steps that change several things at once, or that swap to an unrelated chart (start a new `section` instead). More than about seven steps. A fact that one view can show (use `chart-callout`). In documents that will be printed or embedded in a short frame, set `scrollMode: \"steps\"`.",
       "composes": [
         "prose",
-        "bar-chart"
+        "bar-chart",
+        "line-chart"
       ],
       "props": [
         {
@@ -12430,7 +12970,12 @@
         {
           "name": "theme",
           "type": "ThemeInput",
-          "description": "Theme override, passed on to the chart and the step cards."
+          "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the chart and the step cards. A named theme with its own surface paints that surface behind the component."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint the theme's surface behind the component. Default: on for a named theme with its own surface."
         },
         {
           "name": "mode",
@@ -12441,6 +12986,7 @@
       ],
       "example": {
         "type": "scrolly-chart",
+        "theme": "earth",
         "chart": {
           "type": "bar-chart",
           "data": [
@@ -12532,6 +13078,7 @@
         "prose",
         "line-chart",
         "bar-chart",
+        "area-chart",
         "stat-tile"
       ],
       "props": [
@@ -12612,7 +13159,12 @@
         {
           "name": "theme",
           "type": "ThemeInput",
-          "description": "Theme override, passed on to everything inside."
+          "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the component."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint the theme's surface behind the component. Default: on for a named theme with its own surface."
         },
         {
           "name": "mode",
@@ -12623,6 +13175,7 @@
       ],
       "example": {
         "type": "section",
+        "theme": "ocean",
         "step": 2,
         "total": 4,
         "title": "First-quarter churn was 2.0% for customers who joined after March",
@@ -12733,7 +13286,8 @@
       "composes": [
         "legend-key",
         "bar-chart",
-        "waffle-chart"
+        "waffle-chart",
+        "dumbbell-chart"
       ],
       "props": [
         {
@@ -12830,7 +13384,12 @@
         {
           "name": "theme",
           "type": "ThemeInput",
-          "description": "Theme override, passed on to every panel."
+          "description": "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to every panel. A named theme with its own surface paints that surface behind the component."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint the theme's surface behind the component. Default: on for a named theme with its own surface."
         },
         {
           "name": "mode",
@@ -12841,6 +13400,7 @@
       ],
       "example": {
         "type": "small-multiple-grid",
+        "theme": "poster",
         "title": "65% of Dutch workers aged 25 to 34 worked from home usually or sometimes in 2023",
         "subtitle": "Share of employed people working from home usually or sometimes, by age group, six EU countries, 2023. All panels run from 0 to 70%",
         "data": [
@@ -13061,7 +13621,7 @@
       "title": "Stat row",
       "level": "molecule",
       "category": "layout",
-      "description": "Two to five key figures in one row separated by hairlines, collapsing to two columns and then one as the container narrows.",
+      "description": "Two to five key figures in one row, as open numbers separated by hairlines or as stat tiles of any variant, collapsing to two columns and then one as the container narrows.",
       "whenToUse": "The opening summary of a report or dashboard: the two to five most important numbers. Give every figure a delta or a context line, and order them by importance.",
       "avoid": "More than five figures (use `kpi-grid`), a single lead number (use `big-number` with `size: \"hero\"`), or figures that need their history shown (use `kpi-grid`, or `variant: \"tiles\"` with a `trend`).",
       "composes": [
@@ -13071,15 +13631,59 @@
       "props": [
         {
           "name": "items",
-          "type": "{ value, label, context?, delta?, deltaLabel?, upIsGood?, format?, trend? }[]",
+          "type": "{ value, label, context?, delta?, deltaLabel?, upIsGood?, format?, trend?, variant?, surface?, tone?, size?, align?, series?, target?, targetLabel?, max?, comparison?, comparisonLabel?, valueLabel?, parts?, icon?, unitValue?, rank?, rankOf?, orientation?, edge? }[]",
           "required": true,
-          "description": "Two to five figures, most important first. Each takes the props of `big-number` (or `stat-tile` when `variant` is `tiles`)."
+          "description": "Two to five figures, most important first. In `plain` each takes the props of `big-number`; otherwise each takes the props of `stat-tile`, and an item's own `variant`, `surface`, `tone` and `size` override the row's."
         },
         {
           "name": "variant",
-          "type": "\"plain\" | \"tiles\"",
+          "type": "\"plain\" | \"tiles\" | StatTileVariant",
           "default": "\"plain\"",
-          "description": "Open figures divided by hairlines, or bordered tiles that can carry a `trend`."
+          "description": "`plain`: open `big-number` figures divided by hairlines. `tiles`: bordered `stat-tile` cards. Any `stat-tile` variant (`sparkline`, `area`, `bars`, `dots`, `progress`, `ring`, `comparison`, `delta-first`, `icon`, `unit`, `breakdown`, `rank`, `split`, `compact`, `hero`, `filled`, `tinted`, `borderless`, `outline-accent`) draws every item as that tile. Setting `variant` on any item also switches the row to tiles."
+        },
+        {
+          "name": "surface",
+          "type": "\"plain\" | \"borderless\" | \"filled\" | \"tinted\" | \"outline-accent\"",
+          "description": "Tiles only: the ground of every tile."
+        },
+        {
+          "name": "tone",
+          "type": "\"neutral\" | \"accent\" | \"positive\" | \"negative\" | number | \"series\"",
+          "description": "Tone of every tile. `series` gives each tile the next categorical colour, for figures that name different entities."
+        },
+        {
+          "name": "layout",
+          "type": "\"cards\" | \"dividers\"",
+          "default": "\"cards\"",
+          "description": "Tiles only: separate cards, or open tiles with hairlines between them."
+        },
+        {
+          "name": "columns",
+          "type": "number",
+          "description": "Preferred number of columns. Default: one row when every figure has room."
+        },
+        {
+          "name": "featured",
+          "type": "boolean",
+          "default": "false",
+          "description": "The first figure spans two columns and is set one size larger."
+        },
+        {
+          "name": "density",
+          "type": "\"dense\" | \"default\" | \"roomy\"",
+          "default": "\"default\"",
+          "description": "Spacing and type scale: tiles are `sm`, `md` or `lg`."
+        },
+        {
+          "name": "align",
+          "type": "\"left\" | \"center\"",
+          "default": "\"left\"",
+          "description": "Text alignment of every figure."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Set false to stop a named theme painting its ground."
         },
         {
           "name": "format",
@@ -13110,7 +13714,7 @@
         {
           "name": "theme",
           "type": "ThemeInput",
-          "description": "Theme override, passed on to every figure."
+          "description": "A theme name such as `\"ledger\"`, or token overrides, passed on to every figure. A named theme paints its own ground."
         },
         {
           "name": "mode",
@@ -13160,7 +13764,7 @@
       "title": "Trend card",
       "level": "molecule",
       "category": "layout",
-      "description": "A KPI card computed from a series: the latest value, its change against a baseline in the same data, and a sparkline of the series.",
+      "description": "A KPI card computed from a series: the latest value, its change against a baseline in the same data, and a trend graphic, in any `stat-tile` variant.",
       "whenToUse": "A metric whose recent history matters as much as its level: users, revenue, response time. Pass the series and field names; the figure, the change and the sparkline all come from the same rows, so they cannot disagree.",
       "avoid": "A number with no history (use `big-number` or `stat-tile`); several metrics from one dataset (use `kpi-grid`); a series the reader must read values from (use `line-chart`).",
       "composes": [
@@ -13263,9 +13867,97 @@
           "description": "Where the sparkline sits; `right` falls back to `bottom` in narrow cards."
         },
         {
+          "name": "variant",
+          "type": "StatTileVariant",
+          "description": "The tile display: any `stat-tile` variant (`sparkline`, `area`, `bars`, `dots`, `split`, `compact`, `progress`, `ring`, `comparison`, `delta-first`, `icon`, `breakdown`, `rank`, `unit`, `hero`, `filled`, `tinted`, `borderless`, `outline-accent`, `plain`). The series is passed as the tile's `series`; `comparison` takes the baseline value and both period names from the rows. Omit for the original card with an interactive `sparkline` atom (tooltip on hover)."
+        },
+        {
+          "name": "showTrend",
+          "type": "boolean",
+          "default": "true",
+          "description": "With a `variant` that does not draw the series itself (`filled`, `icon`, `hero`, `delta-first`...), a line is drawn at the bottom; set false to leave it off."
+        },
+        {
+          "name": "surface",
+          "type": "\"plain\" | \"borderless\" | \"filled\" | \"tinted\" | \"outline-accent\"",
+          "description": "The tile's ground, with any `variant`."
+        },
+        {
+          "name": "tone",
+          "type": "\"neutral\" | \"accent\" | \"positive\" | \"negative\" | number",
+          "description": "Colour of the tile's graphic or ground; a number picks a categorical colour, 0-based."
+        },
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\" | \"lg\"",
+          "default": "\"md\"",
+          "description": "Tile scale."
+        },
+        {
+          "name": "align",
+          "type": "\"left\" | \"center\" | \"right\"",
+          "description": "Text alignment."
+        },
+        {
+          "name": "orientation",
+          "type": "\"vertical\" | \"horizontal\"",
+          "description": "Graphic under or beside the figure, as in `stat-tile`."
+        },
+        {
+          "name": "icon",
+          "type": "IconInput",
+          "description": "Icon for the `icon` and `unit` variants."
+        },
+        {
+          "name": "target",
+          "type": "number",
+          "description": "Goal for the `progress` and `ring` variants."
+        },
+        {
+          "name": "targetLabel",
+          "type": "string",
+          "default": "\"Target\"",
+          "description": "Name for the target."
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "description": "End of the scale for `progress` and `ring`; total count for `unit`."
+        },
+        {
+          "name": "parts",
+          "type": "{ label: string; value: number }[]",
+          "description": "Composition of the latest value, for `breakdown`."
+        },
+        {
+          "name": "rank",
+          "type": "number",
+          "description": "Position for the `rank` variant."
+        },
+        {
+          "name": "rankOf",
+          "type": "number",
+          "description": "Entries ranked."
+        },
+        {
+          "name": "unitValue",
+          "type": "number",
+          "description": "What one icon stands for in `unit`."
+        },
+        {
+          "name": "edge",
+          "type": "\"left\" | \"top\"",
+          "description": "Edge of the rule on an `outline-accent` surface."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Set false to stop a named theme painting its ground."
+        },
+        {
           "name": "theme",
           "type": "ThemeInput",
-          "description": "Theme override, passed on to the tile and sparkline."
+          "description": "A theme name such as `\"ledger\"`, or token overrides, passed on to the tile. A named theme paints its own ground."
         },
         {
           "name": "mode",
@@ -13911,7 +14603,8 @@
         "source-note",
         "line-chart",
         "bar-chart",
-        "segmented-bar"
+        "segmented-bar",
+        "waffle-chart"
       ],
       "props": [
         {
@@ -14022,7 +14715,12 @@
         {
           "name": "theme",
           "type": "ThemeInput",
-          "description": "Theme override, passed on to everything inside."
+          "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint the theme's surface behind the piece, with page padding. Default: on when `theme` is a named theme with its own surface. Set false when the host already paints it."
         },
         {
           "name": "mode",
@@ -14033,6 +14731,7 @@
       ],
       "example": {
         "type": "comparison-brief",
+        "theme": "earth",
         "kicker": "Home heating",
         "title": "With the £7,500 grant, a heat pump repays its extra £500 cost in 4 years",
         "deck": "After the grant a heat pump costs £3,500 to buy and fit. A gas boiler costs £3,000. The heat pump costs £855 a year to run. The boiler costs £980.",
@@ -14184,58 +14883,58 @@
         "heroText": "Without the grant the heat pump costs £11,000 to buy and fit. That is £8,000 more than the boiler. A saving of £125 a year would take 64 years to repay it.",
         "pairs": [
           {
-            "title": "The January energy bill is £142 for the heat pump and £158 for the boiler",
+            "title": "The January energy bill is £120 for the heat pump and £139 for the boiler",
             "text": "Estimated monthly energy cost for heating and hot water. Both charts use the same scale. The heat pump's bill is lower in all 12 months.",
             "a": {
               "type": "bar-chart",
               "data": [
                 {
                   "month": "Jan",
-                  "cost": 142
+                  "cost": 120
                 },
                 {
                   "month": "Feb",
-                  "cost": 128
+                  "cost": 108
                 },
                 {
                   "month": "Mar",
-                  "cost": 102
+                  "cost": 86
                 },
                 {
                   "month": "Apr",
-                  "cost": 68
+                  "cost": 57
                 },
                 {
                   "month": "May",
-                  "cost": 40
+                  "cost": 34
                 },
                 {
                   "month": "Jun",
-                  "cost": 28
+                  "cost": 24
                 },
                 {
                   "month": "Jul",
-                  "cost": 25
+                  "cost": 21
                 },
                 {
                   "month": "Aug",
-                  "cost": 26
+                  "cost": 22
                 },
                 {
                   "month": "Sep",
-                  "cost": 38
+                  "cost": 32
                 },
                 {
                   "month": "Oct",
-                  "cost": 66
+                  "cost": 56
                 },
                 {
                   "month": "Nov",
-                  "cost": 98
+                  "cost": 83
                 },
                 {
                   "month": "Dec",
-                  "cost": 134
+                  "cost": 112
                 }
               ],
               "x": "month",
@@ -14247,7 +14946,7 @@
               "height": 200,
               "option": {
                 "yAxis": {
-                  "max": 160
+                  "max": 140
                 }
               }
             },
@@ -14256,51 +14955,51 @@
               "data": [
                 {
                   "month": "Jan",
-                  "cost": 158
+                  "cost": 139
                 },
                 {
                   "month": "Feb",
-                  "cost": 141
+                  "cost": 124
                 },
                 {
                   "month": "Mar",
-                  "cost": 115
+                  "cost": 101
                 },
                 {
                   "month": "Apr",
-                  "cost": 78
+                  "cost": 69
                 },
                 {
                   "month": "May",
-                  "cost": 49
+                  "cost": 43
                 },
                 {
                   "month": "Jun",
-                  "cost": 37
+                  "cost": 33
                 },
                 {
                   "month": "Jul",
-                  "cost": 34
+                  "cost": 30
                 },
                 {
                   "month": "Aug",
-                  "cost": 35
+                  "cost": 31
                 },
                 {
                   "month": "Sep",
-                  "cost": 46
+                  "cost": 41
                 },
                 {
                   "month": "Oct",
-                  "cost": 74
+                  "cost": 65
                 },
                 {
                   "month": "Nov",
-                  "cost": 107
+                  "cost": 94
                 },
                 {
                   "month": "Dec",
-                  "cost": 146
+                  "cost": 130
                 }
               ],
               "x": "month",
@@ -14313,14 +15012,14 @@
               "highlight": "none",
               "option": {
                 "yAxis": {
-                  "max": 160
+                  "max": 140
                 }
               }
             }
           },
           {
             "title": "Cost over 15 years by part",
-            "text": "Energy is £12,075 of the heat pump's cost. It is £13,500 of the boiler's.",
+            "text": "Energy is £11,325 of the heat pump's £16,325. It is £13,500 of the boiler's £17,700.",
             "a": {
               "type": "segmented-bar",
               "data": [
@@ -14330,7 +15029,7 @@
                 },
                 {
                   "part": "Energy",
-                  "gbp": 12075
+                  "gbp": 11325
                 },
                 {
                   "part": "Servicing",
@@ -14659,7 +15358,10 @@
         "linked-charts",
         "data-table",
         "source-note",
-        "bar-chart"
+        "bar-chart",
+        "donut-chart",
+        "lollipop-chart",
+        "segmented-bar"
       ],
       "props": [
         {
@@ -14724,6 +15426,12 @@
           "name": "figures",
           "type": "{ label, field?, op?, where?: { field, value }, per?, format?, context? }[]",
           "description": "Figures recomputed from the filtered rows: `op` over `field` (default sum; count without a field), optionally restricted by `where` and divided by the sum of `per` for a rate or share. While a filter is active each shows the all-rows value as context."
+        },
+        {
+          "name": "figuresVariant",
+          "type": "StatRowProps[\"variant\"]",
+          "default": "\"plain\"",
+          "description": "How the figures are displayed: any `variant` of `stat-row`, e.g. `tiles`, `tinted` or `outline-accent`. Extra fields on a figure (`tone`, `surface`, `icon`...) are passed to its `stat-row` item."
         },
         {
           "name": "table",
@@ -14803,7 +15511,12 @@
         {
           "name": "theme",
           "type": "ThemeInput",
-          "description": "Theme override, passed on to everything inside."
+          "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint the theme's surface behind the piece, with page padding. Default: on when `theme` is a named theme with its own surface. Set false when the host already paints it."
         },
         {
           "name": "mode",
@@ -14814,6 +15527,7 @@
       ],
       "example": {
         "type": "data-explorer",
+        "theme": "science",
         "kicker": "City bike share · June",
         "title": "Casual riders' trips averaged 24.6 minutes in June, against 12.0 for members",
         "deck": "70% of casual trips were at weekends. 40% started in Riverside. The view below is filtered to casual riders.",
@@ -15337,6 +16051,7 @@
           }
         ],
         "unit": "trips",
+        "figuresVariant": "outline-accent",
         "labels": {
           "rider": "Rider",
           "daypart": "Time of day",
@@ -15386,14 +16101,13 @@
         ],
         "charts": [
           {
-            "type": "bar-chart",
+            "type": "donut-chart",
             "id": "by-rider",
-            "x": "rider",
-            "y": "trips",
+            "name": "rider",
+            "value": "trips",
             "select": true,
-            "sort": "none",
-            "orientation": "horizontal",
             "format": "integer",
+            "height": 220,
             "title": "Rider",
             "subtitle": "Trips, thousands",
             "transform": {
@@ -15453,13 +16167,12 @@
             }
           },
           {
-            "type": "bar-chart",
+            "type": "lollipop-chart",
             "id": "by-district",
             "x": "district",
             "y": "trips",
             "select": true,
             "sort": "desc",
-            "orientation": "horizontal",
             "format": "integer",
             "title": "Start district",
             "subtitle": "Trips, thousands",
@@ -15560,7 +16273,10 @@
         "source-note",
         "line-chart",
         "dumbbell-chart",
-        "bar-chart"
+        "slope-chart",
+        "bar-chart",
+        "heatmap",
+        "diverging-bar-chart"
       ],
       "props": [
         {
@@ -15591,8 +16307,8 @@
         },
         {
           "name": "figures",
-          "type": "{ value, label, context?, delta?, deltaLabel?, upIsGood?, format? }[]",
-          "description": "Three or four key figures, most important first. Rendered with `stat-row`."
+          "type": "StatRowItem[] | StatRowProps",
+          "description": "Three or four key figures, most important first. A list of `{ value, label, context?, delta?, deltaLabel?, upIsGood?, format? }`, or the props of `stat-row` (`{ items, variant, ... }`) to choose how they are drawn."
         },
         {
           "name": "hero",
@@ -15660,7 +16376,12 @@
         {
           "name": "theme",
           "type": "ThemeInput",
-          "description": "Theme override, passed on to everything inside."
+          "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint the theme's surface behind the piece, with page padding. Default: on when `theme` is a named theme with its own surface. Set false when the host already paints it."
         },
         {
           "name": "mode",
@@ -15671,96 +16392,129 @@
       ],
       "example": {
         "type": "executive-brief",
+        "theme": "ledger",
         "kicker": "Retention review · Q4 2024",
         "title": "Monthly churn fell from 4.2% to 2.1% in 2024",
         "deck": "The new onboarding shipped in March. Accounts that joined before March still churn at 3.8% a month.",
         "byline": "Growth analytics",
         "date": "2025-01-14",
-        "figures": [
-          {
-            "value": "2.1%",
-            "label": "Monthly churn, December",
-            "delta": "−2.1 pts",
-            "deltaLabel": "vs January",
-            "upIsGood": false
-          },
-          {
-            "value": 0.61,
-            "format": "percent",
-            "label": "New accounts finishing setup in week one",
-            "delta": "+19 pts",
-            "deltaLabel": "vs January"
-          },
-          {
-            "value": 1.12,
-            "format": "percent",
-            "label": "Net revenue retention",
-            "context": "Top quartile for the sector is 110%"
-          },
-          {
-            "value": "$1.9m",
-            "label": "Annual revenue retained",
-            "context": "Compared with churn staying at the January rate of 4.2%"
-          }
-        ],
+        "figures": {
+          "variant": "tiles",
+          "items": [
+            {
+              "surface": "outline-accent",
+              "edge": "top",
+              "value": "2.1%",
+              "label": "Monthly churn, December",
+              "delta": "−2.1 pts",
+              "deltaLabel": "vs January",
+              "upIsGood": false
+            },
+            {
+              "surface": "outline-accent",
+              "edge": "top",
+              "value": 0.61,
+              "format": "percent",
+              "label": "New accounts finishing setup in week one",
+              "delta": "+19 pts",
+              "deltaLabel": "vs January"
+            },
+            {
+              "surface": "outline-accent",
+              "edge": "top",
+              "value": 1.12,
+              "format": "percent",
+              "label": "Net revenue retention",
+              "context": "Top quartile for the sector is 110%"
+            },
+            {
+              "surface": "outline-accent",
+              "edge": "top",
+              "value": "$1.9m",
+              "label": "Annual revenue retained",
+              "context": "Compared with churn staying at the January rate of 4.2%"
+            }
+          ]
+        },
         "hero": {
           "type": "line-chart",
           "data": [
             {
               "month": "2024-01-01",
-              "churn": 4.2
+              "churn": 4.2,
+              "prior": 4.4
             },
             {
               "month": "2024-02-01",
-              "churn": 4.3
+              "churn": 4.3,
+              "prior": 4.3
             },
             {
               "month": "2024-03-01",
-              "churn": 4.1
+              "churn": 4.1,
+              "prior": 4.4
             },
             {
               "month": "2024-04-01",
-              "churn": 3.6
+              "churn": 3.6,
+              "prior": 4.2
             },
             {
               "month": "2024-05-01",
-              "churn": 3.1
+              "churn": 3.1,
+              "prior": 4.3
             },
             {
               "month": "2024-06-01",
-              "churn": 2.9
+              "churn": 2.9,
+              "prior": 4.1
             },
             {
               "month": "2024-07-01",
-              "churn": 2.6
+              "churn": 2.6,
+              "prior": 4.2
             },
             {
               "month": "2024-08-01",
-              "churn": 2.4
+              "churn": 2.4,
+              "prior": 4.3
             },
             {
               "month": "2024-09-01",
-              "churn": 2.3
+              "churn": 2.3,
+              "prior": 4.1
             },
             {
               "month": "2024-10-01",
-              "churn": 2.2
+              "churn": 2.2,
+              "prior": 4.2
             },
             {
               "month": "2024-11-01",
-              "churn": 2.1
+              "churn": 2.1,
+              "prior": 4.3
             },
             {
               "month": "2024-12-01",
-              "churn": 2.1
+              "churn": 2.1,
+              "prior": 4.2
             }
           ],
           "x": "month",
-          "y": "churn",
+          "y": [
+            "churn",
+            "prior"
+          ],
+          "names": {
+            "churn": "2024",
+            "prior": "2023"
+          },
+          "highlight": "churn",
+          "contextLabels": true,
           "format": "{value}%",
           "zero": true,
           "title": "Monthly churn fell from 4.1% in March to 2.1% in December",
-          "subtitle": "Share of paying accounts cancelling each month, 2024",
+          "subtitle": "Share of paying accounts cancelling each month, 2024 and the same months of 2023",
           "annotations": [
             {
               "type": "line",
@@ -15780,7 +16534,7 @@
         },
         "takeaway": {
           "lead": "Churn was between 2.1% and 2.4% from August to December",
-          "body": "The new onboarding shipped in March. Churn did not fall in the same months of 2023."
+          "body": "The new onboarding shipped in March. Churn was between 4.1% and 4.4% in every month of 2023."
         },
         "supporting": [
           {
@@ -15821,7 +16575,7 @@
             "subtitle": "Monthly churn by plan, January and December 2024"
           },
           {
-            "type": "bar-chart",
+            "type": "slope-chart",
             "data": [
               {
                 "reason": "Setup not finished",
@@ -15849,14 +16603,20 @@
                 "after": 16
               }
             ],
-            "x": "reason",
-            "y": "after",
-            "sort": "none",
-            "orientation": "horizontal",
+            "series": "reason",
+            "y": [
+              "before",
+              "after"
+            ],
+            "names": {
+              "before": "Q1",
+              "after": "Q4"
+            },
             "format": "{value}%",
             "highlight": "Setup not finished",
-            "title": "“Setup not finished” was the reason for 14% of cancellations in Q4",
-            "subtitle": "Share of cancellations by stated reason, Q4 2024. “Setup not finished” was 38% in Q1"
+            "height": 260,
+            "title": "“Setup not finished” fell from 38% to 14% of cancellations",
+            "subtitle": "Share of cancellations by stated reason, Q1 and Q4 2024"
           }
         ],
         "actions": [
@@ -15903,9 +16663,13 @@
         "callout",
         "source-note",
         "bar-chart",
+        "donut-chart",
+        "pictogram-chart",
         "icon-stat",
         "line-chart",
-        "segmented-bar"
+        "segmented-bar",
+        "treemap",
+        "lollipop-chart"
       ],
       "props": [
         {
@@ -15936,8 +16700,8 @@
         },
         {
           "name": "hook",
-          "type": "{ value, total?, text?, figure?, visual?, icon?, detail?, label?, context?, format? } | Slot",
-          "description": "The opening number. With `text` it renders a `proportion-statement` (\"19 in every 100 ...\"); with `label` a hero `big-number`. A spec or element is rendered as given."
+          "type": "{ value, total?, text?, figure?, visual?, icon?, detail?, label?, context?, format?, variant?, tone?, series?, target?, max? } | Slot",
+          "description": "The opening number. With `text` it renders a `proportion-statement` (\"19 in every 100 ...\"); with `label` a hero `big-number`, which also takes that atom's `variant` (`filled`, `tinted`, `with-icon`, `with-ring`, `with-trend`), `tone`, `icon`, `series`, `target` and `max`. A spec or element is rendered as given."
         },
         {
           "name": "hero",
@@ -16004,7 +16768,12 @@
         {
           "name": "theme",
           "type": "ThemeInput",
-          "description": "Theme override, passed on to everything inside."
+          "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint the theme's surface behind the piece, with page padding. Default: on when `theme` is a named theme with its own surface. Set false when the host already paints it."
         },
         {
           "name": "mode",
@@ -16015,6 +16784,7 @@
       ],
       "example": {
         "type": "explainer",
+        "theme": "sunrise",
         "kicker": "Food and climate",
         "title": "Households threw away 631 million tonnes of food in 2022",
         "deck": "That is 60% of the 1.05 billion tonnes of food wasted worldwide. Food service wasted 290 million tonnes and retail 131 million.",
@@ -16025,7 +16795,7 @@
           "detail": "That was 1.05 billion tonnes in 2022."
         },
         "hero": {
-          "type": "bar-chart",
+          "type": "donut-chart",
           "data": [
             {
               "sector": "Households",
@@ -16040,12 +16810,12 @@
               "mt": 131
             }
           ],
-          "x": "sector",
-          "y": "mt",
-          "sort": "none",
-          "orientation": "horizontal",
-          "highlight": "Households",
+          "name": "sector",
+          "value": "mt",
           "format": "{value} Mt",
+          "centerLabel": "Million tonnes wasted",
+          "centerValue": "1,052",
+          "height": 340,
           "title": "Households produced 60% of the world's food waste in 2022",
           "subtitle": "Food waste by sector, million tonnes (Mt), 2022",
           "source": "UNEP Food Waste Index Report 2024",
@@ -16057,7 +16827,7 @@
             "title": "Household food waste by income group",
             "text": "Households in high-income countries waste 81 kg of food per person a year. In upper-middle-income countries the figure is 88 kg. In lower-middle-income countries it is 86 kg.",
             "exhibit": {
-              "type": "bar-chart",
+              "type": "pictogram-chart",
               "data": [
                 {
                   "group": "High income",
@@ -16072,10 +16842,11 @@
                   "kg": 86
                 }
               ],
-              "x": "group",
-              "y": "kg",
-              "sort": "none",
-              "orientation": "horizontal",
+              "name": "group",
+              "value": "kg",
+              "unit": 10,
+              "unitLabel": "10 kg of food",
+              "icon": "apple",
               "format": "{value} kg",
               "subtitle": "Household food waste per person per year, by country income group"
             },
@@ -16123,6 +16894,7 @@
             "exhibit": {
               "type": "icon-stat",
               "icon": "person",
+              "tone": "negative",
               "count": 1,
               "total": 11,
               "columns": 11,
@@ -17882,10 +18654,14 @@
       "composes": [
         "headline",
         "prose",
+        "stat-row",
         "source-note",
         "bar-chart",
         "progress-meter",
-        "line-chart"
+        "line-chart",
+        "dumbbell-chart",
+        "histogram",
+        "diverging-bar-chart"
       ],
       "props": [
         {
@@ -17924,6 +18700,11 @@
           "type": "string",
           "default": "\"Summary\"",
           "description": "Heading of the summary."
+        },
+        {
+          "name": "figures",
+          "type": "StatRowItem[] | StatRowProps",
+          "description": "Two to four key figures shown under the summary. A list of `{ value, label, context?, delta?, ... }`, or the props of `stat-row` (`{ items, variant, ... }`) to choose how they are drawn."
         },
         {
           "name": "findings",
@@ -17986,7 +18767,12 @@
         {
           "name": "theme",
           "type": "ThemeInput",
-          "description": "Theme override, passed on to everything inside."
+          "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint the theme's surface behind the piece, with page padding. Default: on when `theme` is a named theme with its own surface. Set false when the host already paints it."
         },
         {
           "name": "mode",
@@ -17997,12 +18783,45 @@
       ],
       "example": {
         "type": "report-page",
+        "theme": "paper",
         "kicker": "Small-group tutoring programme · Year 1 evaluation",
         "title": "Tutored pupils gained 2.9 more scaled-score points in maths than matched pupils",
         "deck": "The difference in reading was 0.5 points. 31% of tutored pupils were eligible for free school meals against a funding target of 50%.",
         "byline": "Evaluation team",
         "date": "2025-02-20",
         "summary": "Pupils offered tutoring gained **2.9 more scaled-score points in maths** over the year than matched pupils who were not. That is about three months of additional learning. The difference in reading was 0.5 points and could be chance. Pupils who attended fewer than 12 sessions gained less than 1 point over their matches. 58% of pupils attended 12 or more. We recommend continuing the maths strand. Attendance should be the main delivery target. The way pupils are selected should change.",
+        "figures": {
+          "variant": "tiles",
+          "items": [
+            {
+              "variant": "comparison",
+              "value": 8.1,
+              "comparison": 5.2,
+              "valueLabel": "Tutored",
+              "comparisonLabel": "Comparison",
+              "delta": "+2.9 points",
+              "format": "decimal:1",
+              "label": "Mean gain in maths, scaled-score points"
+            },
+            {
+              "variant": "ring",
+              "value": 0.58,
+              "max": 1,
+              "format": "percent",
+              "label": "Tutored pupils attending 12 or more sessions",
+              "context": "20 sessions were offered"
+            },
+            {
+              "variant": "progress",
+              "value": 0.31,
+              "max": 1,
+              "target": 0.5,
+              "targetLabel": "Funding target",
+              "format": "percent",
+              "label": "Tutored pupils eligible for free school meals"
+            }
+          ]
+        },
         "findings": [
           {
             "title": "Tutored pupils gained 8.1 points in maths against 5.2 for comparison pupils",
@@ -18027,7 +18846,6 @@
               ],
               "orientation": "horizontal",
               "sort": "none",
-              "highlight": "Tutored",
               "format": "decimal:1",
               "subtitle": "Mean gain in scaled score, autumn 2023 to summer 2024",
               "source": "Standardised assessments, 42 schools"
@@ -18376,7 +19194,8 @@
         "prose",
         "source-note",
         "line-chart",
-        "bar-chart"
+        "bar-chart",
+        "bullet-chart"
       ],
       "props": [
         {
@@ -18480,7 +19299,12 @@
         {
           "name": "theme",
           "type": "ThemeInput",
-          "description": "Theme override, passed on to everything inside."
+          "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint the theme's surface behind the piece, with page padding. Default: on when `theme` is a named theme with its own surface. Set false when the host already paints it."
         },
         {
           "name": "mode",
@@ -18491,6 +19315,7 @@
       ],
       "example": {
         "type": "scorecard",
+        "theme": "noir",
         "kicker": "Online store scorecard",
         "reportPeriod": "October 2024",
         "title": "Orders rose 12% in October to 24,900",
@@ -18502,96 +19327,110 @@
               "orders": 18200,
               "conversion": 2.61,
               "aov": 64.1,
-              "returns": 8.1
+              "returns": 8.1,
+              "outerwear": 13
             },
             {
               "month": "2023-12-01",
               "orders": 26900,
               "conversion": 3.02,
               "aov": 66.8,
-              "returns": 8.4
+              "returns": 8.4,
+              "outerwear": 13.2
             },
             {
               "month": "2024-01-01",
               "orders": 17100,
               "conversion": 2.55,
               "aov": 63,
-              "returns": 9
+              "returns": 9,
+              "outerwear": 13.6
             },
             {
               "month": "2024-02-01",
               "orders": 16400,
               "conversion": 2.58,
               "aov": 62.4,
-              "returns": 8.2
+              "returns": 8.2,
+              "outerwear": 13.1
             },
             {
               "month": "2024-03-01",
               "orders": 17900,
               "conversion": 2.66,
               "aov": 62.9,
-              "returns": 8
+              "returns": 8,
+              "outerwear": 12.9
             },
             {
               "month": "2024-04-01",
               "orders": 18800,
               "conversion": 2.71,
               "aov": 62.2,
-              "returns": 7.9
+              "returns": 7.9,
+              "outerwear": 13.3
             },
             {
               "month": "2024-05-01",
               "orders": 19600,
               "conversion": 2.74,
               "aov": 61.8,
-              "returns": 8.3
+              "returns": 8.3,
+              "outerwear": 13
             },
             {
               "month": "2024-06-01",
               "orders": 19900,
               "conversion": 2.78,
               "aov": 61.5,
-              "returns": 8.1
+              "returns": 8.1,
+              "outerwear": 13.4
             },
             {
               "month": "2024-07-01",
               "orders": 20400,
               "conversion": 2.83,
               "aov": 61.9,
-              "returns": 8.4
+              "returns": 8.4,
+              "outerwear": 13.2
             },
             {
               "month": "2024-08-01",
               "orders": 21300,
               "conversion": 2.9,
               "aov": 61.2,
-              "returns": 9.6
+              "returns": 9.6,
+              "outerwear": 13.5
             },
             {
               "month": "2024-09-01",
               "orders": 22200,
               "conversion": 2.97,
               "aov": 60.8,
-              "returns": 10.5
+              "returns": 10.5,
+              "outerwear": 16.1
             },
             {
               "month": "2024-10-01",
               "orders": 24900,
               "conversion": 3.1,
               "aov": 61,
-              "returns": 11.4
+              "returns": 11.4,
+              "outerwear": 17.8
             }
           ],
           "x": "month",
           "compare": "previous",
           "metrics": [
             {
+              "variant": "area",
               "y": "orders",
               "label": "Orders",
               "format": "compact",
               "deltaLabel": "vs September"
             },
             {
+              "variant": "area",
               "y": "conversion",
               "label": "Conversion rate",
               "format": "{value}%",
@@ -18599,12 +19438,14 @@
               "deltaLabel": "vs September"
             },
             {
+              "variant": "area",
               "y": "aov",
               "label": "Average order value",
               "format": "currency:EUR",
               "deltaLabel": "vs September"
             },
             {
+              "variant": "area",
               "y": "returns",
               "label": "Return rate",
               "format": "{value}%",
@@ -18670,92 +19511,111 @@
                 "orders": 18200,
                 "conversion": 2.61,
                 "aov": 64.1,
-                "returns": 8.1
+                "returns": 8.1,
+                "outerwear": 13
               },
               {
                 "month": "2023-12-01",
                 "orders": 26900,
                 "conversion": 3.02,
                 "aov": 66.8,
-                "returns": 8.4
+                "returns": 8.4,
+                "outerwear": 13.2
               },
               {
                 "month": "2024-01-01",
                 "orders": 17100,
                 "conversion": 2.55,
                 "aov": 63,
-                "returns": 9
+                "returns": 9,
+                "outerwear": 13.6
               },
               {
                 "month": "2024-02-01",
                 "orders": 16400,
                 "conversion": 2.58,
                 "aov": 62.4,
-                "returns": 8.2
+                "returns": 8.2,
+                "outerwear": 13.1
               },
               {
                 "month": "2024-03-01",
                 "orders": 17900,
                 "conversion": 2.66,
                 "aov": 62.9,
-                "returns": 8
+                "returns": 8,
+                "outerwear": 12.9
               },
               {
                 "month": "2024-04-01",
                 "orders": 18800,
                 "conversion": 2.71,
                 "aov": 62.2,
-                "returns": 7.9
+                "returns": 7.9,
+                "outerwear": 13.3
               },
               {
                 "month": "2024-05-01",
                 "orders": 19600,
                 "conversion": 2.74,
                 "aov": 61.8,
-                "returns": 8.3
+                "returns": 8.3,
+                "outerwear": 13
               },
               {
                 "month": "2024-06-01",
                 "orders": 19900,
                 "conversion": 2.78,
                 "aov": 61.5,
-                "returns": 8.1
+                "returns": 8.1,
+                "outerwear": 13.4
               },
               {
                 "month": "2024-07-01",
                 "orders": 20400,
                 "conversion": 2.83,
                 "aov": 61.9,
-                "returns": 8.4
+                "returns": 8.4,
+                "outerwear": 13.2
               },
               {
                 "month": "2024-08-01",
                 "orders": 21300,
                 "conversion": 2.9,
                 "aov": 61.2,
-                "returns": 9.6
+                "returns": 9.6,
+                "outerwear": 13.5
               },
               {
                 "month": "2024-09-01",
                 "orders": 22200,
                 "conversion": 2.97,
                 "aov": 60.8,
-                "returns": 10.5
+                "returns": 10.5,
+                "outerwear": 16.1
               },
               {
                 "month": "2024-10-01",
                 "orders": 24900,
                 "conversion": 3.1,
                 "aov": 61,
-                "returns": 11.4
+                "returns": 11.4,
+                "outerwear": 17.8
               }
             ],
             "x": "month",
-            "y": "returns",
+            "y": [
+              "outerwear",
+              "returns"
+            ],
+            "names": {
+              "outerwear": "Outerwear",
+              "returns": "All orders"
+            },
             "format": "{value}%",
             "zero": true,
             "title": "The return rate rose from 8.4% in July to 11.4% in October",
-            "subtitle": "Share of orders returned, by month of order",
+            "subtitle": "Share of orders returned by month of order, all orders and outerwear",
             "annotations": [
               {
                 "type": "line",
@@ -18851,6 +19711,7 @@
         "bar-chart",
         "big-number",
         "waffle-chart",
+        "area-chart",
         "source-note"
       ],
       "props": [
@@ -18944,7 +19805,7 @@
         {
           "name": "theme",
           "type": "ThemeInput",
-          "description": "Theme override, passed on to the exhibit."
+          "description": "A built-in theme name (`\"magenta\"`, `\"noir\"`, `\"editorial\"`...) or a theme object, passed on to the exhibit. A named theme with its own surface paints the card in that surface; the download button stays in the page's theme."
         },
         {
           "name": "mode",
@@ -18955,6 +19816,7 @@
       ],
       "example": {
         "type": "social-card",
+        "theme": "magenta",
         "aspect": "1:1",
         "kicker": "Climate",
         "title": "The world was 1.6°C warmer in 2024 than in 1850 to 1900",
@@ -19040,14 +19902,15 @@
         "source-note",
         "bar-chart",
         "line-chart",
-        "radial-bar-chart"
+        "radial-bar-chart",
+        "waffle-chart"
       ],
       "props": [
         {
           "name": "cards",
           "type": "Card[]",
           "required": true,
-          "description": "The cards in order. Each has a `kind`: `title` `{ title, deck?, byline? }`; `stat` `{ value, label, context?, delta?, deltaLabel?, upIsGood?, format?, text? }`; `chart` `{ title, chart, text? }`; `quote` `{ quote, attribution?, role? }`; `closing` `{ title, text?, points?, action?: { label, href } }`. Any card takes `kicker`, `tone: \"surface\" | \"inverse\" | \"accent\"` and `id`."
+          "description": "The cards in order. Each has a `kind`: `title` `{ title, deck?, byline? }`; `stat` `{ value, label, context?, delta?, deltaLabel?, upIsGood?, format?, text?, variant?, icon?, series?, target?, max? }`, where `variant` is any `big-number` display (`with-icon`, `with-ring`, `with-trend`, `filled`, `tinted`); `chart` `{ title, chart, text? }`; `quote` `{ quote, attribution?, role? }`; `closing` `{ title, text?, points?, action?: { label, href } }`. Any card takes `kicker`, `tone: \"surface\" | \"inverse\" | \"accent\"` and `id`."
         },
         {
           "name": "label",
@@ -19128,7 +19991,7 @@
         {
           "name": "theme",
           "type": "ThemeInput",
-          "description": "Theme override, passed on to everything inside."
+          "description": "A built-in theme name (`\"dusk\"`, `\"magenta\"`, `\"paper\"`...) or a theme object, passed on to everything in the cards. A named theme with its own surface paints each card in that surface; the pager and the source note stay in the page's theme."
         },
         {
           "name": "mode",
@@ -19139,6 +20002,7 @@
       ],
       "example": {
         "type": "story-deck",
+        "theme": "dusk",
         "aspect": "4:5",
         "cards": [
           {
@@ -19152,13 +20016,42 @@
           {
             "kind": "stat",
             "kicker": "Distance",
+            "variant": "with-trend",
+            "series": [
+              1120,
+              1310,
+              1498,
+              1842
+            ],
             "value": 1842,
             "format": "integer",
             "label": "Kilometres run in 2024",
             "delta": 0.23,
             "deltaLabel": "vs 2023",
-            "context": "An average of 154 km a month",
-            "text": "You ran in 46 of the year's 52 weeks."
+            "context": "You ran 1,120 km in 2021 and 1,498 km in 2023."
+          },
+          {
+            "kind": "chart",
+            "kicker": "Weeks",
+            "title": "You ran in 46 of the year's 52 weeks",
+            "chart": {
+              "type": "waffle-chart",
+              "data": [
+                {
+                  "weeks": "Weeks with a run",
+                  "n": 46
+                }
+              ],
+              "name": "weeks",
+              "value": "n",
+              "total": 52,
+              "rows": 4,
+              "columns": 13,
+              "restLabel": "Weeks without a run",
+              "format": "integer",
+              "aspect": 2.6
+            },
+            "text": "Each square is one week. Four of the six weeks without a run were in July."
           },
           {
             "kind": "chart",
@@ -19710,7 +20603,9 @@
         "line-chart",
         "timeline-chart",
         "bar-chart",
-        "big-number"
+        "big-number",
+        "stat-tile",
+        "waffle-chart"
       ],
       "props": [
         {
@@ -19810,7 +20705,12 @@
         {
           "name": "theme",
           "type": "ThemeInput",
-          "description": "Theme override, passed on to everything inside."
+          "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint the theme's surface behind the piece, with page padding. Default: on when `theme` is a named theme with its own surface. Set false when the host already paints it."
         },
         {
           "name": "mode",
@@ -19821,6 +20721,7 @@
       ],
       "example": {
         "type": "timeline-story",
+        "theme": "forest",
         "kicker": "Energy",
         "title": "Coal generated 39% of Britain's electricity in 2012 and 0.6% in 2024",
         "deck": "The first public coal power station opened in 1882. The last coal plant closed on 30 September 2024.",
@@ -19831,88 +20732,113 @@
           "data": [
             {
               "year": "1990-01-01",
-              "share": 65
+              "share": 65,
+              "wind": 0
             },
             {
               "year": "1994-01-01",
-              "share": 50
+              "share": 50,
+              "wind": 0
             },
             {
               "year": "1998-01-01",
-              "share": 35
+              "share": 35,
+              "wind": 0.2
             },
             {
               "year": "2002-01-01",
-              "share": 32
+              "share": 32,
+              "wind": 0.4
             },
             {
               "year": "2006-01-01",
-              "share": 38
+              "share": 38,
+              "wind": 1
             },
             {
               "year": "2010-01-01",
-              "share": 28
+              "share": 28,
+              "wind": 3
             },
             {
               "year": "2012-01-01",
-              "share": 39
+              "share": 39,
+              "wind": 6
             },
             {
               "year": "2013-01-01",
-              "share": 36
+              "share": 36,
+              "wind": 8
             },
             {
               "year": "2014-01-01",
-              "share": 30
+              "share": 30,
+              "wind": 9
             },
             {
               "year": "2015-01-01",
-              "share": 22
+              "share": 22,
+              "wind": 12
             },
             {
               "year": "2016-01-01",
-              "share": 9
+              "share": 9,
+              "wind": 11
             },
             {
               "year": "2017-01-01",
-              "share": 7
+              "share": 7,
+              "wind": 15
             },
             {
               "year": "2018-01-01",
-              "share": 5
+              "share": 5,
+              "wind": 17
             },
             {
               "year": "2019-01-01",
-              "share": 2
+              "share": 2,
+              "wind": 20
             },
             {
               "year": "2020-01-01",
-              "share": 2
+              "share": 2,
+              "wind": 24
             },
             {
               "year": "2021-01-01",
-              "share": 2
+              "share": 2,
+              "wind": 21
             },
             {
               "year": "2022-01-01",
-              "share": 1.5
+              "share": 1.5,
+              "wind": 27
             },
             {
               "year": "2023-01-01",
-              "share": 1
+              "share": 1,
+              "wind": 29
             },
             {
               "year": "2024-01-01",
-              "share": 0.6
+              "share": 0.6,
+              "wind": 30
             }
           ],
           "x": "year",
-          "y": "share",
+          "y": [
+            "share",
+            "wind"
+          ],
+          "names": {
+            "share": "Coal",
+            "wind": "Wind"
+          },
           "format": "{value}%",
           "zero": true,
-          "area": true,
           "title": "Coal's share of generation fell from 65% in 1990 to 0.6% in 2024",
-          "subtitle": "Share of Great Britain's electricity generated from coal, 1990 to 2024",
+          "subtitle": "Share of Great Britain's electricity generated from coal and from wind, 1990 to 2024",
           "annotations": [
             {
               "type": "band",
@@ -20028,9 +20954,16 @@
             "emphasis": true,
             "text": "The plant had run since 1968. In 2024 wind generated 30% of the country's electricity and gas generated 26%.",
             "exhibit": {
-              "type": "big-number",
-              "value": "0%",
-              "label": "Coal share of generation since October 2024",
+              "type": "stat-tile",
+              "variant": "comparison",
+              "surface": "borderless",
+              "upIsGood": false,
+              "value": 0.6,
+              "comparison": 39,
+              "valueLabel": "2024",
+              "comparisonLabel": "2012",
+              "format": "{value}%",
+              "label": "Coal share of generation",
               "context": "Britain was the first G7 country to end coal power"
             }
           }
@@ -20065,7 +20998,10 @@
         "stat-row",
         "source-note",
         "line-chart",
-        "bar-chart"
+        "bar-chart",
+        "waffle-chart",
+        "dumbbell-chart",
+        "heatmap"
       ],
       "props": [
         {
@@ -20098,7 +21034,7 @@
           "name": "blocks",
           "type": "(Block | Slot)[]",
           "required": true,
-          "description": "The story in reading order. Each block has a `kind`: `prose` `{ text, lead? }`; `figure` `{ chart, caption? }`; `callout` `{ chart, lead, body, label?, tone?, side? }`; `scrolly` `{ chart, steps, cumulative?, scrollMode?, side?, stepHeight? }` (the props of `scrolly-chart`); `quote` `{ quote, attribution?, role? }`; `stats` `{ items, title? }`; `multiples` `{ facet, ... }` (props of `small-multiples`, or of `small-multiple-grid` when it has a `chart`); `break` `{ title, step?, total?, text? }`. Any block takes `width: \"text\" | \"wide\" | \"full\"` and an `id`. A bare chart spec is treated as a wide figure."
+          "description": "The story in reading order. Each block has a `kind`: `prose` `{ text, lead? }`; `figure` `{ chart, caption? }`; `callout` `{ chart, lead, body, label?, tone?, side? }`; `scrolly` `{ chart, steps, cumulative?, scrollMode?, side?, stepHeight? }` (the props of `scrolly-chart`); `quote` `{ quote, attribution?, role? }`; `stats` `{ items, variant?, title? }` (the props of `stat-row`); `multiples` `{ facet, ... }` (props of `small-multiples`, or of `small-multiple-grid` when it has a `chart`); `break` `{ title, step?, total?, text? }`. Any block takes `width: \"text\" | \"wide\" | \"full\"` and an `id`. A bare chart spec is treated as a wide figure."
         },
         {
           "name": "measure",
@@ -20150,7 +21086,12 @@
         {
           "name": "theme",
           "type": "ThemeInput",
-          "description": "Theme override, passed on to everything inside."
+          "description": "A built-in theme name (`\"editorial\"`, `\"ledger\"`, `\"noir\"`...) or a theme object, passed on to everything inside. A named theme with its own surface paints that surface behind the whole piece."
+        },
+        {
+          "name": "frame",
+          "type": "boolean",
+          "description": "Paint the theme's surface behind the piece, with page padding. Default: on when `theme` is a named theme with its own surface. Set false when the host already paints it."
         },
         {
           "name": "mode",
@@ -20161,6 +21102,7 @@
       ],
       "example": {
         "type": "visual-essay",
+        "theme": "editorial",
         "kicker": "Energy transition",
         "title": "Solar supplied 11.1% of EU electricity in 2024, more than coal's 9.8%",
         "deck": "Solar's share was 2.9% in 2015. Coal's share was 24.6% in 2015.",
@@ -20233,7 +21175,6 @@
                 "Solar",
                 "Coal"
               ],
-              "highlight": "Solar",
               "format": "{value}%",
               "zero": true,
               "title": "Solar's share rose from 2.9% to 11.1% between 2015 and 2024",
@@ -20245,14 +21186,6 @@
                   "from": "2021",
                   "to": "2022",
                   "label": "Gas price crisis"
-                },
-                {
-                  "type": "point",
-                  "x": "2016",
-                  "y": 22,
-                  "label": "Coal",
-                  "position": "top",
-                  "dot": false
                 }
               ],
               "source": "Ember, European Electricity Review 2025"
@@ -20325,21 +21258,51 @@
           },
           {
             "kind": "stats",
+            "variant": "tiles",
+            "subtitle": "Bars show 2020 to 2024",
             "items": [
               {
-                "value": "338 GW",
+                "variant": "bars",
+                "series": [
+                  137,
+                  165,
+                  205,
+                  272,
+                  338
+                ],
+                "value": 338,
+                "format": "{value} GW",
                 "label": "Solar capacity installed in the EU, end of 2024",
                 "delta": "+66 GW",
                 "deltaLabel": "in 2024"
               },
               {
-                "value": "304 TWh",
+                "variant": "bars",
+                "series": [
+                  145,
+                  165,
+                  210,
+                  249,
+                  304
+                ],
+                "value": 304,
+                "format": "{value} TWh",
                 "label": "Solar generation, 2024",
                 "delta": 0.22,
                 "deltaLabel": "vs 2023"
               },
               {
-                "value": "269 TWh",
+                "variant": "bars",
+                "tone": 1,
+                "series": [
+                  350,
+                  400,
+                  430,
+                  320,
+                  269
+                ],
+                "value": 269,
+                "format": "{value} TWh",
                 "label": "Coal generation, 2024",
                 "delta": -0.16,
                 "deltaLabel": "vs 2023",

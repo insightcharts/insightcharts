@@ -18,7 +18,8 @@ export { detectMode, subscribeAppearance, systemMode, useColorMode, usePrefersRe
 export type { ColorMode, ModeInput } from "./mode";
 export { categoryAxis, escapeHtml, hiddenAxis, labelStyle, morph, timeAxis, tooltipHtml, valueAxis } from "./parts";
 export type { TooltipRow } from "./parts";
-export { InsightProvider, useInsightConfig, useTheme } from "./provider";
+export { frameStyle, InsightProvider, useInsightConfig, useTheme } from "./provider";
+export { namedTheme, resolveTheme, themeGround, themeNames } from "./named-themes";
 export type { ExportFormat, InsightConfig, InsightProviderProps, RendererInput } from "./provider";
 export { describeExtremes, shapeSeries } from "./shape";
 export type { SeriesFields, Shaped, ShapedSeries } from "./shape";

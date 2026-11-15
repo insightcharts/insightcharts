@@ -115,7 +115,8 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `subtitle` | `string` |  | Measure, population and period. |
 | `source` | `string` |  | Shown under the list as "Source: ...". |
 | `note` | `string` |  | Method note or caveat. |
-| `theme` | `ThemeInput` |  | Theme override. |
+| `theme` | `ThemeInput` |  | A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object. A named theme with its own surface paints that surface behind the component. |
+| `frame` | `boolean` |  | Paint the theme's surface behind the component. Default: on for a named theme with its own surface. |
 | `mode` | `"auto" \| "system" \| "light" \| "dark"` | `"auto"` | Colour mode. |
 
 ## Composition
@@ -124,6 +125,88 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 - Used by: [scorecard](https://insightcharts.dev/llms/scorecard.md)
 
 ## More examples
+
+### Top five with change, forest theme
+
+```tsx
+import { RankedList } from "insightcharts";
+
+const data = [
+  { country: "Russia", area: 815, change: 0 },
+  { country: "Brazil", area: 497, change: -0.03 },
+  { country: "Canada", area: 347, change: 0 },
+  { country: "United States", area: 310, change: 0.01 },
+  { country: "China", area: 220, change: 0.1 },
+];
+
+<RankedList
+  theme="forest"
+  title="Brazil had 497 million hectares of forest in 2020"
+  subtitle="Forest area, million hectares, five largest countries, 2020, with change since 2010"
+  data={data}
+  name="country"
+  value="area"
+  change="change"
+  highlight="Brazil"
+  source="FAO, Global Forest Resources Assessment 2020"
+  note="Figures are approximate, for illustration"
+/>
+```
+
+### Places moved, long names, no bar, mono theme
+
+```tsx
+import { RankedList } from "insightcharts";
+
+const data = [
+  { name: "Erasmus University Medical Center Rotterdam", score: 94.1, moved: 2 },
+  { name: "Karolinska University Hospital", score: 93.6, moved: -1 },
+  { name: "Amsterdam University Medical Centers", score: 92.8, moved: 0 },
+  { name: "Charité – Universitätsmedizin Berlin", score: 91.9, moved: -1 },
+  { name: "University Medical Center Utrecht", score: 90.4, moved: 3 },
+];
+
+<RankedList
+  theme="mono"
+  title="Three of the top five hospitals are in the Netherlands"
+  data={data}
+  name="name"
+  value="score"
+  change="moved"
+  changeFormat="signed"
+  bar={false}
+  note="Illustrative data"
+/>
+```
+
+### Two rows highlighted, magenta theme
+
+```tsx
+import { RankedList } from "insightcharts";
+
+const data = [
+  { genre: "Crime", loans: 412, change: 0.06 },
+  { genre: "Romance", loans: 388, change: 0.21 },
+  { genre: "Picture books", loans: 351, change: 0.02 },
+  { genre: "Fantasy", loans: 274, change: 0.14 },
+  { genre: "Biography", loans: 163, change: -0.05 },
+  { genre: "Cookery", loans: 121, change: -0.08 },
+];
+
+<RankedList
+  theme="magenta"
+  title="Romance loans rose 21% to 388,000 in 2024"
+  subtitle="Loans by genre, thousands, city libraries, 2024, with change on 2023"
+  data={data}
+  name="genre"
+  value="loans"
+  format="{value}k"
+  change="change"
+  highlight={["Romance", "Fantasy"]}
+  source="City library service"
+  note="Illustrative data"
+/>
+```
 
 ### Top five, no highlight
 
@@ -148,31 +231,6 @@ const data = [
   format="{value}%"
   limit={5}
   title="49% of commuting trips in Copenhagen are made by bicycle"
-/>
-```
-
-### Places moved, long names, no bar
-
-```tsx
-import { RankedList } from "insightcharts";
-
-const data = [
-  { name: "Erasmus University Medical Center Rotterdam", score: 94.1, moved: 2 },
-  { name: "Karolinska University Hospital", score: 93.6, moved: -1 },
-  { name: "Amsterdam University Medical Centers", score: 92.8, moved: 0 },
-  { name: "Charité – Universitätsmedizin Berlin", score: 91.9, moved: -1 },
-  { name: "University Medical Center Utrecht", score: 90.4, moved: 3 },
-];
-
-<RankedList
-  title="Three of the top five hospitals are in the Netherlands"
-  data={data}
-  name="name"
-  value="score"
-  change="moved"
-  changeFormat="signed"
-  bar={false}
-  note="Illustrative data"
 />
 ```
 

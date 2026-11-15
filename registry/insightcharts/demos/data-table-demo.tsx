@@ -3,6 +3,7 @@ import { DataTable } from "@/components/insightcharts/atoms/data-table";
 export function DataTableDemo() {
   return (
     <DataTable
+      theme="editorial"
       caption="Wind and solar supplied 67% of Denmark's electricity in 2024"
       subtitle="Electricity generation by country, 2024"
       source="Ember (illustrative figures)"

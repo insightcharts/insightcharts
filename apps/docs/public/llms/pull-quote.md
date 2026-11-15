@@ -38,6 +38,7 @@ The file lands at `components/insightcharts/atoms/pull-quote.tsx`. `@insightchar
 import { PullQuote } from "insightcharts";
 
 <PullQuote
+  theme="editorial"
   quote="Solar set the midday wholesale price on most days in 2023. Our plans had assumed that would happen in the 2030s."
   attribution="Marit de Vries"
   role="Head of system operations, Dutch grid operator"
@@ -51,6 +52,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 ```json
 {
   "type": "pull-quote",
+  "theme": "editorial",
   "quote": "Solar set the midday wholesale price on most days in 2023. Our plans had assumed that would happen in the 2030s.",
   "attribution": "Marit de Vries",
   "role": "Head of system operations, Dutch grid operator"
@@ -68,6 +70,7 @@ The same thing as data, rendered with `<Insight spec={spec} />`:
 | `cite` | `string` |  | Source URL: set as the blockquote `cite` and linked from the attribution. |
 | `size` | `"md" \| "lg"` | `"lg"` | `lg` anchors a section; `md` sits inside a column. |
 | `align` | `"left" \| "center"` | `"left"` | Left-aligned quotes carry a side rule; centred ones do not. |
+| `frame` | `boolean` |  | Paint a named theme's background behind the block, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off. |
 
 ## Composition
 
@@ -95,10 +98,25 @@ import { PullQuote } from "insightcharts";
 import { PullQuote } from "insightcharts";
 
 <PullQuote
+  theme="magenta"
   size="md"
   quote="Solar underbid coal in the afternoon power auctions for three years. The coal plants that could not reduce their output quickly enough in those hours were closed because they no longer covered their costs."
   attribution="European Electricity Review 2025"
   cite="https://ember-energy.org"
+/>
+```
+
+### Accent overridden
+
+```tsx
+import { PullQuote } from "insightcharts";
+
+<PullQuote
+  theme={{ accent: "#0f766e" }}
+  size="md"
+  quote="We connected 1,240 rooftop systems in 2024. In 2019 we connected 180."
+  attribution="Ines Ferreira"
+  role="Connections manager, regional grid operator"
 />
 ```
 

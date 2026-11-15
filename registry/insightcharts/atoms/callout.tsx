@@ -1,7 +1,7 @@
 "use client";
 
 import { type CSSProperties, type ReactNode, useRef } from "react";
-import { useInsightStyles, withMeta, useColorMode, type ModeInput, useInsightConfig, useTheme, chromeVars, type ThemeInput } from "insightcharts/core";
+import { useInsightStyles, withMeta, useColorMode, type ModeInput, frameStyle, useInsightConfig, useTheme, chromeVars, type ThemeInput } from "insightcharts/core";
 
 export type CalloutTone = "neutral" | "positive" | "negative" | "accent";
 
@@ -18,7 +18,10 @@ export interface CalloutProps {
   label?: string;
   /** `"soft"` is a tinted box, `"outline"` a bordered one, `"plain"` has no box (for beside a chart). */
   variant?: "soft" | "outline" | "plain";
+  /** A built-in theme name or a theme object. A named theme paints its own background behind the callout. */
   theme?: ThemeInput;
+  /** Paint the named theme's background behind the callout. Default: on for a named theme with its own surface. */
+  frame?: boolean;
   mode?: ModeInput;
   className?: string;
   style?: CSSProperties;
@@ -69,17 +72,21 @@ function CalloutImpl({ lead, text, children, tone = "neutral", label, variant = 
   const theme = useTheme(rest.theme);
   const { mode } = useColorMode(ref, rest.mode ?? config.mode);
   const color = TONE[tone].color;
+  const frame = frameStyle(rest.theme, mode, rest.frame);
+  // On a painted ground the gridline colour sits too close to the surface to draw a box with.
+  const framed = frame !== undefined;
   const box: CSSProperties =
     variant === "plain"
       ? {}
       : {
           padding: "14px 16px",
           borderRadius: 10,
-          border: `1px solid ${variant === "soft" ? `color-mix(in srgb, ${color} 22%, var(--_ic-grid))` : "var(--_ic-grid)"}`,
+          border: `1px solid ${variant === "soft" ? `color-mix(in srgb, ${color} 22%, var(--_ic-grid))` : framed ? "var(--_ic-axis)" : "var(--_ic-grid)"}`,
           background: variant === "soft" ? `color-mix(in srgb, ${color} ${tone === "neutral" ? 5 : 7}%, transparent)` : undefined,
         };
-  return (
-    <div ref={ref} role="note" data-slot="ic-callout" data-tone={tone} data-ic-mode={mode} className={className} style={{ ...(chromeVars(theme[mode]) as CSSProperties), fontFamily: "var(--_ic-font)", color: "var(--_ic-ink)", display: "flex", alignItems: "flex-start", gap: 12, minWidth: 0, ...box, ...style }}>
+  const row: CSSProperties = { display: "flex", alignItems: "flex-start", gap: 12, minWidth: 0, ...box };
+  const content = (
+    <>
       <Glyph tone={tone} />
       <div data-slot="ic-callout-body" style={{ minWidth: 0, flex: 1 }}>
         {label ? (
@@ -103,6 +110,19 @@ function CalloutImpl({ lead, text, children, tone = "neutral", label, variant = 
           </div>
         ) : null}
       </div>
+    
+    </>
+  );
+  // The callout already draws a box of its own, so a theme's ground goes on a wrapper around it.
+  return (
+    <div ref={ref} role="note" data-slot="ic-callout" data-tone={tone} data-ic-mode={mode} className={className} style={{ ...(chromeVars(theme[mode]) as CSSProperties), fontFamily: "var(--_ic-font)", color: "var(--_ic-ink)", minWidth: 0, ...(frame ?? row), ...style }}>
+      {frame ? (
+        <div data-slot="ic-callout-box" style={row}>
+          {content}
+        </div>
+      ) : (
+        content
+      )}
     </div>
   );
 }
@@ -123,6 +143,7 @@ export const Callout = withMeta(CalloutImpl, {
     { name: "tone", type: '"neutral" | "positive" | "negative" | "accent"', default: '"neutral"', description: "Sets the icon shape and the tint together." },
     { name: "label", type: "string", description: 'Small label above the lead, e.g. "Summary".' },
     { name: "variant", type: '"soft" | "outline" | "plain"', default: '"soft"', description: "Tinted box, bordered box, or no box." },
+    { name: "frame", type: "boolean", description: "Paint a named theme's background behind the callout, with padding and rounded corners. On by default for a named theme with its own surface; `false` turns it off." },
   ],
   example: {
     type: "callout",

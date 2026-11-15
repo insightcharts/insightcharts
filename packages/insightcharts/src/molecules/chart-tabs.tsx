@@ -126,6 +126,22 @@ const emitters = [
   { country: "Germany", total: 0.6, perCapita: 7.1, change: -0.28 },
 ];
 
+const rentYears = ["2019", "2020", "2021", "2022", "2023", "2024"];
+const rentTrend = rentYears.map((year, i) => ({ year, Lisbon: [11.2, 11.6, 11.4, 12.9, 14.8, 16.2][i], Porto: [8.1, 8.5, 8.4, 9.6, 11.0, 12.1][i], Braga: [5.0, 5.3, 5.5, 6.2, 7.1, 7.8][i] }));
+const rentCities = [
+  { city: "Lisbon", y2019: 11.2, y2024: 16.2, burden: 46 },
+  { city: "Porto", y2019: 8.1, y2024: 12.1, burden: 39 },
+  { city: "Braga", y2019: 5.0, y2024: 7.8, burden: 31 },
+];
+const genres = [
+  { genre: "Drama", hours: 412, titles: 1840, perTitle: 224 },
+  { genre: "Comedy", hours: 268, titles: 1310, perTitle: 205 },
+  { genre: "Reality", hours: 231, titles: 620, perTitle: 373 },
+  { genre: "Animation", hours: 198, titles: 540, perTitle: 367 },
+  { genre: "Crime", hours: 176, titles: 465, perTitle: 378 },
+  { genre: "Documentary", hours: 142, titles: 1105, perTitle: 129 },
+];
+
 export const ChartTabs = withMeta(ChartTabsImpl, {
   name: "chart-tabs",
   component: "ChartTabs",
@@ -149,11 +165,13 @@ export const ChartTabs = withMeta(ChartTabsImpl, {
     { name: "source", type: "string", description: 'Shown under the chart as "Source: ...".' },
     { name: "note", type: "string", description: "Method note or caveat." },
     { name: "children", type: "ReactNode", description: "Extra content under the chart." },
-    { name: "theme", type: "ThemeInput", description: "Theme override, passed on to the chart." },
+    { name: "theme", type: "ThemeInput", description: "A built-in theme name (`editorial`, `ledger`, `noir`...) or a theme object, passed on to the chart. A named theme with its own surface paints that surface behind the component." },
+    { name: "frame", type: "boolean", description: "Paint the theme's surface behind the component. Default: on for a named theme with its own surface." },
     { name: "mode", type: '"auto" | "system" | "light" | "dark"', default: '"auto"', description: "Colour mode." },
   ],
   example: {
     type: "chart-tabs",
+    theme: "mono",
     title: "CO2 emissions of six large emitters, 2023",
     tabsPosition: "below",
     chart: { type: "bar-chart", data: emitters, x: "country", y: "total", sort: "desc", orientation: "horizontal", height: 280, highlight: "China", format: "{value} Gt", subtitle: "CO2 emissions from fossil fuels, billion tonnes, 2023" },
@@ -177,5 +195,28 @@ export const examples = {
     ],
     source: "Ember",
     note: "Figures are approximate, for illustration",
+  },
+  "Three chart forms, editorial theme": {
+    theme: "editorial",
+    title: "Median rent in Lisbon was €16.20 per square metre in 2024",
+    views: [
+      { label: "Trend", chart: { type: "line-chart", data: rentTrend, x: "year", y: ["Lisbon", "Porto", "Braga"], highlight: "Lisbon", contextLabels: true, format: "€{value}", zero: true, height: 280, subtitle: "Median monthly rent of new leases, € per square metre, 2019 to 2024" } },
+      { label: "2019 and 2024", chart: { type: "dumbbell-chart", data: rentCities, category: "city", from: "y2019", to: "y2024", names: { y2019: "2019", y2024: "2024" }, format: "€{value}", sort: "to", highlight: "Lisbon", subtitle: "Median monthly rent of new leases, € per square metre, 2019 and 2024" } },
+      { label: "Share of income", chart: { type: "bar-chart", data: rentCities, x: "city", y: "burden", sort: "desc", orientation: "horizontal", format: "{value}%", highlight: "Lisbon", subtitle: "Median rent for 70 square metres as a share of median household income, 2024" } },
+    ],
+    source: "National statistics office",
+    note: "Illustrative data",
+  },
+  "One chart, three measures, dusk theme": {
+    theme: "dusk",
+    title: "Viewing by genre on one streaming service, 2024",
+    tabsPosition: "below",
+    chart: { type: "bar-chart", data: genres, x: "genre", y: "hours", sort: "desc", orientation: "horizontal", height: 280, highlight: "Drama", format: "{value}m", subtitle: "Hours viewed, millions, 2024. Drama had 412 million." },
+    views: [
+      { label: "Hours", id: "hours" },
+      { label: "Titles", id: "titles", props: { y: "titles", highlight: "Drama", format: "integer", subtitle: "Titles available, 2024. Drama had 1,840." } },
+      { label: "Hours per title", id: "per-title", props: { y: "perTitle", highlight: "Crime", format: "{value}k", subtitle: "Hours viewed per title, thousands, 2024. Crime had 378,000." } },
+    ],
+    note: "Illustrative data",
   },
 };

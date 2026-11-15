@@ -19,6 +19,7 @@ const data = [
 export function SankeyChartDemo() {
   return (
     <SankeyChart
+      theme="noir"
       data={data}
       from="from"
       to="to"
